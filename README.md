@@ -1,8 +1,8 @@
 Ladybug: Simple and Extensible PHP Dumper
 =========================================
 
-Ladybug provides an easy and extensible var_dump/print_r replacement. For example,
-with this library, the following is possible:
+Ladybug provides an easy and extensible var_dump/print_r replacement for PHP
+projects. For example, with this library, the following is possible:
 
 ``` php
 <?php
@@ -42,11 +42,11 @@ There are more examples in `examples` directory.
 
 ## Instalation
 
-As easy as include the library and use the provided helpers:
+As easy as download and include the library and use the provided helpers:
 
 ``` php
 <?php
-require_once 'Ladybug.php';
+require_once 'lib/Ladybug.php';
 
 ladybug_dump($var1);
 ```
@@ -89,3 +89,7 @@ Will dump:
     [1] => 1  | raulfraile
     [2] => 2  | ladybug
 ]</pre>
+
+For example, if you want to add a new dumper for DateTime object, you should 
+create a new class in `lib/objects/datetime.php`, that will extend from LadybugExtension
+and will have a public method called `dump`.
