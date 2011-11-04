@@ -6,13 +6,23 @@ with this library, the following is possible:
 
 ``` php
 <?php
-    $var = 'hello world!';
-    ladybug_dump($var)
+    $var1 = NULL;
+    $var2 = 15;
+    $var3 = 15.5;
+    $var4 = 'hello world!';
+    $var5 = false;
+
+    ladybug_dump($var1, $var2, $var3, $var4, $var5);
 ```
 
 As a result:
 
-<pre><strong><em>string(12)</em></strong> <span style="color:#080">"hello world!"</span></pre>
+<pre><strong><em>NULL</em></strong>
+<strong><em>int</em></strong> <span style="color:#800">15</span>
+<strong><em>float</em></strong> <span style="color:#800">15.5</span>
+<strong><em>string(12)</em></strong> <span style="color:#080">"hello world!"</span>
+<strong><em>bool</em></strong> <span style="color:#008">FALSE</span>
+</pre>
 
 It is possible to dump any variable, including arrays, objects and resources:
 
@@ -50,7 +60,8 @@ The are 3 helpers:
 `ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and 
 terminates the current script
 
-`ladybug_dump_return($var1[, $var2[, ...]])`: Returns the value
+`ladybug_dump_return($var1[, $var2[, ...]])`: Dumps one or more variables and
+returns the string
 
 ## Extensible
 
