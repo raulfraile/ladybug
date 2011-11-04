@@ -46,7 +46,34 @@ ladybug_dump($var1);
 The are 3 helpers:
 
 `ladybug_dump($var1[, $var2[, ...]])`: Dumps one or more variables
+
 `ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and 
 terminates the current script
+
 `ladybug_dump_return($var1[, $var2[, ...]])`: Returns the value
 
+## Extensible
+
+The library is easily extensible by adding new classes in `lib/objects` and
+`lib/resources` directories. These new classes will have to extend from 
+`LadybugExtension` class.
+
+For example, there is already an extension to dump the rows of a mysql resultset,
+in `lib/resources/mysql_result.php`, so once is defined, Ladybug will be able to
+find it and use its `dump` method:
+
+``` php
+$connection = mysql_connect('localhost', 'dbuser', 'dbpassword');
+mysql_select_db('dbname', $connection);
+$result = mysql_query('SELECT * FROM user', $connection);
+
+ladybug_dump($result);
+```
+
+Will dump:
+
+<pre><strong><em>resource(mysql result)</em></strong> [
+    [0] => id | username
+    [1] => 1  | raulfraile
+    [2] => 2  | ladybug
+]</pre>
