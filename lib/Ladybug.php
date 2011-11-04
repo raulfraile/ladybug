@@ -21,7 +21,7 @@ class Ladybug {
     const OBJECTS_FOLDER = 'objects';
     const RESOURCES_FOLDER = 'resources';
     
-    protected static $depth = 0;
+    public static $depth = 0;
     
     private static $instance = null;
     

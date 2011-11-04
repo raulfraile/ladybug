@@ -16,4 +16,3 @@ $var1[1] = array(
 
 
 ladybug_dump($var1);
-
