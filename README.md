@@ -74,11 +74,12 @@ in `lib/resources/mysql_result.php`, so once is defined, Ladybug will be able to
 find it and use its `dump` method:
 
 ``` php
-$connection = mysql_connect('localhost', 'dbuser', 'dbpassword');
-mysql_select_db('dbname', $connection);
-$result = mysql_query('SELECT * FROM user', $connection);
+<?php
+    $connection = mysql_connect('localhost', 'dbuser', 'dbpassword');
+    mysql_select_db('dbname', $connection);
+    $result = mysql_query('SELECT * FROM user', $connection);
 
-ladybug_dump($result);
+    ladybug_dump($result);
 ```
 
 Will dump:
