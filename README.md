@@ -26,9 +26,9 @@ As a result:
 
 ## Examples
 
-### Dumping an array
-    
 It is possible to dump any variable, including arrays, objects and resources:
+    
+### Dumping an array
 
 ``` php
 <?php
@@ -40,6 +40,23 @@ It is possible to dump any variable, including arrays, objects and resources:
     [0] => <strong><em>int</em></strong> <span style="color:#800">1</span>
     [1] => <strong><em>int</em></strong> <span style="color:#800">2</span>
     [2] => <strong><em>int</em></strong> <span style="color:#800">3</span>
+]</pre>
+
+### Dumping a mysql resultset
+
+``` php
+<?php
+    $connection = mysql_connect('localhost', 'dbuser', 'dbpassword');
+    mysql_select_db('dbname', $connection);
+    $result = mysql_query('SELECT * FROM user', $connection);
+
+    ladybug_dump($result);
+```
+
+<pre><strong><em>resource(mysql result)</em></strong> [
+    [0] => id | username
+    [1] => 1  | raulfraile
+    [2] => 2  | ladybug
 ]</pre>
 
 ### Dumping a GD image
@@ -67,7 +84,7 @@ There are more examples in `examples` directory.
 
 ## Installation
 
-As easy as download and include the library and use the provided helpers:
+As easy as [download](https://github.com/raulfraile/Ladybug/zipball/master), include the library and use the provided helpers:
 
 ``` php
 <?php
@@ -96,25 +113,8 @@ The library is easily extensible by adding new classes in `lib/objects` and
 
 For example, there is already an extension to dump the rows of a mysql resultset,
 in `lib/resources/mysql_result.php`, so once is defined, Ladybug will be able to
-find it and use its `dump` method:
+find it and use its `dump` method.
 
-``` php
-<?php
-    $connection = mysql_connect('localhost', 'dbuser', 'dbpassword');
-    mysql_select_db('dbname', $connection);
-    $result = mysql_query('SELECT * FROM user', $connection);
-
-    ladybug_dump($result);
-```
-
-Will dump:
-
-<pre><strong><em>resource(mysql result)</em></strong> [
-    [0] => id | username
-    [1] => 1  | raulfraile
-    [2] => 2  | ladybug
-]</pre>
-
-For example, if you want to add a new dumper for DateTime object, you should 
+If you want to add a new dumper for DateTime object, you should 
 create a new class in `lib/objects/datetime.php`, that will extend from LadybugExtension
 and will have a public method called `dump`.
