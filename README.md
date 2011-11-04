@@ -11,14 +11,8 @@ with this library, the following is possible:
 ```
 
 As a result:
-``` html
-<pre>
-    <strong>
-        <em>string(12)</em>
-    </strong> 
-    <span style="color:#080">"hello world!"</span>
-</pre>
-```
+
+<pre><strong><em>string(12)</em></strong> <span style="color:#080">"hello world!"</span></pre>
 
 It is possible to dump any variable, including arrays, objects and resources:
 
@@ -28,17 +22,31 @@ It is possible to dump any variable, including arrays, objects and resources:
     ladybug_dump($var)
 ```
 
-``` html
-<pre>
-    <strong>
-        <em>array</em>
-    </strong> [
+<pre><strong><em>array</em></strong> [
     [0] => <strong><em>int</em></strong> <span style="color:#800">1</span>
     [1] => <strong><em>int</em></strong> <span style="color:#800">2</span>
     [2] => <strong><em>int</em></strong> <span style="color:#800">3</span>
-    ]
-</pre>
-```
+]</pre>
 
 There are more examples in `examples` directory.
+
+## Instalation
+
+As easy as include the library and use the provided helpers:
+
+``` php
+<?php
+require_once 'Ladybug.php';
+
+ladybug_dump($var1);
+```
+
+## Helpers
+
+The are 3 helpers:
+
+`ladybug_dump($var1[, $var2[, ...]])`: Dumps one or more variables
+`ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and 
+terminates the current script
+`ladybug_dump_return($var1[, $var2[, ...]])`: Returns the value
 
