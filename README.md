@@ -40,7 +40,7 @@ It is possible to dump any variable, including arrays, objects and resources:
 
 There are more examples in `examples` directory.
 
-## Instalation
+## Installation
 
 As easy as download and include the library and use the provided helpers:
 
