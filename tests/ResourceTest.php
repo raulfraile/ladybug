@@ -1,7 +1,8 @@
 <?php
-ini_set('xdebug.max_nesting_level',2000);
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once __DIR__.'/../lib/Ladybug.php';
+
+require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
+Ladybug_Autoloader::register();
 
 class ResourceTest extends PHPUnit_Framework_TestCase
 {

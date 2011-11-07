@@ -1,9 +1,8 @@
 <?php
-
-require_once __DIR__.'/../lib/Ladybug.php';
+require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
+Ladybug_Autoloader::register();
 
 // user class
-
 class Foo {
     public $bar = 1;
     public $bar2 = 2;
