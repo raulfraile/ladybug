@@ -28,7 +28,7 @@ class Dumper {
     
     private static $instance = null;
     
-    private function __construct() {}
+    public function __construct() {}
     
     /**
      * Singleton method
@@ -403,3 +403,5 @@ class Dumper {
     
 }
 
+// load the helpers
+//require_once(__DIR__ . '/functions.php');

@@ -1,9 +1,5 @@
 <?php
-
-
-
 // helpers
-
 
 function ladybug_dump(/*$var1 [, $var2...$varN]*/) {
     $ladybug = \Ladybug\Dumper::getInstance();
