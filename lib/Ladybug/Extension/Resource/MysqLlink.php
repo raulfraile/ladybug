@@ -10,15 +10,20 @@
  * file that was distributed with this source code.
  */
 
-class Ladybug_Extension_Resource_Mysqllink extends Ladybug_Extension {
+namespace Ladybug\Extension\Resource;
+
+use Ladybug\Dumper;
+use Ladybug\Extension;
+
+class Mysqllink extends Extension {
     
     
     public function dump($var) {
         $result = '';
         
-        $result .= $this->ladybug->writeDepth() . '[Host info] => ' . mysql_get_host_info($var) . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[MySQL protocol version] => ' . mysql_get_proto_info($var) . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[MySQL server version] => ' . mysql_get_server_info($var) . Ladybug_Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[Host info] => ' . mysql_get_host_info($var) . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[MySQL protocol version] => ' . mysql_get_proto_info($var) . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[MySQL server version] => ' . mysql_get_server_info($var) . Dumper::CHAR_NEWLINE;
         
         return $result;
     }

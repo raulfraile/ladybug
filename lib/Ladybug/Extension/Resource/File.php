@@ -10,7 +10,12 @@
  * file that was distributed with this source code.
  */
 
-class Ladybug_Extension_Resource_File extends Ladybug_Extension {
+namespace Ladybug\Extension\Resource;
+
+use Ladybug\Dumper;
+use Ladybug\Extension;
+
+class File extends Extension {
     
     public function dump($var) {
         $result = '';
@@ -18,9 +23,9 @@ class Ladybug_Extension_Resource_File extends Ladybug_Extension {
         $stream_vars = stream_get_meta_data($var);
         $fstat = fstat($var);
         
-        $result .= $this->ladybug->writeDepth() . '[file] => '.realpath($stream_vars['uri']) . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[mode] => '.$fstat['mode'] .  Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[size] => '.$this->ladybug->formatSize($fstat['size']) . Ladybug_Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[file] => '.realpath($stream_vars['uri']) . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[mode] => '.$fstat['mode'] .  Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[size] => '.$this->ladybug->formatSize($fstat['size']) . Dumper::CHAR_NEWLINE;
         
         return $result;
     }

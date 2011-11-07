@@ -10,19 +10,24 @@
  * file that was distributed with this source code.
  */
 
-class Ladybug_Extension_Object_Domdocument extends Ladybug_Extension {
+namespace Ladybug\Extension\Object;
+
+use Ladybug\Dumper;
+use Ladybug\Extension;
+
+class Domdocument extends Extension {
     
     public function dump($var) {
         $var->formatOutput = true;
         $xml = htmlentities($var->saveXML());
         
         // indentation
-        $lines = explode(Ladybug_Dumper::CHAR_NEWLINE, $xml);
+        $lines = explode(Dumper::CHAR_NEWLINE, $xml);
         $result = '';
         foreach ($lines as $line) {
             
             if (strlen(trim($line)) > 0) {
-                $result .= $this->ladybug->writeDepth() . $line . Ladybug_Dumper::CHAR_NEWLINE;
+                $result .= $this->ladybug->writeDepth() . $line . Dumper::CHAR_NEWLINE;
             }
         }
         

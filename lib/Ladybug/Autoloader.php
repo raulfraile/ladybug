@@ -10,6 +10,8 @@
  * file that was distributed with this source code.
  */
 
+namespace Ladybug;
+
 class Ladybug_Autoloader
 {
     /**
@@ -31,15 +33,23 @@ class Ladybug_Autoloader
      */
     static public function autoload($class)
     {
+
         if (0 !== strpos($class, 'Ladybug')) {
             return;
         }
         
-        if (is_file($file = dirname(__FILE__).'/../'.str_replace(array('_', "\0"), array('/', ''), $class).'.php')) {
+        //$class = str_replace('Ladybug\\','', $class);
+        
+        $file = dirname(__FILE__).'/../'.str_replace(array('_', "\0"), array('/', ''), $class).'.php';
+        
+        $file = dirname(__FILE__).'/../'.str_replace(array('\\', "\0"), array('/', ''), $class).'.php';
+             
+        //echo $class.' __ '.$file.' __ ';
+        if (is_file($file)) {//echo '*';
             require $file;
         }
         else {
-            throw new Exception("Class $class not found");
+            throw new \Exception("Class $class not found");
         }
     }
 }

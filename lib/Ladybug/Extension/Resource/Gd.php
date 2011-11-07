@@ -10,7 +10,12 @@
  * file that was distributed with this source code.
  */
 
-class Ladybug_Extension_Resource_Gd extends Ladybug_Extension {
+namespace Ladybug\Extension\Resource;
+
+use Ladybug\Dumper;
+use Ladybug\Extension;
+
+class Gd extends Extension {
     
     public function dump($var) {
         $result = '';
@@ -41,20 +46,20 @@ class Ladybug_Extension_Resource_Gd extends Ladybug_Extension {
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
         
         // gd info
-        $result .= $this->ladybug->writeDepth() . '[gd] => [' . Ladybug_Dumper::CHAR_NEWLINE;
-        Ladybug_Dumper::$depth++;
-        $result .= $this->ladybug->writeDepth() . '[version] => ' . $gd_info['GD Version'] . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[support] => ' . implode(', ', $gd_support) . Ladybug_Dumper::CHAR_NEWLINE;
-        Ladybug_Dumper::$depth--;
-        $result .= $this->ladybug->writeDepth() . ']' . Ladybug_Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[gd] => [' . Dumper::CHAR_NEWLINE;
+        Dumper::$depth++;
+        $result .= $this->ladybug->writeDepth() . '[version] => ' . $gd_info['GD Version'] . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[support] => ' . implode(', ', $gd_support) . Dumper::CHAR_NEWLINE;
+        Dumper::$depth--;
+        $result .= $this->ladybug->writeDepth() . ']' . Dumper::CHAR_NEWLINE;
         
         // image info
-        $result .= $this->ladybug->writeDepth() . '[width] => ' . $width . 'px' . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[height] => ' . $height . 'px' . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[colors_palette] => ' . $colors_palette . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[true_color] => ' . $is_true_color . Ladybug_Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[image] =>' . Ladybug_Dumper::CHAR_NEWLINE . 
-                   $this->ladybug->writeDepth() . $this->ladybug->writeDepth() . '<img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />' . Ladybug_Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[width] => ' . $width . 'px' . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[height] => ' . $height . 'px' . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[colors_palette] => ' . $colors_palette . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[true_color] => ' . $is_true_color . Dumper::CHAR_NEWLINE;
+        $result .= $this->ladybug->writeDepth() . '[image] =>' . Dumper::CHAR_NEWLINE . 
+                   $this->ladybug->writeDepth() . $this->ladybug->writeDepth() . '<img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />' . Dumper::CHAR_NEWLINE;
 
         return $result;
     }

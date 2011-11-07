@@ -10,7 +10,12 @@
  * file that was distributed with this source code.
  */
 
-class Ladybug_Extension_Resource_Mysqlresult extends Ladybug_Extension {
+namespace Ladybug\Extension\Resource;
+
+use Ladybug\Dumper;
+use Ladybug\Extension;
+
+class Mysqlresult extends Extension {
     
     const CHAR_SEPARATOR = ' | ';
     const MAX_RESULTS = 50;
@@ -27,17 +32,17 @@ class Ladybug_Extension_Resource_Mysqlresult extends Ladybug_Extension {
                 if ($i == 1) $column_names[] = $k;
                 $values[] = $v;
             }
-            $result .= implode(self::CHAR_SEPARATOR, $values) . Ladybug_Dumper::CHAR_NEWLINE;
+            $result .= implode(self::CHAR_SEPARATOR, $values) . Dumper::CHAR_NEWLINE;
             $i++;
             
             if ($i > self::MAX_RESULTS) {
-                $result .= $this->ladybug->writeDepth() . '[...] => '. (mysql_num_rows($var) - self::MAX_RESULTS) . ' more results' . Ladybug_Dumper::CHAR_NEWLINE;
+                $result .= $this->ladybug->writeDepth() . '[...] => '. (mysql_num_rows($var) - self::MAX_RESULTS) . ' more results' . Dumper::CHAR_NEWLINE;
                 break;
             }
         }
         
         // column names
-        $result_with_names = $this->ladybug->writeDepth() . '[0] => ' . implode(self::CHAR_SEPARATOR, $column_names) . Ladybug_Dumper::CHAR_NEWLINE . $result;
+        $result_with_names = $this->ladybug->writeDepth() . '[0] => ' . implode(self::CHAR_SEPARATOR, $column_names) . Dumper::CHAR_NEWLINE . $result;
         return $result_with_names;
     }
 }

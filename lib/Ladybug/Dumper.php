@@ -8,7 +8,9 @@
  * file that was distributed with this source code.
  */
 
-class Ladybug_Dumper {
+namespace Ladybug;
+
+class Dumper {
     
     const COLOR_STRING = '#080';
     const COLOR_INT = '#800';
@@ -33,7 +35,7 @@ class Ladybug_Dumper {
      * @return Get singleton instance
      */
     public static function getInstance() {
-        return (self::$instance !== null) ? self::$instance : (self::$instance = new Ladybug_Dumper()); 
+        return (self::$instance !== null) ? self::$instance : (self::$instance = new Dumper()); 
     }
     
     /**
@@ -206,7 +208,7 @@ class Ladybug_Dumper {
     private function dump_object($var) {
         $class_name = get_class($var);
         
-        $reflection_class = new ReflectionClass($class_name); 
+        $reflection_class = new \ReflectionClass($class_name); 
         
         $data = (array)$var;
         $object_constants = $reflection_class->getConstants();
@@ -226,7 +228,7 @@ class Ladybug_Dumper {
             $data = $custom_dumper->dump($var);
             self::$depth-=2;
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             // class not found => no $data
             $data = '';
         }
@@ -387,8 +389,8 @@ class Ladybug_Dumper {
     private function getIncludeClass($name, $type = 'object') {
         $class = '';
         
-        if ($type == 'object') $class = 'Ladybug_Extension_Object_'.str_replace(' ', '', ucwords(strtolower($name)));
-        elseif ($type == 'resource') $class = 'Ladybug_Extension_Resource_'.str_replace(' ', '', ucwords(strtolower($name)));
+        if ($type == 'object') $class = 'Ladybug\\Extension\\Object\\'.str_replace(' ', '', ucwords(strtolower($name)));
+        elseif ($type == 'resource') $class = 'Ladybug\\Extension\\Resource\\'.str_replace(' ', '', ucwords(strtolower($name)));
         
         return $class;
     }
