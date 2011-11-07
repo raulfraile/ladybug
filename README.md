@@ -88,7 +88,8 @@ As easy as [download](https://github.com/raulfraile/Ladybug/zipball/master), inc
 
 ``` php
 <?php
-require_once 'lib/Ladybug.php';
+require_once 'lib/Ladybug/Autoloader.php';
+Ladybug_Autoloader::register();
 
 ladybug_dump($var1);
 ```
@@ -107,14 +108,15 @@ returns the string
 
 ## Extensible
 
-The library is easily extensible by adding new classes in `lib/objects` and
-`lib/resources` directories. These new classes will have to extend from 
-`LadybugExtension` class.
+The library is easily extensible by adding new classes in `lib/Ladybug/Extension/Object` 
+and `lib/Ladybug/Extension/Resource` directories. These new classes will have to
+extend from `LadybugExtension` class.
 
 For example, there is already an extension to dump the rows of a mysql resultset,
-in `lib/resources/mysql_result.php`, so once is defined, Ladybug will be able to
-find it and use its `dump` method.
+in `lib/Ladybug/Extension/Resource/MysqlResult.php`, so once is defined, Ladybug
+will be able to find it and use its `dump` method.
 
 If you want to add a new dumper for DateTime object, you should 
-create a new class in `lib/objects/datetime.php`, that will extend from LadybugExtension
-and will have a public method called `dump`.
+create a new class in `lib/Ladybug/Extension/Object/Datetime.php`, that will 
+extend from `LadybugExtension` and will have to provide a public method called
+`dump`.
