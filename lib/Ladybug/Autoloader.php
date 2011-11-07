@@ -49,7 +49,7 @@ class Ladybug_Autoloader
             require $file;
         }
         else {
-            throw new \Exception("Class $class not found");
+            //throw new \Exception("Class $class not found");
         }
     }
 }

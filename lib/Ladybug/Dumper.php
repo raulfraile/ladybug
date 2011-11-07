@@ -216,21 +216,25 @@ class Dumper {
         $object_static_properties = $reflection_class->getStaticProperties();
         $object_methods = $reflection_class->getMethods();
         
+        $class_file = $reflection_class->getFileName();
+        $class_interfaces = implode(', ', $reflection_class->getInterfaceNames());
+        $class_namespace = $reflection_class->getNamespaceName();
+        $class_parent_obj = $reflection_class->getParentClass();
+        if ($class_parent_obj) $class_parent = $class_parent_obj->getName();
+        else $class_parent = '';
+        
         $type = 'object('.$class_name.')';
         
         $result = $this->write_all($type)." [";
         
         // is there a class to show the object info?
         $include_class = $this->getIncludeClass($class_name, 'object');
-        try {
+        
+        if (class_exists($include_class)) {
             $custom_dumper = new $include_class($this);
             self::$depth+=2;
             $data = $custom_dumper->dump($var);
             self::$depth-=2;
-        }
-        catch (\Exception $e) {
-            // class not found => no $data
-            $data = '';
         }
         
         if (!empty($data)
@@ -242,6 +246,20 @@ class Dumper {
         
         self::$depth++;
         
+        // info about the class
+        if (!empty($class_file)) {
+            $result .= $this->writeDepth(). "[class] => [\n";
+            
+                self::$depth++;
+                $result .= $this->writeDepth() . '[file] => '.$class_file.self::CHAR_NEWLINE;
+                if (!empty($class_interfaces)) $result .= $this->writeDepth() . '[interfaces] => '.$class_interfaces.self::CHAR_NEWLINE;
+                if (!empty($class_namespace)) $result .= $this->writeDepth() . '[namespace] => '.$class_namespace.self::CHAR_NEWLINE;
+                if (!empty($class_parent)) $result .= $this->writeDepth() . '[parent] => '.$class_parent.self::CHAR_NEWLINE;
+                
+                self::$depth--;
+            
+            $result .= $this->writeDepth()."]\n";
+        }
         
         if (!empty($data)) {
             $result .= $this->writeDepth(). "[data] => [\n";
@@ -271,7 +289,7 @@ class Dumper {
             $result .= $this->writeDepth() . "[properties] => [\n";
             self::$depth++;
             foreach($object_properties as $property) {
-                $result .= $this->writeDepth() . '['.$property->getName().'] => '.$this->dump($property->getValue($var)).self::CHAR_NEWLINE;
+                if ($property->isPublic()) $result .= $this->writeDepth() . '['.$property->getName().'] => '.$this->dump($property->getValue($var)).self::CHAR_NEWLINE;
             }
             self::$depth--;
             $result .= $this->writeDepth()."]\n";
@@ -338,14 +356,11 @@ class Dumper {
         
         // is there a class to show the resource info?
         $include_class = $this->getIncludeClass($resource_type, 'resource');
-        try {
+        if (class_exists($include_class)) {
             $custom_dumper = new $include_class($this);
             $value = $custom_dumper->dump($var);
         }
-        catch (Exception $e) {
-            // class not found => no $value
-            $value = '';
-        }
+        
             
         self::$depth--;
         
@@ -375,16 +390,7 @@ class Dumper {
         else $result = number_format($size/$gb, 2) . ' Gb';
         
         return $result;
-    }
-    
-    private function getIncludePath($name, $type = 'object') {
-        $path = '';
-        
-        if ($type == 'object') $path = self::EXTENSIONS_FOLDER . '/' . self::OBJECTS_FOLDER . '/' . str_replace(' ', '_', strtolower($name)) . '.php';
-        elseif ($type == 'resource') $path = self::EXTENSIONS_FOLDER . '/' . self::RESOURCES_FOLDER . '/' . str_replace(' ', '_', strtolower($name)) . '.php';
-        
-        return $path;
-    }
+    }    
     
     private function getIncludeClass($name, $type = 'object') {
         $class = '';

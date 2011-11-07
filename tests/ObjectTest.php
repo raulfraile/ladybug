@@ -18,8 +18,8 @@ class ObjectTest extends PHPUnit_Framework_TestCase
         $this->foo = new Foo();
     }
     
-    public function testEmptyObjectGetsEmpty() {
-        $this->assertEquals(strip_tags(ladybug_dump_return($this->foo)), 'object(Foo) []');
+    public function testEmptyObjectGetsJustFileName() {
+        $this->assertEquals(count(explode("\n",ladybug_dump_return($this->foo))), 4);
     }
     
     
