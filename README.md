@@ -110,3 +110,7 @@ If you want to add a new dumper for DateTime object, you should
 create a new class in `lib/Ladybug/Extension/Object/Datetime.php`, that will 
 extend from `LadybugExtension` and will have to provide a public method called
 `dump`.
+        
+## Symfony2 users
+        
+Take a look at [LadybugBundle](https://github.com/raulfraile/LadybugBundle)
