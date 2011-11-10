@@ -36,12 +36,9 @@ It is possible to dump any variable, including arrays, objects and resources:
     ladybug_dump($var)
 ```
 
+``` html
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/array_example.png" />
-<pre><strong><em>array</em></strong> [
-    [0] => <strong><em>int</em></strong> <span style="color:#800">1</span>
-    [1] => <strong><em>int</em></strong> <span style="color:#800">2</span>
-    [2] => <strong><em>int</em></strong> <span style="color:#800">3</span>
-]</pre>
+```
 
 ### Dumping a mysql resultset
 
