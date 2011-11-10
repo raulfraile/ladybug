@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  * 
- * Resources/File dumper
+ * Oject/DomDocument dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -10,23 +10,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Extension\Resource;
+namespace Ladybug\Extension\Object\Symfony\Component\HttpFoundation;
 
 use Ladybug\Dumper;
 use Ladybug\Extension;
 
-class File extends Extension {
+class ParameterBag extends Extension {
     
     public function dump($var) {
         $result = array();
+        $result['bag'] = $var->all();
         
-        $stream_vars = stream_get_meta_data($var);
-        $fstat = fstat($var);
-        
-        $result['file'] = realpath($stream_vars['uri']);
-        $result['mode'] = $fstat['mode'];
-        $result['size'] = $fstat['size'];
+        /*foreach ($parameters as $k => $v) {
+            $result .= $this->ladybug->writeDepth() . '[' . $k . '] => ' . $this->ladybug->dump($v) . Dumper::CHAR_NEWLINE;
+        }*/
         
         return $result;
     }
+    
 }

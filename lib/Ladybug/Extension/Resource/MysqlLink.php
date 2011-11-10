@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  * 
- * Resources/File dumper
+ * Mysql/Link dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -15,17 +15,15 @@ namespace Ladybug\Extension\Resource;
 use Ladybug\Dumper;
 use Ladybug\Extension;
 
-class File extends Extension {
+class MysqlLink extends Extension {
+    
     
     public function dump($var) {
-        $result = array();
-        
-        $stream_vars = stream_get_meta_data($var);
-        $fstat = fstat($var);
-        
-        $result['file'] = realpath($stream_vars['uri']);
-        $result['mode'] = $fstat['mode'];
-        $result['size'] = $fstat['size'];
+        $result = array(
+            'Host info' => mysql_get_host_info($var),
+            'MySQL protocol version' => mysql_get_proto_info($var),
+            'MySQL server version' => mysql_get_server_info($var),
+        );
         
         return $result;
     }

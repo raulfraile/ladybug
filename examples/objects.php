@@ -3,18 +3,21 @@ require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
 Ladybug\Ladybug_Autoloader::register();
 
 // user class
+class Foo3 {public $a; public function __construct() {$this->a = new DateTime();}}
+class Foo2 {public $a; public function __construct() {$this->a = new Foo3();}}
 class Foo {
     public $bar = 1;
     public $bar2 = 2;
+    public $a;
     
-    public function __construct() {}
+    public function __construct() {$this->a = new Foo2();}
     public function getBar() { return $this->bar; }
     public function setBar($bar) { $this->bar = $bar; }
 }
 
 $foo = new Foo();
 ladybug_dump($foo);
-
+die();
 // DateTime object
 
 $date = new DateTime();

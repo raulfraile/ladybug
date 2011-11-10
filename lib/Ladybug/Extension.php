@@ -4,9 +4,9 @@ namespace Ladybug;
 
 class Extension {
     
-    protected $ladybug;
+    protected $var;
     
-    public function __construct(Dumper $l) {
-        $this->ladybug = $l;
+    public function __construct($var) {
+        $this->var = $var;
     }
 }

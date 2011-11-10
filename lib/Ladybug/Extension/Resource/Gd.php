@@ -18,7 +18,7 @@ use Ladybug\Extension;
 class Gd extends Extension {
     
     public function dump($var) {
-        $result = '';
+        $result = array();
         
         $gd_info = gd_info();
         $width = imagesx($var);
@@ -31,12 +31,12 @@ class Gd extends Extension {
         $image = ob_get_clean();
 
         $gd_support = array();
-        if ($gd_info['FreeType Support']) $gd_support[] = 'FreeType[' . $gd_info['FreeType Linkage'] . ']';
+        if ($gd_info['FreeType Support']) $gd_support[] = 'FreeType(' . $gd_info['FreeType Linkage'] . ')';
         if ($gd_info['T1Lib Support']) $gd_support[] = 'T1Lib';
         if ($gd_info['GIF Read Support'] || $gd_info['GIF Create Support']) {
             if ($gd_info['GIF Read Support'] && $gd_info['GIF Create Support']) $gd_support[] = 'GIF';
-            elseif ($gd_info['GIF Read Support']) $gd_support[] = 'GIF[read]';
-            elseif ($gd_info['GIF Create Support']) $gd_support[] = 'GIF[create]';
+            elseif ($gd_info['GIF Read Support']) $gd_support[] = 'GIF(read)';
+            elseif ($gd_info['GIF Create Support']) $gd_support[] = 'GIF(create)';
         }
         if ($gd_info['JPEG Support']) $gd_support[] = 'JPEG';
         if ($gd_info['PNG Support']) $gd_support[] = 'PNG';
@@ -46,21 +46,20 @@ class Gd extends Extension {
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
         
         // gd info
-        $result .= $this->ladybug->writeDepth() . '[gd] => [' . Dumper::CHAR_NEWLINE;
-        Dumper::$depth++;
-        $result .= $this->ladybug->writeDepth() . '[version] => ' . $gd_info['GD Version'] . Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[support] => ' . implode(', ', $gd_support) . Dumper::CHAR_NEWLINE;
-        Dumper::$depth--;
-        $result .= $this->ladybug->writeDepth() . ']' . Dumper::CHAR_NEWLINE;
+        $result['gd'] = array(
+            'version' => $gd_info['GD Version'],
+            'support' => implode(', ', $gd_support)
+        );
         
         // image info
-        $result .= $this->ladybug->writeDepth() . '[width] => ' . $width . 'px' . Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[height] => ' . $height . 'px' . Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[colors_palette] => ' . $colors_palette . Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[true_color] => ' . $is_true_color . Dumper::CHAR_NEWLINE;
-        $result .= $this->ladybug->writeDepth() . '[image] =>' . Dumper::CHAR_NEWLINE . 
-                   $this->ladybug->writeDepth() . $this->ladybug->writeDepth() . '<img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />' . Dumper::CHAR_NEWLINE;
-
+        $result['image'] = array(
+            'width' => $width . 'px',
+            'height' => $height . 'px',
+            'colors_palette' => $colors_palette,
+            'true_color' => $is_true_color,
+            'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
+        );
+        
         return $result;
     }
 }

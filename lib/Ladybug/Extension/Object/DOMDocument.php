@@ -15,14 +15,14 @@ namespace Ladybug\Extension\Object;
 use Ladybug\Dumper;
 use Ladybug\Extension;
 
-class Domdocument extends Extension {
+class DOMDocument extends Extension {
     
     public function dump($var) {
         $var->formatOutput = true;
         $xml = htmlentities($var->saveXML());
         
         // indentation
-        $lines = explode(Dumper::CHAR_NEWLINE, $xml);
+        /*$lines = explode(Dumper::CHAR_NEWLINE, $xml);
         $result = '';
         foreach ($lines as $line) {
             
@@ -30,8 +30,8 @@ class Domdocument extends Extension {
                 $result .= $this->ladybug->writeDepth() . $line . Dumper::CHAR_NEWLINE;
             }
         }
-        
-        return $result;
+        */
+        return $xml;
     }
     
 }
