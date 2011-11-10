@@ -36,9 +36,7 @@ It is possible to dump any variable, including arrays, objects and resources:
     ladybug_dump($var)
 ```
 
-``` html
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/array_example.png" />
-```
 
 ### Dumping a mysql resultset
 
