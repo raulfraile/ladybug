@@ -23,9 +23,9 @@ class File extends Extension {
         $stream_vars = stream_get_meta_data($var);
         $fstat = fstat($var);
         
-        $result['file'] = realpath($stream_vars['uri']);
-        $result['mode'] = $fstat['mode'];
-        $result['size'] = $fstat['size'];
+        $result['File'] = realpath($stream_vars['uri']);
+        $result['Mode'] = $fstat['mode'];
+        $result['Size'] = $fstat['size'];
         
         return $result;
     }

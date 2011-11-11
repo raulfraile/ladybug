@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\CLIColors;
 
 class TString extends Variable {
     
@@ -24,7 +25,7 @@ class TString extends Variable {
         $this->length = strlen($this->value);
     }
     
-    public function render($array_key = NULL) {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>string('.$this->length.')</em></strong> <span style="color:'.self::COLOR_STRING.'">"'.$this->value.'"</span></div>';
+    public function getValue() {
+        return '"' . $this->value . '"';
     }
 }

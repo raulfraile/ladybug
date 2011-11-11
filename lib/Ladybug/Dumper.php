@@ -25,6 +25,7 @@ class Dumper {
     private static $tree_counter = 0;
     
     private $css_loaded;
+    private $is_cli;
     
     /**
      * Constructor. Private (singleton pattern)
@@ -32,6 +33,7 @@ class Dumper {
      */
     public function __construct() {
         $this->css_loaded = FALSE;
+        $this->is_cli = $this->_isCli();
     }
     
     /**
@@ -56,17 +58,29 @@ class Dumper {
             $result[] = TFactory::factory($var);
         }
         
-        // generate html code
-        $html = $this->_render($result);
-        unset($result); $result = NULL;
+        // generate html/console code
+        if (!$this->is_cli) {
+            $html = $this->_render($result, 'html');
+            unset($result); $result = NULL;
+
+            // post-processors
+            $html = $this->_postProcess($html);
         
-        // post-processors
-        $html = $this->_postProcess($html);
-        
-        return $html;
+            return $html;
+        }
+        else {
+            $code = $this->_render($result, 'cli');
+            
+            return $code;
+        }
     }
     
-    private function _render($vars) {
+    private function _render($vars, $format = 'html') {
+        if ($format == 'html') return $this->_renderHTML($vars);
+        else return $this->_renderCLI($vars);
+    }
+    
+    private function _renderHTML($vars) {
         $html = '';
         $css = '';
         
@@ -81,6 +95,18 @@ class Dumper {
         
         $html = '<pre><ol class="tree">' . $html . '</ol></pre>';
         return $css . $html;
+    }
+    
+    private function _renderCLI($vars) {
+        $result = '';
+        
+        foreach ($vars as $var) {
+            $result .= $var->render(NULL, 'cli');
+        }
+        
+        $result .= "\n";
+        
+        return $result;
     }
     
     
@@ -119,5 +145,12 @@ class Dumper {
     
     public static function getTreeId() {
         return ++self::$tree_counter;
+    }
+    
+    private function _isCli() {
+        $sapi_type = php_sapi_name();
+        
+        if ($sapi_type == 'cli') return TRUE;
+        else return FALSE;
     }
 }

@@ -17,7 +17,7 @@ class Foo {
 
 $foo = new Foo();
 ladybug_dump($foo);
-die();
+
 // DateTime object
 
 $date = new DateTime();

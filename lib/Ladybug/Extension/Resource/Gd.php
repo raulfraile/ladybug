@@ -46,18 +46,18 @@ class Gd extends Extension {
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
         
         // gd info
-        $result['gd'] = array(
-            'version' => $gd_info['GD Version'],
-            'support' => implode(', ', $gd_support)
+        $result['GD'] = array(
+            'Version' => $gd_info['GD Version'],
+            'Support' => implode(', ', $gd_support)
         );
         
         // image info
-        $result['image'] = array(
-            'width' => $width . 'px',
-            'height' => $height . 'px',
-            'colors_palette' => $colors_palette,
-            'true_color' => $is_true_color,
-            'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
+        $result['Image'] = array(
+            'Width' => $width . 'px',
+            'Height' => $height . 'px',
+            'Colors palette' => $colors_palette,
+            'True color' => $is_true_color,
+            'Image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
         );
         
         return $result;

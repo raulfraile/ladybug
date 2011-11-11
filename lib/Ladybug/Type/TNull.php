@@ -13,15 +13,15 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\CLIColors;
 
 class TNull extends Variable {
     
-    public function __construct() {
-        $this->type = 'null';
-        $this->value = NULL;
+    public function __construct($level = 0) {
+        parent::__construct('null', NULL, $level);
     }
     
-    public function render($array_key = NULL) {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>' . $this->type . '</em></strong> '.$this->value.'</div>';
+    public function getValue() {
+        return NULL;
     }
 }

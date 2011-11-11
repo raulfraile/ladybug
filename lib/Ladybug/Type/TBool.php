@@ -13,17 +13,16 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\CLIColors;
 
 class TBool extends Variable {
     
-    public function __construct($var) {
-        $this->type = 'bool';
-        $this->value = $var;
+    public function __construct($var, $level = 0) {
+        parent::__construct('bool', $var, $level);
     }
     
-    public function render($array_key = NULL) {
-        $value = $this->value ? 'TRUE' : 'FALSE';
-        
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>bool</em></strong> <span style="color:'.self::COLOR_BOOL.'">'.$value.'</span></div>';
+    public function getValue() {
+        return $this->value ? 'TRUE' : 'FALSE';
     }
+
 }

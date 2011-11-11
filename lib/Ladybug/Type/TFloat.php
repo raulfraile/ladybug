@@ -13,15 +13,12 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\CLIColors;
 
 class TFloat extends Variable {
     
-    public function __construct($var) {
-        $this->type = 'float';
-        $this->value = $var;
+    public function __construct($var, $level = 0) {
+        parent::__construct('float', $var, $level);
     }
     
-    public function render($array_key = NULL) {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>float</em></strong> <span style="color:'.self::COLOR_FLOAT.'">'.$this->value.'</span></div>';
-    }
 }

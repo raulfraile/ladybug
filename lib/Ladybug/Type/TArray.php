@@ -13,16 +13,17 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
-
+use Ladybug\CLIColors;
 use Ladybug\Type\TFactory;
 
 class TArray extends Variable {
     
+    protected $length;
+    
     public function __construct($var, $level = 0) {
-        $this->type = 'array';
-        $this->value = array();
+        parent::__construct('array', array(), $level);
+        
         $this->length = count($var);
-        $this->level = $level + 1;
         
         if ($this->level < \Ladybug\Dumper::MAX_NESTING_LEVEL_ARRAYS) {
             foreach ($var as $k=>$v) {
@@ -35,18 +36,45 @@ class TArray extends Variable {
         return $this->length;
     }
     
+    public function setLength(int $length) {
+        $this->length = $length;
+    }
+    
     public function add($var, $index = NULL) {
         $this->value[$index] = TFactory::factory($var, $this->level);
     }
     
-    public function render($array_key = NULL) {
-        $label = $this->type . '(' . count($this->value) . ')';
-        $result = $this->renderTreeSwitcher($label, $array_key) . '<ol>';
+    // override
+    protected function _renderHTML($array_key = NULL) {
+        $label = $this->type . '(' . $this->length . ')';
+        
+        $result = $this->renderTreeSwitcher($label, $array_key);
+        
+        if ($this->length > 0) {
+            $result .= '<ol>';
+        
+            foreach ($this->value as $k=>$v) {
+                $result .= '<li>'.$v->render($k).'</li>';
+            }
+            $result .= '</ol>';
+        }
+        
+        return $result;
+    }
+    
+    // override
+    protected function _renderCLI($array_key = NULL) {
+        $label = $this->type . '(' . $this->length . ')';
+        
+        $result = '';
+        
+        if (!is_null($array_key)) $result .= '[' . $array_key . ']: ';
+            
+        $result .= CLIColors::getColoredString($label, 'yellow') . "\n";
         
         foreach ($this->value as $k=>$v) {
-            $result .= '<li>'.$v->render($k).'</li>';
+            $result .= $this->indentCLI().$v->render($k, 'cli');
         }
-        $result .= '</ol>';
         
         return $result;
     }

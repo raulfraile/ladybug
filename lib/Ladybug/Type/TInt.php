@@ -13,15 +13,12 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\CLIColors;
 
 class TInt extends Variable {
     
-    public function __construct($var) {
-        $this->type = 'int';
-        $this->value = $var;
+    public function __construct($var, $level = 0) {
+        parent::__construct('int', $var, $level);
     }
     
-    public function render($array_key = NULL) {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>int</em></strong> <span style="color:'.self::COLOR_INT.'">'.$this->value.'</span></div>';
-    }
 }

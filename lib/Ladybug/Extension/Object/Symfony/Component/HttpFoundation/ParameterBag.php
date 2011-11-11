@@ -21,10 +21,6 @@ class ParameterBag extends Extension {
         $result = array();
         $result['bag'] = $var->all();
         
-        /*foreach ($parameters as $k => $v) {
-            $result .= $this->ladybug->writeDepth() . '[' . $k . '] => ' . $this->ladybug->dump($v) . Dumper::CHAR_NEWLINE;
-        }*/
-        
         return $result;
     }
     
