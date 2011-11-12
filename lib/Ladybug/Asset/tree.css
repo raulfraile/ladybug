@@ -81,3 +81,15 @@ a.external {
     color: #000;
     text-decoration: none;
 }
+
+a.symfony {
+    background: url(symfony.png) left center no-repeat;
+padding-left: 14px;
+margin-left: 3px;
+}
+
+a.php {
+    background: url(php.png) left center no-repeat;
+padding-left: 14px;
+margin-left: 3px;
+}

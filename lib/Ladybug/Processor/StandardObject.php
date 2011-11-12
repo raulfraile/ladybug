@@ -66,7 +66,7 @@ class StandardObject {
     }
     
     public static function linkify($matches) {
-        return str_replace($matches[1], '<a href="'.self::$phpprefix.self::$objects[$matches[1]].'" class="external" target="_blank" title="' . $matches[1] . '"></a>'.$matches[1], $matches[0]);
+        return str_replace($matches[1], '<a href="'.self::$phpprefix.self::$objects[$matches[1]].'" class="external php" target="_blank" title="' . $matches[1] . '"></a>'.$matches[1], $matches[0]);
     }
     
 }
