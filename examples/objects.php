@@ -12,7 +12,7 @@ class Foo {
     
     public function __construct() {$this->a = new Foo2();}
     public function getBar() { return $this->bar; }
-    public function setBar($bar) { $this->bar = $bar; }
+    public function setBar($bar = 1) { $this->bar = $bar; }
 }
 
 $foo = new Foo();
@@ -40,3 +40,7 @@ $dom = new DOMDocument();
 $dom->loadXml($sXml);
 
 ladybug_dump($dom);
+
+$reflected = new ReflectionClass('Foo');
+
+ladybug_dump($reflected);

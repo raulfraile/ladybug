@@ -28,4 +28,12 @@ class TString extends Variable {
     public function getValue() {
         return '"' . $this->value . '"';
     }
+    
+    protected function _renderHTML($array_key = NULL) {
+        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>'.$this->type.'('.$this->length.')</em></strong> <span style="color:'.$this->getColor('html').'">'.htmlentities($this->getValue()).'</span></div>';
+    }
+    
+    protected function _renderCLI($array_key = NULL) {
+        return $this->renderArrayKey($array_key) . $this->type .'('.$this->length.') '. CLIColors::getColoredString ($this->getValue(), $this->getColor('cli')) . "\n";
+    }
 }

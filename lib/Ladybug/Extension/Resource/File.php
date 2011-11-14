@@ -23,10 +23,24 @@ class File extends Extension {
         $stream_vars = stream_get_meta_data($var);
         $fstat = fstat($var);
         
-        $result['File'] = realpath($stream_vars['uri']);
+        $real_path = realpath($stream_vars['uri']);
+        
+        $result['File'] = $real_path;
         $result['Mode'] = $fstat['mode'];
-        $result['Size'] = $fstat['size'];
+        $result['Size'] = $this->_formatSize($fstat['size']);
+        
+        $permissions = array('read');
+        if (is_writable($real_path)) $permissions[] = 'write';
+        if (is_executable($real_path)) $permissions[] = 'execute';
+        if (is_link($real_path)) $permissions[] = 'link';
+        if (is_dir($real_path)) $permissions[] = 'directory';
+        
+        $result['Permissions'] = implode(', ', $permissions);
+        
+        
         
         return $result;
     }
+    
+    
 }

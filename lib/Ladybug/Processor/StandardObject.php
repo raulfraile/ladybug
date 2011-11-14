@@ -50,7 +50,27 @@ class StandardObject {
         'Countable' => 'class.countable.php',
         'OuterIterator' => 'class.outeriterator.php',
         'RecursiveIterator' => 'class.recursiveiterator.php',
-        'SeekableIterator' => 'class.seekableiterator.php'
+        'SeekableIterator' => 'class.seekableiterator.php',
+        'Reflector' => 'class.reflector.php',
+        
+        // Reflection
+        'ReflectionClass' => 'class.reflectionclass.php',
+        'ReflectionExtension' => 'class.reflectionextension.php',
+        'ReflectionFunction' => 'class.reflectionfunction.php',
+        'ReflectionFunctionAbstract' => 'class.reflectionfunctionabstract.php',
+        'ReflectionMethod' => 'class.reflectionmethod.php',
+        'ReflectionObject' => 'class.reflectionobject.php',
+        'ReflectionParameter' => 'class.reflectionparameter.php',
+        'ReflectionProperty' => 'class.reflectionproperty.php',
+        'ReflectionException' => 'class.reflectionexception.php',
+        
+        // QuickHash
+        'QuickHashIntSet' => 'class.quickhashintset.php',
+        'QuickHashIntHash' => 'class.quickhashinthash.php',
+        'QuickHashStringIntHash' => 'class.quickhashstringinthash.php',
+        'QuickHashIntStringHash' => 'class.quickhashintstringhash.php',
+        
+        'ZipArchive' => 'class.ziparchive.php'
     );
     
     public function process($str) {

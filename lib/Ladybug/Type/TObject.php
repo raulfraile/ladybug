@@ -30,11 +30,14 @@ class TObject extends Variable {
     
     protected $is_leaf;
     
+    protected $inspect_custom_data;
+    protected $is_custom_data;
+    
     
     public function __construct($var, $level = 0) {
         parent::__construct('object', $var, $level);
         
-        
+        $this->inspect_custom_data = TRUE;
         
         $this->class_name = get_class($var);
        
@@ -67,8 +70,16 @@ class TObject extends Variable {
             if (class_exists($include_class)) {
                 $custom_dumper = new $include_class($var);
                 $this->object_custom_data = $custom_dumper->dump($var);
+                $this->is_custom_data = TRUE;
+                
+                if (is_array($this->object_custom_data)) $this->inspect_custom_data = $custom_dumper->getInspect();
+                else $this->inspect_custom_data = FALSE;
             }
-            else $this->object_custom_data = (array)$var;
+            else {
+                $this->object_custom_data = (array)$var;
+                $this->is_custom_data = FALSE;
+                $this->inspect_custom_data = TRUE;
+            }
 
             // Custom/array-cast data
             if (!empty($this->object_custom_data) && is_array($this->object_custom_data)) {
@@ -127,7 +138,14 @@ class TObject extends Variable {
 
                         if ($parameter->isPassedByReference()) $parameter_result .= '&';
                         $parameter_result .= '$' . $parameter->getName();
+                        
+                        $default = NULL;
+                        if ($parameter->isDefaultValueAvailable()) {
+                            $default = $parameter->getDefaultValue();
+                        }
 
+                        if (!is_null($default)) $parameter_result .= ' = ' . $default;
+                        
                         if ($parameter->isOptional()) $parameter_result .= ']';
 
                         $method_parameters_result[] = $parameter_result; 
@@ -157,7 +175,9 @@ class TObject extends Variable {
 
                 if (is_array($this->object_custom_data)) {
                     foreach($this->object_custom_data as $k=>&$v) {
-                        $result .= '<li>'.$v->render($k).'</li>';
+                        
+                        if ($this->inspect_custom_data) $result .= '<li>'.$v->render($k).'</li>';
+                        else $result .= '<li>' . $this->renderArrayKey($k) . $v->getValue().'</li>';
                     }
                 }
                 else $result .= '<li>'.$this->object_custom_data.'</li>';
@@ -169,10 +189,10 @@ class TObject extends Variable {
             // class info
             if (!empty($this->class_file)) {
                 $result .= '<li>' . $this->renderTreeSwitcher('Class info') . '<ol>';
-                if (!empty($this->class_file)) $result .= '<li>file: '.$this->class_file.'</li>';
-                if (!empty($this->class_interfaces)) $result .= '<li>interfaces: '.$this->class_interfaces.'</li>';
-                if (!empty($this->class_namespace)) $result .= '<li>namespace: '.$this->class_namespace.'</li>';
-                if (!empty($this->class_parent)) $result .= '<li>parent: '.$this->class_parent.'</li>';        
+                if (!empty($this->class_file)) $result .= '<li>Filename: '.$this->class_file.'</li>';
+                if (!empty($this->class_interfaces)) $result .= '<li>Interfaces: '.$this->class_interfaces.'</li>';
+                if (!empty($this->class_namespace)) $result .= '<li>Namespace: '.$this->class_namespace.'</li>';
+                if (!empty($this->class_parent)) $result .= '<li>Parent: '.$this->class_parent.'</li>';        
                 $result .= '</ol></li>';       
             }
 
@@ -242,7 +262,7 @@ class TObject extends Variable {
             // class info
             if (!empty($this->class_file)) {
                 $result .= $this->indentCLI() . CLIColors::getColoredString('Class info', NULL, 'magenta') . "\n";
-                if (!empty($this->class_file)) $result .= $this->indentCLI() . 'File: '.$this->class_file."\n";
+                if (!empty($this->class_file)) $result .= $this->indentCLI() . 'Filename: '.$this->class_file."\n";
                 if (!empty($this->class_interfaces)) $result .= $this->indentCLI() . 'Interfaces: '.$this->class_interfaces."\n";
                 if (!empty($this->class_namespace)) $result .= $this->indentCLI() . 'Namespace: '.$this->class_namespace."\n";
                 if (!empty($this->class_parent)) $result .= $this->indentCLI() . 'Parent: '.$this->class_parent."\n";
@@ -281,6 +301,9 @@ class TObject extends Variable {
                 $result .= "\n";
             }
         }
+        
+        // remove extra "\n"
+        $result = preg_replace('/\n+/', "\n", $result);
             
         return $result;
     }

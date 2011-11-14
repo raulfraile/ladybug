@@ -128,5 +128,4 @@ class Variable {
         return $result;
     }
     
-    
 }

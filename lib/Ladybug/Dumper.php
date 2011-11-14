@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
+ * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ class Dumper {
     const OBJECTS_FOLDER = 'Object';
     const RESOURCES_FOLDER = 'Resource';
     
-    const MAX_NESTING_LEVEL_ARRAYS = 10;
+    const MAX_NESTING_LEVEL_ARRAYS = 8;
     const MAX_NESTING_LEVEL_OBJECTS = 3;
     
     private static $instance = null;
@@ -128,20 +128,7 @@ class Dumper {
     }
     
     
-    public function formatSize($size, $unit = NULL) {
-        $kb = 1024;
-        $mb = $kb * 1024;
-        $gb = $mb * 1024;
-        
-        $result = '';
-        
-        if ($size < $kb) $result = $size . ' bytes';
-        elseif ($size < $mb) $result = number_format($size/$kb, 2) . ' Kb';
-        elseif ($size < $gb) $result = number_format($size/$mb, 2) . ' Mb';
-        else $result = number_format($size/$gb, 2) . ' Gb';
-        
-        return $result;
-    }    
+    
     
     public static function getTreeId() {
         return ++self::$tree_counter;
