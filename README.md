@@ -108,7 +108,7 @@ returns the string
 ## Customizable
 
 Almost any display option can be easily customizable, using the function 
-`ladybug_dump($key, $value)`. Available options and default values:
+`ladybug_set($key, $value)`. Available options and default values:
         
 * `array.max_nesting_level = 8`
 * `object.max_nesting_level = 3`
