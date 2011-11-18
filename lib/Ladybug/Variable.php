@@ -3,30 +3,17 @@
 namespace Ladybug;
 
 class Variable {
-    // html color constants
-    
-    protected $html_colors = array(
-        'string' => '#080',
-        'int' => '#800',
-        'float' => '#800',
-        'bool' => '#008',
-    );
-    
-    protected $cli_colors = array(
-        'string' => 'green',
-        'int' => 'red',
-        'float' => 'red',
-        'bool' => 'blue',
-    );
     
     protected $type;
     protected $value;
     protected $level;
+    protected $options;
     
-    public function __construct($type, $value = NULL, $level = 0) {
+    public function __construct($type, $value, $level, Options $options) {
         $this->type = $type;
         $this->value = $value;
         $this->level = $level + 1;
+        $this->options = $options;
     }
     
     public function getType() {
@@ -54,8 +41,8 @@ class Variable {
     }
     
     protected function getColor($format = 'html') {
-        if ($format == 'html' && isset($this->html_colors[$this->type])) return $this->html_colors[$this->type];
-        elseif ($format == 'cli' && isset($this->html_colors[$this->type])) return $this->cli_colors[$this->type];
+        if ($format == 'html') return $this->options->getOption($this->type.'.html_color');
+        elseif ($format == 'cli') return $this->options->getOption($this->type.'.cli_color');
         else return NULL;
     }
     
@@ -71,11 +58,11 @@ class Variable {
     }
     
     protected function _renderHTML($array_key = NULL) {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>'.$this->type.'</em></strong> <span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span></div>';
+        return '<div class="final">'.$this->renderArrayKey($array_key).'<span class="type">'.$this->type.'</span> <span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span></div>';
     }
     
     protected function _renderCLI($array_key = NULL) {
-        return $this->renderArrayKey($array_key) . $this->type . ' '. CLIColors::getColoredString ($this->getValue(), $this->getColor('cli')) . "\n";
+        return $this->renderArrayKey($array_key) . $this->type . ' '. CLIColors::getColoredString($this->getValue(), $this->getColor('cli')) . "\n";
     }
     
     protected function renderArrayKey($key) {

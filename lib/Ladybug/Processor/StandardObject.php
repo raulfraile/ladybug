@@ -70,7 +70,16 @@ class StandardObject {
         'QuickHashStringIntHash' => 'class.quickhashstringinthash.php',
         'QuickHashIntStringHash' => 'class.quickhashintstringhash.php',
         
-        'ZipArchive' => 'class.ziparchive.php'
+        // Zip
+        'ZipArchive' => 'class.ziparchive.php',
+        
+        // Varnish
+        'VarnishAdmin' => 'class.varnishadmin.php',
+        'VarnishStat' => 'class.varnishstat.php',
+        'VarnishLog' => 'class.varnishlog.php',
+        
+        // Memcache
+        'Memcache' => 'class.memcache.php'
     );
     
     public function process($str) {

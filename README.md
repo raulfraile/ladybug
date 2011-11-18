@@ -105,6 +105,29 @@ terminates the current script
 `ladybug_dump_return($var1[, $var2[, ...]])`: Dumps one or more variables and
 returns the string
 
+## Customizable
+
+Almost any display option can be easily customizable, using the function 
+`ladybug_dump($key, $value)`. Available options and default values:
+        
+* `array.max_nesting_level = 8`
+* `object.max_nesting_level = 3`
+* `object.show_data = TRUE`
+* `object.show_classinfo = TRUE`
+* `object.show_constants = TRUE`
+* `object.show_methods = TRUE`
+* `object.show_properties = TRUE`
+* `processor.active = TRUE`
+* `bool.html_color = '#008'`
+* `bool.cli_color = 'blue'`
+* `float.html_color = '#800'`
+* `float.cli_color = 'red'`
+* `int.html_color = '#800'`
+* `int.cli_color = 'red'`
+* `string.html_color = '#080'`
+* `string.cli_color = 'green'`
+* `string.show_quotes = TRUE`
+        
 ## Extensible
 
 The library is easily extensible by adding new classes in `lib/Ladybug/Extension/Object` 

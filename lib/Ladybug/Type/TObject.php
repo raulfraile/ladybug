@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\Options;
 use Ladybug\CLIColors;
 
 class TObject extends Variable {
@@ -34,130 +35,126 @@ class TObject extends Variable {
     protected $is_custom_data;
     
     
-    public function __construct($var, $level = 0) {
-        parent::__construct('object', $var, $level);
+    public function __construct($var, $level, Options $options) {
+        parent::__construct('object', $var, $level, $options);
         
         $this->inspect_custom_data = TRUE;
         
         $this->class_name = get_class($var);
        
-        if ($this->level < \Ladybug\Dumper::MAX_NESTING_LEVEL_OBJECTS) {
+        if ($this->level < $this->options->getOption('object.max_nesting_level')) {
             $this->is_leaf = FALSE;
             
             $reflection_class = new \ReflectionClass($this->class_name); 
 
-            
-            $this->class_constants = $reflection_class->getConstants();
-            
-            //$object_static_properties = $reflection_class->getStaticProperties();
-            //$this->object_static_properties_clean = array();
-            $class_methods = $reflection_class->getMethods();
+            // class info
+            if ($this->options->getOption('object.show_classinfo')) {
+                $this->class_file = $reflection_class->getFileName();
+                if (empty($this->class_file)) $this->class_file = 'built-in';
+                $this->class_interfaces = implode(', ', $reflection_class->getInterfaceNames());
+                $this->class_namespace = $reflection_class->getNamespaceName();
+                $class_parent_obj = $reflection_class->getParentClass();
+                if ($class_parent_obj) $this->class_parent = $class_parent_obj->getName();
+                else $this->class_parent = '';
 
-            $this->class_file = $reflection_class->getFileName();
-            if (empty($this->class_file)) $this->class_file = 'built-in';
-            $this->class_interfaces = implode(', ', $reflection_class->getInterfaceNames());
-            $this->class_namespace = $reflection_class->getNamespaceName();
-            $class_parent_obj = $reflection_class->getParentClass();
-            if ($class_parent_obj) $this->class_parent = $class_parent_obj->getName();
-            else $this->class_parent = '';
-
-            unset($class_parent_obj); $class_parent_obj = NULL;
-            //unset($reflection_class); $reflection_class = NULL;
-
-            // is there a class to show the object info?
-            $include_class = $this->getIncludeClass($this->class_name, 'object');
-
-            if (class_exists($include_class)) {
-                $custom_dumper = new $include_class($var);
-                $this->object_custom_data = $custom_dumper->dump($var);
-                $this->is_custom_data = TRUE;
-                
-                if (is_array($this->object_custom_data)) $this->inspect_custom_data = $custom_dumper->getInspect();
-                else $this->inspect_custom_data = FALSE;
+                unset($class_parent_obj); $class_parent_obj = NULL;
             }
-            else {
-                $this->object_custom_data = (array)$var;
-                $this->is_custom_data = FALSE;
-                $this->inspect_custom_data = TRUE;
-            }
+            
+            if ($this->options->getOption('object.show_data')) {
+                // is there a class to show the object info?
+                $include_class = $this->getIncludeClass($this->class_name, 'object');
 
-            // Custom/array-cast data
-            if (!empty($this->object_custom_data) && is_array($this->object_custom_data)) {
-                foreach ($this->object_custom_data as &$c) {
-                    $c = TFactory::factory($c, $this->level);
+                if (class_exists($include_class)) {
+                    $custom_dumper = new $include_class($var);
+                    $this->object_custom_data = $custom_dumper->dump($var);
+                    $this->is_custom_data = TRUE;
+
+                    if (is_array($this->object_custom_data)) $this->inspect_custom_data = $custom_dumper->getInspect();
+                    else $this->inspect_custom_data = FALSE;
+                }
+                else {
+                    $this->object_custom_data = (array)$var;
+                    $this->is_custom_data = FALSE;
+                    $this->inspect_custom_data = TRUE;
+                }
+
+                // Custom/array-cast data
+                if (!empty($this->object_custom_data) && is_array($this->object_custom_data)) {
+                    foreach ($this->object_custom_data as &$c) {
+                        $c = TFactory::factory($c, $this->level, $options);
+                    }
                 }
             }
 
             // Class constants
-            if (!empty($this->class_constants)) {
-                foreach ($this->class_constants as &$c) {
-                    $c = TFactory::factory($c, $this->level);
+            if ($this->options->getOption('object.show_constants')) {
+                $this->class_constants = $reflection_class->getConstants();
+                if (!empty($this->class_constants)) {
+                    foreach ($this->class_constants as &$c) {
+                        $c = TFactory::factory($c, $this->level, $options);
+                    }
                 }
             }
 
             // Object properties
-            $object_properties = $reflection_class->getProperties();
-            $this->object_properties = array();
-            if (!empty($object_properties)) {
-                foreach($object_properties as $property) {
-                    if ($property->isPublic()) {
-                        $property_value = $property->getValue($this->value);
-                        $this->object_properties[$property->getName()] = TFactory::factory($property_value, $this->level);
+            if ($this->options->getOption('object.show_properties')) {
+                $object_properties = $reflection_class->getProperties();
+                $this->object_properties = array();
+                if (!empty($object_properties)) {
+                    foreach($object_properties as $property) {
+                        if ($property->isPublic()) {
+                            $property_value = $property->getValue($this->value);
+                            $this->object_properties[$property->getName()] = TFactory::factory($property_value, $this->level, $options);
+                        }
                     }
                 }
             }
-
-            /*if (!empty($this->object_static_properties)) {
-                foreach($this->object_static_properties as $property) {
-                    if ($property->isPublic()) {
-                        $property_value = $property->getValue($this->value);
-                        $this->object_static_properties_clean[$property->getName()] = TFactory::factory($property_value, $this->level);
-                    }
-                }
-            }*/
             
             // Class methods
-            if (!empty($class_methods)) {
-                foreach($class_methods as $k=>$v) {
-                    $method = $reflection_class->getMethod($v->name);
-                    
-                    $method_syntax = '';
+            if ($this->options->getOption('object.show_methods')) {
+                $class_methods = $reflection_class->getMethods();
+                if (!empty($class_methods)) {
+                    foreach($class_methods as $k=>$v) {
+                        $method = $reflection_class->getMethod($v->name);
 
-                    if ($method->isPublic()) $method_syntax .= '+ ';
-                    elseif ($method->isProtected()) $method_syntax .= '# ';
-                    elseif ($method->isPrivate()) $method_syntax .= '- ';
+                        $method_syntax = '';
 
-                    $method_syntax .= $method->getName();
+                        if ($method->isPublic()) $method_syntax .= '+ ';
+                        elseif ($method->isProtected()) $method_syntax .= '# ';
+                        elseif ($method->isPrivate()) $method_syntax .= '- ';
 
-                    $method_parameters = $method->getParameters();
-                    $method_syntax .= '(';
-                    $method_parameters_result = array();
-                    foreach ($method_parameters as $parameter) {
-                        $parameter_result = '';
-                        if ($parameter->isOptional()) $parameter_result .= '[';
+                        $method_syntax .= $method->getName();
 
-                        if ($parameter->isPassedByReference()) $parameter_result .= '&';
-                        $parameter_result .= '$' . $parameter->getName();
-                        
-                        $default = NULL;
-                        if ($parameter->isDefaultValueAvailable()) {
-                            $default = $parameter->getDefaultValue();
+                        $method_parameters = $method->getParameters();
+                        $method_syntax .= '(';
+                        $method_parameters_result = array();
+                        foreach ($method_parameters as $parameter) {
+                            $parameter_result = '';
+                            if ($parameter->isOptional()) $parameter_result .= '[';
+
+                            if ($parameter->isPassedByReference()) $parameter_result .= '&';
+                            $parameter_result .= '$' . $parameter->getName();
+
+                            $default = NULL;
+                            if ($parameter->isDefaultValueAvailable()) {
+                                $default = $parameter->getDefaultValue();
+                            }
+
+                            if (!is_null($default)) $parameter_result .= ' = ' . $default;
+
+                            if ($parameter->isOptional()) $parameter_result .= ']';
+
+                            $method_parameters_result[] = $parameter_result; 
                         }
 
-                        if (!is_null($default)) $parameter_result .= ' = ' . $default;
-                        
-                        if ($parameter->isOptional()) $parameter_result .= ']';
+                        $method_syntax .= implode(', ', $method_parameters_result);
+                        $method_syntax .= ')';
 
-                        $method_parameters_result[] = $parameter_result; 
+                        $this->class_methods[] = $method_syntax;
                     }
 
-                    $method_syntax .= implode(', ', $method_parameters_result);
-                    $method_syntax .= ')';
-
-                    $this->class_methods[] = $method_syntax;
+                    sort($this->class_methods, SORT_STRING);
                 }
-                
-                sort($this->class_methods, SORT_STRING);
             }
         }
         else $this->is_leaf = TRUE;

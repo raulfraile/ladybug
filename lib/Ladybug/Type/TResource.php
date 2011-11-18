@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\Options;
 use Ladybug\CLIColors;
 
 class TResource extends Variable {
@@ -20,8 +21,8 @@ class TResource extends Variable {
     protected $resource_type;
     protected $resource_custom_data;
     
-    public function __construct($var, $level = 0) {
-        parent::__construct('resource', $var, $level);
+    public function __construct($var, $level, Options $options) {
+        parent::__construct('resource', $var, $level, $options);
         
         $this->resource_type = get_resource_type($var);
         

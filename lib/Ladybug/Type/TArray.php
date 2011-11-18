@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\Options;
 use Ladybug\CLIColors;
 use Ladybug\Type\TFactory;
 
@@ -20,12 +21,12 @@ class TArray extends Variable {
     
     protected $length;
     
-    public function __construct($var, $level = 0) {
-        parent::__construct('array', array(), $level);
+    public function __construct($var, $level, Options $options) {
+        parent::__construct('array', array(), $level, $options);
         
         $this->length = count($var);
         
-        if ($this->level < \Ladybug\Dumper::MAX_NESTING_LEVEL_ARRAYS) {
+        if ($this->level < $this->options->getOption('array.max_nesting_level')) {
             foreach ($var as $k=>$v) {
                 $this->add($v, $k);
             }
@@ -41,7 +42,7 @@ class TArray extends Variable {
     }
     
     public function add($var, $index = NULL) {
-        $this->value[$index] = TFactory::factory($var, $this->level);
+        $this->value[$index] = TFactory::factory($var, $this->level, $this->options);
     }
     
     // override

@@ -1,5 +1,11 @@
 <?php
+
 // helpers
+
+function ladybug_set($key, $value) {
+    $ladybug = \Ladybug\Dumper::getInstance();
+    $ladybug->setOption($key, $value);
+}
 
 function ladybug_dump(/*$var1 [, $var2...$varN]*/) {
     $ladybug = \Ladybug\Dumper::getInstance();

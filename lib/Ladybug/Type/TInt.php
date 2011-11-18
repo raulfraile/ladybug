@@ -13,12 +13,13 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\Options;
 use Ladybug\CLIColors;
 
 class TInt extends Variable {
     
-    public function __construct($var, $level = 0) {
-        parent::__construct('int', $var, $level);
+    public function __construct($var, $level, Options $options) {
+        parent::__construct('int', $var, $level, $options);
     }
     
 }

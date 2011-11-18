@@ -24,16 +24,20 @@ class Dumper {
     private static $instance = null;
     private static $tree_counter = 0;
     
-    private $css_loaded;
+    private $is_css_loaded;
     private $is_cli;
+    
+    private $options;
+    
     
     /**
      * Constructor. Private (singleton pattern)
      * @return Get singleton instance
      */
     public function __construct() {
-        $this->css_loaded = FALSE;
+        $this->is_css_loaded = FALSE;
         $this->is_cli = $this->_isCli();
+        $this->options = new Options();
     }
     
     /**
@@ -55,7 +59,7 @@ class Dumper {
         $result = array();
         
         foreach ($args as $var) {
-            $result[] = TFactory::factory($var);
+            $result[] = TFactory::factory($var, 0, $this->options);
         }
         
         // generate html/console code
@@ -88,8 +92,8 @@ class Dumper {
             $html .= '<li>'.$var->render().'</li>';
         }
         
-        if (!$this->css_loaded) {
-            $this->css_loaded = TRUE;
+        if (!$this->is_css_loaded) {
+            $this->is_css_loaded = TRUE;
             $css = '<style>' . file_get_contents(__DIR__.'/Asset/tree.min.css') . '</style>';
         }
         
@@ -111,19 +115,21 @@ class Dumper {
     
     
     private function _postProcess($str) {
-        $dir = dir(__DIR__. '/Processor');
         $result = $str;
         
-        while (false !== ($file = $dir->read())) {
-            if (strpos($file, '.php') !== FALSE) {
-                $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
-                $processor_object = new $class();
-                
-                $result = $processor_object->process($result);
+        if ($this->options->getOption('processor.active')) {
+            $dir = dir(__DIR__. '/Processor');
+
+            while (false !== ($file = $dir->read())) {
+                if (strpos($file, '.php') !== FALSE) {
+                    $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
+                    $processor_object = new $class();
+
+                    $result = $processor_object->process($result);
+                }
             }
+            $dir->close();
         }
-        $dir->close();
-        
         return $result;
     }
     
@@ -139,5 +145,9 @@ class Dumper {
         
         if ($sapi_type == 'cli') return TRUE;
         else return FALSE;
+    }
+    
+    public function setOption($key, $value) {
+        $this->options->setOption($key, $value);
     }
 }

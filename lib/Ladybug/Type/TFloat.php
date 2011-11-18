@@ -13,12 +13,13 @@
 namespace Ladybug\Type;
 
 use Ladybug\Variable;
+use Ladybug\Options;
 use Ladybug\CLIColors;
 
 class TFloat extends Variable {
     
-    public function __construct($var, $level = 0) {
-        parent::__construct('float', $var, $level);
+    public function __construct($var, $level, Options $options) {
+        parent::__construct('float', $var, $level, $options);
     }
     
 }

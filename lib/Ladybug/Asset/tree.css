@@ -13,22 +13,6 @@ ol.tree
 		list-style: none;
 		margin-bottom: 4px;
 	}
-	li.file
-	{
-		margin-left: -1px !important;
-	}
-		li.file a
-		{
-			background: url(document.png) 0 0 no-repeat;
-			color: #fff;
-			padding-left: 21px;
-			text-decoration: none;
-			display: block;
-		}
-		li.file a[href *= '.pdf']	{ background: url(document.png) 0 0 no-repeat; }
-		li.file a[href *= '.html']	{ background: url(document.png) 0 0 no-repeat; }
-		li.file a[href $= '.css']	{ background: url(document.png) 0 0 no-repeat; }
-		li.file a[href $= '.js']		{ background: url(document.png) 0 0 no-repeat; }
 	li input
 	{
 		position: absolute;
@@ -54,11 +38,9 @@ ol.tree
 			padding-left: 10px; }
 	li label
 	{
-		/*background: url(folder-horizontal.png) 15px 1px no-repeat;*/
 		cursor: pointer;
 		display: inline;
 		padding-left: 15px;
-                /*float: left;*/
 	}
 
 	li input:checked + ol
@@ -73,6 +55,11 @@ ol.tree
 
 .final {
     padding-left: 15px;
+}
+
+.final span.type {
+    font-weight: bold;
+    font-style: italic;
 }
 
 a.external {
