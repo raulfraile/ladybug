@@ -9,7 +9,7 @@ class NullTest extends PHPUnit_Framework_TestCase
     public function testNullVariableGetsNull() {
         $var = NULL;
         
-        $this->assertEquals(strip_tags(ladybug_dump_return($var)), 'null');
+        $this->assertContains('null', strip_tags(ladybug_dump_return($var)));
     }
 }
 

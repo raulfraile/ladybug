@@ -88,7 +88,7 @@ As easy as [download](https://github.com/raulfraile/Ladybug/zipball/master), inc
 ``` php
 <?php
 require_once 'lib/Ladybug/Autoloader.php';
-Ladybug_Autoloader::register();
+Ladybug\Ladybug_Autoloader::register();
 
 ladybug_dump($var1);
 ```

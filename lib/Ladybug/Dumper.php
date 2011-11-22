@@ -13,22 +13,13 @@ namespace Ladybug;
 use Ladybug\Type\TFactory;
 
 class Dumper {
-    
-    const EXTENSIONS_FOLDER = 'Extension';
-    const OBJECTS_FOLDER = 'Object';
-    const RESOURCES_FOLDER = 'Resource';
-    
-    const MAX_NESTING_LEVEL_ARRAYS = 8;
-    const MAX_NESTING_LEVEL_OBJECTS = 3;
-    
     private static $instance = null;
-    private static $tree_counter = 0;
     
+    private static $tree_counter = 0;
     private $is_css_loaded;
     private $is_cli;
     
     private $options;
-    
     
     /**
      * Constructor. Private (singleton pattern)
