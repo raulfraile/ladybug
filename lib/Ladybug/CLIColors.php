@@ -1,9 +1,20 @@
 <?php
+/*
+ * Ladybug: Simple and Extensible PHP Dumper
+ * 
+ * CLI Colors class
+ *
+ * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Ladybug;
 
 class CLIColors {
-    private static $foreground_colors = array(
+    
+    private static $foreground = array(
         'black' => '0;30',
         'dark_gray' => '1;30',
         'blue' => '0;34',
@@ -21,7 +32,7 @@ class CLIColors {
         'light_gray' => '0;37',
         'white' => '1;37'
     );
-    private static $background_colors = array(
+    private static $background = array(
         'black' => '40',
         'red' => '41',
         'green' => '42',
@@ -32,32 +43,31 @@ class CLIColors {
         'light_gray' => '47'
     );
 
-    // Returns colored string
-    public static function getColoredString($string, $foreground_color = null, $background_color = null) {
-        $colored_string = "";
+    /**
+     * Returns colored string
+     *
+     * @param string $str String to be colorized
+     * @param string $foreground Foreground color
+     * @param string $background Background color
+     * @return string Colorized string
+     */
+    public static function getColoredString($str, $foreground = null, $background = null) {
+        $str_start = "\033[";
+        $str_middle = "m";
+        $str_end = "\033[0m";
+        $colored_string = '';
 
-        // Check if given foreground color found
-        if (isset(self::$foreground_colors[$foreground_color])) {
-                $colored_string .= "\033[" . self::$foreground_colors[$foreground_color] . "m";
+        if (isset(self::$foreground[$foreground])) {
+            $colored_string .= $str_start . self::$foreground[$foreground] . $str_middle;
         }
-        // Check if given background color found
-        if (isset(self::$background_colors[$background_color])) {
-                $colored_string .= "\033[" . self::$background_colors[$background_color] . "m";
+        
+        if (isset(self::$background[$background])) {
+            $colored_string .= $str_start . self::$background[$background] . $str_middle;
         }
 
-        // Add string and end coloring
-        $colored_string .=  $string . "\033[0m";
+        $colored_string .=  $str . $str_end;
 
         return $colored_string;
     }
 
-    // Returns all foreground color names
-    public static function getForegroundColors() {
-        return array_keys(self::$foreground_colors);
-    }
-
-    // Returns all background color names
-    public static function getBackgroundColors() {
-        return array_keys(self::$background_colors);
-    }
 }

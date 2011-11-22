@@ -31,8 +31,6 @@ class Symfony {
             }
             
         }
-    
-        
         
         return $result;
     }

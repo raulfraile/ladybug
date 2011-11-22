@@ -79,12 +79,34 @@ class StandardObject {
         'VarnishLog' => 'class.varnishlog.php',
         
         // Memcache
-        'Memcache' => 'class.memcache.php'
+        'Memcache' => 'class.memcache.php',
+        
+        // Windows only
+        'COM' => 'class.com.php',
+        'DOTNET' => 'class.dotnet.php',
+        'VARIANT' => 'class.variant.php',
+        
+        // KTaglib
+        'KTagLib_MPEG_File' => 'class.ktaglib-mpeg-file.php',
+        'KTaglib_MPEG_AudioProperties' => 'class.ktaglib-mpeg-audioproperties.php',
+        'KTaglib_Tag' => 'class.ktaglib-tag.php',
+        'KTagLib_ID3v2_Tag' => 'class.ktaglib-id3v2-tag.php',
+        'KTagLib_ID3v2_Frame' => 'class.ktaglib-id3v2-frame.php',
+        'KTaglib_ID3v2_AttachedPictureFrame' => 'class.ktaglib-id3v2-attachedpictureframe.php',
+        
+        // Phar
+        'Phar' => 'class.Phar.php',
+        'PharData' => 'class.PharData.php',
+        'PharFileInfo' => 'class.PharFileInfo.php',
+        'PharException' => 'class.PharException.php',
+        
+        // Rar
+        'RarArchive' => 'class.rararchive.php',
+        'RarEntry' => 'class.rarentry.php',
+        'RarException' => 'class.rarexception.php',
     );
     
     public function process($str) {
-        
-    
         $result = $str;
         
         foreach (self::$objects as $name => $url) {

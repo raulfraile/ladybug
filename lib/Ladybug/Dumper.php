@@ -117,6 +117,8 @@ class Dumper {
                     $processor_object = new $class();
 
                     $result = $processor_object->process($result);
+                    
+                    unset($processor_object);
                 }
             }
             $dir->close();

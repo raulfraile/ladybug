@@ -4,7 +4,7 @@
  * 
  * Autoloads Ladybug classes
  *
- * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
+ * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,6 +14,7 @@ namespace Ladybug;
 
 class Ladybug_Autoloader
 {
+    
     /**
      * Registers Ladybug_Autoloader as an SPL autoloader.
      */
@@ -38,18 +39,10 @@ class Ladybug_Autoloader
             return;
         }
         
-        //$class = str_replace('Ladybug\\','', $class);
+        $file = dirname(__FILE__).'/../'.str_replace(array('\\', "\0"), array('/', ''), $class).'.php';     
         
-        $file = dirname(__FILE__).'/../'.str_replace(array('_', "\0"), array('/', ''), $class).'.php';
-        
-        $file = dirname(__FILE__).'/../'.str_replace(array('\\', "\0"), array('/', ''), $class).'.php';
-             
-        //echo $class.' __ '.$file.' __ ';
-        if (is_file($file)) {//echo '*';
+        if (is_file($file)) {
             require $file;
-        }
-        else {
-            //throw new \Exception("Class $class not found");
         }
     }
 }

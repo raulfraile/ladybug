@@ -1,4 +1,14 @@
 <?php
+/*
+ * Ladybug: Simple and Extensible PHP Dumper
+ * 
+ * Variable class
+ *
+ * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Ladybug;
 
@@ -16,41 +26,79 @@ class Variable {
         $this->options = $options;
     }
     
+    /**
+     * Gets the variable type
+     *
+     * @return string Variable type
+     */
     public function getType() {
         return $this->type;
     }
     
+    /**
+     * Sets the variable type
+     *
+     * @param string $type Variable type
+     */
     public function setType($type) {
         $this->type = $type;
     }
     
+    /**
+     * Gets the variable value
+     *
+     * @return mixed Variable value
+     */
     public function getValue() {
         return $this->value;
     }
     
+    /**
+     * Sets the variable value
+     *
+     * @param mixed Variable value
+     */
     public function setValue($value) {
         $this->value = $value;
     }
     
+    /**
+     * Gets the variable level in the dump tree
+     *
+     * @return int Variable level
+     */
     public function getLevel() {
         return $this->level;
     }
     
+    /**
+     * Sets the variable level in the dump tree
+     *
+     * @param int $level Variable level
+     */
     public function setLevel($level) {
         $this->level = $level;
     }
     
+    /**
+     * Gets the variable color based on variable type
+     *
+     * @param string $format Format: html or cli
+     * @return string Color value
+     */
     protected function getColor($format = 'html') {
         if ($format == 'html') return $this->options->getOption($this->type.'.html_color');
         elseif ($format == 'cli') return $this->options->getOption($this->type.'.cli_color');
         else return NULL;
     }
     
-    /*protected function renderSimpleVariable($format, $array_key = NULL) {
-        if ($format == 'html') return '<div class="final">'.$this->renderArrayKey($array_key).'<strong><em>'.$this->type.'</em></strong> <span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span></div>';
-        else return $this->renderArrayKey($array_key) . $this->type . ' '. CLIColors::getColoredString ($this->getValue(), $this->getColor('cli')) . "\n";
-    }*/
-    
+    /**
+     * Renders the variable node in the dump tree
+     *
+     * @param mixed $array_key if the variable is part of an array, it's value
+     * @param string $format Format: html or cli
+     * @return string Variable representation
+     */
     public function render($array_key = NULL, $format = 'html') {
         if ($format == 'html') return $this->_renderHTML($array_key);
         elseif ($format == 'cli') return $this->_renderCLI($array_key);
@@ -58,11 +106,21 @@ class Variable {
     }
     
     protected function _renderHTML($array_key = NULL) {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<span class="type">'.$this->type.'</span> <span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span></div>';
+        $html = '<div class="final">';
+            $html .= $this->renderArrayKey($array_key);
+            $html .= '<span class="type">'.$this->type.'</span> ';
+            $html .= '<span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span>';
+        $html .= '</div>';
+        
+        return $html;
     }
     
     protected function _renderCLI($array_key = NULL) {
-        return $this->renderArrayKey($array_key) . $this->type . ' '. CLIColors::getColoredString($this->getValue(), $this->getColor('cli')) . "\n";
+        $cli = $this->renderArrayKey($array_key) . $this->type . ' ';
+        $cli .= CLIColors::getColoredString($this->getValue(), $this->getColor('cli'));
+        $cli .= "\n";
+        
+        return $cli;
     }
     
     protected function renderArrayKey($key) {
@@ -73,6 +131,7 @@ class Variable {
     
     protected function renderTreeSwitcher($label, $array_key = NULL) {
         $tree_id = \Ladybug\Dumper::getTreeId();
+        
         $result = '<label for="tree_'.$this->type.'_'.$tree_id.'">';
             $result .= $this->renderArrayKey($array_key);
             $result .= '<strong><em>'.$label.'</em></strong>';
@@ -102,8 +161,6 @@ class Variable {
     }
     
     protected function indentCLI($increment = 0) {
-        //$char = CLIColors::getColoredString(' · ', 'dark_gray');
-        
         $char1 = CLIColors::getColoredString('   ', 'dark_gray');
         $char2 = CLIColors::getColoredString(' | ', 'dark_gray');
         
