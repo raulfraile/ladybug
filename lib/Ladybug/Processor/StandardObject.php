@@ -104,6 +104,9 @@ class StandardObject {
         'RarArchive' => 'class.rararchive.php',
         'RarEntry' => 'class.rarentry.php',
         'RarException' => 'class.rarexception.php',
+        
+        // Weakref
+        'Weakref' => 'class.weakref.php'
     );
     
     public function process($str) {

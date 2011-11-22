@@ -6,7 +6,8 @@ $var1 = array();
 
 $var1[0] = array(
     'name' => 'Raul',
-    'age' => 29
+    'age' => 29,
+    'url' => 'http://twitter.com/raulfraile'
 );
         
 $var1[1] = array(

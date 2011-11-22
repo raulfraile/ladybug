@@ -95,7 +95,7 @@ ladybug_dump($var1);
 
 ## Helpers
 
-The are 3 helpers:
+The are 5 helpers:
 
 `ladybug_dump($var1[, $var2[, ...]])`: Dumps one or more variables
 
@@ -104,6 +104,10 @@ terminates the current script
 
 `ladybug_dump_return($var1[, $var2[, ...]])`: Dumps one or more variables and
 returns the string
+        
+`ladybug_dump_ini([$extension])`: Dumps all configuration options 
+        
+`ladybug_dump_ext()`: Dumps loaded extensions
 
 ## Customizable
 

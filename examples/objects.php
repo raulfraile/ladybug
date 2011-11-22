@@ -12,7 +12,7 @@ class Foo {
     
     public function __construct() {$this->a = new Foo2();}
     public function getBar() { return $this->bar; }
-    public function setBar($bar = 1) { $this->bar = $bar; }
+    public function setBar($bar = 1, $bar2 = TRUE, $bar3 = NULL) { $this->bar = $bar; }
 }
 
 $foo = new Foo();

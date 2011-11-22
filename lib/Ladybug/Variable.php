@@ -105,6 +105,12 @@ class Variable {
         else return NULL;
     }
     
+    /**
+     * Renders the variable node in the dump tree using HTML code
+     *
+     * @param mixed $array_key if the variable is part of an array, it's value
+     * @return string Variable representation
+     */
     protected function _renderHTML($array_key = NULL) {
         $html = '<div class="final">';
             $html .= $this->renderArrayKey($array_key);
@@ -115,6 +121,12 @@ class Variable {
         return $html;
     }
     
+    /**
+     * Renders the variable node in the dump tree using CLI code
+     *
+     * @param mixed $array_key if the variable is part of an array, it's value
+     * @return string Variable representation
+     */
     protected function _renderCLI($array_key = NULL) {
         $cli = $this->renderArrayKey($array_key) . $this->type . ' ';
         $cli .= CLIColors::getColoredString($this->getValue(), $this->getColor('cli'));
@@ -124,7 +136,6 @@ class Variable {
     }
     
     protected function renderArrayKey($key) {
-        
         if (is_null($key)) return NULL;
         else return "[$key]: ";
     }

@@ -90,7 +90,7 @@ class TObject extends Variable {
             if ($this->options->getOption('object.show_constants')) {
                 $this->class_constants = $reflection_class->getConstants();
                 if (!empty($this->class_constants)) {
-                    foreach ($this->class_constants as $c) {
+                    foreach ($this->class_constants as &$c) {
                         $c = TFactory::factory($c, $this->level, $options);
                     }
                 }
@@ -138,9 +138,13 @@ class TObject extends Variable {
                             $default = NULL;
                             if ($parameter->isDefaultValueAvailable()) {
                                 $default = $parameter->getDefaultValue();
+                                
+                                if($default === null) $default = 'NULL';
+                                elseif(is_bool($default)) $default = $default ? 'TRUE' : 'FALSE';
+                                elseif(is_string($default)) $default = '"' . $default . '"';
+                                
+                                $parameter_result .= ' = ' . $default;
                             }
-
-                            if (!is_null($default)) $parameter_result .= ' = ' . $default;
 
                             if ($parameter->isOptional()) $parameter_result .= ']';
 
