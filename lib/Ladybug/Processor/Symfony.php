@@ -16,7 +16,6 @@ class Symfony {
     
     public $sfprefix = 'http://api.symfony.com/2.0/index.html?q=';
     
-    
     public function process($str) {
         $matches = array();
         $result = $str;

@@ -16,7 +16,6 @@ class Doctrine {
     
     private $doctrine_prefix = 'http://www.doctrine-project.org/api/orm/2.1/';
     
-    
     public function process($str) {
         $matches = array();
         $result = $str;
@@ -33,8 +32,6 @@ class Doctrine {
             
         }
     
-        
-        
         return $result;
     }
 

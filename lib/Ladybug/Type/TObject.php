@@ -90,7 +90,7 @@ class TObject extends Variable {
             if ($this->options->getOption('object.show_constants')) {
                 $this->class_constants = $reflection_class->getConstants();
                 if (!empty($this->class_constants)) {
-                    foreach ($this->class_constants as &$c) {
+                    foreach ($this->class_constants as $c) {
                         $c = TFactory::factory($c, $this->level, $options);
                     }
                 }
