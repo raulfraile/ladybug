@@ -6,14 +6,14 @@ ol.tree
 	font-family: 'Bitstream Vera Sans Mono','Courier New',monospace;
 	font-size: 12px;
 }
-	li 
+	ol.tree li 
 	{ 
 		position: relative; 
 		margin-left: -15px;
 		list-style: none;
 		margin-bottom: 4px;
 	}
-	li input
+	ol.tree li input
 	{
 		position: absolute;
 		left: 0;
@@ -25,7 +25,7 @@ ol.tree
 		width: 1em;
 		top: 0;
 	}
-		li input + ol
+		ol.tree li input + ol
 		{
 			background: url(toggle-small-expand.png) 40px 0px no-repeat;
                         
@@ -34,24 +34,24 @@ ol.tree
 			height: 1em;
 			
 		}
-		li input + ol > li { height: 0; overflow: hidden; margin-left: -14px !important; padding-left: 1px;border-left: 1px dotted #CCC;
+		ol.tree li input + ol > li { height: 0; overflow: hidden; margin-left: -14px !important; padding-left: 1px;border-left: 1px dotted #CCC;
 			padding-left: 10px; }
-	li label
+	ol.tree li label
 	{
 		cursor: pointer;
 		display: inline;
 		padding-left: 15px;
 	}
 
-	li input:checked + ol
+	ol.tree li input:checked + ol
 	{
 		background: url(toggle-small.png) 40px 4px no-repeat;
 		margin: -1.25em 0 0 -44px; /* 20px */
 		padding: 1.563em 0 0 80px;
 		height: auto;
 	}
-		li input:checked + ol > li { height: auto; margin: 0 0 0.125em;  /* 2px */}
-		li input:checked + ol > li:last-child { margin: 0 0 0.063em; /* 1px */ }
+		ol.tree li input:checked + ol > li { height: auto; margin: 0 0 0.125em;  /* 2px */}
+		ol.tree li input:checked + ol > li:last-child { margin: 0 0 0.063em; /* 1px */ }
 
 .final {
     padding-left: 15px;
