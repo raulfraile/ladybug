@@ -56,6 +56,9 @@ class TResource extends Variable {
                         $result .= '<li>' . $this->renderTreeSwitcher($k) . '<ol>';
                         
                         foreach ($v as $sub_k=>$sub_v) {
+                            if ($this->isEmbeddedImage($sub_v)) 
+                                $sub_v = '<br/><img style="border:1px solid #ccc; padding:1px" src="' . $sub_v . '" />';
+                                
                             $result .= '<li>'.$sub_k.': '.$sub_v.'</li>';
                         }
                         $result .= '</ol></li>';
@@ -96,5 +99,38 @@ class TResource extends Variable {
         }
         
         return $result;
+    }
+    
+    public function export() {
+        $value = array();
+        
+        if (!empty($this->resource_custom_data)) {
+            
+            if (is_array($this->resource_custom_data)) {
+                foreach($this->resource_custom_data as $k=>$v) {
+                    if (is_array($v)) {
+                        $value[$k] = array();
+                        foreach ($v as $sub_k=>$sub_v) {
+                            $stripped = strip_tags($sub_v);
+                            if (strlen($stripped) > 0) $value[$k][$sub_k] = $stripped;
+                        }
+                        
+                    }
+                    else $value[$k] = strip_tags($v);
+                }
+            }
+            else $value[$k] = $this->resource_custom_data;
+        }
+        
+        $return = array(
+            'type' => $this->type . '(' . $this->resource_type . ')',
+            'value' => $value
+        );
+        
+        return $return;
+    }
+    
+    private function isEmbeddedImage($value) {
+        return (substr($value, 0, 11) == 'data:image/');
     }
 }

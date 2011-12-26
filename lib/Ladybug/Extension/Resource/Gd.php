@@ -47,17 +47,18 @@ class Gd extends Extension {
         
         // gd info
         $result['GD'] = array(
-            'Version' => $gd_info['GD Version'],
-            'Support' => implode(', ', $gd_support)
+            'version' => $gd_info['GD Version'],
+            'support' => implode(', ', $gd_support)
         );
         
         // image info
-        $result['Image'] = array(
-            'Width' => $width . 'px',
-            'Height' => $height . 'px',
-            'Colors palette' => $colors_palette,
-            'True color' => $is_true_color,
-            'Image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
+        $result['image'] = array(
+            'width' => $width . 'px',
+            'height' => $height . 'px',
+            'colors_palette' => $colors_palette,
+            'true_color' => $is_true_color,
+            //'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
+            'image' => 'data:image/png;base64,' . base64_encode($image)
         );
         
         return $result;

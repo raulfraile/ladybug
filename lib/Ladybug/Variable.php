@@ -145,7 +145,7 @@ class Variable {
         
         $result = '<label for="tree_'.$this->type.'_'.$tree_id.'">';
             $result .= $this->renderArrayKey($array_key);
-            $result .= '<strong><em>'.$label.'</em></strong>';
+            $result .= '<span class="switcher">'.$label.'</span>';
         $result .= '</label>';
         
         $result .= '<input type="checkbox" id="tree_'.$this->type.'_'.$tree_id.'" />';
@@ -182,5 +182,13 @@ class Variable {
         }
         return $result;
     }
-    
+ 
+    public function export() {
+        $return = array(
+            'type' => $this->type,
+            'value' => $this->value
+        );
+        
+        return $return;
+    }
 }

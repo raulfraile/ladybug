@@ -20,9 +20,9 @@ class MysqlLink extends Extension {
     
     public function dump($var) {
         $result = array(
-            'Host info' => mysql_get_host_info($var),
-            'MySQL protocol version' => mysql_get_proto_info($var),
-            'MySQL server version' => mysql_get_server_info($var),
+            'host_info' => mysql_get_host_info($var),
+            'MySQL_protocol_version' => mysql_get_proto_info($var),
+            'MySQL_server_version' => mysql_get_server_info($var),
         );
         
         return $result;

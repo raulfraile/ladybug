@@ -28,6 +28,7 @@ class TObject extends Variable {
     protected $class_interfaces;
     protected $class_namespace;
     protected $class_parent;
+    protected $tostring;
     
     protected $is_leaf;
     
@@ -41,6 +42,8 @@ class TObject extends Variable {
         $this->inspect_custom_data = TRUE;
         
         $this->class_name = get_class($var);
+        
+        $this->tostring = null;
        
         if ($this->level < $this->options->getOption('object.max_nesting_level')) {
             $this->is_leaf = FALSE;
@@ -112,11 +115,14 @@ class TObject extends Variable {
             
             // Class methods
             if ($this->options->getOption('object.show_methods')) {
+                $this->class_methods = array();
                 $class_methods = $reflection_class->getMethods();
                 if (!empty($class_methods)) {
                     foreach($class_methods as $k=>$v) {
                         $method = $reflection_class->getMethod($v->name);
 
+                        if ($method->getName() == '__toString') $this->tostring = $var->__toString();
+                                
                         $method_syntax = '';
 
                         if ($method->isPublic()) $method_syntax .= '+ ';
@@ -166,6 +172,8 @@ class TObject extends Variable {
     
     public function _renderHTML($array_key = NULL) {
         $label = $this->type . '('.$this->class_name . ')';
+        
+        if (!is_null($this->tostring)) $label .= '<a class="tostring" href="javascript:void(0)" title="'.htmlentities($this->tostring).'"></a>';
         $result = $this->renderTreeSwitcher($label, $array_key);
         
         if (!$this->is_leaf) {
@@ -307,5 +315,51 @@ class TObject extends Variable {
         $result = preg_replace('/\n+/', "\n", $result);
             
         return $result;
+    }
+    
+    public function export() {
+        $value = array();
+        
+        // Class info
+        $value['class_info'] = array();
+        if (!empty($this->class_file)) $value['class_info']['filename'] = $this->class_file;
+        if (!empty($this->class_interfaces)) $value['class_info']['interfaces'] = $this->class_interfaces."\n";
+        if (!empty($this->class_namespace)) $value['class_info']['namespace'] = $this->class_namespace."\n";
+        if (!empty($this->class_parent)) $value['class_info']['parent'] = $this->class_parent."\n";
+        
+        // Constants
+        $value['constants'] = array();
+        foreach($this->class_constants as $k=>$v) {
+            if (is_string($v)) $value['constants'][$k] = $v;
+            else $value['constants'][$k] = $v->export();
+        }
+        
+        // Properties
+        $value['public_properties'] = array();
+        foreach($this->object_properties as $k=>$v) {
+            if (is_string($v)) $value['public_properties'][$k] = $v;
+            else $value['public_properties'][$k] = $v->export();
+        }
+        
+        // Static properties
+        /*$value['static_properties'] = array();
+        foreach($this->class_static_properties as $k=>$v) {
+            if (is_string($v)) $value['static_properties'][$k] = $v;
+            else $value['static_properties'][$k] = $v->export();
+        }*/
+        
+        // Methods
+        $value['methods'] = array();
+        foreach($this->class_methods as $k=>$v) {
+            if (is_string($v)) $value['methods'][$k] = $v;
+            else $value['methods'][$k] = $v->export();
+        }
+        
+        $return = array(
+            'type' => $this->type . '(' . $this->class_name . ')',
+            'value' => $value
+        );
+        
+        return $return;
     }
 }

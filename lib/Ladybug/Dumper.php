@@ -11,14 +11,22 @@
 namespace Ladybug;
 
 use Ladybug\Type\TFactory;
+use Ladybug\Exception\InvalidFormatException;
 
 class Dumper {
+    const EXPORT_FORMAT_PHP = 'php';
+    const EXPORT_FORMAT_YAML = 'yaml';
+    const EXPORT_FORMAT_JSON = 'json';
+    const EXPORT_FORMAT_XML = 'xml';
+    
     private static $instance = null;
     
     private static $tree_counter = 0;
+
     private $is_css_loaded;
     private $is_cli;
     
+    private $nodes;
     private $options;
     
     /**
@@ -40,22 +48,16 @@ class Dumper {
     }
     
     /**
-     * Creates the tree and dump one or more variables
+     * Dumps one or more variables
      * @param vars one or more variables to dump
      */
     public function dump(/*$var1 [, $var2...$varN]*/) {
         $args = func_get_args();
-        $num_args = func_num_args();
-        
-        $result = array();
-        
-        foreach ($args as $var) {
-            $result[] = TFactory::factory($var, 0, $this->options);
-        }
+        $this->nodes = $this->_readVars($args);
         
         // generate html/console code
         if (!$this->is_cli) {
-            $html = $this->_render($result, 'html');
+            $html = $this->_render('html');
             unset($result); $result = NULL;
 
             // post-processors
@@ -64,22 +66,87 @@ class Dumper {
             return $html;
         }
         else {
-            $code = $this->_render($result, 'cli');
+            $code = $this->_render('cli');
             
             return $code;
         }
     }
     
-    private function _render($vars, $format = 'html') {
-        if ($format == 'html') return $this->_renderHTML($vars);
-        else return $this->_renderCLI($vars);
+    /**
+     * Exports one or more variables to the selected format
+     * Available formats: php (for testing purposes), yaml, xml and json
+     * @param vars format and variables to dump
+     */
+    public function export(/*$format, $var1 [, $var2...$varN]*/) {
+        $args = func_get_args();
+        
+        $format = strtolower($args[0]);
+        $vars = array_slice($args, 1);
+        
+        $this->nodes = $this->_readVars($vars);
+        
+        $response = null;
+        
+        $export_array = array();
+        $i=1;
+        foreach ($this->nodes as $k => $v) {
+            $export_array['var' . $i] = $v->export();
+            $i++;
+        }
+        
+        switch ($format) {
+            case self::EXPORT_FORMAT_PHP:
+                $response = $export_array;
+                break;
+            case self::EXPORT_FORMAT_YAML:
+                $yaml = new \Symfony\Component\Yaml\Yaml();
+                $response = $yaml->dump($export_array);
+                break;
+            case self::EXPORT_FORMAT_XML:
+                $serializer = new \Symfony\Component\Serializer\Encoder\XmlEncoder();
+                $response = $serializer->encode($export_array, 'xml');
+                break;
+            case self::EXPORT_FORMAT_JSON:
+                $response = json_encode($export_array);
+                break;
+            default:
+                throw new InvalidFormatException();
+        }
+        
+        return $response;
     }
     
-    private function _renderHTML($vars) {
+    /**
+     * Reads variables and creates TType objects
+     * @param vars variables to dump
+     */
+    private function _readVars($vars) {
+        $nodes = array();
+        
+        foreach ($vars as $var) {
+            $nodes[] = TFactory::factory($var, 0, $this->options);
+        }
+        
+        return $nodes;
+    }
+    
+    /**
+     * Renders the variables into the selected format
+     * @param format dump format (html, cli)
+     */
+    private function _render($format = 'html') {
+        if ($format == 'html') return $this->_renderHTML();
+        else return $this->_renderCLI();
+    }
+    
+    /**
+     * Renders the variables into HTML format
+     */
+    private function _renderHTML() {
         $html = '';
         $css = '';
         
-        foreach ($vars as $var) {
+        foreach ($this->nodes as $var) {
             $html .= '<li>'.$var->render().'</li>';
         }
         
@@ -92,10 +159,13 @@ class Dumper {
         return $css . $html;
     }
     
-    private function _renderCLI($vars) {
+    /**
+     * Renders the variables into CLI format
+     */
+    private function _renderCLI() {
         $result = '';
         
-        foreach ($vars as $var) {
+        foreach ($this->nodes as $var) {
             $result .= $var->render(NULL, 'cli');
         }
         
@@ -104,7 +174,10 @@ class Dumper {
         return $result;
     }
     
-    
+    /**
+     * Triggers the html post-processors
+     * @param $str html code
+     */
     private function _postProcess($str) {
         $result = $str;
         
