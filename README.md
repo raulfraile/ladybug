@@ -85,7 +85,7 @@ There are more examples in `examples` directory.
 
 ## Installation
 
-As easy as [download](https://github.com/raulfraile/Ladybug/raw/master/Ladybug.zip), include the library and use the provided helpers:
+As easy as [download](https://github.com/raulfraile/Ladybug/raw/master/Ladybug.zip), include the library and use the provided helpers.   
 
 ``` php
 <?php
@@ -94,6 +94,9 @@ Ladybug\Ladybug_Autoloader::register();
 
 ladybug_dump($var1);
 ```
+
+If you want to clone the project, you will have to execute `git submodule init` and `git submodule update` in
+order to download the dependencies.
 
 ## Helpers
 
