@@ -14,7 +14,7 @@ namespace Ladybug\Processor;
 
 class Doctrine {
     
-    private $doctrine_prefix = 'http://www.doctrine-project.org/api/orm/2.1/';
+    private $doctrine_prefix = 'http://www.doctrine-project.org/api/orm/current/';
     
     public function process($str) {
         $matches = array();

@@ -36,9 +36,9 @@ class Ladybug_Autoloader
     {
 
         if (0 !== strpos($class, 'Ladybug')) {
-            return;
+            //return;
         }
-        
+
         $file = dirname(__FILE__).'/../'.str_replace(array('\\', "\0"), array('/', ''), $class).'.php';     
         
         if (is_file($file)) {

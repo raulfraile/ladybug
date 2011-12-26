@@ -7,55 +7,68 @@ Ladybug\Ladybug_Autoloader::register();
 
 class ArrayTest extends PHPUnit_Framework_TestCase
 {
-    protected $fruits;
-    protected $countries;
- 
-    protected function setUp()
-    {
-        $this->fruits = array(
-            'apple',
-            'pear',
-            'banana',
-            'orange',
-            'lemon'
-        );
-        
-        $this->countries = array(
-            'europe' => array(
-                'spain',
-                'uk',
-                'italy',
-                'germany'
-            ),
-            'america' => array(
-                'usa',
-                'canada',
-                'mexico'
-            )
-        );
-    }
     
     public function testEmptyArrayGetsEmpty() {
-        $var = array();
+        $vars = array(
+            array(),
+            (array) null
+        );
         
-        $this->assertEquals(strip_tags(ladybug_dump_return($var)), 'array []');
+        $result = ladybug_dump_return('php', $vars[0], $vars[1]);
+        
+        $this->assertEquals(count($vars), count($result));
+        
+        $i = 0;
+        foreach ($result as $item) {
+            $this->assertEquals('array', $item['type']);
+            $this->assertEquals($vars[$i], $item['value']);
+            $this->assertEquals(0, $item['length']);
+            $i++;
+        }
     }
     
     public function testSimpleArrayGetsAllElements() {
-        $array_count = count($this->fruits);
-        $result_lines = count(explode("\n",ladybug_dump_return($this->fruits)));
+        $vars = array(
+            range(1, 10),
+            array('a')
+        );
         
-        $this->assertEquals($array_count + 2, $result_lines);
+        $lengths = array(10, 1);
+        
+        $result = ladybug_dump_return('php', $vars[0], $vars[1]);
+        
+        $this->assertEquals(count($vars), count($result));
+        
+        $i = 0;
+        foreach ($result as $item) {
+            $this->assertEquals('array', $item['type']);
+            $this->assertEquals($lengths[$i], $item['length']);
+            $i++;
+        }
     }
     
     public function testNestedArrayGetsAllElements() {
-        $array_count_level_1 = count($this->countries);
-        $array_count = count($this->countries, COUNT_RECURSIVE);
-        $result_lines = count(explode("\n",ladybug_dump_return($this->countries)));
-        $expected = (($array_count - ($array_count - $array_count_level_1)) * 2) + $array_count;
+        $vars = array(
+            array(
+                0 => array(1, 2, 3),
+                1 => array(4, 5, 6)
+            )
+        );
         
-        $this->assertEquals($expected, $result_lines);
+        $lengths = array(2);
+        
+        $result = ladybug_dump_return('php', $vars[0]);
+        
+        $this->assertEquals(count($vars), count($result));
+        
+        $i = 0;
+        foreach ($result as $item) {
+            $this->assertEquals('array', $item['type']);
+            $this->assertEquals($lengths[$i], $item['length']);
+            $this->assertEquals(3, count($item['value'][0]));
+            $this->assertEquals(3, count($item['value'][1]));
+            $i++;
+        }
     }
     
 }
-

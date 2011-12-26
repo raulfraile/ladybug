@@ -20,6 +20,7 @@ class Options {
     
     public function __construct() {
         $this->options = array(
+            '_ladybug.format' => 'html',
             'array.max_nesting_level' => 8,
             'object.max_nesting_level' => 3,
             'object.show_data' => TRUE,

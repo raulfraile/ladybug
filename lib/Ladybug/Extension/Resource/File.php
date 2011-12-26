@@ -25,9 +25,9 @@ class File extends Extension {
         
         $real_path = realpath($stream_vars['uri']);
         
-        $result['File'] = $real_path;
-        $result['Mode'] = $fstat['mode'];
-        $result['Size'] = $this->_formatSize($fstat['size']);
+        $result['file'] = $real_path;
+        $result['mode'] = $fstat['mode'];
+        $result['size'] = $this->_formatSize($fstat['size']);
         
         $permissions = array('read');
         if (is_writable($real_path)) $permissions[] = 'write';
@@ -35,7 +35,7 @@ class File extends Extension {
         if (is_link($real_path)) $permissions[] = 'link';
         if (is_dir($real_path)) $permissions[] = 'directory';
         
-        $result['Permissions'] = implode(', ', $permissions);
+        $result['permissions'] = implode(', ', $permissions);
         
         
         

@@ -6,23 +6,24 @@ Ladybug\Ladybug_Autoloader::register();
 
 class BoolTest extends PHPUnit_Framework_TestCase
 {
-    public function testTrueValuesGetsTRUE() {
+    public function testTrueValuesGetsTrue() {
         $var1 = true;
         $var2 = (bool) 1;
         $var3 = (bool) -2;
         $var4 = (bool) "foo";
         $var5 = (bool) 2.3e5;
         
-        $expected = '<div class="final"><span class="type">bool</span> <span style="color:#008">FALSE</span></div>';
+        $result = ladybug_dump_return('php', $var1, $var2, $var3, $var4, $var5);
         
-        $this->assertEquals($expected, ladybug_dump_return($var1));
-        /*$this->assertEquals(strip_tags(ladybug_dump_return($var2)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var3)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var4)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var5)), $expected);*/
+        $this->assertEquals(count($result), 5);
+        
+        foreach ($result as $item) {
+            $this->assertEquals('bool', $item['type']);
+            $this->assertEquals(true, $item['value']);
+        }
     }
     
-    public function testFalseValuesGetsFALSE() {
+    public function testFalseValuesGetsFalse() {
         $var1 = false;
         $var2 = (bool) 0;
         $var3 = (bool) 0.0;
@@ -30,14 +31,14 @@ class BoolTest extends PHPUnit_Framework_TestCase
         $var5 = (bool) "0";
         $var6 = (bool) array();
         
-        $expected = 'bool FALSE';
+        $result = ladybug_dump_return('php', $var1, $var2, $var3, $var4, $var5, $var6);
         
-        $this->assertEquals(strip_tags(ladybug_dump_return($var1)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var2)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var3)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var4)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var5)), $expected);
-        $this->assertEquals(strip_tags(ladybug_dump_return($var6)), $expected);
+        $this->assertEquals(count($result), 6);
+        
+        foreach ($result as $item) {
+            $this->assertEquals('bool', $item['type']);
+            $this->assertEquals(false, $item['value']);
+        }
     }
     
 }

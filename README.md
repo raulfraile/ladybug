@@ -1,6 +1,8 @@
 Ladybug: Simple and Extensible PHP Dumper
 =========================================
 
+[![Build Status](https://secure.travis-ci.org/raulfraile/Ladybug.png)](http://travis-ci.org/raulfraile/Ladybug)
+
 Ladybug provides an easy and extensible var_dump/print_r replacement for PHP 5.3+
 projects. For example, with this library, the following is possible:
 
@@ -83,7 +85,7 @@ There are more examples in `examples` directory.
 
 ## Installation
 
-As easy as [download](https://github.com/raulfraile/Ladybug/zipball/master), include the library and use the provided helpers:
+As easy as [download](https://github.com/raulfraile/Ladybug/raw/master/Ladybug.zip), include the library and use the provided helpers:
 
 ``` php
 <?php
@@ -102,12 +104,25 @@ The are 5 helpers:
 `ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and 
 terminates the current script
 
-`ladybug_dump_return($var1[, $var2[, ...]])`: Dumps one or more variables and
-returns the string
+`ladybug_dump_return($format, $var1[, $var2[, ...]])`: Dumps one or more variables and
+returns the dump in any of the following formats:
+
+* yml: Returns the dump in YAML
+* json: Returns the dump in JSON
+* xml: Returns the dump in XML
+* php: Returns the dump in PHP arrays
         
 `ladybug_dump_ini([$extension])`: Dumps all configuration options 
         
 `ladybug_dump_ext()`: Dumps loaded extensions
+        
+There are also some shortcuts in case you are not using this function names:
+        
+`ld($var1[, $var2[, ...]])`: shortcut for ladybug_dump
+        
+`ldd($var1[, $var2[, ...]])`: shortcut for ladybug_dump_die
+        
+`ldr($format, $var1[, $var2[, ...]])`: shortcut for ladybug_return
 
 ## Customizable
 

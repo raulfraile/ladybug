@@ -3,7 +3,7 @@ ol.tree
 {
 	padding: 0 0 0 15px;
 	
-	font-family: 'Bitstream Vera Sans Mono','Courier New',monospace;
+	font-family: 'Courier New',monospace;
 	font-size: 12px;
 }
 	ol.tree li 
@@ -60,6 +60,16 @@ ol.tree
 .final span.type {
     font-weight: bold;
     font-style: italic;
+}
+
+.switcher {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.tostring {
+    background: url(filefind.png) left center no-repeat;
+    padding-left: 11px;
 }
 
 a.external {

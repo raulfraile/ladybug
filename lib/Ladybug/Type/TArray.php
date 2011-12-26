@@ -37,8 +37,8 @@ class TArray extends Variable {
         return $this->length;
     }
     
-    public function setLength(int $length) {
-        $this->length = $length;
+    public function setLength($length) {
+        if ($length >= 0) $this->length = $length;
     }
     
     public function add($var, $index = NULL) {
@@ -78,5 +78,21 @@ class TArray extends Variable {
         }
         
         return $result;
+    }
+    
+    public function export() {
+        $value = array();
+        
+        foreach ($this->value as $k=>$v) {
+            $value[] = $v->export();
+        }
+        
+        $return = array(
+            'type' => $this->type,
+            'value' => $value,
+            'length' => $this->length
+        );
+        
+        return $return;
     }
 }

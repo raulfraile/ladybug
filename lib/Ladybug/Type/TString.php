@@ -19,9 +19,11 @@ use Ladybug\CLIColors;
 class TString extends Variable {
     
     protected $length;
+    protected $encoding;
     
     public function __construct($var, $level, Options $options) {
-        $this->length = strlen($var);
+        $this->encoding = mb_detect_encoding($var);
+        $this->length = mb_strlen($var, $this->encoding);
         
         parent::__construct('string', $var, $level, $options);
     }
@@ -37,5 +39,16 @@ class TString extends Variable {
     
     protected function _renderCLI($array_key = NULL) {
         return $this->renderArrayKey($array_key) . $this->type .'('.$this->length.') '. CLIColors::getColoredString($this->getValue(), $this->getColor('cli')) . "\n";
+    }
+    
+    public function export() {
+        $return = array(
+            'type' => $this->type,
+            'value' => $this->value,
+            'length' => $this->length,
+            'encoding' => $this->encoding
+        );
+        
+        return $return;
     }
 }

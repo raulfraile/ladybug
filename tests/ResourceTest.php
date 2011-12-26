@@ -7,16 +7,18 @@ Ladybug\Ladybug_Autoloader::register();
 class ResourceTest extends PHPUnit_Framework_TestCase
 {
     protected $file;
+    protected $image;
  
     protected function setUp()
     {
         $this->file = fopen(__DIR__.'/files/test.txt', 'r');
+        $this->image = imagecreatefrompng(__DIR__ . '/files/ladybug.png');
+        $this->result = ladybug_dump_return('php', $this->file, $this->image);
     }
     
-    public function testEmptyObjectGetsEmpty() {
-        $this->assertTrue(strpos(strip_tags(ladybug_dump_return($this->file)), 'resource(file) [') !== FALSE);
+    public function testResourceGetsRightType() {
+        $this->assertEquals('resource(file)', $this->result['var1']['type']);
+        $this->assertEquals('resource(gd)', $this->result['var2']['type']);
     }
-    
     
 }
-
