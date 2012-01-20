@@ -12,8 +12,8 @@
 
 namespace Ladybug\Processor;
 
-class Silex {
-    
+class Silex
+{    
     private $silex_prefix = 'http://silex.sensiolabs.org/api/index.html?q=';
     
     public function process($str) {
@@ -25,14 +25,12 @@ class Silex {
             
             foreach ($matches as $m) {
                 $class = str_replace('(', '',str_replace(')', '', $m));
-                $class_url = strtolower($class) . '.html';
                 
-                $result = str_replace($m, '(<a href="' . $this->silex_prefix . $class_url . '" class="external silex" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
+                $result = str_replace($m, '(<a href="' . $this->silex_prefix . $class . '" class="external silex" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
             }
             
         }
     
         return $result;
     }
-
 }
