@@ -111,3 +111,8 @@ pre.ladybug
 	    padding-left: 14px;
 	    margin-left: 3px;
 	}
+	pre.ladybug a.silex {
+	    background: url(silex.png) left center no-repeat;
+	    padding-left: 14px;
+	    margin-left: 3px;
+	}
