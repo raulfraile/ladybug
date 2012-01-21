@@ -89,7 +89,7 @@ As easy as [download](https://github.com/raulfraile/Ladybug/raw/master/Ladybug.z
 ``` php
 <?php
 require_once 'lib/Ladybug/Autoloader.php';
-Ladybug\Ladybug_Autoloader::register();
+Ladybug\Autoloader::register();
 
 // alternatively, use another PSR-0 compliant autoloader (like the Symfony2 ClassLoader 
 // for instance) and load the helpers manually: Ladybug\Loader::loadHelpers();

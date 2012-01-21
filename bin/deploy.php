@@ -38,7 +38,7 @@ foreach ($files as $item) {
 foreach ($components as $key => $item) {
     if (!is_dir($temp . '/' . $item['target'])) rmkdir($item['target']);
     
-    $command = "git clone $item['git'] $temp/$item['target']";
+    $command = 'git clone '.$item['git'].' '.$temp.'/'.$item['target'];
     echo "$command\n";
     
     shell_exec($command);
