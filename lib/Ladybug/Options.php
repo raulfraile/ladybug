@@ -18,26 +18,28 @@ class Options {
     
     private $options;
     
-    public function __construct() {
+    public function __construct()
+    {
         $this->options = array(
-            '_ladybug.format' => 'html',
-            'array.max_nesting_level' => 8,
+            '_ladybug.format'          => 'html',
+            'array.max_nesting_level'  => 8,
             'object.max_nesting_level' => 3,
-            'object.show_data' => TRUE,
-            'object.show_classinfo' => TRUE,
-            'object.show_constants' => TRUE,
-            'object.show_methods' => TRUE,
-            'object.show_properties' => TRUE,
-            'processor.active' => TRUE,
-            'bool.html_color' => '#008',
-            'bool.cli_color' => 'blue',
-            'float.html_color' => '#800',
-            'float.cli_color' => 'red',
-            'int.html_color' => '#800',
-            'int.cli_color' => 'red',
-            'string.html_color' => '#080',
-            'string.cli_color' => 'green',
-            'string.show_quotes' => TRUE
+            'object.show_data'         => true,
+            'object.show_classinfo'    => true,
+            'object.show_constants'    => true,
+            'object.show_methods'      => true,
+            'object.show_properties'   => true,
+            'processor.active'         => true,
+            'bool.html_color'          => '#008',
+            'bool.cli_color'           => 'blue',
+            'float.html_color'         => '#800',
+            'float.cli_color'          => 'red',
+            'int.html_color'           => '#800',
+            'int.cli_color'            => 'red',
+            'string.html_color'        => '#080',
+            'string.cli_color'         => 'green',
+            'string.show_quotes'       => true,
+            'css.path'                 => __DIR__.'/Asset/tree.min.css'
         );
     }
     
@@ -47,8 +49,9 @@ class Options {
      * @param string $key Option name
      * @param mixed $value Option value
      */
-    public function setOption($key, $value) {
-        $this->options[$key] = $value;
+    public function setOption($key, $value)
+    {
+        $this->options[strtolower($key)] = $value;
     }
     
     /**
@@ -58,8 +61,24 @@ class Options {
      * @param mixed $default Default value, in case the option name does not exist
      * @return mixed Option value
      */
-    public function getOption($key, $default = NULL) {
-        if (isset($this->options[$key])) return $this->options[$key];
-        else return $default;
+    public function getOption($key, $default = NULL)
+    {
+        if (isset($this->options[$key])) {
+            return $this->options[$key];
+        } else {
+            return $default;
+        }
+    }
+
+    /**
+     * Gets all options
+     *
+     * @param string $key Option name
+     * @param mixed $default Default value, in case the option name does not exist
+     * @return mixed Option value
+     */
+    public function getAll()
+    {
+        return $this->options;
     }
 }

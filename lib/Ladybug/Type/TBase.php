@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  * 
- * Variable class
+ * Type/TBase: Base type
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
@@ -10,9 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug;
+namespace Ladybug\Type;
 
-class Variable {
+use Ladybug\Options;
+use Ladybug\CLIColors;
+
+abstract class TBase {
     
     protected $type;
     protected $value;

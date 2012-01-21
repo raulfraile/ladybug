@@ -13,9 +13,9 @@
 namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
-use Ladybug\Extension;
+use Ladybug\Extension\ExtensionBase;
 
-class ZipArchive extends Extension {
+class ZipArchive extends ExtensionBase {
     
     public function dump($var) {
         $result = array();

@@ -12,16 +12,16 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Variable;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TResource extends Variable {
+class TResource extends TBase {
     
     protected $resource_type;
     protected $resource_custom_data;
     
-    public function __construct($var, $level, Options $options) {
+    public function __construct($var, $level, Options $options)
+    {
         parent::__construct('resource', $var, $level, $options);
         
         $this->resource_type = get_resource_type($var);
@@ -43,7 +43,8 @@ class TResource extends Variable {
         }
     }
     
-    public function _renderHTML($array_key = NULL) {
+    public function _renderHTML($array_key = NULL)
+    {
         $label = $this->type . '('.$this->resource_type . ')';
         $result = $this->renderTreeSwitcher($label, $array_key) . '<ol>';
         
@@ -75,7 +76,8 @@ class TResource extends Variable {
         return $result;
     }
     
-    public function _renderCLI($array_key = NULL) {
+    public function _renderCLI($array_key = NULL)
+    {
         $label = $this->type . '('.$this->resource_type . ')';
         $result = $this->renderArrayKey($array_key) . CLIColors::getColoredString($label, 'yellow') . "\n";
         
@@ -95,13 +97,13 @@ class TResource extends Variable {
                 }
             }
             else $result .= $this->indentCLI() . $this->resource_custom_data . "\n";
-            
         }
         
         return $result;
     }
     
-    public function export() {
+    public function export()
+    {
         $value = array();
         
         if (!empty($this->resource_custom_data)) {
@@ -122,15 +124,14 @@ class TResource extends Variable {
             else $value[$k] = $this->resource_custom_data;
         }
         
-        $return = array(
+        return array(
             'type' => $this->type . '(' . $this->resource_type . ')',
             'value' => $value
         );
-        
-        return $return;
     }
     
-    private function isEmbeddedImage($value) {
+    private function isEmbeddedImage($value)
+    {
         return (substr($value, 0, 11) == 'data:image/');
     }
 }

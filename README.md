@@ -80,7 +80,6 @@ $ php examples/array.php
 
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/array_cli_example.png" />
 
-
 There are more examples in `examples` directory.
 
 ## Installation
@@ -92,9 +91,36 @@ As easy as [download](https://github.com/raulfraile/Ladybug/raw/master/Ladybug.z
 require_once 'lib/Ladybug/Autoloader.php';
 Ladybug\Ladybug_Autoloader::register();
 
+// alternatively, use another PSR-0 compliant autoloader (like the Symfony2 ClassLoader 
+// for instance) and load the helpers manually: Ladybug\Loader::loadHelpers();
+
 ladybug_dump($var1);
 ```
 
+### Using Composer
+[Composer](http://packagist.org/about-composer) is a project dependency manager for PHP. You have to list
+your dependencies in a `composer.json` file:
+
+``` json
+{
+    "require": {
+        "raulfraile/Ladybug": "master-dev"
+    }
+}
+```
+To actually install Ladybug in your project, download the composer binary and run it:
+
+``` bash
+wget http://getcomposer.org/composer.phar
+# or
+curl -O http://getcomposer.org/composer.phar
+
+php composer.phar install
+```
+
+After running the install command, you must see a new vendor directory that must contain the Ladybug code.
+
+### Using Ladybug as a git submodule
 If you want to clone the project, you will have to execute `git submodule init` and `git submodule update` in
 order to download the dependencies.
 
@@ -149,6 +175,7 @@ Almost any display option can be easily customizable, using the function
 * `string.html_color = '#080'`
 * `string.cli_color = 'green'`
 * `string.show_quotes = TRUE`
+* `string.show_quotes = '/Asset/tree.min.css'`
         
 ## Extensible
 

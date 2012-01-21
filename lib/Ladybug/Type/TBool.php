@@ -12,11 +12,9 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Variable;
 use Ladybug\Options;
-use Ladybug\CLIColors;
 
-class TBool extends Variable {
+class TBool extends TBase {
     
     public function __construct($var, $level, Options $options) {
         parent::__construct('bool', $var, $level, $options);

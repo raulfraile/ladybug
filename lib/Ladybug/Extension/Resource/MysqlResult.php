@@ -13,9 +13,9 @@
 namespace Ladybug\Extension\Resource;
 
 use Ladybug\Dumper;
-use Ladybug\Extension;
+use Ladybug\Extension\ExtensionBase;
 
-class Mysqlresult extends Extension {
+class Mysqlresult extends ExtensionBase {
     
     const CHAR_SEPARATOR = ' | ';
     const MAX_RESULTS = 9;

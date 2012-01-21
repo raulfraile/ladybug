@@ -12,11 +12,10 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Variable;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TObject extends Variable {
+class TObject extends TBase {
     
     protected $class_name;
     protected $class_constants;
@@ -64,7 +63,7 @@ class TObject extends Variable {
             }
             
             if ($this->options->getOption('object.show_data')) {
-                // is there a class to show the object info?
+                // is there a class to show the object data?
                 $include_class = $this->getIncludeClass($this->class_name, 'object');
 
                 if (class_exists($include_class)) {
@@ -80,8 +79,8 @@ class TObject extends Variable {
                     $this->is_custom_data = FALSE;
                     $this->inspect_custom_data = TRUE;
                 }
-
-                // Custom/array-cast data
+                
+                // Custom/array-cast data & name normalization
                 if (!empty($this->object_custom_data) && is_array($this->object_custom_data)) {
                     foreach ($this->object_custom_data as &$c) {
                         $c = TFactory::factory($c, $this->level, $options);

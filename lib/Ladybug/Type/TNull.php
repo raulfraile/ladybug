@@ -12,17 +12,18 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Variable;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TNull extends Variable {
+class TNull extends TBase {
     
-    public function __construct($level, Options $options) {
-        parent::__construct('null', NULL, $level, $options);
+    public function __construct($level, Options $options)
+    {
+        parent::__construct('null', null, $level, $options);
     }
     
-    public function getValue() {
+    public function getValue()
+    {
         return NULL;
     }
 }

@@ -12,11 +12,13 @@
 
 namespace Ladybug\Processor;
 
-class Doctrine {
+class Doctrine implements ProcessorInterface
+{
     
     private $doctrine_prefix = 'http://www.doctrine-project.org/api/orm/2.1/';
     
-    public function process($str) {
+    public function process($str)
+    {
         $matches = array();
         $result = $str;
         
@@ -27,7 +29,7 @@ class Doctrine {
                 $class = str_replace('(', '',str_replace(')', '', $m));
                 $class_url = strtolower($class) . '.html';
                 
-                $result = str_replace($m, '(<a href="' . $this->doctrine_prefix . $class_url . '" class="external doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
+                $result = str_replace($m, '(<a href="' . $this->doctrine_prefix . $class_url . '" class="doc doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
             }
             
         }

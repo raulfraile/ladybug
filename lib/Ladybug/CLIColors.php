@@ -51,7 +51,8 @@ class CLIColors {
      * @param string $background Background color
      * @return string Colorized string
      */
-    public static function getColoredString($str, $foreground = null, $background = null) {
+    public static function getColoredString($str, $foreground = null, $background = null)
+    {
         $str_start = "\033[";
         $str_middle = "m";
         $str_end = "\033[0m";

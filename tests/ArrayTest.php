@@ -3,7 +3,7 @@
 require_once 'PHPUnit/Framework/TestCase.php';
 
 require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Ladybug_Autoloader::register();
+Ladybug\Autoloader::register();
 
 class ArrayTest extends PHPUnit_Framework_TestCase
 {
@@ -71,4 +71,20 @@ class ArrayTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    public function testDeepArrayGetsTruncated()
+    {
+        $var = range(1, 5);
+        $max_deep = 3;
+        $deep = 20;
+
+        for ($i=0;$i<$deep;$i++) {
+            $var[0] = $var;
+        }
+        
+        ladybug_set('array.max_nesting_level', $max_deep);
+
+        $result = ladybug_dump_return('php', $var);
+        
+        $this->assertEquals($max_deep, count($result['var1']));
+    }
 }

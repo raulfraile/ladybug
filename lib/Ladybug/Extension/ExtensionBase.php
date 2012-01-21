@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  * 
- * Extension class
+ * ExtensionBase class
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
@@ -10,22 +10,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug;
+namespace Ladybug\Extension;
 
-class Extension {
+abstract class ExtensionBase implements ExtensionInterface {
     
     protected $var;
-    protected $icon;
-    protected $color_cli;
-    protected $color_html;
     protected $inspect;
     
-    public function __construct($var) {
+    public function __construct($var)
+    {
         $this->var = $var;
-        $this->icon = NULL;
-        $this->color_cli = NULL;
-        $this->color_html = NULL;
-        $this->inspect = TRUE;
+        $this->inspect = true;
     }
     
     public function getInspect() {

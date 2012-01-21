@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Ladybug_Autoloader::register();
+Ladybug\Autoloader::register();
 
 ladybug_set('string.html_color', '#ccc');
 ladybug_set('int.html_color', '#fff');

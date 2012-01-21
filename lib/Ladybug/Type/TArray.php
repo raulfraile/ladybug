@@ -12,16 +12,15 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Variable;
 use Ladybug\Options;
 use Ladybug\CLIColors;
-use Ladybug\Type\TFactory;
 
-class TArray extends Variable {
+class TArray extends TBase {
     
     protected $length;
     
-    public function __construct($var, $level, Options $options) {
+    public function __construct($var, $level, Options $options)
+    {
         parent::__construct('array', array(), $level, $options);
         
         $this->length = count($var);
@@ -33,20 +32,24 @@ class TArray extends Variable {
         }
     }
     
-    public function getLength() {
+    public function getLength()
+    {
         return $this->length;
     }
     
-    public function setLength($length) {
+    public function setLength($length)
+    {
         if ($length >= 0) $this->length = $length;
     }
     
-    public function add($var, $index = NULL) {
+    public function add($var, $index = NULL)
+    {
         $this->value[$index] = TFactory::factory($var, $this->level, $this->options);
     }
     
     // override
-    protected function _renderHTML($array_key = NULL) {
+    protected function _renderHTML($array_key = NULL)
+    {
         $label = $this->type . '(' . $this->length . ')';
         
         $result = $this->renderTreeSwitcher($label, $array_key);
@@ -64,7 +67,8 @@ class TArray extends Variable {
     }
     
     // override
-    protected function _renderCLI($array_key = NULL) {
+    protected function _renderCLI($array_key = NULL)
+    {
         $label = $this->type . '(' . $this->length . ')';
         
         $result = '';
@@ -80,19 +84,18 @@ class TArray extends Variable {
         return $result;
     }
     
-    public function export() {
+    public function export()
+    {
         $value = array();
         
         foreach ($this->value as $k=>$v) {
             $value[] = $v->export();
         }
         
-        $return = array(
+        return array(
             'type' => $this->type,
             'value' => $value,
             'length' => $this->length
         );
-        
-        return $return;
     }
 }

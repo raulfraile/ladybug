@@ -2,7 +2,7 @@
 require_once 'PHPUnit/Framework/TestCase.php';
 
 require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Ladybug_Autoloader::register();
+Ladybug\Autoloader::register();
 
 class BoolTest extends PHPUnit_Framework_TestCase
 {

@@ -12,6 +12,7 @@
 
 namespace Ladybug\Exception;
 
-class InvalidTypeException extends \Exception {
+class InvalidTypeException extends \Exception
+{
     
 }

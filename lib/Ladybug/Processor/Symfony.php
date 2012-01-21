@@ -12,7 +12,8 @@
 
 namespace Ladybug\Processor;
 
-class Symfony {
+class Symfony implements ProcessorInterface
+{
     
     public $sfprefix = 'http://api.symfony.com/2.0/index.html?q=';
     
@@ -26,7 +27,7 @@ class Symfony {
             foreach ($matches as $m) {
                 $class = str_replace('(', '',str_replace(')', '', $m));
                 
-                $result = str_replace($m, '(<a href="' . $this->sfprefix . urlencode($class) . '" class="external symfony" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
+                $result = str_replace($m, '(<a href="' . $this->sfprefix . urlencode($class) . '" class="doc symfony" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
             }
             
         }

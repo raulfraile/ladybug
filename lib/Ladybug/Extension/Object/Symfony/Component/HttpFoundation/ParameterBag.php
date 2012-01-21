@@ -13,9 +13,9 @@
 namespace Ladybug\Extension\Object\Symfony\Component\HttpFoundation;
 
 use Ladybug\Dumper;
-use Ladybug\Extension;
+use Ladybug\Extension\ExtensionBase;
 
-class ParameterBag extends Extension {
+class ParameterBag extends ExtensionBase {
     
     public function dump($var) {
         $result = array();

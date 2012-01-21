@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  * 
- * Autoloads Ladybug classes
+ * Autoloads Ladybug classes. It can be uses any PSR-0 compliant autoloader
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
@@ -12,7 +12,7 @@
 
 namespace Ladybug;
 
-class Ladybug_Autoloader
+class Autoloader
 {
     
     /**
@@ -23,7 +23,7 @@ class Ladybug_Autoloader
         ini_set('unserialize_callback_func', 'spl_autoload_call');
         spl_autoload_register(array(new self, 'autoload'));
         
-        require_once(__DIR__ . '/functions.php');
+        Loader::loadHelpers();
     }
 
     /**
@@ -39,7 +39,7 @@ class Ladybug_Autoloader
             //return;
         }
 
-        $file = dirname(__FILE__).'/../'.str_replace(array('\\', "\0"), array('/', ''), $class).'.php';     
+        $file = dirname(__FILE__).'/../'.str_replace(array('\\', "\0"), array('/', ''), $class).'.php';   
         
         if (is_file($file)) {
             require $file;

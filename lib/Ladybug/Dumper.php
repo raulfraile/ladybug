@@ -68,8 +68,7 @@ class Dumper
             $html = $this->_postProcess($html);
 
             return $html;
-        }
-        else {
+        } else {
             $code = $this->_render('cli');
 
             return $code;
@@ -144,8 +143,7 @@ class Dumper
     {
         if ($format == 'html') {
             return $this->_renderHTML();
-        }
-        else {
+        } else {
             return $this->_renderCLI();
         }
     }
@@ -164,7 +162,7 @@ class Dumper
 
         if (!$this->isCssLoaded) {
             $this->isCssLoaded = true;
-            $css = '<style>' . file_get_contents(__DIR__.'/Asset/tree.min.css') . '</style>';
+            $css = '<style>' . file_get_contents($this->options->getOption('css.path')) . '</style>';
         }
 
         $html = '<pre class="ladybug"><ol class="tree">' . $html . '</ol></pre>';
@@ -201,8 +199,9 @@ class Dumper
             $dir = dir(__DIR__. '/Processor');
 
             while (false !== ($file = $dir->read())) {
-                if (strpos($file, '.php') !== false) {
+                if (strpos($file, '.php') !== false && strpos($file, 'Interface.php') === false) {
                     $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
+                    
                     $processorObject = new $class();
                     $result = $processorObject->process($result);
 
@@ -221,10 +220,7 @@ class Dumper
 
     private function _isCli()
     {
-        $sapiType = php_sapi_name();
-
-        if ($sapiType == 'cli') return true;
-        else return false;
+        return (php_sapi_name() == 'cli') ? true : false;
     }
 
     public function setOption($key, $value)

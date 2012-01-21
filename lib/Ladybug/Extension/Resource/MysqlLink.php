@@ -13,9 +13,9 @@
 namespace Ladybug\Extension\Resource;
 
 use Ladybug\Dumper;
-use Ladybug\Extension;
+use Ladybug\Extension\ExtensionBase;
 
-class MysqlLink extends Extension {
+class MysqlLink extends ExtensionBase {
     
     
     public function dump($var) {

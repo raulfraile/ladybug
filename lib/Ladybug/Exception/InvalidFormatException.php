@@ -12,6 +12,7 @@
 
 namespace Ladybug\Exception;
 
-class InvalidFormatException extends \Exception {
+class InvalidFormatException extends \Exception
+{
     
 }

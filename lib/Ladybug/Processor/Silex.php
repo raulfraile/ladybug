@@ -12,11 +12,12 @@
 
 namespace Ladybug\Processor;
 
-class Silex
+class Silex implements ProcessorInterface
 {    
     private $silex_prefix = 'http://silex.sensiolabs.org/api/index.html?q=';
     
-    public function process($str) {
+    public function process($str)
+    {
         $matches = array();
         $result = $str;
         
@@ -26,7 +27,7 @@ class Silex
             foreach ($matches as $m) {
                 $class = str_replace('(', '',str_replace(')', '', $m));
                 
-                $result = str_replace($m, '(<a href="' . $this->silex_prefix . $class . '" class="external silex" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
+                $result = str_replace($m, '(<a href="' . $this->silex_prefix . $class . '" class="doc silex" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
             }
             
         }

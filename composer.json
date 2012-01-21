@@ -1,7 +1,7 @@
 {
     "name": "raulfraile/Ladybug",
     "description": "Simple and Extensible PHP Dumper",
-    "keywords": ["dump", "tree"],
+    "keywords": ["ladybug", dump", "tree"],
     "homepage": "https://github.com/raulfraile/Ladybug",
     "type": "library",
     "license": "MIT",
@@ -13,6 +13,12 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
-    }
+        "php": ">=5.3.0",
+        "symfony/Serializer": "2.1.*",
+        "symfony/Yaml": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "Ladybug": "lib/Ladybug" }
+    },
+    "target-dir": "raulfraile/Ladybug/lib"
 }

@@ -12,11 +12,9 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Variable;
 use Ladybug\Options;
-use Ladybug\CLIColors;
 
-class TInt extends Variable {
+class TInt extends TBase {
     
     public function __construct($var, $level, Options $options) {
         parent::__construct('int', $var, $level, $options);

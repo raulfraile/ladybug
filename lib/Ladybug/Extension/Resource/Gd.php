@@ -13,9 +13,9 @@
 namespace Ladybug\Extension\Resource;
 
 use Ladybug\Dumper;
-use Ladybug\Extension;
+use Ladybug\Extension\ExtensionBase;
 
-class Gd extends Extension {
+class Gd extends ExtensionBase {
     
     public function dump($var) {
         $result = array();

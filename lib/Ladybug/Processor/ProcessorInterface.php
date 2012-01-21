@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  * 
- * Processor / RFC
+ * ProcessorInterface
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -12,11 +12,13 @@
 
 namespace Ladybug\Processor;
 
-class RFC implements ProcessorInterface
+interface ProcessorInterface
 {
-    
-    public function process($str)
-    {
-        return preg_replace('/RFC([0-9]+)/', '<a href="http://www.rfc-editor.org/rfc/rfc\1.txt" class="external" target="_blank"></a>RFC\1', $str);
-    }
+    /**
+     * Process the HTML code and make the proper changes
+     *
+     * @param string $str html code
+     * @return string modified html code
+     */
+    function process($str);
 }
