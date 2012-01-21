@@ -3,3 +3,7 @@ language: php
 php:
   - 5.3
   - 5.4
+
+before_install:
+  - git clone http://github.com/symfony/Serializer.git lib/Symfony/Component/Serializer
+  - git clone http://github.com/symfony/Yaml.git lib/Symfony/Component/Yaml
