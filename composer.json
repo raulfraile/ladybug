@@ -18,7 +18,6 @@
         "symfony/Yaml": "2.1.*"
     },
     "autoload": {
-        "psr-0": { "Ladybug": "lib/Ladybug" }
-    },
-    "target-dir": "raulfraile/Ladybug/lib"
+        "psr-0": { "Ladybug": "lib/" }
+    }
 }
