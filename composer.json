@@ -1,7 +1,7 @@
 {
     "name": "raulfraile/Ladybug",
     "description": "Simple and Extensible PHP Dumper",
-    "keywords": ["ladybug", dump", "tree"],
+    "keywords": ["ladybug", "dump", "tree"],
     "homepage": "https://github.com/raulfraile/Ladybug",
     "type": "library",
     "license": "MIT",
