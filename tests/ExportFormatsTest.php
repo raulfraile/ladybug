@@ -15,7 +15,8 @@ class ExportFormatsTest extends PHPUnit_Framework_TestCase
             null,
             'hello world',
             array(1, 2, 3),
-            new \DateTime()
+            new \DateTime(),
+            true
         );
     }
     
@@ -41,7 +42,7 @@ class ExportFormatsTest extends PHPUnit_Framework_TestCase
      * @expectedException Ladybug\Exception\InvalidFormatException
      */
     public function testUnknownFormatThrowsException() {
-        $yaml = ladybug_dump_return('unknown', $this->vars[0], $this->vars[1], $this->vars[2], $this->vars[3], $this->vars[4], $this->vars[5]);
-        $this->assertEquals(file_get_contents(__DIR__ . '/files/test.json'), $yaml);
+        $data = ladybug_dump_return('unknown', $this->vars[0], $this->vars[1], $this->vars[2], $this->vars[3], $this->vars[4], $this->vars[5]);
+        $this->assertEquals(file_get_contents(__DIR__ . '/files/test.unknown'), $data);
     }   
 }
