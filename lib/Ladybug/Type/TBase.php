@@ -151,7 +151,13 @@ abstract class TBase {
             $result .= '<span class="switcher">'.$label.'</span>';
         $result .= '</label>';
         
-        $result .= '<input type="checkbox" id="tree_'.$this->type.'_'.$tree_id.'" />';
+        $result .= '<input type="checkbox" id="tree_'.$this->type.'_'.$tree_id.'"';
+
+        if ($this->options->getOption('general.expanded')) {
+            $result .= ' checked';
+        }
+
+        $result .= ' />';
         
         return $result;
     }

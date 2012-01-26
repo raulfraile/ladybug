@@ -158,14 +158,15 @@ There are also some shortcuts in case you are not using this function names:
 Almost any display option can be easily customizable, using the function 
 `ladybug_set($key, $value)`. Available options and default values:
         
+* `general.expanded = false`
 * `array.max_nesting_level = 8`
 * `object.max_nesting_level = 3`
-* `object.show_data = TRUE`
-* `object.show_classinfo = TRUE`
-* `object.show_constants = TRUE`
-* `object.show_methods = TRUE`
-* `object.show_properties = TRUE`
-* `processor.active = TRUE`
+* `object.show_data = true`
+* `object.show_classinfo = true`
+* `object.show_constants = true`
+* `object.show_methods = true`
+* `object.show_properties = true`
+* `processor.active = true`
 * `bool.html_color = '#008'`
 * `bool.cli_color = 'blue'`
 * `float.html_color = '#800'`
@@ -174,7 +175,7 @@ Almost any display option can be easily customizable, using the function
 * `int.cli_color = 'red'`
 * `string.html_color = '#080'`
 * `string.cli_color = 'green'`
-* `string.show_quotes = TRUE`
+* `string.show_quotes = true`
 * `string.show_quotes = '/Asset/tree.min.css'`
         
 ## Extensible

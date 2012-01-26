@@ -22,6 +22,7 @@ class Options {
     {
         $this->options = array(
             '_ladybug.format'          => 'html',
+            'general.expanded'         => false,
             'array.max_nesting_level'  => 8,
             'object.max_nesting_level' => 3,
             'object.show_data'         => true,
