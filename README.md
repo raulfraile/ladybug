@@ -34,7 +34,17 @@ It is possible to dump any variable, including arrays, objects and resources:
 
 ``` php
 <?php
-    $var = array(1, 2, 3);
+    $var = array(
+        array(
+            'name' => 'Raul',
+            'age' => 29
+        ),
+        array(
+            'name' => 'John',
+            'age' => 27
+        )
+    );
+    
     ladybug_dump($var)
 ```
 
