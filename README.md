@@ -104,7 +104,7 @@ your dependencies in a `composer.json` file:
 ``` json
 {
     "require": {
-        "raulfraile/Ladybug": "master-dev"
+        "raulfraile/ladybug": "master-dev"
     }
 }
 ```
