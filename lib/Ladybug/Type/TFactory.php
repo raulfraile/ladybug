@@ -13,13 +13,13 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\Exception\InvalidTypeException;
 
 class TFactory {
     
-    public static function factory($var, $level, Options $options) {
+    public static function factory($var, $level, Options $options)
+    {
         $result = null;
 
         if ($var === null) {

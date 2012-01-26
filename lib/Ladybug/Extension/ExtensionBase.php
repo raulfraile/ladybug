@@ -12,7 +12,8 @@
 
 namespace Ladybug\Extension;
 
-abstract class ExtensionBase implements ExtensionInterface {
+abstract class ExtensionBase implements ExtensionInterface
+{
     
     protected $var;
     protected $inspect;
@@ -23,11 +24,13 @@ abstract class ExtensionBase implements ExtensionInterface {
         $this->inspect = true;
     }
     
-    public function getInspect() {
+    public function getInspect()
+    {
         return $this->inspect;
     }
     
-    protected function _formatSize($size, $unit = NULL) {
+    protected function _formatSize($size, $unit = NULL)
+    {
         $kb = 1024;
         $mb = $kb * 1024;
         $gb = $mb * 1024;

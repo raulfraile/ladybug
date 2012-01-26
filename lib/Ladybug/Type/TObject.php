@@ -15,8 +15,11 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TObject extends TBase {
+class TObject extends TBase
+{
     
+    const TYPE_ID = 'object';
+
     protected $class_name;
     protected $class_constants;
     protected $object_properties;
@@ -35,17 +38,18 @@ class TObject extends TBase {
     protected $is_custom_data;
     
     
-    public function __construct($var, $level, Options $options) {
-        parent::__construct('object', $var, $level, $options);
+    public function __construct($var, $level, Options $options)
+    {
+        parent::__construct(self::TYPE_ID, $var, $level, $options);
         
-        $this->inspect_custom_data = TRUE;
+        $this->inspect_custom_data = true;
         
         $this->class_name = get_class($var);
         
         $this->tostring = null;
        
         if ($this->level < $this->options->getOption('object.max_nesting_level')) {
-            $this->is_leaf = FALSE;
+            $this->is_leaf = false;
             
             $reflection_class = new \ReflectionClass($this->class_name); 
 
@@ -169,7 +173,8 @@ class TObject extends TBase {
         else $this->is_leaf = TRUE;
     }
     
-    public function _renderHTML($array_key = NULL) {
+    public function _renderHTML($array_key = NULL)
+    {
         $label = $this->type . '('.$this->class_name . ')';
         
         if (!is_null($this->tostring)) $label .= '<a class="tostring" href="javascript:void(0)" title="'.htmlentities($this->tostring).'"></a>';
@@ -247,7 +252,8 @@ class TObject extends TBase {
         
     }
     
-    public function _renderCLI($array_key = NULL) {
+    public function _renderCLI($array_key = NULL)
+    {
         $label = $this->type . '('.$this->class_name . ')';
         $result = $this->renderArrayKey($array_key) . CLIColors::getColoredString($label, 'yellow');
         
@@ -295,7 +301,8 @@ class TObject extends TBase {
         
     }
     
-    private function _renderListCLI(&$list, $title) {
+    private function _renderListCLI(&$list, $title)
+    {
         $result = '';
         
         if (!empty($list)) {
@@ -316,7 +323,8 @@ class TObject extends TBase {
         return $result;
     }
     
-    public function export() {
+    public function export()
+    {
         $value = array();
         
         // Class info

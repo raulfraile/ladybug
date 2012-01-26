@@ -20,28 +20,7 @@ class Options {
     
     public function __construct()
     {
-        $this->options = array(
-            '_ladybug.format'          => 'html',
-            'general.expanded'         => false,
-            'array.max_nesting_level'  => 8,
-            'object.max_nesting_level' => 3,
-            'object.show_data'         => true,
-            'object.show_classinfo'    => true,
-            'object.show_constants'    => true,
-            'object.show_methods'      => true,
-            'object.show_properties'   => true,
-            'processor.active'         => true,
-            'bool.html_color'          => '#008',
-            'bool.cli_color'           => 'blue',
-            'float.html_color'         => '#800',
-            'float.cli_color'          => 'red',
-            'int.html_color'           => '#800',
-            'int.cli_color'            => 'red',
-            'string.html_color'        => '#080',
-            'string.cli_color'         => 'green',
-            'string.show_quotes'       => true,
-            'css.path'                 => __DIR__.'/Asset/tree.min.css'
-        );
+        $this->setDefaults();
     }
     
     /**
@@ -81,5 +60,38 @@ class Options {
     public function getAll()
     {
         return $this->options;
+    }
+
+    /**
+     * Load default options
+     *
+     * @return boolean
+     */
+    public function setDefaults()
+    {
+        $this->options = array(
+            '_ladybug.format'          => 'html',
+            'general.expanded'         => false,
+            'array.max_nesting_level'  => 8,
+            'object.max_nesting_level' => 3,
+            'object.show_data'         => true,
+            'object.show_classinfo'    => true,
+            'object.show_constants'    => true,
+            'object.show_methods'      => true,
+            'object.show_properties'   => true,
+            'processor.active'         => true,
+            'bool.html_color'          => '#008',
+            'bool.cli_color'           => 'blue',
+            'float.html_color'         => '#800',
+            'float.cli_color'          => 'red',
+            'int.html_color'           => '#800',
+            'int.cli_color'            => 'red',
+            'string.html_color'        => '#080',
+            'string.cli_color'         => 'green',
+            'string.show_quotes'       => true,
+            'css.path'                 => __DIR__.'/Asset/tree.min.css'
+        );
+
+        return true;
     }
 }

@@ -15,13 +15,16 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TArray extends TBase {
+class TArray extends TBase
+{
     
+    const TYPE_ID = 'array';
+
     protected $length;
     
     public function __construct($var, $level, Options $options)
     {
-        parent::__construct('array', array(), $level, $options);
+        parent::__construct(self::TYPE_ID, array(), $level, $options);
         
         $this->length = count($var);
         
@@ -42,13 +45,13 @@ class TArray extends TBase {
         if ($length >= 0) $this->length = $length;
     }
     
-    public function add($var, $index = NULL)
+    public function add($var, $index = null)
     {
         $this->value[$index] = TFactory::factory($var, $this->level, $this->options);
     }
     
     // override
-    protected function _renderHTML($array_key = NULL)
+    protected function _renderHTML($array_key = null)
     {
         $label = $this->type . '(' . $this->length . ')';
         
@@ -67,7 +70,7 @@ class TArray extends TBase {
     }
     
     // override
-    protected function _renderCLI($array_key = NULL)
+    protected function _renderCLI($array_key = null)
     {
         $label = $this->type . '(' . $this->length . ')';
         
@@ -78,7 +81,7 @@ class TArray extends TBase {
         $result .= CLIColors::getColoredString($label, 'yellow') . "\n";
         
         foreach ($this->value as $k=>$v) {
-            $result .= $this->indentCLI().$v->render($k, 'cli');
+            $result .= $this->indentCLI() . $v->render($k, 'cli');
         }
         
         return $result;

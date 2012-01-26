@@ -14,10 +14,14 @@ namespace Ladybug\Type;
 
 use Ladybug\Options;
 
-class TInt extends TBase {
+class TInt extends TBase
+{
     
-    public function __construct($var, $level, Options $options) {
-        parent::__construct('int', $var, $level, $options);
+    const TYPE_ID = 'int';
+
+    public function __construct($var, $level, Options $options)
+    {
+        parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
     
 }

@@ -14,10 +14,14 @@ namespace Ladybug\Type;
 
 use Ladybug\Options;
 
-class TFloat extends TBase {
+class TFloat extends TBase
+{
     
-    public function __construct($var, $level, Options $options) {
-        parent::__construct('float', $var, $level, $options);
+    const TYPE_ID = 'float';
+
+    public function __construct($var, $level, Options $options)
+    {
+        parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
     
 }

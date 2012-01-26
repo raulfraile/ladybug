@@ -16,10 +16,10 @@ use Ladybug\Exception\InvalidFormatException;
 
 class Dumper
 {
-    const EXPORT_FORMAT_PHP = 'php';
+    const EXPORT_FORMAT_PHP  = 'php';
     const EXPORT_FORMAT_YAML = 'yaml';
     const EXPORT_FORMAT_JSON = 'json';
-    const EXPORT_FORMAT_XML = 'xml';
+    const EXPORT_FORMAT_XML  = 'xml';
 
     private static $instance = null;
 
@@ -27,7 +27,6 @@ class Dumper
 
     private $isCssLoaded;
     private $isCli;
-
     private $nodes;
     private $options;
 
@@ -166,6 +165,7 @@ class Dumper
         }
 
         $html = '<pre class="ladybug"><ol class="tree">' . $html . '</ol></pre>';
+
         return $css . $html;
     }
 
@@ -213,11 +213,19 @@ class Dumper
         return $result;
     }
 
+    /**
+     * Increments and returns the tree counter
+     * @return int tree id
+     */
     public static function getTreeId()
     {
         return ++self::$tree_counter;
     }
 
+    /**
+     * Returns true if the script is being executed in CLI
+     * @return boolean
+     */
     private function _isCli()
     {
         return (php_sapi_name() == 'cli') ? true : false;

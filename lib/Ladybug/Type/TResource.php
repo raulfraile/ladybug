@@ -15,14 +15,17 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TResource extends TBase {
+class TResource extends TBase
+{
     
+    const TYPE_ID = 'resource';
+
     protected $resource_type;
     protected $resource_custom_data;
     
     public function __construct($var, $level, Options $options)
     {
-        parent::__construct('resource', $var, $level, $options);
+        parent::__construct(self::TYPE_ID, $var, $level, $options);
         
         $this->resource_type = get_resource_type($var);
         

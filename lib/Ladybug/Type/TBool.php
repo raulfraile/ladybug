@@ -14,14 +14,21 @@ namespace Ladybug\Type;
 
 use Ladybug\Options;
 
-class TBool extends TBase {
+class TBool extends TBase
+{
     
-    public function __construct($var, $level, Options $options) {
-        parent::__construct('bool', $var, $level, $options);
+    const TYPE_ID = 'bool';
+    const TRUE_REPRESENTATION = 'TRUE';
+    const FALSE_REPRESENTATION = 'FALSE';
+
+    public function __construct($var, $level, Options $options)
+    {
+        parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
     
-    public function getValue() {
-        return $this->value ? 'TRUE' : 'FALSE';
+    public function getValue()
+    {
+        return $this->value ? self::TRUE_REPRESENTATION : self::FALSE_REPRESENTATION;
     }
 
 }

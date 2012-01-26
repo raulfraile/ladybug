@@ -15,8 +15,11 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TString extends TBase {
+class TString extends TBase
+{
     
+    const TYPE_ID = 'string';
+
     protected $length;
     protected $encoding;
     
@@ -25,21 +28,24 @@ class TString extends TBase {
         $this->encoding = mb_detect_encoding($var);
         $this->length = mb_strlen($var, $this->encoding);
         
-        parent::__construct('string', $var, $level, $options);
+        parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
     
     public function getValue()
     {
-        if ($this->options->getOption('string.show_quotes')) return '"' . $this->value . '"';
-        else return $this->value;
+        if ($this->options->getOption('string.show_quotes')) {
+            return '"' . $this->value . '"';
+        } else {
+            return $this->value;
+        }
     }
     
-    protected function _renderHTML($array_key = NULL)
+    protected function _renderHTML($array_key = null)
     {
         return '<div class="final">'.$this->renderArrayKey($array_key).'<span class="type">'.$this->type.'('.$this->length.')</span> <span style="color:'.$this->getColor('html').'">'.htmlentities($this->getValue()).'</span></div>';
     }
     
-    protected function _renderCLI($array_key = NULL)
+    protected function _renderCLI($array_key = null)
     {
         return $this->renderArrayKey($array_key) . $this->type .'('.$this->length.') '. CLIColors::getColoredString($this->getValue(), $this->getColor('cli')) . "\n";
     }

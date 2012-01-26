@@ -15,15 +15,18 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\CLIColors;
 
-class TNull extends TBase {
+class TNull extends TBase
+{
     
+    const TYPE_ID = 'null';
+
     public function __construct($level, Options $options)
     {
-        parent::__construct('null', null, $level, $options);
+        parent::__construct(self::TYPE_ID, null, $level, $options);
     }
     
     public function getValue()
     {
-        return NULL;
+        return null;
     }
 }
