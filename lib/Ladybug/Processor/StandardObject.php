@@ -111,6 +111,11 @@ class StandardObject implements ProcessorInterface
         'Weakref'                            => 'class.weakref.php'
     );
     
+    public function isProcessable($str)
+    {
+        return true;
+    }
+
     public function process($str)
     {
         $result = $str;

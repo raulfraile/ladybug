@@ -203,7 +203,10 @@ class Dumper
                     $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
                     
                     $processorObject = new $class();
-                    $result = $processorObject->process($result);
+
+                    if ($processorObject->isProcessable($result)) {
+                        $result = $processorObject->process($result);
+                    }
 
                     unset($processorObject);
                 }

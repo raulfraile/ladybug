@@ -22,4 +22,11 @@ interface ProcessorInterface
      */
     function process($str);
 
+    /**
+     * Fast check to see if str is processable
+     *
+     * @param string $str html code
+     * @return boolean true if is processable
+     */
+    function isProcessable($str);
 }

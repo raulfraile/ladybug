@@ -15,6 +15,11 @@ namespace Ladybug\Processor;
 class RFC implements ProcessorInterface
 {
     
+    public function isProcessable($str)
+    {
+        return strpos($str, 'RFC') !== false;
+    }
+
     public function process($str)
     {
         return preg_replace('/RFC([0-9]+)/', '<a href="http://www.rfc-editor.org/rfc/rfc\1.txt" class="external" target="_blank"></a>RFC\1', $str);

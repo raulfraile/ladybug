@@ -17,6 +17,11 @@ class Symfony implements ProcessorInterface
     
     public $sfprefix = 'http://api.symfony.com/2.0/index.html?q=';
     
+    public function isProcessable($str)
+    {
+        return strpos($str, 'Symfony') !== false;
+    }
+
     public function process($str) {
         $matches = array();
         $result = $str;

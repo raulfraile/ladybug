@@ -14,8 +14,14 @@ namespace Ladybug\Processor;
 
 class Twig implements ProcessorInterface
 {    
+
     private $twig_prefix = 'http://twig.sensiolabs.org/api/master/';
     
+    public function isProcessable($str)
+    {
+        return strpos($str, 'Twig_') !== false;
+    }
+
     public function process($str)
     {
         $matches = array();

@@ -20,6 +20,11 @@ class Doctrine implements ProcessorInterface
     private $doctrine_mongodb_odm_prefix = 'http://www.doctrine-project.org/api/mongodb_odm/1.0/';
     private $doctrine_common_prefix = 'http://www.doctrine-project.org/api/common/2.1/';
     
+    public function isProcessable($str)
+    {
+        return strpos($str, 'Doctrine') !== false;
+    }
+
     public function process($str)
     {
         $matches = array();

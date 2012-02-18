@@ -14,8 +14,14 @@ namespace Ladybug\Processor;
 
 class Silex implements ProcessorInterface
 {    
+    
     private $silex_prefix = 'http://silex.sensiolabs.org/api/index.html?q=';
     
+    public function isProcessable($str)
+    {
+        return strpos($str, 'Silex') !== false;
+    }
+
     public function process($str)
     {
         $matches = array();
