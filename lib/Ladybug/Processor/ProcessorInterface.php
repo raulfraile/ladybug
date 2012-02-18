@@ -21,4 +21,5 @@ interface ProcessorInterface
      * @return string modified html code
      */
     function process($str);
+
 }
