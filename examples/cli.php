@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
 Ladybug\Autoloader::register();
 

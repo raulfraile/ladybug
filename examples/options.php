@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
 Ladybug\Autoloader::register();
 
@@ -7,7 +8,7 @@ ladybug_set('int.html_color', '#fff');
 ladybug_set('float.html_color', '#f09');
 ladybug_set('bool.html_color', '#726');
 
-$var1 = NULL;
+$var1 = null;
 $var2 = 15;
 $var3 = 15.5;
 $var4 = 'hello world!';
