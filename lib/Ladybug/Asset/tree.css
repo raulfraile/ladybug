@@ -139,3 +139,8 @@ pre.ladybug
 	{
 	    background: url(twig.png) left center no-repeat;
 	}
+
+	pre.ladybug a.propel
+	{
+	    background: url(propel.png) left center no-repeat;
+	}
