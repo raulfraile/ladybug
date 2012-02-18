@@ -25,55 +25,28 @@ class Doctrine implements ProcessorInterface
         $matches = array();
         $result = $str;
         
-        // ORM classes
-        if (preg_match_all('/\(Doctrine\\\\ORM[\\\\A-Za-z]*\)/', $str, $matches)) {
-            $matches = array_unique($matches[0]);
-            
-            foreach ($matches as $m) {
-                $class = str_replace('(', '', str_replace(')', '', $m));
-                $class_url = strtolower($class) . '.html';
-                
-                $result = str_replace($m, '(<a href="' . $this->doctrine_orm_prefix . $class_url . '" class="doc doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
-            }
-        }
-
-        // DBAL classes
-        if (preg_match_all('/\(Doctrine\\\\DBAL[\\\\A-Za-z]*\)/', $str, $matches)) {
-            $matches = array_unique($matches[0]);
-            
-            foreach ($matches as $m) {
-                $class = str_replace('(', '', str_replace(')', '', $m));
-                $class_url = strtolower($class) . '.html';
-                
-                $result = str_replace($m, '(<a href="' . $this->doctrine_dbal_prefix . $class_url . '" class="doc doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
-            }
-        }
-
-        // MongoDB ODM classes
-        if (preg_match_all('/\(Doctrine\\\\ODM\\\\MongoDB[\\\\A-Za-z]*\)/', $str, $matches)) {
-            $matches = array_unique($matches[0]);
-            
-            foreach ($matches as $m) {
-                $class = str_replace('(', '', str_replace(')', '', $m));
-                $class_url = strtolower($class) . '.html';
-                
-                $result = str_replace($m, '(<a href="' . $this->doctrine_mongodb_odm_prefix . $class_url . '" class="doc doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
-            }
-        }
-
-        // Common classes
-        if (preg_match_all('/\(Doctrine\\\\Common[\\\\A-Za-z]*\)/', $str, $matches)) {
-            $matches = array_unique($matches[0]);
-            
-            foreach ($matches as $m) {
-                $class = str_replace('(', '', str_replace(')', '', $m));
-                $class_url = strtolower($class) . '.html';
-                
-                $result = str_replace($m, '(<a href="' . $this->doctrine_common_prefix . $class_url . '" class="doc doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
-            }
-        }
+        $this->processReplace($result, 'Doctrine\ORM', $this->doctrine_orm_prefix);
+        $this->processReplace($result, 'Doctrine\DBAL', $this->doctrine_dbal_prefix);
+        $this->processReplace($result, 'Doctrine\ODM\MongoDB', $this->doctrine_mongodb_odm_prefix);
+        $this->processReplace($result, 'Doctrine\Common', $this->doctrine_common_prefix);
     
         return $result;
     }
 
+    private function processReplace(& $result, $classPrefix, $apiPrefix)
+    {
+        $classPrefixRegexp = str_replace('\\', '\\\\', $classPrefix);
+        $matches = array();
+
+        if (preg_match_all('/\(' . $classPrefixRegexp . '[\\\\A-Za-z]*\)/', $result, $matches)) {
+            $matches = array_unique($matches[0]);
+            
+            foreach ($matches as $m) {
+                $class = str_replace('(', '', str_replace(')', '', $m));
+                $class_url = strtolower($class) . '.html';
+                
+                $result = str_replace($m, '(<a href="' . $apiPrefix . $class_url . '" class="doc doctrine" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
+            }
+        }
+    }
 }
