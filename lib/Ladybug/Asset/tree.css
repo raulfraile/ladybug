@@ -129,7 +129,13 @@ pre.ladybug
 	{
 	    background: url(doctrine.png) left center no-repeat;
 	}
+
 	pre.ladybug a.silex
 	{
 	    background: url(silex.png) left center no-repeat;
+	}
+
+	pre.ladybug a.twig
+	{
+	    background: url(twig.png) left center no-repeat;
 	}
