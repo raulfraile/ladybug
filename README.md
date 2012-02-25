@@ -205,4 +205,4 @@ extend from `LadybugExtension` and will have to provide a public method called
         
 ## Symfony2 users
         
-Take a look at [LadybugBundle](https://github.com/raulfraile/LadybugBundle)
+Take a look at [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
