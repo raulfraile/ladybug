@@ -14,8 +14,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "symfony/Serializer": "2.1.*",
-        "symfony/Yaml": "2.1.*"
+        "symfony/Serializer": ">=2.0.4",
+        "symfony/Yaml": ">=2.0.4"
     },
     "autoload": {
         "psr-0": { "Ladybug": "lib/" }
