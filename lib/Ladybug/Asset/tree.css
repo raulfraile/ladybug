@@ -6,8 +6,6 @@ pre.ladybug
 	white-space: pre;
 	margin: 10px 0px;
 	background-color:#fff;
-	max-width:750px;
-	max-height:400px;
 	overflow-y:visible;
 	overflow-x:hidden;
 	border: 1px dotted #ddd;
