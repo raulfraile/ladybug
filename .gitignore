@@ -1,2 +1,5 @@
 nbproject
 .idea
+vendor
+composer.phar
+composer.lock

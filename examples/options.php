@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Autoloader::register();
+require_once __DIR__.'/../vendor/autoload.php';
+Ladybug\Loader::loadHelpers();
 
 ladybug_set('string.html_color', '#ccc');
 ladybug_set('int.html_color', '#fff');

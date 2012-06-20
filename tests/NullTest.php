@@ -1,8 +1,8 @@
 <?php
 require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Autoloader::register();
+require_once __DIR__.'/../vendor/autoload.php';
+Ladybug\Loader::loadHelpers();
 
 class NullTest extends PHPUnit_Framework_TestCase
 {

@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Autoloader::register();
+require_once __DIR__.'/../vendor/autoload.php';
+Ladybug\Loader::loadHelpers();
 
 // user class
 class Foo3 {public $a; public function __construct() {$this->a = new DateTime();}}

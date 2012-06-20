@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/../lib/Ladybug/Autoloader.php';
-Ladybug\Autoloader::register();
+require_once __DIR__.'/../vendor/autoload.php';
+Ladybug\Loader::loadHelpers();
 
 $connection = mysql_connect('localhost', 'dbuser', 'dbpass');
 mysql_select_db('dbname', $connection);
