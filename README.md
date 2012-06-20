@@ -146,7 +146,7 @@ terminates the current script
 `ladybug_dump_return($format, $var1[, $var2[, ...]])`: Dumps one or more variables and
 returns the dump in any of the following formats:
 
-* yml: Returns the dump in YAML
+* yaml: Returns the dump in YAML
 * json: Returns the dump in JSON
 * xml: Returns the dump in XML
 * php: Returns the dump in PHP arrays
