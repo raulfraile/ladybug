@@ -22,7 +22,7 @@ class ExportFormatsTest extends PHPUnit_Framework_TestCase
     
     public function testExportYamlFormat() {
         $data = ladybug_dump_return('yaml', $this->vars[0], $this->vars[1], $this->vars[2], $this->vars[3], $this->vars[4], $this->vars[5], $this->vars[6]);
-        
+
         $this->assertEquals(file_get_contents(__DIR__ . '/files/test.yml'), $data);
     }
     
@@ -34,7 +34,7 @@ class ExportFormatsTest extends PHPUnit_Framework_TestCase
     
     public function testExportJsonFormat() {
         $data = ladybug_dump_return('json', $this->vars[0], $this->vars[1], $this->vars[2], $this->vars[3], $this->vars[4], $this->vars[5], $this->vars[6]);
-        
+
         $this->assertEquals(file_get_contents(__DIR__ . '/files/test.json'), $data);
     }
     

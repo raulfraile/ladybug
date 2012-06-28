@@ -65,6 +65,6 @@ class ObjectTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals(1, count($foo_methods));
         
-        $this->assertEquals('+ test($required, [$optional = TRUE])', $foo_methods[0]);
+        $this->assertEquals('public test($required, [$optional = TRUE])', $foo_methods[0]);
     }
 }
