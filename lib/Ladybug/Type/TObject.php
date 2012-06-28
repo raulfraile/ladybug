@@ -127,10 +127,11 @@ class TObject extends TBase
                         if ($method->getName() == '__toString') $this->tostring = $var->__toString();
                                 
                         $method_syntax = '';
-
-                        if ($method->isPublic()) $method_syntax .= '+ ';
-                        elseif ($method->isProtected()) $method_syntax .= '# ';
-                        elseif ($method->isPrivate()) $method_syntax .= '- ';
+                        
+                        if ($method->isStatic()) $method_syntax .= 'static ';
+                        elseif ($method->isPublic()) $method_syntax .= 'public ';
+                        elseif ($method->isProtected()) $method_syntax .= 'protected ';
+                        elseif ($method->isPrivate()) $method_syntax .= 'private ';
 
                         $method_syntax .= $method->getName();
 
