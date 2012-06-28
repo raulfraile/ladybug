@@ -140,6 +140,13 @@ class TObject extends TBase
                         $method_parameters_result = array();
                         foreach ($method_parameters as $parameter) {
                             $parameter_result = '';
+                            
+                            $class = $parameter->getClass();
+                            if($class instanceof \ReflectionClass)
+                            {
+                            	$parameter_result .= $class->getName().' ';
+                            }
+                            
                             if ($parameter->isOptional()) $parameter_result .= '[';
 
                             if ($parameter->isPassedByReference()) $parameter_result .= '&';
