@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * CLI Colors class
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
@@ -12,8 +12,8 @@
 
 namespace Ladybug;
 
-class CLIColors {
-    
+class CLIColors
+{
     private static $foreground = array(
         'black' => '0;30',
         'dark_gray' => '1;30',
@@ -46,9 +46,9 @@ class CLIColors {
     /**
      * Returns colored string
      *
-     * @param string $str String to be colorized
-     * @param string $foreground Foreground color
-     * @param string $background Background color
+     * @param  string $str        String to be colorized
+     * @param  string $foreground Foreground color
+     * @param  string $background Background color
      * @return string Colorized string
      */
     public static function getColoredString($str, $foreground = null, $background = null)
@@ -61,7 +61,7 @@ class CLIColors {
         if (isset(self::$foreground[$foreground])) {
             $colored_string .= $str_start . self::$foreground[$foreground] . $str_middle;
         }
-        
+
         if (isset(self::$background[$background])) {
             $colored_string .= $str_start . self::$background[$background] . $str_middle;
         }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Type/TNull variable type
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -13,18 +13,17 @@
 namespace Ladybug\Type;
 
 use Ladybug\Options;
-use Ladybug\CLIColors;
 
 class TNull extends TBase
 {
-    
+
     const TYPE_ID = 'null';
 
     public function __construct($level, Options $options)
     {
         parent::__construct(self::TYPE_ID, null, $level, $options);
     }
-    
+
     public function getValue()
     {
         return null;

@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Loads Ladybug helpers
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
@@ -14,13 +14,13 @@ namespace Ladybug;
 
 class Loader
 {
-    
-    static public function loadHelpers($path = null)
+
+    public static function loadHelpers($path = null)
     {
         if (null !== $path) {
             require_once($path);
         } else {
-            require_once(__DIR__ . '/helpers.php');    
+            require_once(__DIR__ . '/helpers.php');
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Options class
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
@@ -12,34 +12,32 @@
 
 namespace Ladybug;
 
-use Ladybug\Type\TFactory;
-
-class Options {
-    
+class Options
+{
     private $options;
-    
+
     public function __construct()
     {
         $this->setDefaults();
     }
-    
+
     /**
      * Add or update an option value
      *
-     * @param string $key Option name
-     * @param mixed $value Option value
+     * @param string $key   Option name
+     * @param mixed  $value Option value
      */
     public function setOption($key, $value)
     {
         $this->options[strtolower($key)] = $value;
     }
-    
+
     /**
      * Gets the value of the given option name
      *
-     * @param string $key Option name
-     * @param mixed $default Default value, in case the option name does not exist
-     * @return mixed Option value
+     * @param  string $key     Option name
+     * @param  mixed  $default Default value, in case the option name does not exist
+     * @return mixed  Option value
      */
     public function getOption($key, $default = NULL)
     {
@@ -53,9 +51,9 @@ class Options {
     /**
      * Gets all options
      *
-     * @param string $key Option name
-     * @param mixed $default Default value, in case the option name does not exist
-     * @return mixed Option value
+     * @param  string $key     Option name
+     * @param  mixed  $default Default value, in case the option name does not exist
+     * @return mixed  Option value
      */
     public function getAll()
     {

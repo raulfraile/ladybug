@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * ProcessorInterface
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -17,8 +17,8 @@ interface ExtensionInterface
     /**
      * Returns the object data into an array/string
      *
-     * @param string $str html code
+     * @param  string $str html code
      * @return string modified html code
      */
-    function dump($var);
+    public function dump($var);
 }

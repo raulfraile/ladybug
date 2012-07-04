@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Invalid variable type exception
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -14,5 +14,5 @@ namespace Ladybug\Exception;
 
 class InvalidTypeException extends \Exception
 {
-    
+
 }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Invalid format exception
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -14,5 +14,5 @@ namespace Ladybug\Exception;
 
 class InvalidFormatException extends \Exception
 {
-    
+
 }

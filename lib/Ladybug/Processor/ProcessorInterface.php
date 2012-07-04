@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * ProcessorInterface
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -17,16 +17,16 @@ interface ProcessorInterface
     /**
      * Process the HTML code and make the proper changes
      *
-     * @param string $str html code
+     * @param  string $str html code
      * @return string modified html code
      */
-    function process($str);
+    public function process($str);
 
     /**
      * Fast check to see if str is processable
      *
-     * @param string $str html code
+     * @param  string  $str html code
      * @return boolean true if is processable
      */
-    function isProcessable($str);
+    public function isProcessable($str);
 }

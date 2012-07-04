@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Oject/DomDocument dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -15,13 +15,14 @@ namespace Ladybug\Extension\Object\Symfony\Component\HttpFoundation;
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
 
-class ParameterBag extends ExtensionBase {
-    
-    public function dump($var) {
+class ParameterBag extends ExtensionBase
+{
+    public function dump($var)
+    {
         $result = array();
         $result['bag'] = $var->all();
-        
+
         return $result;
     }
-    
+
 }

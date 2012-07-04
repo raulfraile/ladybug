@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Oject/DomDocument dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -15,16 +15,17 @@ namespace Ladybug\Extension\Object;
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
 
-class ZipArchive extends ExtensionBase {
-    
-    public function dump($var) {
+class ZipArchive extends ExtensionBase
+{
+    public function dump($var)
+    {
         $result = array();
-        
+
         $result['Filename'] = $var->filename;
         $result['Status'] = $var->status;
         $result['StatusSys'] = $var->statusSys;
         $result['Comment'] = $var->comment;
-        
+
         $files = array();
         for ($i=0; $i<$var->numFiles;$i++) {
             $stats_index = $var->statIndex($i);
@@ -33,9 +34,10 @@ class ZipArchive extends ExtensionBase {
 
         return $result;
     }
-    
-    public function getInspect() {
+
+    public function getInspect()
+    {
         return TRUE;
     }
-    
+
 }

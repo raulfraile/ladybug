@@ -45,7 +45,8 @@ class Dumper
      * Singleton method
      * @return Get singleton instance
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         return (self::$instance !== null) ? self::$instance : (self::$instance = new Dumper());
     }
 
@@ -54,7 +55,8 @@ class Dumper
      * @param vars one or more variables to dump
      * @return string
      */
-    public function dump(/*$var1 [, $var2...$varN]*/) {
+    public function dump(/*$var1 [, $var2...$varN]*/)
+    {
         $args = func_get_args();
         $this->nodes = $this->_readVars($args);
 
@@ -188,7 +190,7 @@ class Dumper
 
     /**
      * Triggers the html post-processors
-     * @param string $str HTML code
+     * @param  string $str HTML code
      * @return string processed string
      */
     private function _postProcess($str)
@@ -201,7 +203,7 @@ class Dumper
             while (false !== ($file = $dir->read())) {
                 if (strpos($file, '.php') !== false && strpos($file, 'Interface.php') === false) {
                     $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
-                    
+
                     $processorObject = new $class();
 
                     if ($processorObject->isProcessable($result)) {
@@ -213,6 +215,7 @@ class Dumper
             }
             $dir->close();
         }
+
         return $result;
     }
 

@@ -2,7 +2,7 @@
 
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Type/TFactory: Types factory
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -16,8 +16,8 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\Exception\InvalidTypeException;
 
-class TFactory {
-    
+class TFactory
+{
     public static function factory($var, $level, Options $options)
     {
         $result = null;
@@ -41,7 +41,7 @@ class TFactory {
         } else {
             throw new InvalidTypeException();
         }
-        
+
         return $result;
     }
 }

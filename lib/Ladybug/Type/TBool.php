@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Type/TBool variable type
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -16,7 +16,7 @@ use Ladybug\Options;
 
 class TBool extends TBase
 {
-    
+
     const TYPE_ID = 'bool';
     const TRUE_REPRESENTATION = 'TRUE';
     const FALSE_REPRESENTATION = 'FALSE';
@@ -25,7 +25,7 @@ class TBool extends TBase
     {
         parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
-    
+
     public function getValue()
     {
         return $this->value ? self::TRUE_REPRESENTATION : self::FALSE_REPRESENTATION;

@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Processor / RFC
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -14,7 +14,7 @@ namespace Ladybug\Processor;
 
 class RFC implements ProcessorInterface
 {
-    
+
     public function isProcessable($str)
     {
         return strpos($str, 'RFC') !== false;

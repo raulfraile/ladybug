@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * GD dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -15,17 +15,18 @@ namespace Ladybug\Extension\Resource;
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
 
-class Gd extends ExtensionBase {
-    
-    public function dump($var) {
+class Gd extends ExtensionBase
+{
+    public function dump($var)
+    {
         $result = array();
-        
+
         $gd_info = gd_info();
         $width = imagesx($var);
         $height = imagesy($var);
         $colors_palette = imagecolorstotal($var);
         $is_true_color = imageistruecolor($var) ? 'TRUE' : 'FALSE';
-        
+
         ob_start();
         imagepng($var);
         $image = ob_get_clean();
@@ -44,13 +45,13 @@ class Gd extends ExtensionBase {
         if ($gd_info['XPM Support']) $gd_support[] = 'XPM';
         if ($gd_info['XBM Support']) $gd_support[] = 'XBM';
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
-        
+
         // gd info
         $result['GD'] = array(
             'version' => $gd_info['GD Version'],
             'support' => implode(', ', $gd_support)
         );
-        
+
         // image info
         $result['image'] = array(
             'width' => $width . 'px',
@@ -60,7 +61,7 @@ class Gd extends ExtensionBase {
             //'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
             'image' => 'data:image/png;base64,' . base64_encode($image)
         );
-        
+
         return $result;
     }
 }

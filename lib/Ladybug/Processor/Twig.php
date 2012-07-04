@@ -1,7 +1,7 @@
 <?php
 /*
  * Ladybug: Simple and Extensible PHP Dumper
- * 
+ *
  * Processor / Twig
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
@@ -13,10 +13,10 @@
 namespace Ladybug\Processor;
 
 class Twig implements ProcessorInterface
-{    
+{
 
     private $twig_prefix = 'http://twig.sensiolabs.org/api/master/';
-    
+
     public function isProcessable($str)
     {
         return strpos($str, 'Twig_') !== false;
@@ -26,18 +26,18 @@ class Twig implements ProcessorInterface
     {
         $matches = array();
         $result = $str;
-        
+
         if (preg_match_all('/\(Twig_[\_A-Za-z]+\)/', $str, $matches)) {
             $matches = array_unique($matches[0]);
-            
+
             foreach ($matches as $m) {
                 $class = str_replace('(', '',str_replace(')', '', $m));
-                
+
                 $result = str_replace($m, '(<a href="' . $this->twig_prefix . $class . '.html" class="doc twig" target="_blank" title="'.$class.'"></a>'.$class.')', $result);
             }
-            
+
         }
-    
+
         return $result;
     }
 }
