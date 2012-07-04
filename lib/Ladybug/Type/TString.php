@@ -42,7 +42,7 @@ class TString extends TBase
     
     protected function _renderHTML($array_key = null)
     {
-        return '<div class="final">'.$this->renderArrayKey($array_key).'<span class="type">'.$this->type.'('.$this->length.')</span> <span style="color:'.$this->getColor('html').'">'.htmlentities($this->getValue()).'</span></div>';
+        return '<div class="final">'.$this->renderArrayKey($array_key).'<span class="type">'.$this->type.'('.$this->length.')</span> <span style="color:'.$this->getColor('html').'">'.htmlentities($this->getValue(), ENT_COMPAT, $this->encoding).'</span></div>';
     }
     
     protected function _renderCLI($array_key = null)
