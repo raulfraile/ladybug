@@ -15,7 +15,7 @@ class ExportFormatsTest extends PHPUnit_Framework_TestCase
             null,
             'hello world',
             array(1, 2, 3),
-            new \DateTime(),
+            new stdClass(),
             true
         );
     }

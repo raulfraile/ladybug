@@ -21,11 +21,23 @@ class TBool extends TBase
     const TRUE_REPRESENTATION = 'TRUE';
     const FALSE_REPRESENTATION = 'FALSE';
 
+    /**
+     * Constructor
+     *
+     * @param string  $var
+     * @param mixed   $level
+     * @param Options $options
+     */
     public function __construct($var, $level, Options $options)
     {
         parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
 
+    /**
+     * Get value
+     *
+     * @return string
+     */
     public function getValue()
     {
         return $this->value ? self::TRUE_REPRESENTATION : self::FALSE_REPRESENTATION;
