@@ -3,3 +3,4 @@ nbproject
 vendor
 composer.phar
 composer.lock
+bin/php-cs-fixer.phar
