@@ -87,6 +87,24 @@ class TArray extends TBase
         return $result;
     }
 
+    // override
+    protected function _renderTXT($array_key = null)
+    {
+        $label = $this->type . '(' . $this->length . ')';
+
+        $result = '';
+
+        if (!is_null($array_key)) $result .= '[' . $array_key . ']: ';
+
+        $result .= $label . "\n";
+
+        foreach ($this->value as $k=>$v) {
+            $result .= $this->indentTXT() . $v->render($k, 'txt');
+        }
+
+        return $result;
+    }
+
     public function export()
     {
         $value = array();

@@ -325,6 +325,74 @@ class TObject extends TBase
         return $result;
     }
 
+    public function _renderTXT($array_key = NULL)
+    {
+        $label = $this->type . '('.$this->class_name . ')';
+        $result = $this->renderArrayKey($array_key) . $label;
+
+        if (!$this->is_leaf) {
+
+            $result .=  "\n";
+
+            if (!empty($this->object_custom_data)) {
+                $result .= $this->indentTXT() . 'Data' . "\n";
+
+                if (is_array($this->object_custom_data)) {
+                    foreach ($this->object_custom_data as $k=>&$v) {
+                        $result .= $this->indentTXT() .  $v->render($k, 'txt');
+                    }
+                } else $result .= $this->indentTXT() . $this->object_custom_data."\n";
+
+            }
+
+            // class info
+            if (!empty($this->class_file)) {
+                $result .= $this->indentTXT() . 'Class info' . "\n";
+                if (!empty($this->class_file)) $result .= $this->indentTXT() . 'Filename: '.$this->class_file."\n";
+                if (!empty($this->class_interfaces)) $result .= $this->indentTXT() . 'Interfaces: '.$this->class_interfaces."\n";
+                if (!empty($this->class_namespace)) $result .= $this->indentTXT() . 'Namespace: '.$this->class_namespace."\n";
+                if (!empty($this->class_parent)) $result .= $this->indentTXT() . 'Parent: '.$this->class_parent."\n";
+            }
+
+            // constants
+            $result .= $this->_renderListTXT($this->class_constants, 'Constants');
+
+            // properties
+            $result .= $this->_renderListTXT($this->object_properties, 'Public properties');
+
+            // static properties
+            $result .= $this->_renderListTXT($this->class_static_properties, 'Static properties');
+
+            // methods
+            $result .= $this->_renderListTXT($this->class_methods, 'Methods');
+
+        } else $result .= "\n";
+
+        return $result;
+
+    }
+
+    private function _renderListTXT(&$list, $title)
+    {
+        $result = '';
+
+        if (!empty($list)) {
+            $result .= $this->indentTXT() . $title . "\n";
+            foreach ($list as $k=>$v) {
+                $result .= '  '.$this->indentTXT();
+
+                if (is_string($v)) $result .= $v;
+                else $result .= $v->render($k, 'txt');
+
+                $result .= "\n";
+            }
+        }
+
+        // remove extra "\n"
+        $result = preg_replace('/\n+/', "\n", $result);
+
+        return $result;
+    }
     public function export()
     {
         $value = array();

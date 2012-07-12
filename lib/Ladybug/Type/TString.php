@@ -56,6 +56,11 @@ class TString extends TBase
         return $this->renderArrayKey($array_key) . $this->type .'('.$this->length.') '. CLIColors::getColoredString($this->getValue(), $this->getColor('cli')) . "\n";
     }
 
+    protected function _renderTXT($array_key = null)
+    {
+        return $this->renderArrayKey($array_key) . $this->type .'('.$this->length.') '. $this->getValue() . "\n";
+    }
+
     public function export()
     {
         return array(

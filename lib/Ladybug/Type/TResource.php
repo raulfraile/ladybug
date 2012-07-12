@@ -101,6 +101,30 @@ class TResource extends TBase
         return $result;
     }
 
+    public function _renderTXT($array_key = NULL)
+    {
+        $label = $this->type . '('.$this->resource_type . ')';
+        $result = $this->renderArrayKey($array_key) . $label . "\n";
+
+        if (!empty($this->resource_custom_data)) {
+
+            if (is_array($this->resource_custom_data)) {
+                foreach ($this->resource_custom_data as $k=>$v) {
+                    if (is_array($v)) {
+                        $result .= $this->indentTXT() . $k . "\n";
+                        foreach ($v as $sub_k=>$sub_v) {
+                            $stripped = strip_tags($sub_v);
+                            if (strlen($stripped) > 0) $result .= $this->indentTXT(1) . $sub_k . ': ' . $stripped . "\n";
+                        }
+
+                    } else $result .= $this->indentTXT() . $k . ': ' . strip_tags($v) . "\n";
+                }
+            } else $result .= $this->indentTXT() . $this->resource_custom_data . "\n";
+        }
+
+        return $result;
+    }
+
     public function export()
     {
         $value = array();

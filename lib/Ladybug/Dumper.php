@@ -26,7 +26,6 @@ class Dumper
     private static $tree_counter = 0;
 
     private $isCssLoaded;
-    private $isCli;
     private $nodes;
     private $options;
 
@@ -37,7 +36,6 @@ class Dumper
     public function __construct()
     {
         $this->isCssLoaded = false;
-        $this->isCli = $this->_isCli();
         $this->options = new Options();
     }
 
@@ -60,20 +58,21 @@ class Dumper
         $args = func_get_args();
         $this->nodes = $this->_readVars($args);
 
-        // generate html/console code
-        if (!$this->isCli) {
-            $html = $this->_render('html');
-            unset($result); $result = null;
-
-            // post-processors
-            $html = $this->_postProcess($html);
-
-            return $html;
-        } else {
-            $code = $this->_render('cli');
-
-            return $code;
+        // generate CONSOLE code
+        if (true === $this->_isCli()) {
+            return $this->_render('cli');
         }
+        // generate TEXT code
+        if ($this->isXmlHttpRequest()) {
+            return $this->_render('txt');
+        }
+        // generate HTML code
+        $html = $this->_render('html');
+
+        // post-processors
+        $html = $this->_postProcess($html);
+
+        return $html;
     }
 
     /**
@@ -144,9 +143,11 @@ class Dumper
     {
         if ($format == 'html') {
             return $this->_renderHTML();
-        } else {
-            return $this->_renderCLI();
         }
+        if ($format == 'txt') {
+            return $this->_renderTXT();
+        }
+        return $this->_renderCLI();
     }
 
     /**
@@ -181,6 +182,23 @@ class Dumper
 
         foreach ($this->nodes as $var) {
             $result .= $var->render(null, 'cli');
+        }
+
+        $result .= "\n";
+
+        return $result;
+    }
+
+    /**
+     * Renders the variables into TXT format
+     * @return string
+     */
+    private function _renderTXT()
+    {
+        $result = '';
+
+        foreach ($this->nodes as $var) {
+            $result .= $var->render(null, 'txt');
         }
 
         $result .= "\n";
@@ -234,7 +252,20 @@ class Dumper
      */
     private function _isCli()
     {
-        return (php_sapi_name() == 'cli') ? true : false;
+        return 'cli' === php_sapi_name();
+    }
+
+    /**
+     * Returns true if the request is a XMLHttpRequest.
+     *
+     * It works if your JavaScript library set an X-Requested-With HTTP header.
+     * It is known to work with Prototype, Mootools, jQuery.
+     *
+     * @return Boolean true if the request is an XMLHttpRequest, false otherwise
+     */
+    public function isXmlHttpRequest()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
     }
 
     public function setOption($key, $value)

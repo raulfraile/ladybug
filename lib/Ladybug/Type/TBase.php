@@ -125,7 +125,7 @@ abstract class TBase
     /**
      * Renders the variable node in the dump tree
      *
-     * @param  mixed  $array_key if the variable is part of an array, it's value
+     * @param  mixed  $array_key if the variable is part of an array, its value
      * @param  string $format    Format: html or cli
      * @return string Variable representation
      */
@@ -133,13 +133,14 @@ abstract class TBase
     {
         if ($format == 'html') return $this->_renderHTML($array_key);
         elseif ($format == 'cli') return $this->_renderCLI($array_key);
+        elseif ($format == 'txt') return $this->_renderTXT($array_key);
         else return NULL;
     }
 
     /**
      * Renders the variable node in the dump tree using HTML code
      *
-     * @param  mixed  $array_key if the variable is part of an array, it's value
+     * @param  mixed  $array_key if the variable is part of an array, its value
      * @return string Variable representation
      */
     protected function _renderHTML($array_key = NULL)
@@ -156,7 +157,7 @@ abstract class TBase
     /**
      * Renders the variable node in the dump tree using CLI code
      *
-     * @param  mixed  $array_key if the variable is part of an array, it's value
+     * @param  mixed  $array_key if the variable is part of an array, its value
      * @return string Variable representation
      */
     protected function _renderCLI($array_key = NULL)
@@ -166,6 +167,21 @@ abstract class TBase
         $cli .= "\n";
 
         return $cli;
+    }
+
+    /**
+     * Renders the variable node in the dump tree using TXT code
+     *
+     * @param  mixed  $array_key if the variable is part of an array, its value
+     * @return string Variable representation
+     */
+    protected function _renderTXT($array_key = NULL)
+    {
+        $ret = $this->renderArrayKey($array_key) . $this->type . ' ';
+        $ret .= $this->getValue();
+        $ret .= "\n";
+
+        return $ret;
     }
 
     protected function renderArrayKey($key)
@@ -206,7 +222,6 @@ abstract class TBase
             if (($i+1) < $path_number) $class_name .= '\\';
         }
 
-
         if ($type == 'object') $class = 'Ladybug\\Extension\\Object\\'.$class_name;
         elseif ($type == 'resource') $class = 'Ladybug\\Extension\\Resource\\'.$class_name;
 
@@ -217,6 +232,20 @@ abstract class TBase
     {
         $char1 = CLIColors::getColoredString('   ', 'dark_gray');
         $char2 = CLIColors::getColoredString(' | ', 'dark_gray');
+
+        $result = '';
+        for ($i=0;$i<($this->level + $increment);$i++) {
+            if ($i==0) $result .= $char1;
+            else $result .= $char2;
+        }
+
+        return $result;
+    }
+
+    protected function indentTXT($increment = 0)
+    {
+        $char1 = '   ';
+        $char2 = ' | ';
 
         $result = '';
         for ($i=0;$i<($this->level + $increment);$i++) {
