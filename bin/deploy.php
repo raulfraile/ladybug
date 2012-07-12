@@ -37,10 +37,10 @@ foreach ($files as $item) {
 // add git components
 foreach ($components as $key => $item) {
     if (!is_dir($temp . '/' . $item['target'])) rmkdir($item['target']);
-    
+
     $command = 'git clone '.$item['git'].' '.$temp.'/'.$item['target'];
     echo "$command\n";
-    
+
     shell_exec($command);
 }
 
@@ -59,44 +59,46 @@ raddzip($temp, $zip);
 $zip->close();
 
 // functions from https://github.com/asiermarques/Leophard/blob/master/leophard_install.php
-function rrmdir($dir) { 
-   if (is_dir($dir)) { 
-     $objects = scandir($dir); 
-     foreach ($objects as $object) { 
-       if ($object != "." && $object != "..") { 
-         if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); 
-         else unlink($dir."/".$object); 
-       } 
-     } 
-     reset($objects); 
-     rmdir($dir); 
-   } 
-} 
+function rrmdir($dir)
+{
+   if (is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object);
+         else unlink($dir."/".$object);
+       }
+     }
+     reset($objects);
+     rmdir($dir);
+   }
+}
 
-function rcopy($src, $dst) {
+function rcopy($src, $dst)
+{
   //if (file_exists($dst)) rrmdir($dst);
   if (is_dir($src)) {
     @mkdir($dst);
     $files = scandir($src);
     foreach ($files as $file)
-    if ($file != "." && $file != "..") rcopy("$src/$file", "$dst/$file"); 
-  }
-  else if (file_exists($src)) copy($src, $dst);
+    if ($file != "." && $file != "..") rcopy("$src/$file", "$dst/$file");
+  } elseif (file_exists($src)) copy($src, $dst);
 }
 
-function rmkdir($dir) {
+function rmkdir($dir)
+{
     @mkdir($dir, 0777, true);
 }
 
-function raddzip($src, & $zip) {
+function raddzip($src, & $zip)
+{
   if (is_dir($src)) {
     $zip->addEmptyDir($src);
-    
+
     $files = scandir($src);
     foreach ($files as $file)
     if ($file != "." && $file != "..") raddzip("$src/$file", $zip);
-  }
-  else if (file_exists($src)) {
+  } elseif (file_exists($src)) {
       $zip->addFile("$src", preg_replace('/^\/tmp\/Ladybug/', '', $src));
   }
 }

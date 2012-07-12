@@ -6,11 +6,12 @@ Ladybug\Loader::loadHelpers();
 // user class
 class Foo3 {public $a; public function __construct() {$this->a = new DateTime();}}
 class Foo2 {public $a; public function __construct() {$this->a = new Foo3();}}
-class Foo {
+class Foo
+{
     public $bar = 1;
     public $bar2 = 2;
     public $a;
-    
+
     public function __construct() {$this->a = new Foo2();}
     public function getBar() { return $this->bar; }
     public function setBar($bar = 1, $bar2 = TRUE, $bar3 = NULL) { $this->bar = $bar; }
@@ -24,7 +25,6 @@ ladybug_dump($foo);
 
 $date = new DateTime();
 ladybug_dump($date);
-
 
 $sXml = <<<XML
 <books>

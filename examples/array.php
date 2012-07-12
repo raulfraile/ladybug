@@ -10,7 +10,7 @@ $var1[0] = array(
     'age' => 29,
     'url' => 'http://twitter.com/raulfraile'
 );
-        
+
 $var1[1] = array(
     'name' => 'John',
     'age' => 27

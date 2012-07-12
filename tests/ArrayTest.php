@@ -7,17 +7,18 @@ Ladybug\Loader::loadHelpers();
 
 class ArrayTest extends PHPUnit_Framework_TestCase
 {
-    
-    public function testEmptyArrayGetsEmpty() {
+
+    public function testEmptyArrayGetsEmpty()
+    {
         $vars = array(
             array(),
             (array) null
         );
-        
+
         $result = ladybug_dump_return('php', $vars[0], $vars[1]);
-        
+
         $this->assertEquals(count($vars), count($result));
-        
+
         $i = 0;
         foreach ($result as $item) {
             $this->assertEquals('array', $item['type']);
@@ -26,19 +27,20 @@ class ArrayTest extends PHPUnit_Framework_TestCase
             $i++;
         }
     }
-    
-    public function testSimpleArrayGetsAllElements() {
+
+    public function testSimpleArrayGetsAllElements()
+    {
         $vars = array(
             range(1, 10),
             array('a')
         );
-        
+
         $lengths = array(10, 1);
-        
+
         $result = ladybug_dump_return('php', $vars[0], $vars[1]);
-        
+
         $this->assertEquals(count($vars), count($result));
-        
+
         $i = 0;
         foreach ($result as $item) {
             $this->assertEquals('array', $item['type']);
@@ -46,21 +48,22 @@ class ArrayTest extends PHPUnit_Framework_TestCase
             $i++;
         }
     }
-    
-    public function testNestedArrayGetsAllElements() {
+
+    public function testNestedArrayGetsAllElements()
+    {
         $vars = array(
             array(
                 0 => array(1, 2, 3),
                 1 => array(4, 5, 6)
             )
         );
-        
+
         $lengths = array(2);
-        
+
         $result = ladybug_dump_return('php', $vars[0]);
-        
+
         $this->assertEquals(count($vars), count($result));
-        
+
         $i = 0;
         foreach ($result as $item) {
             $this->assertEquals('array', $item['type']);
@@ -70,7 +73,7 @@ class ArrayTest extends PHPUnit_Framework_TestCase
             $i++;
         }
     }
-    
+
     public function testDeepArrayGetsTruncated()
     {
         $var = range(1, 5);
@@ -80,11 +83,11 @@ class ArrayTest extends PHPUnit_Framework_TestCase
         for ($i=0;$i<$deep;$i++) {
             $var[0] = $var;
         }
-        
+
         ladybug_set('array.max_nesting_level', $max_deep);
 
         $result = ladybug_dump_return('php', $var);
-        
+
         $this->assertEquals($max_deep, count($result['var1']));
     }
 }
