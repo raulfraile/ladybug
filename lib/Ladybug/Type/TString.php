@@ -80,23 +80,23 @@ class TString extends TBase
     private function _getEncodingForHtmlentities()
     {
         $validEncodings = array(
-            'iso-8859-1', 'iso8859-1',
-            'iso-8859-5', 'iso8859-5',
-            'iso-8859-15', 'iso8859-15',
-            'utf-8',
-            'cp866', 'ibm866', '866',
-            'cp1251', 'Windows-1251', 'win-1251', '1251',
-            'cp1252', 'Windows-1252', '1252',
-            'KOI8-R', 'koi8-ru', 'koi8r',
+            'ISO-8859-1', 'ISO8859-1',
+            'ISO-8859-5', 'ISO8859-5',
+            'ISO-8859-15', 'ISO8859-15',
+            'UTF-8',
+            'CP866', 'IBM866', '866',
+            'CP1251', 'WINDOWS-1251', 'WIN-1251', '1251',
+            'CP1252', 'WINDOWS-1252', '1252',
+            'KOI8-R', 'KOI8-RU', 'KOI8R',
             'BIG5', '950',
             'GB2312', '936',
             'BIG5-HKSCS',
-            'Shift_JIS', 'SJIS', 'SJIS-win', 'cp932', '932',
-            'EUC-JP', 'EUCJP', 'eucJP-win',
-            'MacRoman'
+            'SHIFT_JIS', 'SJIS', 'SJIS-WIN', 'CP932', '932',
+            'EUC-JP', 'EUCJP', 'EUCJP-WIN',
+            'MACROMAN'
         );
 
-        if (in_array($this->encoding, $validEncodings)) {
+        if (in_array(strtoupper($this->encoding), $validEncodings)) {
             return $this->encoding;
         } else {
             return 'ISO-8859-1';
