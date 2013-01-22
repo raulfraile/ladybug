@@ -142,3 +142,13 @@ pre.ladybug
 	{
 	    background: url(propel.png) left center no-repeat;
 	}
+
+    pre.ladybug a.zendframework
+    {
+        background: url(zendframework.png) left center no-repeat;
+    }
+
+    pre.ladybug a.aura
+    {
+        background: url(aura.png) left center no-repeat;
+    }
