@@ -108,7 +108,18 @@ class StandardObject implements ProcessorInterface
         'RarException'                       => 'class.rarexception.php',
 
         // Weakref
-        'Weakref'                            => 'class.weakref.php'
+        'Weakref'                            => 'class.weakref.php',
+
+        // SPL
+        'SplDoublyLinkedList'                => 'class.spldoublylinkedlist.php',
+        'SplStack'                           => 'class.splstack.php',
+        'SplQueue'                           => 'class.splqueue.php',
+        'SplHeap'                            => 'class.splheap.php',
+        'SplMaxHeap'                         => 'class.splmaxheap.php',
+        'SplMinHeap'                         => 'class.splminheap.php',
+        'SplPriorityQueue'                   => 'class.splpriorityqueue.php',
+        'SplFixedArray'                      => 'class.splfixedarray.php',
+        'SplObjectStorage'                   => 'class.splobjectstorage.php'
     );
 
     public function isProcessable($str)
