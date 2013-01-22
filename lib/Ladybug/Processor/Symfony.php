@@ -15,7 +15,7 @@ namespace Ladybug\Processor;
 class Symfony implements ProcessorInterface
 {
 
-    public $sfprefix = 'http://api.symfony.com/2.0/index.html?q=';
+    public $sfprefix = 'http://api.symfony.com/2.1/index.html?q=';
 
     public function isProcessable($str)
     {

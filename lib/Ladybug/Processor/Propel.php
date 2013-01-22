@@ -15,7 +15,7 @@ namespace Ladybug\Processor;
 class Propel implements ProcessorInterface
 {
 
-    private $propel_prefix = 'http://api.propelorm.org/1.6.4/';
+    private $propel_prefix = 'http://api.propelorm.org/1.6.6/';
 
     public function isProcessable($str)
     {
