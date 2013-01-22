@@ -155,7 +155,7 @@ class TObject extends TBase
 
                                 if($default === null) $default = 'NULL';
                                 elseif(is_bool($default)) $default = $default ? 'TRUE' : 'FALSE';
-                                elseif(is_string($default)) $default = '"' . $default . '"';
+                                elseif(is_string($default)) $default = '"' . htmlentities($default, ENT_COMPAT) . '"';
                                 elseif(is_array($default)) $default = 'Array';
 
                                 $parameter_result .= ' = ' . $default;
