@@ -178,7 +178,7 @@ class TObject extends TBase
         } else $this->is_leaf = TRUE;
     }
 
-    public function _renderHTML($array_key = NULL)
+    public function _renderHTML($array_key = NULL, $escape = false)
     {
         $label = $this->type . '('.$this->class_name . ')';
 

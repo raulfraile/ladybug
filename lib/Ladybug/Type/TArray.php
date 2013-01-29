@@ -51,7 +51,7 @@ class TArray extends TBase
     }
 
     // override
-    protected function _renderHTML($array_key = null)
+    protected function _renderHTML($array_key = null, $escape = true)
     {
         $label = $this->type . '(' . $this->length . ')';
 
@@ -61,7 +61,8 @@ class TArray extends TBase
             $result .= '<ol>';
 
             foreach ($this->value as $k=>$v) {
-                $result .= '<li>'.$v->render($k).'</li>';
+
+                $result .= '<li>'.$v->render($k, 'html', true).'</li>';
             }
             $result .= '</ol>';
         }

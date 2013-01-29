@@ -33,6 +33,9 @@ abstract class TBase
     /** @var Options $options */
     protected $options;
 
+    /** @var string $encoding */
+    protected $encoding;
+
     /**
      * Constructor
      *
@@ -129,11 +132,11 @@ abstract class TBase
      * @param  string $format    Format: html or cli
      * @return string Variable representation
      */
-    public function render($array_key = NULL, $format = 'html')
+    public function render($array_key = NULL, $format = 'html', $escape = false)
     {
-        if ($format == 'html') return $this->_renderHTML($array_key);
-        elseif ($format == 'cli') return $this->_renderCLI($array_key);
-        elseif ($format == 'txt') return $this->_renderTXT($array_key);
+        if ($format == 'html') return $this->_renderHTML($array_key, $escape);
+        elseif ($format == 'cli') return $this->_renderCLI($array_key, $escape);
+        elseif ($format == 'txt') return $this->_renderTXT($array_key, $escape);
         else return NULL;
     }
 
@@ -143,10 +146,10 @@ abstract class TBase
      * @param  mixed  $array_key if the variable is part of an array, its value
      * @return string Variable representation
      */
-    protected function _renderHTML($array_key = NULL)
+    protected function _renderHTML($array_key = NULL, $escape = false)
     {
         $html = '<div class="final">';
-            $html .= $this->renderArrayKey($array_key);
+            $html .= $this->renderArrayKey($array_key, $escape);
             $html .= '<span class="type">'.$this->type.'</span> ';
             $html .= '<span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span>';
         $html .= '</div>';
@@ -184,10 +187,10 @@ abstract class TBase
         return $ret;
     }
 
-    protected function renderArrayKey($key)
+    protected function renderArrayKey($key, $escape = false)
     {
         if (is_null($key)) return NULL;
-        else return "[$key]: ";
+        else return '['. ($escape ? htmlentities($key, ENT_COMPAT, $this->_getEncodingForHtmlentities()) : $key. 'toto2' ). ']: ';
     }
 
     protected function renderTreeSwitcher($label, $array_key = NULL)
@@ -264,5 +267,31 @@ abstract class TBase
         );
 
         return $return;
+    }
+
+    protected function _getEncodingForHtmlentities()
+    {
+        $validEncodings = array(
+            'ISO-8859-1', 'ISO8859-1',
+            'ISO-8859-5', 'ISO8859-5',
+            'ISO-8859-15', 'ISO8859-15',
+            'UTF-8',
+            'CP866', 'IBM866', '866',
+            'CP1251', 'WINDOWS-1251', 'WIN-1251', '1251',
+            'CP1252', 'WINDOWS-1252', '1252',
+            'KOI8-R', 'KOI8-RU', 'KOI8R',
+            'BIG5', '950',
+            'GB2312', '936',
+            'BIG5-HKSCS',
+            'SHIFT_JIS', 'SJIS', 'SJIS-WIN', 'CP932', '932',
+            'EUC-JP', 'EUCJP', 'EUCJP-WIN',
+            'MACROMAN'
+        );
+
+        if (in_array(strtoupper($this->encoding), $validEncodings)) {
+            return $this->encoding;
+        } else {
+            return 'ISO-8859-1';
+        }
     }
 }
