@@ -46,7 +46,7 @@ class TResource extends TBase
         }
     }
 
-    public function _renderHTML($array_key = NULL)
+    public function _renderHTML($array_key = NULL, $escape = false)
     {
         $label = $this->type . '('.$this->resource_type . ')';
         $result = $this->renderTreeSwitcher($label, $array_key) . '<ol>';

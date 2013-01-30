@@ -187,10 +187,14 @@ abstract class TBase
         return $ret;
     }
 
-    protected function renderArrayKey($key, $escape = false)
+    protected function renderArrayKey($key, $escape = true)
     {
-        if (is_null($key)) return NULL;
-        else return '['. ($escape ? htmlentities($key, ENT_COMPAT, $this->_getEncodingForHtmlentities()) : $key. 'toto2' ). ']: ';
+        if (is_null($key)) {
+            return NULL;
+        }
+        else {
+            return '['. ($escape ? htmlentities($key, ENT_COMPAT, $this->_getEncodingForHtmlentities()) : $key). ']: ';
+        }
     }
 
     protected function renderTreeSwitcher($label, $array_key = NULL)
