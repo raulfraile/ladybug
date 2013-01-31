@@ -31,7 +31,8 @@ class TString extends TBase
     public function __construct($var, $level, Options $options)
     {
         $this->encoding = mb_detect_encoding($var);
-        $this->length = mb_strlen($var, $this->encoding);
+        $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());        
+
 
         parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
