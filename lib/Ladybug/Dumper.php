@@ -167,7 +167,12 @@ class Dumper
             $css = '<style>' . file_get_contents($this->options->getOption('css.path')) . '</style>';
         }
 
-        $html = '<pre class="ladybug"><ol class="tree">' . $html . '</ol></pre>';
+        $call = '<span class="call_title">Laydybug called at:</span>'. PHP_EOL;
+        foreach (self::getCallLocationInfos() as $key => $val) {
+            $call .= !empty($val) ? '  &raquo; <span class="call_info">'. str_pad($key, 8, ' ', STR_PAD_RIGHT). '</span> : '. $val. PHP_EOL : '';
+        }
+
+        $html = '<pre class="ladybug"><ol class="tree">' . $html . '</ol>'. $call. '</pre>';
 
         return $css . $html;
     }
@@ -182,6 +187,11 @@ class Dumper
 
         foreach ($this->nodes as $var) {
             $result .= $var->render(null, 'cli');
+        }
+
+        $result .= PHP_EOL. 'Laydybug called at:'. PHP_EOL;
+        foreach (self::getCallLocationInfos() as $key => $val) {
+            $result .= !empty($val) ? ' > '. str_pad($key, 8, ' ', STR_PAD_RIGHT). ' : '. $val. PHP_EOL : '';
         }
 
         $result .= "\n";
@@ -199,6 +209,11 @@ class Dumper
 
         foreach ($this->nodes as $var) {
             $result .= $var->render(null, 'txt');
+        }
+
+        $result .= PHP_EOL. 'Laydybug called at:'. PHP_EOL;
+        foreach (self::getCallLocationInfos() as $key => $val) {
+            $result .= !empty($val) ? ' | '. str_pad($key, 8, ' ', STR_PAD_RIGHT). ' | '. $val. PHP_EOL : '';
         }
 
         $result .= "\n";
@@ -271,5 +286,29 @@ class Dumper
     public function setOption($key, $value)
     {
         $this->options->setOption($key, $value);
+    }
+
+    /**
+     * Returns call location informations.
+     *
+     * @return array
+     */
+    public static function getCallLocationInfos()
+    {
+        $idx = 7;
+        $bt = debug_backtrace();
+
+        // Check if Ladybug was called from the helpers shortcuts
+        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+        if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
+            $idx = $idx - 2;
+        }
+
+        return array(
+            'file'     => isset($bt[$idx]['file']) ? $bt[$idx]['file'] : '',
+            'line'     => isset($bt[$idx]['line']) ? $bt[$idx]['line'] : '',
+            'class'    => isset($bt[$idx + 1]['class'])    ? $bt[$idx + 1]['class'] : '',
+            'function' => isset($bt[$idx + 1]['function']) ? $bt[$idx + 1]['function'] : ''
+        );
     }
 }
