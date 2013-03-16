@@ -187,7 +187,7 @@ abstract class TBase
         return $ret;
     }
 
-    protected function renderArrayKey($key, $escape = true)
+    protected function renderArrayKey($key, $escape = false)
     {
         if (is_null($key)) {
             return NULL;

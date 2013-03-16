@@ -16,4 +16,9 @@ $var1[1] = array(
     'age' => 27
 );
 
+$var1[2] = array(
+    '<<name>>' => '<<Ladybug>>',
+    '<<age>>' => 2
+);
+
 ladybug_dump($var1);
