@@ -122,7 +122,7 @@ class Dumper
 
     /**
      * Reads variables and creates TType objects
-     * @param vars variables to dump
+     * @param array $vars variables to dump
      */
     private function _readVars($vars)
     {
@@ -137,7 +137,7 @@ class Dumper
 
     /**
      * Renders the variables into the selected format
-     * @param format dump format (html, cli)
+     * @param string $format dump format (html, cli)
      */
     private function _render($format = 'html')
     {

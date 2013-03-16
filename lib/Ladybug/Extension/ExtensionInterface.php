@@ -17,7 +17,7 @@ interface ExtensionInterface
     /**
      * Returns the object data into an array/string
      *
-     * @param  string $str html code
+     * @param  string $var html code
      * @return string modified html code
      */
     public function dump($var);

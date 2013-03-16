@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Oject/SplMaxHeap dumper
+ * Object/SplMaxHeap dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *

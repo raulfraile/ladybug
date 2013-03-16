@@ -128,9 +128,10 @@ abstract class TBase
     /**
      * Renders the variable node in the dump tree
      *
-     * @param  mixed  $array_key if the variable is part of an array, its value
-     * @param  string $format    Format: html or cli
-     * @return string Variable representation
+     * @param  mixed   $array_key if the variable is part of an array, its value
+     * @param  string  $format    Format: html or cli
+     * @param  boolean $escape
+     * @return string  Variable representation
      */
     public function render($array_key = NULL, $format = 'html', $escape = false)
     {
@@ -143,8 +144,9 @@ abstract class TBase
     /**
      * Renders the variable node in the dump tree using HTML code
      *
-     * @param  mixed  $array_key if the variable is part of an array, its value
-     * @return string Variable representation
+     * @param  mixed   $array_key if the variable is part of an array, its value
+     * @param  boolean $escape
+     * @return string  Variable representation
      */
     protected function _renderHTML($array_key = NULL, $escape = false)
     {

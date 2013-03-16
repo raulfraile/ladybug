@@ -142,7 +142,7 @@ class TResource extends TBase
 
                     } else $value[$k] = strip_tags($v);
                 }
-            } else $value[$k] = $this->resource_custom_data;
+            } else $value[] = $this->resource_custom_data;
         }
 
         return array(
