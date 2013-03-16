@@ -110,7 +110,7 @@ class Dumper
 
     /**
      * Reads variables and creates TType objects
-     * @param vars variables to dump
+     * @param array $vars variables to dump
      */
     private function _readVars($vars)
     {
@@ -125,7 +125,7 @@ class Dumper
 
     /**
      * Renders the variables into the selected format
-     * @param format dump format (html, cli)
+     * @param string $format dump format (html, cli)
      */
     private function _render($format = 'html')
     {
@@ -286,8 +286,14 @@ class Dumper
      */
     public static function getCallLocationInfos()
     {
+        $idx = 7;
         $bt = debug_backtrace();
-        $idx = count($bt) - 1;
+
+        // Check if Ladybug was called from the helpers shortcuts
+        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+        if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
+            $idx = $idx - 2;
+        }
 
         return array(
             'caller'   => isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '',

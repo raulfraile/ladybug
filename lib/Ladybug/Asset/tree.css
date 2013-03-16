@@ -4,7 +4,7 @@ pre.ladybug
 	display: block;
 	font-family: monospace;
 	white-space: pre;
-	margin: 10px 0px;
+	margin: 10px 0;
 	background-color:#fff;
 	overflow-y:visible;
 	overflow-x:hidden;
@@ -61,9 +61,9 @@ pre.ladybug
 			}
 			pre.ladybug ol.tree li input + ol
 			{
-				background: url(toggle-small-expand.png) 40px 0px no-repeat;
+				background: url(toggle-small-expand.png) 40px 0 no-repeat;
 				margin: -0.938em 0 0 -44px; /* 15px */
-				xdisplay: block;
+				display: block;
 				height: 1em;
 			}
 				pre.ladybug ol.tree li input + ol > li

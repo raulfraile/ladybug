@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Oject/DomDocument dumper
+ * Object/DomDocument dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *

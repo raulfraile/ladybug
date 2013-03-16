@@ -51,8 +51,6 @@ class Options
     /**
      * Gets all options
      *
-     * @param  string $key     Option name
-     * @param  mixed  $default Default value, in case the option name does not exist
      * @return mixed  Option value
      */
     public function getAll()

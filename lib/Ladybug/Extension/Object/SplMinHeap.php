@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Oject/SplMinHeap dumper
+ * Object/SplMinHeap dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
