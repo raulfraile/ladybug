@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Oject/SplQueue dumper
+ * Object/SplQueue dumper
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
