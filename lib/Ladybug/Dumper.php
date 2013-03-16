@@ -167,8 +167,11 @@ class Dumper
             $css = '<style>' . file_get_contents($this->options->getOption('css.path')) . '</style>';
         }
 
-        $locationInfo = self::getCallLocationInfos();
-        $call = '<div class="call_info"><span>' . $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'] . '</span></div>';
+        $call = '';
+        if ($this->options->getOption('general.show_backtrace')) {
+            $locationInfo = self::getCallLocationInfos();
+            $call = '<div class="call_info"><span>' . $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'] . '</span></div>';
+        }
 
         $html = '<pre class="ladybug">' . $call . '<ol class="tree">' . $html . '</ol></pre>';
 
@@ -187,8 +190,11 @@ class Dumper
             $result .= $var->render(null, 'cli');
         }
 
-        $locationInfo = self::getCallLocationInfos();
-        $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
+        $call = '';
+        if ($this->options->getOption('general.show_backtrace')) {
+            $locationInfo = self::getCallLocationInfos();
+            $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
+        }
 
         $result .= CLIColors::getColoredString($call, 'light_cyan') . "\n";
 
@@ -207,14 +213,12 @@ class Dumper
             $result .= $var->render(null, 'txt');
         }
 
-        $locationInfo = self::getCallLocationInfos();
-        $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
-/*
-        $result .= PHP_EOL. 'Laydybug called at:'. PHP_EOL;
-        foreach (self::getCallLocationInfos() as $key => $val) {
-            $result .= !empty($val) ? ' | '. str_pad($key, 8, ' ', STR_PAD_RIGHT). ' | '. $val. PHP_EOL : '';
+        $call = '';
+        if ($this->options->getOption('general.show_backtrace')) {
+            $locationInfo = self::getCallLocationInfos();
+            $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
         }
-*/
+
         $result .= $call . "\n";
 
         return $result;

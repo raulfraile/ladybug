@@ -180,6 +180,7 @@ Almost any display option can be easily customizable, using the function
 `ladybug_set($key, $value)`. Available options and default values:
         
 * `general.expanded = false`
+* `general.show_backtrace = true`
 * `array.max_nesting_level = 8`
 * `object.max_nesting_level = 3`
 * `object.show_data = true`

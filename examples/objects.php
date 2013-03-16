@@ -46,4 +46,3 @@ ladybug_dump($dom);
 $reflected = new ReflectionClass('Foo');
 
 ladybug_dump($reflected);
-ldd(1);
