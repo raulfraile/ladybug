@@ -298,8 +298,14 @@ class Dumper
      */
     public static function getCallLocationInfos()
     {
+        $idx = 7;
         $bt = debug_backtrace();
-        $idx = count($bt) - 1;
+
+        // Check if Ladybug was called from the helpers shortcuts
+        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+        if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
+            $idx = $idx - 2;
+        }
 
         return array(
             'caller'   => isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '',
