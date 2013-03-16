@@ -25,7 +25,7 @@ class ObjectTest extends PHPUnit_Framework_TestCase
     {
         $this->date = new DateTime();
         $this->foo = new Foo();
-        $this->t_dumper = \Ladybug\Dumper::getInstance();
+        $this->t_dumper = new \Ladybug\Dumper();
         $this->result = ladybug_dump_return('php', $this->date, $this->foo, $this->t_dumper);
     }
 

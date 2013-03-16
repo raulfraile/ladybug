@@ -4,13 +4,13 @@
 
 function ladybug_set($key, $value)
 {
-    $ladybug = \Ladybug\Dumper::getInstance();
+    $ladybug = new \Ladybug\Dumper();
     $ladybug->setOption($key, $value);
 }
 
 function ladybug_dump(/*$var1 [, $var2...$varN]*/)
 {
-    $ladybug = \Ladybug\Dumper::getInstance();
+    $ladybug = new \Ladybug\Dumper();
     echo call_user_func_array(array($ladybug,'dump'), func_get_args());
 }
 
@@ -28,14 +28,14 @@ function ladybug_dump_ext()
 
 function ladybug_dump_die(/*$var1 [, $var2...$varN]*/)
 {
-    $ladybug = \Ladybug\Dumper::getInstance();
+    $ladybug = new \Ladybug\Dumper();
     echo call_user_func_array(array($ladybug,'dump'), func_get_args());
     die();
 }
 
 function ladybug_dump_return(/*$format $var1 [, $var2...$varN]*/)
 {
-    $ladybug = \Ladybug\Dumper::getInstance();
+    $ladybug = new \Ladybug\Dumper();
     $result = call_user_func_array(array($ladybug,'export'), func_get_args());
 
     return $result;

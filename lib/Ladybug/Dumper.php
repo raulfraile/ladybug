@@ -21,8 +21,6 @@ class Dumper
     const EXPORT_FORMAT_JSON = 'json';
     const EXPORT_FORMAT_XML  = 'xml';
 
-    private static $instance = null;
-
     private static $tree_counter = 0;
 
     private $isCssLoaded;
@@ -30,22 +28,12 @@ class Dumper
     private $options;
 
     /**
-     * Constructor. Private (singleton pattern)
-     * @return Get singleton instance
+     * Constructor
      */
     public function __construct()
     {
         $this->isCssLoaded = false;
         $this->options = new Options();
-    }
-
-    /**
-     * Singleton method
-     * @return Get singleton instance
-     */
-    public static function getInstance()
-    {
-        return (self::$instance !== null) ? self::$instance : (self::$instance = new Dumper());
     }
 
     /**
