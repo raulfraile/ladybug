@@ -19,9 +19,23 @@ pre.ladybug
 	{
 		background-color:transparent;
 	}
+    pre.ladybug .call_info
+    {
+        display: block;
+    }
+        pre.ladybug .call_info span
+        {
+            border-right: 1px dotted #DDD;
+            border-left: 1px dotted #DDD;
+            border-bottom: 1px dotted #DDD;
+            padding: 2px;
+            font-size: 10px;
+            background-color: #F7F8E0;
+            margin-left: 5px;
+        }
 	pre.ladybug ol.tree
 	{
-		padding: 2px 19px;
+		padding: 0 2px 2px 19px;
 		font: 12px 'Courier New',monospace;
 		
 	}

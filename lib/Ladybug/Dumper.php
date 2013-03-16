@@ -167,12 +167,10 @@ class Dumper
             $css = '<style>' . file_get_contents($this->options->getOption('css.path')) . '</style>';
         }
 
-        $call = '<span class="call_title">Laydybug called at:</span>'. PHP_EOL;
-        foreach (self::getCallLocationInfos() as $key => $val) {
-            $call .= !empty($val) ? '  &raquo; <span class="call_info">'. str_pad($key, 8, ' ', STR_PAD_RIGHT). '</span> : '. $val. PHP_EOL : '';
-        }
+        $locationInfo = self::getCallLocationInfos();
+        $call = '<div class="call_info"><span>' . $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'] . '</span></div>';
 
-        $html = '<pre class="ladybug"><ol class="tree">' . $html . '</ol>'. $call. '</pre>';
+        $html = '<pre class="ladybug">' . $call . '<ol class="tree">' . $html . '</ol></pre>';
 
         return $css . $html;
     }
@@ -189,12 +187,10 @@ class Dumper
             $result .= $var->render(null, 'cli');
         }
 
-        $result .= PHP_EOL. 'Laydybug called at:'. PHP_EOL;
-        foreach (self::getCallLocationInfos() as $key => $val) {
-            $result .= !empty($val) ? ' > '. str_pad($key, 8, ' ', STR_PAD_RIGHT). ' : '. $val. PHP_EOL : '';
-        }
+        $locationInfo = self::getCallLocationInfos();
+        $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
 
-        $result .= "\n";
+        $result .= CLIColors::getColoredString($call, 'light_cyan') . "\n";
 
         return $result;
     }
@@ -211,12 +207,15 @@ class Dumper
             $result .= $var->render(null, 'txt');
         }
 
+        $locationInfo = self::getCallLocationInfos();
+        $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
+/*
         $result .= PHP_EOL. 'Laydybug called at:'. PHP_EOL;
         foreach (self::getCallLocationInfos() as $key => $val) {
             $result .= !empty($val) ? ' | '. str_pad($key, 8, ' ', STR_PAD_RIGHT). ' | '. $val. PHP_EOL : '';
         }
-
-        $result .= "\n";
+*/
+        $result .= $call . "\n";
 
         return $result;
     }
@@ -295,16 +294,11 @@ class Dumper
      */
     public static function getCallLocationInfos()
     {
-        $idx = 7;
         $bt = debug_backtrace();
-
-        // Check if Ladybug was called from the helpers shortcuts
-        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
-        if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
-            $idx = $idx - 2;
-        }
+        $idx = count($bt) - 1;
 
         return array(
+            'caller'   => isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '',
             'file'     => isset($bt[$idx]['file']) ? $bt[$idx]['file'] : '',
             'line'     => isset($bt[$idx]['line']) ? $bt[$idx]['line'] : '',
             'class'    => isset($bt[$idx + 1]['class'])    ? $bt[$idx + 1]['class'] : '',
