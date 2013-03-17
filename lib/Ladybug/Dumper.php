@@ -53,7 +53,7 @@ class Dumper
             return $this->_render('cli');
         }
         // generate TEXT code
-        if ($this->isXmlHttpRequest()) {
+        if ($this->isXmlHttpRequest() || true) {
             return $this->_render('txt');
         }
         // generate HTML code
@@ -235,6 +235,13 @@ class Dumper
         foreach ($this->nodes as $var) {
             $result .= $var->render(null, 'txt');
         }
+
+        $result = preg_replace('/\s/', '', $result);
+        $result = str_replace('<intro>', PHP_EOL, $result);
+        $result = str_replace('<tab>', '   ', $result);
+        $result = str_replace('<space>', ' ', $result);
+
+        return $result;
 
         $call = '';
         if ($this->options->getOption('general.show_backtrace')) {
