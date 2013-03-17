@@ -21,4 +21,4 @@ $var1[2] = array(
     '<<age>>' => 2
 );
 
-ladybug_dump($var1);
+ladybug_dump(array(1,2,3, array(1, array(2,3,4))));

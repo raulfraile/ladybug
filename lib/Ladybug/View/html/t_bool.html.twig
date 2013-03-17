@@ -1,0 +1,9 @@
+{% spaceless %}
+<div class="final">
+    {% if array_key is not empty %}
+        <span class="key">[{{ array_key }}]:</span>
+    {% endif %}
+    <span class="type">bool</span>
+    <span style="color:#800">{{ value ? 'TRUE' : 'FALSE' }}</span>
+</div>
+{% endspaceless %}

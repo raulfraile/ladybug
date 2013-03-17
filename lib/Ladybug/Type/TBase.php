@@ -13,7 +13,10 @@
 namespace Ladybug\Type;
 
 use Ladybug\Options;
-use Ladybug\CLIColors;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 /**
  * TBase is the base type all specific types extends from
@@ -35,6 +38,8 @@ abstract class TBase
 
     /** @var string $encoding */
     protected $encoding;
+
+    protected $length;
 
     /**
      * Constructor
@@ -135,10 +140,48 @@ abstract class TBase
      */
     public function render($array_key = NULL, $format = 'html', $escape = false)
     {
-        if ($format == 'html') return $this->_renderHTML($array_key, $escape);
+
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../View/' . $format);
+        $twig = new Twig_Environment($loader);
+
+        $result = $twig->render('t_'.static::TYPE_ID.'.'.$format.'.twig', array_merge(
+            $this->getViewParameters(),
+            array('array_key' => $array_key, 'level' => $this->level)
+        ));
+
+
+
+       // if (in_array($format, array('html', 'txt'))) {
+            return $result;
+        /*} elseif ('cli' === $format) {
+            $output = new ConsoleOutput();
+
+            // styles
+
+            $stringStyle = new OutputFormatterStyle($this->options->getOption('string.cli_color', 'white'));
+            $output->getFormatter()->setStyle('t_string', $stringStyle);
+
+            $boolStyle = new OutputFormatterStyle($this->options->getOption('bool.cli_color', 'white'));
+            $output->getFormatter()->setStyle('t_bool', $boolStyle);
+
+            $intStyle = new OutputFormatterStyle($this->options->getOption('int.cli_color', 'white'));
+            $output->getFormatter()->setStyle('t_int', $intStyle);
+
+            $floatStyle = new OutputFormatterStyle($this->options->getOption('float.cli_color', 'white'));
+            $output->getFormatter()->setStyle('t_float', $floatStyle);
+
+
+            $output->writeln($result);
+
+        }
+*/
+
+        //return $result;
+
+        /*if ($format == 'html') return $this->_renderHTML($array_key, $escape);
         elseif ($format == 'cli') return $this->_renderCLI($array_key, $escape);
         elseif ($format == 'txt') return $this->_renderTXT($array_key, $escape);
-        else return NULL;
+        else return NULL;*/
     }
 
     /**
@@ -300,4 +343,15 @@ abstract class TBase
             return 'ISO-8859-1';
         }
     }
+
+    public function getViewParameters()
+    {
+        return array(
+            'value' => $this->value,
+            'encoding' => $this->encoding,
+            'type' => $this->type,
+            'length' => $this->length
+        );
+    }
+
 }

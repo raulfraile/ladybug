@@ -13,6 +13,8 @@
 namespace Ladybug\Type;
 
 use Ladybug\Options;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 
 class TInt extends TBase
 {
@@ -23,5 +25,6 @@ class TInt extends TBase
     {
         parent::__construct(self::TYPE_ID, $var, $level, $options);
     }
+
 
 }

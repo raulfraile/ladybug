@@ -45,7 +45,7 @@ class TObject extends TBase
 
         $this->class_name = get_class($var);
 
-        $this->tostring = null;
+        $this->tostring = (method_exists($var, '__toString')) ? $var->__toString() : null;
 
         if ($this->level < $this->options->getOption('object.max_nesting_level')) {
             $this->is_leaf = false;
@@ -77,7 +77,20 @@ class TObject extends TBase
                     if (is_array($this->object_custom_data)) $this->inspect_custom_data = $custom_dumper->getInspect();
                     else $this->inspect_custom_data = FALSE;
                 } else {
-                    $this->object_custom_data = (array) $var;
+                    $data = (array) $var;
+
+                    // unmangle private and protected
+                    $this->object_custom_data = array();
+                    foreach ($data as $key => $item) {
+                        if (0 === strpos($key, "\0*\0")) {
+                            $this->object_custom_data['protected ' . substr($key, 3)] = $item;
+                        } elseif (0 === strpos($key, "\0" . $this->class_name . "\0")) {
+                            $this->object_custom_data['private ' . substr($key, 2 + strlen($this->class_name))] = $item;
+                        } else {
+                            $this->object_custom_data['public ' . $key] = $item;
+                        }
+                    }
+
                     $this->is_custom_data = FALSE;
                     $this->inspect_custom_data = TRUE;
                 }
@@ -122,7 +135,7 @@ class TObject extends TBase
                     foreach ($class_methods as $k=>$v) {
                         $method = $reflection_class->getMethod($v->name);
 
-                        if ($method->getName() == '__toString') $this->tostring = $var->__toString();
+                        //if ($method->getName() == '__toString') $this->tostring = $var->__toString();
 
                         $method_syntax = '';
 
@@ -438,5 +451,23 @@ class TObject extends TBase
         );
 
         return $return;
+    }
+
+    public function getViewParameters()
+    {
+        return array_merge(parent::getViewParameters(), array(
+            'class_name' => $this->class_name,
+            'class_file' => $this->class_file,
+            'class_interfaces' => $this->class_interfaces,
+            'class_namespace' => $this->class_namespace,
+            'class_parent' => $this->class_parent,
+            'class_constants' => $this->class_constants,
+            'class_static_properties' => $this->class_static_properties,
+            'object_custom_data' => $this->object_custom_data,
+            'class_methods' => $this->class_methods,
+            'object_properties' => $this->object_properties,
+            'is_leaf' => $this->is_leaf,
+            'tostring' => $this->tostring
+        ));
     }
 }

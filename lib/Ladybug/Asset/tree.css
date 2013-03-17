@@ -103,12 +103,22 @@ pre.ladybug
 	pre.ladybug .final span.type {
 	    font-weight: bold;
 	    font-style: italic;
+        padding-right: 5px;
 	}
+
+    pre.ladybug .key {
+        padding-right: 3px;
+    }
 
 	pre.ladybug .switcher {
 	    font-weight: bold;
 	    font-style: italic;
 	}
+
+    pre.ladybug .switcher .type {
+        font-weight: bold;
+        font-style: italic;
+    }
 
 	pre.ladybug .tostring {
 	    background: url(filefind.png) left center no-repeat;

@@ -1,0 +1,36 @@
+{% macro indent(level) %}
+    {% for i in 1..level %}
+        <tab>
+    {% endfor %}
+{% endmacro %}
+
+{% macro array_block(title, data, level, show_keys) %}
+
+    {% set show_keys = show_keys|default(true) %}
+
+    {{ _self.indent(level) }}<t_array_block>{{ title }}</t_array_block><intro>
+
+    {% for key,var in data %}
+        {{ _self.indent(level) }}
+
+        {{ var.render(key, 'cli')|raw }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro text_block(title, data, level, show_keys) %}
+
+    {{ _self.indent(level) }}<t_array_block>{{ title }}</t_array_block><intro>
+
+    {% for key,var in data %}
+        {{ _self.indent(level) }}
+
+        {% if show_keys %}{{ key }}:<space>{% endif %}
+        {{ var|replace({' ': '<space>'})|raw }}<intro>
+    {% endfor %}
+{% endmacro %}
+
+{% macro array_key(key) %}
+    {% if key is not empty %}
+        [{{ key }}]:<space>
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,9 @@
+{% spaceless %}
+<div class="final">
+    {% if array_key is not empty %}
+        <span class="key">[{{ array_key }}]:</span>
+    {% endif %}
+    <span class="type">int</span>
+    <span style="color:#800">{{ value }}</span>
+</div>
+{% endspaceless %}

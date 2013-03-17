@@ -1,0 +1,8 @@
+{% import "_macros.cli.twig" as m %}
+
+{% spaceless %}
+    {{ m.array_key(array_key) }}
+
+    string({{ length }}) <space> <t_string>"{{ value }}"</t_string>
+    <intro>
+{% endspaceless %}

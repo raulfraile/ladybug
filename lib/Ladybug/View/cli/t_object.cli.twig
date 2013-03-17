@@ -1,0 +1,47 @@
+{% import "_macros.cli.twig" as m %}
+
+{% spaceless %}
+
+    {{ m.array_key(array_key) }}
+
+    <t_object>object({{ class_name }})</t_object><intro>
+
+    {% if object_custom_data is not empty %}
+        {{ m.array_block('Data', object_custom_data, level) }}
+    {% endif %}
+
+    {% if class_file is not empty %}
+        {% set class_info_data = {} %}
+
+        {# Filename #}
+        {% if class_file is not empty %}
+            {% set class_info_data = class_info_data|merge({'Filename': class_file}) %}
+        {% endif %}
+
+        {# Interfaces #}
+        {% if class_interfaces is not empty %}
+            {% set class_info_data = class_info_data|merge({'Interfaces': class_interfaces}) %}
+        {% endif %}
+
+        {# Namespace #}
+        {% if class_namespace is not empty %}
+            {% set class_info_data = class_info_data|merge({'Namespace': class_namespace}) %}
+        {% endif %}
+
+        {# Parent #}
+        {% if class_parent is not empty %}
+            {% set class_info_data = class_info_data|merge({'Parent': class_parent}) %}
+        {% endif %}
+
+        {{ m.text_block('Class info', class_info_data, level, true) }}
+    {% endif %}
+
+    {% if class_constants is not empty %}
+        {{ m.array_block('Constants', class_constants, level) }}
+    {% endif %}
+
+    {% if class_methods is not empty %}
+        {{ m.text_block('Methods', class_methods, level, false) }}
+    {% endif %}
+
+{% endspaceless %}

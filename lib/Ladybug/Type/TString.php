@@ -20,7 +20,7 @@ class TString extends TBase
 
     const TYPE_ID = 'string';
 
-    protected $length;
+
 
     /**
      * Constructor

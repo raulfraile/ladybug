@@ -11,6 +11,9 @@ class Foo
     public $bar = 1;
     public $bar2 = 2;
     public $a;
+    public $b = array(1, 2, 3);
+    private $w = 1;
+    protected $w2 = 2;
 
     public function __construct() {$this->a = new Foo2();}
     public function getBar() { return $this->bar; }

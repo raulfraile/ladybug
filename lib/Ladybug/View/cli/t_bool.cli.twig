@@ -1,0 +1,8 @@
+{% import "_macros.cli.twig" as m %}
+
+{% spaceless %}
+    {{ m.array_key(array_key) }}
+
+    bool <space> <t_bool>{{ value ? 'TRUE' : 'FALSE' }}</t_bool>
+    <intro>
+{% endspaceless %}

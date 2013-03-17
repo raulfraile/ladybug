@@ -1,0 +1,85 @@
+{% spaceless %}
+    {% set id = random(1000) %}
+    <label for="tree_object_{{ id }}">
+        {% if array_key is not empty %}
+            <span class="key">[{{ array_key }}]:</span>
+        {% endif %}
+        <span class="switcher">
+            <span class="type">Object ({{ class_name }})</span>
+            {% if tostring is not empty %}
+                <a class="tostring" href="javascript:void(0)" title="{{ tostring }}"></a>
+            {% endif %}
+        </span>
+    </label>
+    <input type="checkbox" id="tree_object_{{ id }}">
+
+    {% if not is_leaf %}
+        <ol>
+            {% if object_custom_data is not empty %}
+                <li>
+                    <label for="tree_object_data_{{ id }}">
+                        <span class="switcher">Data</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_data_{{ id }}">
+                    <ol>
+                        {% for key,data in object_custom_data %}
+                            <li>{{ data.render(key)|raw }}</li>
+                        {% endfor %}
+                    </ol>
+                </li>
+            {% endif %}
+
+            {% if class_file is not empty %}
+                <li>
+                    <label for="tree_object_classinfo_{{ id }}">
+                        <span class="switcher">Class info</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_classinfo_{{ id }}">
+                    <ol>
+                        {% if class_file is not empty %}
+                            <li><div class="final">Filename: {{ class_file }}</div></li>
+                        {% endif %}
+                        {% if class_interfaces is not empty %}
+                            <li><div class="final">Interfaces: {{ class_interfaces }}</div></li>
+                        {% endif %}
+                        {% if class_namespace is not empty %}
+                            <li><div class="final">Namespace: {{ class_namespace }}</div></li>
+                        {% endif %}
+                        {% if class_parent is not empty %}
+                            <li><div class="final">Parent: {{ class_parent }}</div></li>
+                        {% endif %}
+                    </ol>
+                </li>
+            {% endif %}
+
+            {% if class_constants is not empty %}
+                <li>
+                    <label for="tree_object_classconstants_{{ id }}">
+                        <span class="switcher">Class constants</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_classconstants_{{ id }}">
+                    <ol>
+                        {% for key,constant in class_constants %}
+                            <li>{{ constant.render(key)|raw }}</li>
+                        {% endfor %}
+                    </ol>
+                </li>
+            {% endif %}
+
+            {% if class_methods is not empty %}
+                <li>
+                    <label for="tree_object_methods_{{ id }}">
+                        <span class="switcher">Methods</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_methods_{{ id }}">
+                    <ol>
+                        {% for method in class_methods %}
+                            <li><div class="final">{{ method }}</div></li>
+                        {% endfor %}
+                    </ol>
+                </li>
+            {% endif %}
+        </ol>
+    {% endif %}
+
+{% endspaceless %}

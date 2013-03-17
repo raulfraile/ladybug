@@ -13,6 +13,8 @@ namespace Ladybug;
 
 use Ladybug\Type\TFactory;
 use Ladybug\Exception\InvalidFormatException;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class Dumper
 {
@@ -178,15 +180,48 @@ class Dumper
             $result .= $var->render(null, 'cli');
         }
 
+        // clean whitespace
+        $result = preg_replace('/\s/', '', $result);
+        $result = str_replace('<intro>', PHP_EOL, $result);
+        $result = str_replace('<tab>', '   ', $result);
+        $result = str_replace('<space>', ' ', $result);
+
         $call = '';
         if ($this->options->getOption('general.show_backtrace')) {
             $locationInfo = self::getCallLocationInfos();
             $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
         }
 
-        $result .= CLIColors::getColoredString($call, 'light_cyan') . "\n";
+        //$result .= CLIColors::getColoredString($call, 'light_cyan') . "\n";
 
-        return $result;
+        $output = new ConsoleOutput();
+
+        // styles
+
+        $stringStyle = new OutputFormatterStyle($this->options->getOption('string.cli_color', 'white'));
+        $output->getFormatter()->setStyle('t_string', $stringStyle);
+
+        $boolStyle = new OutputFormatterStyle($this->options->getOption('bool.cli_color', 'white'));
+        $output->getFormatter()->setStyle('t_bool', $boolStyle);
+
+        $intStyle = new OutputFormatterStyle($this->options->getOption('int.cli_color', 'white'));
+        $output->getFormatter()->setStyle('t_int', $intStyle);
+
+        $floatStyle = new OutputFormatterStyle($this->options->getOption('float.cli_color', 'white'));
+        $output->getFormatter()->setStyle('t_float', $floatStyle);
+
+        $arrayStyle = new OutputFormatterStyle('yellow');
+        $output->getFormatter()->setStyle('t_array', $arrayStyle);
+
+        $objectStyle = new OutputFormatterStyle('yellow');
+        $output->getFormatter()->setStyle('t_object', $objectStyle);
+
+        $arrayBlockStyle = new OutputFormatterStyle('white', 'magenta');
+        $output->getFormatter()->setStyle('t_array_block', $arrayBlockStyle);
+
+        $output->writeln($result);
+
+        //return $result;
     }
 
     /**

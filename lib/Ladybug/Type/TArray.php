@@ -20,7 +20,8 @@ class TArray extends TBase
 
     const TYPE_ID = 'array';
 
-    protected $length;
+
+
 
     public function __construct($var, $level, Options $options)
     {
