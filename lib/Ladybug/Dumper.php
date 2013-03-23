@@ -11,10 +11,11 @@
 
 namespace Ladybug;
 
-use Ladybug\Type\TFactory;
+use Ladybug\Type\FactoryType;
 use Ladybug\Exception\InvalidFormatException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Pimple;
 
 class Dumper
 {
@@ -29,6 +30,8 @@ class Dumper
     private $nodes;
     private $options;
 
+    protected $container;
+
     /**
      * Constructor
      */
@@ -36,6 +39,15 @@ class Dumper
     {
         $this->isCssLoaded = false;
         $this->options = new Options();
+
+        $this->container = new Pimple();
+
+        $this->container['options'] = $this->container->share(function ($c) {
+            return new Options();
+        });
+
+
+
     }
 
     /**
@@ -53,7 +65,7 @@ class Dumper
             return $this->_render('cli');
         }
         // generate TEXT code
-        if ($this->isXmlHttpRequest() || true) {
+        if ($this->isXmlHttpRequest()) {
             return $this->_render('txt');
         }
         // generate HTML code
@@ -119,7 +131,7 @@ class Dumper
         $nodes = array();
 
         foreach ($vars as $var) {
-            $nodes[] = TFactory::factory($var, 0, $this->options);
+            $nodes[] = FactoryType::factory($var, 0, $this->container);
         }
 
         return $nodes;

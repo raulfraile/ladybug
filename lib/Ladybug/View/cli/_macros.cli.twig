@@ -1,5 +1,11 @@
 {% macro indent(level) %}
-    {% for i in 1..level %}
+
+    {% set limit = level %}
+    {% if limit > 1 %}
+        {% set limit = limit -1 %}
+    {% endif %}
+
+    {% for i in 1..limit %}
         <tab>
     {% endfor %}
 {% endmacro %}
@@ -8,7 +14,7 @@
 
     {% set show_keys = show_keys|default(true) %}
 
-    {{ _self.indent(level) }}<t_array_block>{{ title }}</t_array_block><intro>
+    {{ _self.indent(level) }}<t_array_block>{{ title|replace({' ': '<space>'})|raw }}</t_array_block><intro>
 
     {% for key,var in data %}
         {{ _self.indent(level) }}
@@ -17,9 +23,12 @@
     {% endfor %}
 {% endmacro %}
 
+
+
+
 {% macro text_block(title, data, level, show_keys) %}
 
-    {{ _self.indent(level) }}<t_array_block>{{ title }}</t_array_block><intro>
+    {{ _self.indent(level) }}<t_array_block>{{ title|replace({' ': '<space>'})|raw }}</t_array_block><intro>
 
     {% for key,var in data %}
         {{ _self.indent(level) }}
@@ -29,8 +38,10 @@
     {% endfor %}
 {% endmacro %}
 
+
+
 {% macro array_key(key) %}
     {% if key is not empty %}
-        [{{ key }}]:<space>
+        [{{ key|replace({' ': '<space>'})|raw }}]:<space>
     {% endif %}
 {% endmacro %}

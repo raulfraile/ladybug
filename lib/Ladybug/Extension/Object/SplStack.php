@@ -17,7 +17,7 @@ use Ladybug\Extension\ExtensionBase;
 
 class SplStack extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         /** @var $var \SplStack */
 

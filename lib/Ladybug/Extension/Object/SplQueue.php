@@ -17,7 +17,7 @@ use Ladybug\Extension\ExtensionBase;
 
 class SplQueue extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         /** @var $var \SplQueue */
 

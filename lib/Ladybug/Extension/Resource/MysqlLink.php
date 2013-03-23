@@ -17,7 +17,7 @@ use Ladybug\Extension\ExtensionBase;
 
 class MysqlLink extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         $result = array(
             'host_info' => mysql_get_host_info($var),

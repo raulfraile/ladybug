@@ -12,16 +12,24 @@
 
 namespace Ladybug\Extension;
 
+use Pimple;
+
 abstract class ExtensionBase implements ExtensionInterface
 {
 
     protected $var;
     protected $inspect;
 
-    public function __construct($var)
+    protected $container;
+
+    protected $level;
+
+    public function __construct($var, $level, Pimple $container)
     {
         $this->var = $var;
         $this->inspect = true;
+        $this->container = $container;
+        $this->level;
     }
 
     public function getInspect()
@@ -43,5 +51,15 @@ abstract class ExtensionBase implements ExtensionInterface
         else $result = number_format($size/$gb, 2) . ' Gb';
 
         return $result;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
     }
 }

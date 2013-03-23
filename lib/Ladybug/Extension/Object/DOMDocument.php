@@ -14,15 +14,16 @@ namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Type;
 
 class DOMDocument extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         $var->formatOutput = true;
         $xml = htmlentities($var->saveXML());
 
-        return $xml;
+        return new Type\Extended\CodeType($xml, 1,$this->container, 'xml');
     }
 
 }

@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Type/TBool variable type
+ * Type/BoolType variable type
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Options;
 
-class TBool extends TBase
+class BoolType extends BaseType
 {
 
     const TYPE_ID = 'bool';
@@ -26,9 +26,14 @@ class TBool extends TBase
      * @param mixed   $level
      * @param Options $options
      */
-    public function __construct($var, $level, Options $options)
+    public function __construct($var, $level, $container)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $options);
+        parent::__construct(self::TYPE_ID, $var, $level, $container);
+    }
+
+    public function getFormattedValue()
+    {
+        return $this->value ? 'TRUE' : 'FALSE';
     }
 
 }

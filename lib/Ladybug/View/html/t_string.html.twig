@@ -1,9 +1,3 @@
-{% spaceless %}
-<div class="final">
-    {% if array_key is not empty %}
-        <span class="key">[{{ array_key }}]:</span>
-    {% endif %}
-    <span class="type">string({{ length }})</span>
-    <span style="color:#800">{{ value|convert_encoding('UTF-8', encoding) }}</span>
-</div>
-{% endspaceless %}
+{% extends "_base.html.twig" %}
+
+{% block type %}{{ parent() }}({{ var.length }}){% endblock %}

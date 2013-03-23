@@ -17,7 +17,7 @@ use Ladybug\Extension\ExtensionBase;
 
 class File extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         $result = array();
 

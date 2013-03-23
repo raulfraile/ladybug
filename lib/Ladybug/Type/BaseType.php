@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Type/TBase: Base type
+ * Type/BaseType: Base type
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
@@ -17,11 +17,12 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Pimple;
 
 /**
- * TBase is the base type all specific types extends from
+ * BaseType is the base type all specific types extends from
  */
-abstract class TBase
+abstract class BaseType
 {
 
     /** @var string $type */
@@ -41,6 +42,8 @@ abstract class TBase
 
     protected $length;
 
+    protected $container;
+
     /**
      * Constructor
      *
@@ -49,12 +52,17 @@ abstract class TBase
      * @param int     $level
      * @param Options $options
      */
-    public function __construct($type, $value, $level, Options $options)
+    public function __construct($type, $value, $level, Pimple $container)
     {
+
         $this->type = $type;
         $this->value = $value;
+        $this->container = $container;
         $this->level = $level + 1;
-        $this->options = $options;
+
+
+
+        //$this->options = $options;
     }
 
     /**
@@ -83,6 +91,11 @@ abstract class TBase
      * @return mixed Variable value
      */
     public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function getFormattedValue()
     {
         return $this->value;
     }
@@ -125,8 +138,8 @@ abstract class TBase
      */
     protected function getColor($format = 'html')
     {
-        if ($format == 'html') return $this->options->getOption($this->type.'.html_color');
-        elseif ($format == 'cli') return $this->options->getOption($this->type.'.cli_color');
+        if ($format == 'html') return $this->getOption($this->type.'.html_color');
+        elseif ($format == 'cli') return $this->getOption($this->type.'.cli_color');
         else return NULL;
     }
 
@@ -145,8 +158,8 @@ abstract class TBase
         $twig = new Twig_Environment($loader);
 
         $result = $twig->render('t_'.static::TYPE_ID.'.'.$format.'.twig', array_merge(
-            $this->getViewParameters(),
-            array('array_key' => $array_key, 'level' => $this->level)
+            array(),//$this->getViewParameters(),
+            array('var' => $this, 'array_key' => $array_key, 'level' => $this->level)
         ));
 
 
@@ -232,35 +245,7 @@ abstract class TBase
         return $ret;
     }
 
-    protected function renderArrayKey($key, $escape = false)
-    {
-        if (is_null($key)) {
-            return NULL;
-        }
-        else {
-            return '['. ($escape ? htmlentities($key, ENT_COMPAT, $this->_getEncodingForHtmlentities()) : $key). ']: ';
-        }
-    }
 
-    protected function renderTreeSwitcher($label, $array_key = NULL)
-    {
-        $tree_id = \Ladybug\Dumper::getTreeId();
-
-        $result = '<label for="tree_'.$this->type.'_'.$tree_id.'">';
-            $result .= $this->renderArrayKey($array_key);
-            $result .= '<span class="switcher">'.$label.'</span>';
-        $result .= '</label>';
-
-        $result .= '<input type="checkbox" id="tree_'.$this->type.'_'.$tree_id.'"';
-
-        if ($this->options->getOption('general.expanded')) {
-            $result .= ' checked';
-        }
-
-        $result .= ' />';
-
-        return $result;
-    }
 
     protected function getIncludeClass($name, $type = 'object')
     {
@@ -278,34 +263,6 @@ abstract class TBase
         elseif ($type == 'resource') $class = 'Ladybug\\Extension\\Resource\\'.$class_name;
 
         return $class;
-    }
-
-    protected function indentCLI($increment = 0)
-    {
-        $char1 = CLIColors::getColoredString('   ', 'dark_gray');
-        $char2 = CLIColors::getColoredString(' | ', 'dark_gray');
-
-        $result = '';
-        for ($i=0;$i<($this->level + $increment);$i++) {
-            if ($i==0) $result .= $char1;
-            else $result .= $char2;
-        }
-
-        return $result;
-    }
-
-    protected function indentTXT($increment = 0)
-    {
-        $char1 = '   ';
-        $char2 = ' | ';
-
-        $result = '';
-        for ($i=0;$i<($this->level + $increment);$i++) {
-            if ($i==0) $result .= $char1;
-            else $result .= $char2;
-        }
-
-        return $result;
     }
 
     public function export()
@@ -353,5 +310,21 @@ abstract class TBase
             'length' => $this->length
         );
     }
+
+    public function getOption($key, $default = null)
+    {
+        return $this->container['options']->getOption($key);
+    }
+
+    public function setLength($length)
+    {
+        $this->length = $length;
+    }
+
+    public function getLength()
+    {
+        return $this->length;
+    }
+
 
 }

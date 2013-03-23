@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Type/TFloat variable type
+ * Type/IntType variable type
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -13,15 +13,18 @@
 namespace Ladybug\Type;
 
 use Ladybug\Options;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 
-class TFloat extends TBase
+class IntType extends BaseType
 {
 
-    const TYPE_ID = 'float';
+    const TYPE_ID = 'int';
 
-    public function __construct($var, $level, Options $options)
+    public function __construct($var, $level, $container)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $options);
+        parent::__construct(self::TYPE_ID, $var, $level, $container);
     }
+
 
 }

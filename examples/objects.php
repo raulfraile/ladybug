@@ -22,7 +22,7 @@ class Foo
 }
 
 $foo = new Foo();
-ladybug_dump($foo);
+//ld($foo);
 
 // DateTime object
 

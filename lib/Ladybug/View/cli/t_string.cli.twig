@@ -1,8 +1,5 @@
-{% import "_macros.cli.twig" as m %}
+{% extends "_base.cli.twig" %}
 
-{% spaceless %}
-    {{ m.array_key(array_key) }}
+{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
 
-    string({{ length }}) <space> <t_string>"{{ value }}"</t_string>
-    <intro>
-{% endspaceless %}
+{% block value %}{{ var.formattedValue()|replace({' ': '<space>'})|raw }}{% endblock %}

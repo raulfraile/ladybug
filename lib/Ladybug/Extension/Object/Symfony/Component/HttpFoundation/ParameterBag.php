@@ -17,7 +17,7 @@ use Ladybug\Extension\ExtensionBase;
 
 class ParameterBag extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         $result = array();
         $result['bag'] = $var->all();

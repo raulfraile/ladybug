@@ -4,44 +4,44 @@
 
     {{ m.array_key(array_key) }}
 
-    <t_object>object({{ class_name }})</t_object><intro>
+    <t_object>object({{ var.className }})</t_object><intro>
 
-    {% if object_custom_data is not empty %}
-        {{ m.array_block('Data', object_custom_data, level) }}
+    {% if var.objectCustomData is not empty %}
+        {{ m.array_block('Data', var.objectCustomData, var.level + 1) }}
     {% endif %}
 
-    {% if class_file is not empty %}
+    {% if var.hasClassInfo() %}
         {% set class_info_data = {} %}
 
         {# Filename #}
-        {% if class_file is not empty %}
-            {% set class_info_data = class_info_data|merge({'Filename': class_file}) %}
+        {% if var.classFile is not empty %}
+            {% set class_info_data = class_info_data|merge({'Filename': var.classFile}) %}
         {% endif %}
 
         {# Interfaces #}
-        {% if class_interfaces is not empty %}
-            {% set class_info_data = class_info_data|merge({'Interfaces': class_interfaces}) %}
+        {% if var.classInterfaces is not empty %}
+            {% set class_info_data = class_info_data|merge({'Interfaces': var.classInterfaces}) %}
         {% endif %}
 
         {# Namespace #}
-        {% if class_namespace is not empty %}
-            {% set class_info_data = class_info_data|merge({'Namespace': class_namespace}) %}
+        {% if var.classNamespace is not empty %}
+            {% set class_info_data = class_info_data|merge({'Namespace': var.classNamespace}) %}
         {% endif %}
 
         {# Parent #}
-        {% if class_parent is not empty %}
-            {% set class_info_data = class_info_data|merge({'Parent': class_parent}) %}
+        {% if var.classParent is not empty %}
+            {% set class_info_data = class_info_data|merge({'Parent': var.classParent}) %}
         {% endif %}
 
-        {{ m.text_block('Class info', class_info_data, level, true) }}
+        {{ m.text_block('Class info', class_info_data, var.level + 1, true) }}
     {% endif %}
 
-    {% if class_constants is not empty %}
-        {{ m.array_block('Constants', class_constants, level) }}
+    {% if var.classConstants is not empty %}
+        {{ m.array_block('Constants', var.classConstants, var.level + 1) }}
     {% endif %}
 
-    {% if class_methods is not empty %}
-        {{ m.text_block('Methods', class_methods, level, false) }}
+    {% if var.classMethods is not empty %}
+        {{ m.text_block('Methods', var.classMethods, var.level + 1, false) }}
     {% endif %}
 
 {% endspaceless %}

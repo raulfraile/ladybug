@@ -1,13 +1,12 @@
 {% import "_macros.cli.twig" as m %}
 
 {% spaceless %}
-
     {{ m.array_key(array_key) }}
 
-    <t_array>array({{ length }})</t_array><intro>
+    <t_array>array({{ var.length }})</t_array><intro>
 
-    {% for key,var in value %}
-        {{ m.indent(level) }}
+    {% for key,var in var.value %}
+        {{ m.indent(var.level) }}
         {{ var.render(key, 'cli')|raw }}
     {% endfor %}
 

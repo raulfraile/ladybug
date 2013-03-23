@@ -14,9 +14,9 @@ namespace Ladybug\Extension\Object;
 
 class SplMinHeap extends SplHeap
 {
-    public function dump($var)
+    public function getData($var)
     {
-        return parent::dump($var);
+        return parent::getData($var);
     }
 
 }

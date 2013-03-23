@@ -17,7 +17,8 @@
         "symfony/serializer": ">=2.0.4",
         "symfony/yaml": ">=2.0.4",
         "symfony/console": ">=2.0.4",
-        "twig/twig": ">=v1.7.0"
+        "twig/twig": ">=v1.7.0",
+        "pimple/pimple": ">=v1.0.2"
     },
     "autoload": {
         "psr-0": { "Ladybug": "lib/" }

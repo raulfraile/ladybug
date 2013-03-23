@@ -20,7 +20,7 @@ class MysqlResult extends ExtensionBase
     const CHAR_SEPARATOR = ' | ';
     const MAX_RESULTS = 9;
 
-    public function dump($var)
+    public function getData($var)
     {
         $result = array();
         $i = 1;

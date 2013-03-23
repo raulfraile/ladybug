@@ -20,5 +20,5 @@ interface ExtensionInterface
      * @param  string $var html code
      * @return string modified html code
      */
-    public function dump($var);
+    public function getData($var);
 }

@@ -14,10 +14,12 @@ namespace Ladybug\Extension\Resource;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Type;
+
 
 class Gd extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         $result = array();
 
@@ -47,20 +49,20 @@ class Gd extends ExtensionBase
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
 
         // gd info
-        $result['GD'] = array(
+        $result['GD'] = Type\FactoryType::factory(array(
             'version' => $gd_info['GD Version'],
             'support' => implode(', ', $gd_support)
-        );
+        ), $this->container);
 
         // image info
-        $result['image'] = array(
-            'width' => $width . 'px',
-            'height' => $height . 'px',
-            'colors_palette' => $colors_palette,
-            'true_color' => $is_true_color,
+        $result['image'] = Type\FactoryType::factory(array(
+            'width' => Type\FactoryType::factory($width . 'px', $this->container),
+            'height' => Type\FactoryType::factory($height . 'px', $this->container),
+            'colors_palette' => Type\FactoryType::factory($colors_palette, $this->container),
+            'true_color' => Type\FactoryType::factory($is_true_color, $this->container),
             //'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
-            'image' => 'data:image/png;base64,' . base64_encode($image)
-        );
+            'image' => new Type\Extended\ImageType('data:image/png;base64,' . base64_encode($image), $this->container),
+        ), $this->container);
 
         return $result;
     }

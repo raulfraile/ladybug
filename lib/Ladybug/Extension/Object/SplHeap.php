@@ -17,7 +17,7 @@ use Ladybug\Extension\ExtensionBase;
 
 abstract class SplHeap extends ExtensionBase
 {
-    public function dump($var)
+    public function getData($var)
     {
         /** @var $var \SplHeap */
 

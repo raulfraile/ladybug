@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Type/TNull variable type
+ * Type/NullType variable type
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -14,14 +14,14 @@ namespace Ladybug\Type;
 
 use Ladybug\Options;
 
-class TNull extends TBase
+class NullType extends BaseType
 {
 
     const TYPE_ID = 'null';
 
-    public function __construct($level, Options $options)
+    public function __construct($level, $container)
     {
-        parent::__construct(self::TYPE_ID, null, $level, $options);
+        parent::__construct(self::TYPE_ID, null, $level, $container);
     }
 
     public function getValue()
