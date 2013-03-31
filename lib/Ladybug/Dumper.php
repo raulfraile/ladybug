@@ -16,15 +16,28 @@ use Ladybug\Exception\InvalidFormatException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Pimple;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+use Twig_SimpleFunction;
+
+use Ladybug\Theme\ThemeInterface;
+use Ladybug\Exception\ThemeNotFoundException;
+use Ladybug\Render\RenderInterface;
 
 class Dumper
 {
+
+    const ENVIRONMENT_HTML = 'Html';
+    const ENVIRONMENT_CLI = 'Cli';
+    const ENVIRONMENT_TXT = 'Text';
+
     const EXPORT_FORMAT_PHP  = 'php';
     const EXPORT_FORMAT_YAML = 'yaml';
     const EXPORT_FORMAT_JSON = 'json';
     const EXPORT_FORMAT_XML  = 'xml';
 
     private static $tree_counter = 0;
+    private static $assetsLoaded = false;
 
     private $isCssLoaded;
     private $nodes;
@@ -58,23 +71,13 @@ class Dumper
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
         $args = func_get_args();
-        $this->nodes = $this->_readVars($args);
+        $this->nodes = $this->readVars($args);
 
-        // generate CONSOLE code
-        if (true === $this->_isCli()) {
-            return $this->_render('cli');
-        }
-        // generate TEXT code
-        if ($this->isXmlHttpRequest()) {
-            return $this->_render('txt');
-        }
-        // generate HTML code
-        $html = $this->_render('html');
+        $env = $this->getEnvironment();
 
-        // post-processors
-        $html = $this->_postProcess($html);
+        $render = $this->getRender($env);
 
-        return $html;
+        return $render->render($this->nodes);
     }
 
     /**
@@ -89,7 +92,7 @@ class Dumper
         $format = strtolower($args[0]);
         $vars = array_slice($args, 1);
 
-        $this->nodes = $this->_readVars($vars);
+        $this->nodes = $this->readVars($vars);
 
         $response = null;
 
@@ -126,7 +129,7 @@ class Dumper
      * Reads variables and creates TType objects
      * @param array $vars variables to dump
      */
-    private function _readVars($vars)
+    protected function readVars($vars)
     {
         $nodes = array();
 
@@ -137,104 +140,6 @@ class Dumper
         return $nodes;
     }
 
-    /**
-     * Renders the variables into the selected format
-     * @param string $format dump format (html, cli)
-     */
-    private function _render($format = 'html')
-    {
-        if ($format == 'html') {
-            return $this->_renderHTML();
-        }
-        if ($format == 'txt') {
-            return $this->_renderTXT();
-        }
-        return $this->_renderCLI();
-    }
-
-    /**
-     * Renders the variables into HTML format
-     */
-    private function _renderHTML()
-    {
-        $html = '';
-        $css = '';
-
-        foreach ($this->nodes as $var) {
-            $html .= '<li>'.$var->render().'</li>';
-        }
-
-        if (!$this->isCssLoaded) {
-            $this->isCssLoaded = true;
-            $css = '<style>' . file_get_contents($this->options->getOption('css.path')) . '</style>';
-        }
-
-        $call = '';
-        if ($this->options->getOption('general.show_backtrace')) {
-            $locationInfo = self::getCallLocationInfos();
-            $call = '<div class="call_info"><span>' . $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'] . '</span></div>';
-        }
-
-        $html = '<pre class="ladybug">' . $call . '<ol class="tree">' . $html . '</ol></pre>';
-
-        return $css . $html;
-    }
-
-    /**
-     * Renders the variables into CLI format
-     * @return string
-     */
-    private function _renderCLI()
-    {
-        $result = '';
-
-        foreach ($this->nodes as $var) {
-            $result .= $var->render(null, 'cli');
-        }
-
-        // clean whitespace
-        $result = preg_replace('/\s/', '', $result);
-        $result = str_replace('<intro>', PHP_EOL, $result);
-        $result = str_replace('<tab>', '   ', $result);
-        $result = str_replace('<space>', ' ', $result);
-
-        $call = '';
-        if ($this->options->getOption('general.show_backtrace')) {
-            $locationInfo = self::getCallLocationInfos();
-            $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
-        }
-
-        //$result .= CLIColors::getColoredString($call, 'light_cyan') . "\n";
-
-        $output = new ConsoleOutput();
-
-        // styles
-
-        $stringStyle = new OutputFormatterStyle($this->options->getOption('string.cli_color', 'white'));
-        $output->getFormatter()->setStyle('t_string', $stringStyle);
-
-        $boolStyle = new OutputFormatterStyle($this->options->getOption('bool.cli_color', 'white'));
-        $output->getFormatter()->setStyle('t_bool', $boolStyle);
-
-        $intStyle = new OutputFormatterStyle($this->options->getOption('int.cli_color', 'white'));
-        $output->getFormatter()->setStyle('t_int', $intStyle);
-
-        $floatStyle = new OutputFormatterStyle($this->options->getOption('float.cli_color', 'white'));
-        $output->getFormatter()->setStyle('t_float', $floatStyle);
-
-        $arrayStyle = new OutputFormatterStyle('yellow');
-        $output->getFormatter()->setStyle('t_array', $arrayStyle);
-
-        $objectStyle = new OutputFormatterStyle('yellow');
-        $output->getFormatter()->setStyle('t_object', $objectStyle);
-
-        $arrayBlockStyle = new OutputFormatterStyle('white', 'magenta');
-        $output->getFormatter()->setStyle('t_array_block', $arrayBlockStyle);
-
-        $output->writeln($result);
-
-        //return $result;
-    }
 
     /**
      * Renders the variables into TXT format
@@ -356,5 +261,57 @@ class Dumper
             'class'    => isset($bt[$idx + 1]['class'])    ? $bt[$idx + 1]['class'] : '',
             'function' => isset($bt[$idx + 1]['function']) ? $bt[$idx + 1]['function'] : ''
         );
+    }
+
+    public function getEnvironment()
+    {
+        if (true === $this->_isCli()) {
+            return self::ENVIRONMENT_CLI;
+        } elseif ($this->isXmlHttpRequest()) {
+            return self::ENVIRONMENT_TXT;
+        }
+
+        return self::ENVIRONMENT_HTML;
+    }
+
+    /**
+     * @throws Exception\ThemeNotFoundException
+     *
+     * @return RenderInterface
+     */
+    public function getRender($environment)
+    {
+        $themeClass = '\\Ladybug\\Theme\\' . $this->options->getOption('theme') . '\\' . $this->options->getOption('theme') . 'Theme';
+
+        if (!class_exists($themeClass)) {
+            throw new ThemeNotFoundException();
+        }
+
+        /** @var $theme ThemeInterface */
+        $theme = new $themeClass();
+
+
+        if (!in_array($environment, $theme->getEnvironments())) {
+            $found = false;
+            while (!is_null($theme->getParent()) && !$found) {
+                $themeClass = '\\Ladybug\\Theme\\' . $theme->getParent() . '\\' . $theme->getParent() . 'Theme';
+
+                /** @var $theme ThemeInterface */
+                $theme = new $themeClass();
+
+                if (in_array($environment, $theme->getEnvironments())) {
+                    $found = true;
+                }
+            }
+
+            if (!$found) {
+                var_dump('error');die();
+            }
+        }
+
+        $rendererClass = '\\Ladybug\\Render\\' . $environment . 'Render';
+        $renderer = new $rendererClass($theme);
+
+        return $renderer;
     }
 }

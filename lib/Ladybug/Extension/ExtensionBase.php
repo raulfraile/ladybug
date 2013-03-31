@@ -29,7 +29,7 @@ abstract class ExtensionBase implements ExtensionInterface
         $this->var = $var;
         $this->inspect = true;
         $this->container = $container;
-        $this->level;
+        $this->level = $level;
     }
 
     public function getInspect()
@@ -62,4 +62,6 @@ abstract class ExtensionBase implements ExtensionInterface
     {
         return $this->level;
     }
+
+
 }

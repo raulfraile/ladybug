@@ -22,7 +22,7 @@ use Pimple;
 /**
  * BaseType is the base type all specific types extends from
  */
-abstract class BaseType
+abstract class BaseType implements TypeInterface
 {
 
     /** @var string $type */
@@ -44,6 +44,8 @@ abstract class BaseType
 
     protected $container;
 
+    protected $key;
+
     /**
      * Constructor
      *
@@ -52,14 +54,14 @@ abstract class BaseType
      * @param int     $level
      * @param Options $options
      */
-    public function __construct($type, $value, $level, Pimple $container)
+    public function __construct($type, $value, $level, Pimple $container, $key = null)
     {
 
         $this->type = $type;
         $this->value = $value;
         $this->container = $container;
         $this->level = $level + 1;
-
+        $this->key = null;
 
 
         //$this->options = $options;
@@ -154,7 +156,7 @@ abstract class BaseType
     public function render($array_key = NULL, $format = 'html', $escape = false)
     {
 
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../View/' . $format);
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Theme/' . $this->getOption('theme') . '/' . $format);
         $twig = new Twig_Environment($loader);
 
         $result = $twig->render('t_'.static::TYPE_ID.'.'.$format.'.twig', array_merge(
@@ -197,53 +199,7 @@ abstract class BaseType
         else return NULL;*/
     }
 
-    /**
-     * Renders the variable node in the dump tree using HTML code
-     *
-     * @param  mixed   $array_key if the variable is part of an array, its value
-     * @param  boolean $escape
-     * @return string  Variable representation
-     */
-    protected function _renderHTML($array_key = NULL, $escape = false)
-    {
-        $html = '<div class="final">';
-            $html .= $this->renderArrayKey($array_key, $escape);
-            $html .= '<span class="type">'.$this->type.'</span> ';
-            $html .= '<span style="color:'.$this->getColor('html').'">'.$this->getValue().'</span>';
-        $html .= '</div>';
 
-        return $html;
-    }
-
-    /**
-     * Renders the variable node in the dump tree using CLI code
-     *
-     * @param  mixed  $array_key if the variable is part of an array, its value
-     * @return string Variable representation
-     */
-    protected function _renderCLI($array_key = NULL)
-    {
-        $cli = $this->renderArrayKey($array_key) . $this->type . ' ';
-        $cli .= CLIColors::getColoredString($this->getValue(), $this->getColor('cli'));
-        $cli .= "\n";
-
-        return $cli;
-    }
-
-    /**
-     * Renders the variable node in the dump tree using TXT code
-     *
-     * @param  mixed  $array_key if the variable is part of an array, its value
-     * @return string Variable representation
-     */
-    protected function _renderTXT($array_key = NULL)
-    {
-        $ret = $this->renderArrayKey($array_key) . $this->type . ' ';
-        $ret .= $this->getValue();
-        $ret .= "\n";
-
-        return $ret;
-    }
 
 
 
@@ -324,6 +280,25 @@ abstract class BaseType
     public function getLength()
     {
         return $this->length;
+    }
+
+    function getParameters()
+    {
+        return array(
+            'var' => $this,
+            'array_key' => $this->key,
+            'level' => $this->level
+        );
+    }
+
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    public function getKey()
+    {
+        return $this->key;
     }
 
 

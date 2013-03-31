@@ -19,13 +19,18 @@ class NullType extends BaseType
 
     const TYPE_ID = 'null';
 
-    public function __construct($level, $container)
+    public function __construct($level, $container, $key = null)
     {
-        parent::__construct(self::TYPE_ID, null, $level, $container);
+        parent::__construct(self::TYPE_ID, null, $level, $container, $key);
     }
 
     public function getValue()
     {
         return null;
+    }
+
+    public function getName()
+    {
+        return 'null';
     }
 }

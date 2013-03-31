@@ -1,0 +1,59 @@
+{% import "_macros.html.twig" as m %}
+
+
+{% set id = random(1000) %}
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ id }}">
+            {{ m.array_key(array_key) }}
+
+            <span class="">{% block type %}Resource ({{ var.resourceType }}){% endblock %}</span>
+
+        </a>
+    </div>
+    <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
+        <div class="accordion-inner">
+            {% if var.resourceCustomData is not empty %}
+
+            {% if var.isCustomData %}
+            {{ var.resourceCustomData.render()|raw}}
+            {% else %}
+            {% for key,data in var.resourceCustomData %}
+            {{ data.render(key)|raw }}
+            {% endfor %}
+            {% endif %}
+
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+
+{#
+
+
+{% spaceless %}
+{% set id = random(1000) %}
+<label for="tree_resource_{{ id }}">
+    {% if array_key is not empty %}
+    <span class="key">[{{ array_key }}]:</span>
+    {% endif %}
+        <span class="switcher">
+            <span class="type">Resource ({{ var.resourceType }})</span>
+        </span>
+</label>
+<input type="checkbox" id="tree_resource_{{ id }}">
+
+{% if not var.isLeaf %}
+<ol>
+
+    {% if var.isCustomData %}
+        <li style="border-left: 3px solid #eee">{{ var.resourceCustomData.render()|raw }}</li>
+    {% endif %}
+</ol>
+{% endif %}
+#}

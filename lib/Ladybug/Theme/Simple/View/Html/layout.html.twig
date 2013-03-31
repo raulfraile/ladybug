@@ -1,0 +1,17 @@
+<style>
+    {% for file in css %}
+        {{ include_file(file)|raw }}
+    {% endfor %}
+</style>
+
+<script>
+    {% for file in js %}
+        {{ include_file(file)|raw }}
+    {% endfor %}
+</script>
+
+<div class="ladybug" style="width:700px; margin:10px">
+    {% for node in nodes %}
+        {{ render_type(node)|raw }}
+    {% endfor %}
+</div>

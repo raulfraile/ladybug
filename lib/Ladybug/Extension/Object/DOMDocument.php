@@ -14,7 +14,7 @@ namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
-use Ladybug\Type;
+use Ladybug\Extension\Type;
 
 class DOMDocument extends ExtensionBase
 {
@@ -23,7 +23,10 @@ class DOMDocument extends ExtensionBase
         $var->formatOutput = true;
         $xml = htmlentities($var->saveXML());
 
-        return new Type\Extended\CodeType($xml, 1,$this->container, 'xml');
+        $result = new Type\CodeType($xml);
+        $result->setLanguage('xml');
+
+        return array($result);
     }
 
 }

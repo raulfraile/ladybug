@@ -1,0 +1,19 @@
+{% import "_macros.html.twig" as m %}
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle"{# data-toggle="collapse" data-parent="#subb" href="#collapseThree"#}>
+            {{ m.array_key(array_key) }}
+
+
+            {% block value %}{{ var.formattedValue }}{% endblock %}
+        </a>
+    </div>
+    {#<div id="collapseThree" class="accordion-body collapse">
+        <div class="accordion-inner">
+            xxx
+        </div>
+    </div>#}
+
+</div>
+{% block js %}{% endblock %}

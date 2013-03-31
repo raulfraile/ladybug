@@ -14,6 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Options;
 use Pimple;
+use Ladybug\Extension\ExtensionInterface;
 
 class ObjectType extends BaseType
 {
@@ -37,9 +38,9 @@ class ObjectType extends BaseType
     protected $inspect_custom_data;
     protected $isCustomData;
 
-    public function __construct($var, $level, Pimple $container)
+    public function __construct($var, $level, Pimple $container, $key = null)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container);
+        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
 
         $this->inspect_custom_data = true;
 
@@ -70,11 +71,17 @@ class ObjectType extends BaseType
                 $include_class = $this->getIncludeClass($this->className, 'object');
 
                 if (class_exists($include_class)) {
-                    $custom_dumper = new $include_class($var, $this->container);
-                    $this->objectCustomData = FactoryType::factory(array($custom_dumper->getData($var)), $this->container);
+
+                    /** @var $customDumper ExtensionInterface */
+                    $customDumper = new $include_class($var, $this->level, $this->container);
+                    $data = $customDumper->getData($var);
+                    $this->objectCustomData = FactoryType::factory($data, $this->level, $this->container);
+
+                    //$custom_dumper = new $include_class($var, $this->container);
+                    //$this->objectCustomData = FactoryType::factory(array($custom_dumper->getData($var)), $this->container);
                     $this->isCustomData = TRUE;
 
-                    if (is_array($this->objectCustomData)) $this->inspect_custom_data = $custom_dumper->getInspect();
+                    if (is_array($this->objectCustomData)) $this->inspect_custom_data = $customDumper->getInspect();
                     else $this->inspect_custom_data = FALSE;
                 } else {
                     $data = (array) $var;
@@ -84,7 +91,7 @@ class ObjectType extends BaseType
                     foreach ($data as $key => $item) {
 
                         $type = FactoryType::factory($item, $this->level, $this->container);
-
+$type=$item;
                         if (0 === strpos($key, "\0*\0")) {
                             $this->objectCustomData['protected ' . substr($key, 3)] = $type;
                         } elseif (0 === strpos($key, "\0" . $this->className . "\0")) {
@@ -383,6 +390,11 @@ class ObjectType extends BaseType
         );
     }
 
+
+    public function getName()
+    {
+        return 'object';
+    }
 
 
 }

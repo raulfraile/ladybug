@@ -1,0 +1,210 @@
+{% import "_macros.html.twig" as m %}
+
+
+{% set id = random(1000) %}
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ id }}">
+            {{ m.array_key(array_key) }}
+
+            <span class="">{% block type %}Object ({{ var.className }}){% endblock %}</span>
+
+        </a>
+    </div>
+    <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
+        <div class="accordion-inner">
+            {% if var.objectCustomData is not empty %}
+
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#object_data_{{ id }}">
+                            Data
+                        </a>
+                    </div>
+                    <div id="object_data_{{ id }}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+
+                            {% if var.isCustomData %}
+                                {{ var.objectCustomData.render()|raw}}
+                            {% else %}
+                                {% for key,data in var.objectCustomData %}
+                                    {{ data.render(key)|raw }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+
+
+
+            {% if var.classFile is not empty %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ id }}" href="#object_info_{{ id }}">
+                        Class info
+                    </a>
+                </div>
+                <div id="object_info_{{ id }}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        {% if var.classFile is not empty %}
+                        <div class="final">Filename: {{ var.classFile }}</div>
+                        {% endif %}
+                        {% if var.classInterface is not empty %}
+                        <div class="final">Interfaces: {{ var.classInterface }}</div>
+                        {% endif %}
+                        {% if var.classNamespace is not empty %}
+                        <div class="final">Namespace: {{ var.classNamespace }}</div>
+                        {% endif %}
+                        {% if var.classParent is not empty %}
+                        <div class="final">Parent: {{ var.classParent }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+            {% endif %}
+
+            {% if var.classConstants is not empty %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ id }}" href="#object_constants_{{ id }}">
+                        Class constants
+                    </a>
+                </div>
+                <div id="object_constants_{{ id }}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        {% for key,constant in var.classConstants %}
+                            {{ constant.render(key)|raw }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+
+            {% if var.classMethods is not empty %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ id }}" href="#object_methods_{{ id }}">
+                        Methods
+                    </a>
+                </div>
+                <div id="object_methods_{{ id }}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        {% for method in var.classMethods %}
+                            {{ method }}<br/>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+{#
+{% spaceless %}
+    {% set id = random(1000) %}
+    <label for="tree_object_{{ id }}">
+        {% if array_key is not empty %}
+            <span class="key">[{{ array_key }}]:</span>
+        {% endif %}
+        <span class="switcher">
+            <span class="type">Object ({{ var.className }})</span>
+            {% if var.toString is not empty %}
+                <a class="tostring" href="javascript:void(0)" title="{{ var.toString }}"></a>
+            {% endif %}
+        </span>
+    </label>
+    <input type="checkbox" id="tree_object_{{ id }}">
+
+    {% if not var.isLeaf %}
+        <ol>
+
+
+
+            {% if var.objectCustomData is not empty %}
+                <li>
+                    {{ var.objectCustomData.render('Data')|raw }}
+
+                </li>
+            {% endif %}
+
+            {% if var.objectCustomData is not empty %}
+            <li>
+                {{ var.objectCustomData.render('Data') }}
+
+            </li>
+            {% endif %}
+
+            {% if var.classFile is not empty %}
+                <li>
+                    <label for="tree_object_classinfo_{{ id }}">
+                        <span class="switcher">Class info</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_classinfo_{{ id }}">
+                    <ol>
+                        {% if var.classFile is not empty %}
+                            <li><div class="final">Filename: {{ var.classFile }}</div></li>
+                        {% endif %}
+                        {% if var.classInterface is not empty %}
+                            <li><div class="final">Interfaces: {{ var.classInterface }}</div></li>
+                        {% endif %}
+                        {% if var.classNamespace is not empty %}
+                            <li><div class="final">Namespace: {{ var.classNamespace }}</div></li>
+                        {% endif %}
+                        {% if var.classParent is not empty %}
+                            <li><div class="final">Parent: {{ var.classParent }}</div></li>
+                        {% endif %}
+                    </ol>
+                </li>
+            {% endif %}
+
+            {% if var.classConstants is not empty %}
+                <li>
+                    <label for="tree_object_classconstants_{{ id }}">
+                        <span class="switcher">Class constants</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_classconstants_{{ id }}">
+                    <ol>
+                        {% for key,constant in classConstants %}
+                            <li>{{ constant.render(key)|raw }}</li>
+                        {% endfor %}
+                    </ol>
+                </li>
+            {% endif %}
+
+            {% if var.classMethods is not empty %}
+                <li>
+                    <label for="tree_object_methods_{{ id }}">
+                        <span class="switcher">Methods</span>
+                    </label>
+                    <input type="checkbox" id="tree_object_methods_{{ id }}">
+                    <ol>
+                        {% for method in var.classMethods %}
+                            <li><div class="final">{{ method }}</div></li>
+                        {% endfor %}
+                    </ol>
+                </li>
+            {% endif %}
+        </ol>
+    {% endif %}
+
+{% endspaceless %}
+#}

@@ -1,0 +1,34 @@
+{% import "_macros.html.twig" as m %}
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle"{# data-toggle="collapse" data-parent="#subb" href="#collapseThree"#}>
+            {{ m.array_key(array_key) }}
+
+            <span class="label label-info">&nbsp;</span>
+
+            <span class="">{% block type %}{{ var.type }}{% endblock %}</span>
+            <span style="color:{% block color %}{{ var.getOption('int.html_color', '#000') }}{% endblock %}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+        </a>
+    </div>
+    {#<div id="collapseThree" class="accordion-body collapse">
+        <div class="accordion-inner">
+            xxx
+        </div>
+    </div>#}
+
+</div>
+
+{#
+{% spaceless %}
+
+
+
+
+
+<div class="final">
+    {{ m.array_key(array_key) }}
+    <span class="type">{% block type %}{{ var.type }}{% endblock %}</span>
+    <span style="color:{% block color %}{{ var.getOption('int.html_color', '#000') }}{% endblock %}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+</div>
+{% endspaceless %}#}

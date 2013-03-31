@@ -1,0 +1,23 @@
+<style>
+    {% for file in css %}
+        {{ include_file(file)|raw }}
+    {% endfor %}
+</style>
+
+<script>
+    {% for file in js %}
+        {{ include_file(file)|raw }}
+    {% endfor %}
+</script>
+
+{% spaceless %}
+<pre class="ladybug">
+
+    <ol class="tree">
+        {% for node in nodes %}
+            <li>{{ render_type(node)|raw }}</li>
+        {% endfor %}
+    </ol>
+
+</pre>
+{% endspaceless %}

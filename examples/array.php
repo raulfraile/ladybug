@@ -7,8 +7,11 @@ $var1 = array();
 
 $var1[0] = array(
     'name' => 'Raul',
-    'age' => 29,
-    'url' => 'http://twitter.com/raulfraile'
+    'url' => 'http://twitter.com/raulfraile',
+    'stats' => array(
+        array(1,2,3),
+        array(3,4)
+    )
 );
 
 $var1[1] = array(

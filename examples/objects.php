@@ -8,6 +8,8 @@ class Foo3 {public $a; public function __construct() {$this->a = new DateTime();
 class Foo2 {public $a; public function __construct() {$this->a = new Foo3();}}
 class Foo
 {
+    const www = 1;
+
     public $bar = 1;
     public $bar2 = 2;
     public $a;
@@ -24,10 +26,12 @@ class Foo
 $foo = new Foo();
 //ld($foo);
 
+
+
 // DateTime object
 
 $date = new DateTime();
-ladybug_dump($date);
+//ladybug_dump($date);
 
 $sXml = <<<XML
 <books>
@@ -48,4 +52,4 @@ ladybug_dump($dom);
 
 $reflected = new ReflectionClass('Foo');
 
-ladybug_dump($reflected);
+//ladybug_dump($reflected);

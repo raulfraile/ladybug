@@ -14,7 +14,8 @@ namespace Ladybug\Extension\Resource;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
-use Ladybug\Type;
+
+use Ladybug\Extension\Type;
 
 
 class Gd extends ExtensionBase
@@ -27,7 +28,7 @@ class Gd extends ExtensionBase
         $width = imagesx($var);
         $height = imagesy($var);
         $colors_palette = imagecolorstotal($var);
-        $is_true_color = imageistruecolor($var) ? 'TRUE' : 'FALSE';
+        $is_true_color = imageistruecolor($var) ? true : false;
 
         ob_start();
         imagepng($var);
@@ -49,21 +50,29 @@ class Gd extends ExtensionBase
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
 
         // gd info
-        $result['GD'] = Type\FactoryType::factory(array(
-            'version' => $gd_info['GD Version'],
-            'support' => implode(', ', $gd_support)
-        ), $this->container);
+        $result['GD'] = array(
+            'version' => new Type\TextType($gd_info['GD Version']),
+            'support' => new Type\TextType(implode(', ', $gd_support))
+        );
 
         // image info
-        $result['image'] = Type\FactoryType::factory(array(
-            'width' => Type\FactoryType::factory($width . 'px', $this->container),
-            'height' => Type\FactoryType::factory($height . 'px', $this->container),
-            'colors_palette' => Type\FactoryType::factory($colors_palette, $this->container),
-            'true_color' => Type\FactoryType::factory($is_true_color, $this->container),
+        $result['image'] = array(
+            'width' => $width . 'px',
+            'height' => $height . 'px',
+            'colors_palette' => $colors_palette,
+            'true_color' => $is_true_color,
             //'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
-            'image' => new Type\Extended\ImageType('data:image/png;base64,' . base64_encode($image), $this->container),
-        ), $this->container);
+            'image' => new Type\ImageType('data:image/png;base64,' . base64_encode($image)),
+        );
 
+        /*$result = new Type\ImageType('data:image/png;base64,' . base64_encode($image));
+        $result->setWidth($width);
+        $result->setHeight($height);
+*/
+
+        return array(1,2,3);
         return $result;
+        return new Type\CollectionType($result);
+
     }
 }

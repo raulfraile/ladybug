@@ -86,7 +86,8 @@ class Options
             'string.html_color'        => '#080',
             'string.cli_color'         => 'green',
             'string.show_quotes'       => true,
-            'css.path'                 => __DIR__.'/Asset/tree.min.css'
+            'css.path'                 => '/Asset/tree.min.css',
+            'theme' => 'Modern'
         );
 
         return true;

@@ -19,9 +19,14 @@ class FloatType extends BaseType
 
     const TYPE_ID = 'float';
 
-    public function __construct($var, $level, $container)
+    public function __construct($var, $level, $container, $key = null)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container);
+        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
+    }
+
+    public function getName()
+    {
+        return 'float';
     }
 
 }

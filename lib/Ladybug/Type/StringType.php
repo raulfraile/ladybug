@@ -27,13 +27,13 @@ class StringType extends BaseType
      * @param int     $level
      * @param Options $options
      */
-    public function __construct($var, $level, $container)
+    public function __construct($var, $level, $container, $key = null)
     {
         $this->encoding = mb_detect_encoding($var);
         $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());        
 
 
-        parent::__construct(self::TYPE_ID, $var, $level, $container);
+        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
     }
 
     public function getFormattedValue()
@@ -53,5 +53,10 @@ class StringType extends BaseType
             'length' => $this->length,
             'encoding' => $this->encoding
         );
+    }
+
+    public function getName()
+    {
+        return 'string';
     }
 }

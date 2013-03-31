@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Options;
+use Ladybug\Extension\ExtensionInterface;
 
 class ResourceType extends BaseType
 {
@@ -23,9 +24,9 @@ class ResourceType extends BaseType
     protected $resourceCustomData;
     protected $isCustomData;
 
-    public function __construct($var, $level, $container)
+    public function __construct($var, $level, $container, $key = null)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container);
+        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
 
         $this->resourceType = get_resource_type($var);
 
@@ -40,11 +41,19 @@ class ResourceType extends BaseType
         // is there a class to show the resource info?
         $include_class = $this->getIncludeClass($this->resourceType, 'resource');
         if (class_exists($include_class)) {
-            $custom_dumper = new $include_class($var, $this->container);
-            $this->resourceCustomData = FactoryType::factory(array(
-                $custom_dumper->getData($var)
-            ), $this->container);
 
+            /** @var $customDumper ExtensionInterface */
+            $customDumper = new $include_class($var, $this->level, $this->container);
+            $data = $customDumper->getData($var);
+
+
+            if (!is_array($data)) {
+                $this->resourceCustomData = FactoryType::factory(new \Ladybug\Extension\Type\CollectionType(array($data)), $this->level, $this->container);
+            } else {
+                $this->resourceCustomData = FactoryType::factory(new \Ladybug\Extension\Type\CollectionType($data), $this->level, $this->container);
+            }
+
+//var_dump($this->resourceCustomData);
             $this->isCustomData = true;
 
             unset($custom_dumper); $custom_dumper = NULL;
@@ -116,5 +125,10 @@ class ResourceType extends BaseType
         return $this->isCustomData;
     }
 
+
+    public function getName()
+    {
+        return 'resource';
+    }
 
 }

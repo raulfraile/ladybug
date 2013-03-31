@@ -27,8 +27,13 @@ class File extends ExtensionBase
         $real_path = realpath($stream_vars['uri']);
 
         $result['file'] = $real_path;
-        $result['mode'] = $fstat['mode'];
-        $result['size'] = $this->_formatSize($fstat['size']);
+        //$result['mode'] = $fstat['mode'];
+
+        $mode = new \Ladybug\Extension\Type\UnixPermissionsType($fstat['mode']);
+        $result['mode'] = $mode;
+
+        $size = new \Ladybug\Extension\Type\SizeType($fstat['size']);
+        $result['size'] = $size;
 
         $permissions = array('read');
         if (is_writable($real_path)) $permissions[] = 'write';

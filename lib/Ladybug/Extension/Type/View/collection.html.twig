@@ -1,0 +1,11 @@
+{#
+{% extends "_base.html.twig" %}
+
+{% block value %}
+        #}
+    {% for key,value in var.processedData %}
+        {{ value.render(key)|raw }}
+    {% endfor %}
+{#
+{% endblock %}
+        #}

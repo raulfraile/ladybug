@@ -19,9 +19,9 @@ class ArrayType extends BaseType
 
     const TYPE_ID = 'array';
 
-    public function __construct(array $var, $level, $container)
+    public function __construct(array $var, $level, $container, $key = null)
     {
-        parent::__construct(self::TYPE_ID, array(), $level, $container);
+        parent::__construct(self::TYPE_ID, array(), $level, $container, $key);
 
         $this->length = count($var);
 
@@ -50,5 +50,11 @@ class ArrayType extends BaseType
             'value' => $value,
             'length' => $this->length
         );
+    }
+
+
+    public function getName()
+    {
+        return 'array';
     }
 }

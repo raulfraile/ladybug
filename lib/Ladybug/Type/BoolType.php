@@ -26,14 +26,19 @@ class BoolType extends BaseType
      * @param mixed   $level
      * @param Options $options
      */
-    public function __construct($var, $level, $container)
+    public function __construct($var, $level, $container, $key = null)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container);
+        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
     }
 
     public function getFormattedValue()
     {
         return $this->value ? 'TRUE' : 'FALSE';
+    }
+
+    public function getName()
+    {
+        return 'bool';
     }
 
 }
