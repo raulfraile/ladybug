@@ -15,29 +15,31 @@ namespace Ladybug\Render;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Twig_SimpleFunction;
-use Ladybug\Theme\HtmlThemeInterface;
+use Ladybug\Theme\ThemeInterface;
 use Ladybug\Type\TypeInterface;
+use Ladybug\Format\FormatInterface;
 
 abstract class BaseRender implements RenderInterface
 {
 
-    /** @var HtmlThemeInterface $theme */
+    /** @var ThemeInterface $theme */
     protected $theme;
 
     /** @var Twig_Environment $twig */
     protected $twig;
 
+    /** @var FormatInterface $format */
+    protected $format;
+
     /**
-     * @param \Ladybug\Theme\HtmlThemeInterface $theme
+     * @param ThemeInterface $theme
      */
-    public function __construct(HtmlThemeInterface $theme)
+    public function __construct(ThemeInterface $theme, FormatInterface $format)
     {
         $this->theme = $theme;
-
+        $this->format = $format;
 
         $loader = new Twig_Loader_Filesystem($this->getPaths());
-
-        //$loader = new Twig_Loader_Filesystem(__DIR__ . '/../Theme/');
 
         $this->twig = new Twig_Environment($loader);
 
@@ -50,7 +52,8 @@ abstract class BaseRender implements RenderInterface
         $this->twig->addFunction($function);
 
         $twig = $this->twig;
-        $format = static::getFormat();
+        $format = $this->format->getName();
+
         $function2 = new Twig_SimpleFunction('render_type', function (TypeInterface $var) use ($twig, $format) {
             return $twig->render($var->getName().'.'.$format.'.twig', $var->getParameters());
         });

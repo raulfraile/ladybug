@@ -1,9 +1,7 @@
 {% import "_macros.html.twig" as m %}
 
-{% spaceless %}
 <div class="final">
     {{ m.array_key(array_key) }}
     <span class="type">{% block type %}{{ var.type }}{% endblock %}</span>
     <span style="color:{% block color %}{{ var.getOption('int.html_color', '#000') }}{% endblock %}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
 </div>
-{% endspaceless %}

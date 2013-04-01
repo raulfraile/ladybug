@@ -141,35 +141,6 @@ class Dumper
     }
 
 
-    /**
-     * Renders the variables into TXT format
-     * @return string
-     */
-    private function _renderTXT()
-    {
-        $result = '';
-
-        foreach ($this->nodes as $var) {
-            $result .= $var->render(null, 'txt');
-        }
-
-        $result = preg_replace('/\s/', '', $result);
-        $result = str_replace('<intro>', PHP_EOL, $result);
-        $result = str_replace('<tab>', '   ', $result);
-        $result = str_replace('<space>', ' ', $result);
-
-        return $result;
-
-        $call = '';
-        if ($this->options->getOption('general.show_backtrace')) {
-            $locationInfo = self::getCallLocationInfos();
-            $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
-        }
-
-        $result .= $call . "\n";
-
-        return $result;
-    }
 
     /**
      * Triggers the html post-processors

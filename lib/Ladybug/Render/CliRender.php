@@ -13,6 +13,7 @@
 namespace Ladybug\Render;
 
 use Ladybug\Theme\CliThemeInterface;
+
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 

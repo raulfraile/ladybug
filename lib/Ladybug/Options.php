@@ -87,7 +87,7 @@ class Options
             'string.cli_color'         => 'green',
             'string.show_quotes'       => true,
             'css.path'                 => '/Asset/tree.min.css',
-            'theme' => 'Modern'
+            'theme' => 'Simple'
         );
 
         return true;
