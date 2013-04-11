@@ -13,15 +13,20 @@
 namespace Ladybug\Theme;
 
 use Ladybug\Render\RenderInterface;
+use Ladybug\Format\FormatInterface;
+use Ladybug\Container;
 
 abstract class BaseTheme implements ThemeInterface
 {
 
+    /** @var Container $container */
+    protected $container;
 
+    protected $formats;
 
-    public function __construct()
+    public function __construct(Container $container)
     {
-
+        $this->container = $container;
     }
 
     public function getHtmlCssDependencies()
@@ -32,6 +37,11 @@ abstract class BaseTheme implements ThemeInterface
     public function getHtmlJsDependencies()
     {
         return array();
+    }
+
+    public function supportsFormat(FormatInterface $format)
+    {
+        return in_array($format->getName(), static::getFormats());
     }
 
 

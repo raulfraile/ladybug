@@ -16,6 +16,7 @@ use Ladybug\Theme\BaseTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Theme\CliThemeInterface;
+use Ladybug\Format;
 
 class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface
 {
@@ -39,9 +40,11 @@ class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfa
         );
     }
 
-    function getEnvironments()
+    function getFormats()
     {
-        return array('Html');
+        return array(
+            Format\HtmlFormat::FORMAT_NAME
+        );
     }
 
 }

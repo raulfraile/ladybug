@@ -3,11 +3,15 @@
 
 namespace Ladybug\Theme;
 
+use Ladybug\Format\FormatInterface;
+
 interface ThemeInterface
 {
     function getName();
 
     function getParent();
 
-    function getEnvironments();
+    function getFormats();
+
+    function supportsFormat(FormatInterface $format);
 }

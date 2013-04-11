@@ -13,21 +13,22 @@
 namespace Ladybug\Render;
 
 use Ladybug\Theme\CliThemeInterface;
-
+use Ladybug\Format\FormatInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
-class CliRender extends BaseRender implements RenderInterface
+
+class ConsoleRender extends BaseRender implements RenderInterface
 {
 
 
 
     protected $console;
 
-    public function __construct(CliThemeInterface $theme)
+    public function __construct(CliThemeInterface $theme, FormatInterface $format)
     {
 
-        parent::__construct($theme);
+        parent::__construct($theme, $format);
 
 
         $this->console = new ConsoleOutput();
@@ -41,7 +42,7 @@ class CliRender extends BaseRender implements RenderInterface
 
     public function render(array $nodes)
     {
-        $result = $this->twig->render('layout.cli.twig', array(
+        $result = $this->twig->render('layout.console.twig', array(
             'nodes' => $nodes
         ));
 

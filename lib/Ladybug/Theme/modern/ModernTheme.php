@@ -15,6 +15,7 @@ namespace Ladybug\Theme\Modern;
 use Ladybug\Theme\BaseTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
+use Ladybug\Format;
 
 class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface
 {
@@ -50,8 +51,10 @@ class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
         );
     }
 
-    function getEnvironments()
+    function getFormats()
     {
-        return array('Html');
+        return array(
+            Format\HtmlFormat::FORMAT_NAME
+        );
     }
 }

@@ -17,6 +17,8 @@ use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Theme\CliThemeInterface;
 
+use Ladybug\Format;
+
 class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface, CliThemeInterface
 {
 
@@ -53,9 +55,13 @@ class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
         );
     }
 
-    function getEnvironments()
+    function getFormats()
     {
-        return array('Html', 'Cli', 'Text');
+        return array(
+            Format\HtmlFormat::FORMAT_NAME,
+            Format\ConsoleFormat::FORMAT_NAME,
+            Format\TextFormat::FORMAT_NAME
+        );
     }
 
 

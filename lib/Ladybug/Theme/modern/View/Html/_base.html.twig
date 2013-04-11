@@ -8,7 +8,7 @@
             <span class="label label-info">&nbsp;</span>
 
             <span class="">{% block type %}{{ var.type }}{% endblock %}</span>
-            <span style="color:{% block color %}{{ var.getOption('int.html_color', '#000') }}{% endblock %}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+            <span style="">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
         </a>
     </div>
     {#<div id="collapseThree" class="accordion-body collapse">

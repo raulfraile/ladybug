@@ -12,7 +12,6 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -34,9 +33,6 @@ abstract class BaseType implements TypeInterface
     /** @var int $level */
     protected $level;
 
-    /** @var Options $options */
-    protected $options;
-
     /** @var string $encoding */
     protected $encoding;
 
@@ -52,9 +48,8 @@ abstract class BaseType implements TypeInterface
      * @param string  $type
      * @param mixed   $value
      * @param int     $level
-     * @param Options $options
      */
-    public function __construct($type, $value, $level, Pimple $container, $key = null)
+    public function __construct($type, $value, $level, \Ladybug\Container $container, $key = null)
     {
 
         $this->type = $type;
@@ -62,9 +57,6 @@ abstract class BaseType implements TypeInterface
         $this->container = $container;
         $this->level = $level + 1;
         $this->key = null;
-
-
-        //$this->options = $options;
     }
 
     /**
@@ -132,18 +124,7 @@ abstract class BaseType implements TypeInterface
         $this->level = $level;
     }
 
-    /**
-     * Gets the variable color based on variable type
-     *
-     * @param  string $format Format: html or cli
-     * @return string Color value
-     */
-    protected function getColor($format = 'html')
-    {
-        if ($format == 'html') return $this->getOption($this->type.'.html_color');
-        elseif ($format == 'cli') return $this->getOption($this->type.'.cli_color');
-        else return NULL;
-    }
+
 
     /**
      * Renders the variable node in the dump tree
@@ -165,38 +146,8 @@ abstract class BaseType implements TypeInterface
         ));
 
 
-
-       // if (in_array($format, array('html', 'txt'))) {
             return $result;
-        /*} elseif ('cli' === $format) {
-            $output = new ConsoleOutput();
 
-            // styles
-
-            $stringStyle = new OutputFormatterStyle($this->options->getOption('string.cli_color', 'white'));
-            $output->getFormatter()->setStyle('t_string', $stringStyle);
-
-            $boolStyle = new OutputFormatterStyle($this->options->getOption('bool.cli_color', 'white'));
-            $output->getFormatter()->setStyle('t_bool', $boolStyle);
-
-            $intStyle = new OutputFormatterStyle($this->options->getOption('int.cli_color', 'white'));
-            $output->getFormatter()->setStyle('t_int', $intStyle);
-
-            $floatStyle = new OutputFormatterStyle($this->options->getOption('float.cli_color', 'white'));
-            $output->getFormatter()->setStyle('t_float', $floatStyle);
-
-
-            $output->writeln($result);
-
-        }
-*/
-
-        //return $result;
-
-        /*if ($format == 'html') return $this->_renderHTML($array_key, $escape);
-        elseif ($format == 'cli') return $this->_renderCLI($array_key, $escape);
-        elseif ($format == 'txt') return $this->_renderTXT($array_key, $escape);
-        else return NULL;*/
     }
 
 
@@ -269,7 +220,7 @@ abstract class BaseType implements TypeInterface
 
     public function getOption($key, $default = null)
     {
-        return $this->container['options']->getOption($key);
+        return $this->container->getParameter($key);
     }
 
     public function setLength($length)

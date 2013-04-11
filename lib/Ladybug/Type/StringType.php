@@ -38,9 +38,6 @@ class StringType extends BaseType
 
     public function getFormattedValue()
     {
-        if ($this->getOption('string.show_quotes')) {
-            return sprintf('"%s"', $this->value);
-        }
 
         return $this->value;
     }

@@ -3,7 +3,9 @@
 
 namespace Ladybug\Environment;
 
-class BrowserEnvironment implements EnvironmentInterface
+use Ladybug\Format;
+
+class BrowserEnvironment extends BaseEnvironment
 {
 
     public function getName()
@@ -18,6 +20,6 @@ class BrowserEnvironment implements EnvironmentInterface
 
     function getDefaultFormat()
     {
-        return 'Html';
+        return Format\HtmlFormat::FORMAT_NAME;
     }
 }

@@ -89,23 +89,26 @@ abstract class BaseRender implements RenderInterface
     {
         $paths = array();
 
-        $templatesDir = __DIR__ . '/../Theme/' . $this->theme->getName() . '/View/'.ucfirst(static::getFormat()).'/';
+        $templatesDir = __DIR__ . '/../Theme/' . $this->theme->getName() . '/View/'.ucfirst($this->format->getName()).'/';
+
         if (file_exists($templatesDir)) {
             $paths[] = $templatesDir;
         }
 
         // parents
-        $currentTheme = $this->theme;
+        /*$currentTheme = $this->theme;
         while (!is_null($currentTheme->getParent())) {
             $templatesDir = __DIR__ . '/../Theme/' . $currentTheme->getParent() . '/View/'.ucfirst(static::getFormat()).'/';;
             if (file_exists($templatesDir)) {
                 $paths[] = $templatesDir;
             }
 
-            $themeClass = 'Ladybug\\Theme\\' . $currentTheme->getParent() . '\\' . $currentTheme->getParent() . 'Theme';
-            $currentTheme = new $themeClass;
+            //$themeClass = 'Ladybug\\Theme\\' . $currentTheme->getParent() . '\\' . $currentTheme->getParent() . 'Theme';
+            //$currentTheme = new $themeClass;
 
-        }
+
+
+        }*/
 
         return $paths;
     }

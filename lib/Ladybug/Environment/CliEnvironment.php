@@ -3,7 +3,9 @@
 
 namespace Ladybug\Environment;
 
-class CliEnvironment implements EnvironmentInterface
+use Ladybug\Format;
+
+class CliEnvironment extends BaseEnvironment
 {
 
     public function getName()
@@ -18,6 +20,6 @@ class CliEnvironment implements EnvironmentInterface
 
     function getDefaultFormat()
     {
-        return 'Console';
+        return Format\ConsoleFormat::FORMAT_NAME;
     }
 }

@@ -24,48 +24,34 @@ use Ladybug\Theme\ThemeInterface;
 use Ladybug\Exception\ThemeNotFoundException;
 use Ladybug\Render\RenderInterface;
 
+use Ladybug\Environment\EnvironmentResolver;
+use Ladybug\Theme\ThemeResolver;
+use Ladybug\Container;
+
+
 class Dumper
 {
 
-    const ENVIRONMENT_HTML = 'Html';
-    const ENVIRONMENT_CLI = 'Cli';
-    const ENVIRONMENT_TXT = 'Text';
-
-    const EXPORT_FORMAT_PHP  = 'php';
-    const EXPORT_FORMAT_YAML = 'yaml';
-    const EXPORT_FORMAT_JSON = 'json';
-    const EXPORT_FORMAT_XML  = 'xml';
-
-    private static $tree_counter = 0;
-    private static $assetsLoaded = false;
-
-    private $isCssLoaded;
+    /** @var array $nodes */
     private $nodes;
-    private $options;
 
+    /** @var Container $container */
     protected $container;
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->isCssLoaded = false;
-        $this->options = new Options();
-
-        $this->container = new Pimple();
-
-        $this->container['options'] = $this->container->share(function ($c) {
-            return new Options();
-        });
-
-
-
+        $this->container = new Container();
+        $this->container->load();
     }
 
     /**
      * Dumps one or more variables
-     * @param vars one or more variables to dump
+     * @param vars One or more variables to dump
+     *
      * @return string
      */
     public function dump(/*$var1 [, $var2...$varN]*/)
@@ -73,60 +59,21 @@ class Dumper
         $args = func_get_args();
         $this->nodes = $this->readVars($args);
 
-        $env = $this->getEnvironment();
+        //$env = $this->getEnvironment();
 
-        $render = $this->getRender($env);
+        //$render = $this->getRender($env);
 
-        return $render->render($this->nodes);
+        //return $render->render($this->nodes);
+        //return $this->container['__render']->render($this->nodes);
+
+
+
+
+        return $this->getRender()->render($this->nodes);
     }
 
     /**
-     * Exports one or more variables to the selected format
-     * Available formats: php (for testing purposes), yaml, xml and json
-     * @param vars format and variables to dump
-     */
-    public function export(/*$format, $var1 [, $var2...$varN]*/)
-    {
-        $args = func_get_args();
-
-        $format = strtolower($args[0]);
-        $vars = array_slice($args, 1);
-
-        $this->nodes = $this->readVars($vars);
-
-        $response = null;
-
-        $exportArray = array();
-        $i=1;
-        foreach ($this->nodes as $v) {
-            $exportArray['var' . $i] = $v->export();
-            $i++;
-        }
-
-        switch ($format) {
-            case self::EXPORT_FORMAT_PHP:
-                $response = $exportArray;
-                break;
-            case self::EXPORT_FORMAT_YAML:
-                $yaml = new \Symfony\Component\Yaml\Yaml();
-                $response = $yaml->dump($exportArray);
-                break;
-            case self::EXPORT_FORMAT_XML:
-                $serializer = new \Symfony\Component\Serializer\Encoder\XmlEncoder();
-                $response = $serializer->encode($exportArray, 'xml');
-                break;
-            case self::EXPORT_FORMAT_JSON:
-                $response = json_encode($exportArray);
-                break;
-            default:
-                throw new InvalidFormatException();
-        }
-
-        return $response;
-    }
-
-    /**
-     * Reads variables and creates TType objects
+     * Reads variables and creates XType objects
      * @param array $vars variables to dump
      */
     protected function readVars($vars)
@@ -138,75 +85,6 @@ class Dumper
         }
 
         return $nodes;
-    }
-
-
-
-    /**
-     * Triggers the html post-processors
-     * @param  string $str HTML code
-     * @return string processed string
-     */
-    private function _postProcess($str)
-    {
-        $result = $str;
-
-        if ($this->options->getOption('processor.active')) {
-            $dir = dir(__DIR__. '/Processor');
-
-            while (false !== ($file = $dir->read())) {
-                if (strpos($file, '.php') !== false && strpos($file, 'Interface.php') === false) {
-                    $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
-
-                    $processorObject = new $class();
-
-                    if ($processorObject->isProcessable($result)) {
-                        $result = $processorObject->process($result);
-                    }
-
-                    unset($processorObject);
-                }
-            }
-            $dir->close();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Increments and returns the tree counter
-     * @return int tree id
-     */
-    public static function getTreeId()
-    {
-        return ++self::$tree_counter;
-    }
-
-    /**
-     * Returns true if the script is being executed in CLI
-     * @return boolean
-     */
-    private function _isCli()
-    {
-        return 'cli' === php_sapi_name();
-    }
-
-    /**
-     * Returns true if the request is a XMLHttpRequest.
-     *
-     * It works if your JavaScript library set an X-Requested-With HTTP header.
-     * It is known to work with Prototype, Mootools, jQuery.
-     *
-     * @return Boolean true if the request is an XMLHttpRequest, false otherwise
-     */
-    public function isXmlHttpRequest()
-    {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
-    }
-
-    public function setOption($key, $value)
-    {
-        $this->options->setOption($key, $value);
     }
 
     /**
@@ -234,55 +112,57 @@ class Dumper
         );
     }
 
-    public function getEnvironment()
+    /**
+     * Set option value
+     * @param string $key   Option key
+     * @param mixed  $value Option value
+     */
+    public function setOption($key, $value)
     {
-        if (true === $this->_isCli()) {
-            return self::ENVIRONMENT_CLI;
-        } elseif ($this->isXmlHttpRequest()) {
-            return self::ENVIRONMENT_TXT;
-        }
-
-        return self::ENVIRONMENT_HTML;
+        $this->container->setAttribute($key, $value);
     }
 
     /**
-     * @throws Exception\ThemeNotFoundException
+     * Get option value
+     * @param mixed $key Option key
+     *
+     * @return mixed
+     */
+    public function getOption($key)
+    {
+        return $this->container->getAttribute($key);
+    }
+
+    /**
+     * Get render object
      *
      * @return RenderInterface
      */
-    public function getRender($environment)
+    protected function getRender()
     {
-        $themeClass = '\\Ladybug\\Theme\\' . $this->options->getOption('theme') . '\\' . $this->options->getOption('theme') . 'Theme';
+        // environment
 
-        if (!class_exists($themeClass)) {
-            throw new ThemeNotFoundException();
-        }
-
-        /** @var $theme ThemeInterface */
-        $theme = new $themeClass();
+        /** @var $environmentResolver EnvironmentResolver */
+        $environmentResolver = $this->container->get('environment.resolver');
+        $environment = $environmentResolver->resolve();
 
 
-        if (!in_array($environment, $theme->getEnvironments())) {
-            $found = false;
-            while (!is_null($theme->getParent()) && !$found) {
-                $themeClass = '\\Ladybug\\Theme\\' . $theme->getParent() . '\\' . $theme->getParent() . 'Theme';
+        $this->container->setAttribute('format', $environment->getDefaultFormat());
+        $format = $this->container->get(sprintf('format.%s', $environment->getDefaultFormat()));
 
-                /** @var $theme ThemeInterface */
-                $theme = new $themeClass();
+        /** @var $themeResolver ThemeResolver */
+        $themeResolver = $this->container->get('theme.resolver');
 
-                if (in_array($environment, $theme->getEnvironments())) {
-                    $found = true;
-                }
-            }
+        $theme = $themeResolver->resolve();
+        $this->container->setAttribute('theme', strtolower($theme->getName()));
 
-            if (!$found) {
-                var_dump('error');die();
-            }
-        }
 
-        $rendererClass = '\\Ladybug\\Render\\' . $environment . 'Render';
-        $renderer = new $rendererClass($theme);
+        /** @var $render RenderInterface */
+        $render = $this->container->get('render.' . $environment->getDefaultFormat());
 
-        return $renderer;
+        $this->container->setAttribute('render', $render);
+
+        return $render;
     }
+
 }

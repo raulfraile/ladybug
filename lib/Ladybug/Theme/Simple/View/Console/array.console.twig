@@ -1,4 +1,4 @@
-{% import "_macros.cli.twig" as m %}
+{% import "_macros.console.twig" as m %}
 
 {% spaceless %}
     {{ m.array_key(array_key) }}
@@ -7,7 +7,7 @@
 
     {% for key,var in var.value %}
         {{ m.indent(var.level) }}
-        {{ var.render(key, 'cli')|raw }}
+        {{ render_type(var)|raw }}
     {% endfor %}
 
 {% endspaceless %}

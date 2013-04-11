@@ -3,7 +3,10 @@
 
 namespace Ladybug\Environment;
 
-class AjaxEnvironment implements EnvironmentInterface
+use Ladybug\Container;
+use Ladybug\Format;
+
+class AjaxEnvironment extends BaseEnvironment
 {
 
     public function getName()
@@ -13,7 +16,7 @@ class AjaxEnvironment implements EnvironmentInterface
 
     function getDefaultFormat()
     {
-        return 'Text';
+        return Format\TextFormat::FORMAT_NAME;
     }
 
 
