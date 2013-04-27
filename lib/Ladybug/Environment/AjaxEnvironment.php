@@ -7,6 +7,17 @@ use Ladybug\Format;
 class AjaxEnvironment extends BaseEnvironment
 {
 
+    protected $httpXRequestedWith = null;
+
+    public function __construct($httpXRequestedWith = null)
+    {
+        if (!is_null($httpXRequestedWith)) {
+            $this->httpXRequestedWith = $httpXRequestedWith;
+        } elseif (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER)) {
+            $this->httpXRequestedWith = $_SERVER['HTTP_X_REQUESTED_WITH'];
+        }
+    }
+
     public function getName()
     {
         return 'Ajax';
@@ -32,6 +43,6 @@ class AjaxEnvironment extends BaseEnvironment
      */
     protected function isXmlHttpRequest()
     {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
+        return !is_null($this->httpXRequestedWith) && 'XMLHttpRequest' == $this->httpXRequestedWith;
     }
 }
