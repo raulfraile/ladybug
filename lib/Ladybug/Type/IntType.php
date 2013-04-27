@@ -12,6 +12,8 @@
 
 namespace Ladybug\Type;
 
+use Ladybug\Type\Exception\InvalidVariableTypeException;
+
 class IntType extends BaseType
 {
 
@@ -22,6 +24,15 @@ class IntType extends BaseType
         parent::__construct();
 
         $this->type = self::TYPE_ID;
+    }
+
+    public function load($var, $key = null)
+    {
+        if (!is_int($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
+        parent::load($var, $key);
     }
 
 }

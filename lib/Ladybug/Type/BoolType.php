@@ -12,7 +12,7 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
+use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class BoolType extends BaseType
 {
@@ -36,6 +36,15 @@ class BoolType extends BaseType
     public function getFormattedValue()
     {
         return $this->value ? 'true' : 'false';
+    }
+
+    public function load($var, $key = null)
+    {
+        if (!is_bool($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
+        parent::load($var, $key);
     }
 
 }

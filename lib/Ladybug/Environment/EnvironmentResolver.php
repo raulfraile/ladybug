@@ -10,11 +10,14 @@ class EnvironmentResolver
     /** @var array $environments */
     protected $environments = array();
 
-    public function __construct(Container $container)
+    /**
+     * @param EnvironmentInterface[] $environments
+     */
+    public function __construct(array $environments)
     {
-        $this->register($container['environment.browser']);
-        $this->register($container['environment.ajax']);
-        $this->register($container['environment.cli']);
+        foreach ($environments as $item) {
+            $this->register($item);
+        }
     }
 
     /**

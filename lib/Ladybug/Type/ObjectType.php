@@ -16,6 +16,7 @@ use Ladybug\Extension\ExtensionInterface;
 use Ladybug\Container;
 use Ladybug\Type\Object;
 use Ladybug\ObjectMetadata\ObjectMetadataResolver;
+use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ObjectType extends BaseType
 {
@@ -55,7 +56,7 @@ class ObjectType extends BaseType
     /** @var ObjectMetadataResolver $metadataResolver */
     protected $metadataResolver;
 
-    public function __construct($level, $maxLevel, FactoryType $factory, ObjectMetadataResolver $metadataResolver)
+    public function __construct($level, $maxLevel, FactoryType $factory, ObjectMetadataResolver $metadataResolver = null)
     {
         parent::__construct();
 
@@ -68,6 +69,10 @@ class ObjectType extends BaseType
 
     public function load($var, $key = null)
     {
+        if (!is_null($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
         $this->className = get_class($var);
 
         $this->toString = (method_exists($var, '__toString')) ? $var->__toString() : null;

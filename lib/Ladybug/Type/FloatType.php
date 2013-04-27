@@ -12,6 +12,8 @@
 
 namespace Ladybug\Type;
 
+use Ladybug\Type\Exception\InvalidVariableTypeException;
+
 class FloatType extends BaseType
 {
 
@@ -23,5 +25,15 @@ class FloatType extends BaseType
 
         $this->type = self::TYPE_ID;
     }
+
+    public function load($var, $key = null)
+    {
+        if (!is_float($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
+        parent::load($var, $key);
+    }
+
 
 }

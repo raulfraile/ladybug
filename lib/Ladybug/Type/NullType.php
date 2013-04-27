@@ -12,6 +12,8 @@
 
 namespace Ladybug\Type;
 
+use Ladybug\Type\Exception\InvalidVariableTypeException;
+
 class NullType extends BaseType
 {
 
@@ -32,5 +34,14 @@ class NullType extends BaseType
     public function getFormattedValue()
     {
         return 'null';
+    }
+
+    public function load($var, $key = null)
+    {
+        if (!is_null($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
+        parent::load($var, $key);
     }
 }

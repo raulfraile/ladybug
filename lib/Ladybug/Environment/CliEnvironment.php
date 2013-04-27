@@ -7,6 +7,13 @@ use Ladybug\Format;
 class CliEnvironment extends BaseEnvironment
 {
 
+    protected $sapiName;
+
+    public function __construct($sapiName = null)
+    {
+        $this->sapiName = is_null($sapiName) ? php_sapi_name() : $sapiName;
+    }
+
     public function getName()
     {
         return 'Cli';
@@ -14,7 +21,7 @@ class CliEnvironment extends BaseEnvironment
 
     public function isActive()
     {
-        return 'cli' === php_sapi_name();
+        return 'cli' === $this->sapiName;
     }
 
     public function getDefaultFormat()

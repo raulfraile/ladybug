@@ -69,16 +69,20 @@ class Container extends Pimple
 
         // environments
         $this->setShared('environment.ajax', function ($c) {
-            return new \Ladybug\Environment\AjaxEnvironment($c);
+            return new \Ladybug\Environment\AjaxEnvironment();
         });
         $this->setShared('environment.cli', function ($c) {
-            return new \Ladybug\Environment\CliEnvironment($c);
+            return new \Ladybug\Environment\CliEnvironment();
         });
         $this->setShared('environment.browser', function ($c) {
-            return new \Ladybug\Environment\BrowserEnvironment($c);
+            return new \Ladybug\Environment\BrowserEnvironment();
         });
         $this->setShared('environment.resolver', function ($c) {
-            return new \Ladybug\Environment\EnvironmentResolver($c);
+            return new \Ladybug\Environment\EnvironmentResolver(array(
+                $c->get('environment.ajax'),
+                $c->get('environment.cli'),
+                $c->get('environment.browser')
+            ));
         });
 
         // format

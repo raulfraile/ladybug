@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Options;
+use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class StringType extends BaseType
 {
@@ -35,6 +36,10 @@ class StringType extends BaseType
 
     public function load($var, $key = null)
     {
+        if (!is_string($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
         parent::load($var, $key);
 
         $this->encoding = mb_detect_encoding($var);

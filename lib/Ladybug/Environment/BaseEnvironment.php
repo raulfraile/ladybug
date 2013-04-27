@@ -7,11 +7,8 @@ use Ladybug\Container;
 abstract class BaseEnvironment implements EnvironmentInterface
 {
 
-    /** @var Container $container */
-    protected $container;
-
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->container = $container;
+
     }
 }
