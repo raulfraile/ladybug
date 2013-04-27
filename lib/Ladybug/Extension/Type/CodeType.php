@@ -12,16 +12,12 @@
 
 namespace Ladybug\Extension\Type;
 
-
-
-
 class CodeType extends BaseType
 {
 
     const TYPE_ID = 'code';
 
     protected $language;
-
 
     public function setLanguage($language)
     {
@@ -32,4 +28,15 @@ class CodeType extends BaseType
     {
         return $this->language;
     }
+
+    public function getTemplateName()
+    {
+        return 'code';
+    }
+
+    public function load($var)
+    {
+        // TODO: Implement load() method.
+    }
+
 }

@@ -20,13 +20,17 @@ class DOMDocument extends ExtensionBase
 {
     public function getData($var)
     {
+        /** @var \DOMDocument $var */
+
         $var->formatOutput = true;
         $xml = htmlentities($var->saveXML());
 
-        $result = new Type\CodeType($xml);
+        $result = new Type\CodeType();
         $result->setLanguage('xml');
+        $result->setData($xml);
+        $result->setKey('Code');
 
-        return array($result);
+        return $result;
     }
 
 }

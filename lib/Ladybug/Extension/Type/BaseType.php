@@ -12,18 +12,20 @@
 
 namespace Ladybug\Extension\Type;
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
+use Ladybug\Type\TypeInterface;
 
-
-abstract class BaseType
+abstract class BaseType implements TypeInterface
 {
 
     const TYPE_ID = 'base';
 
     protected $id;
 
+    protected $key;
+
     protected $data;
+
+    protected $level;
 
     /**
      * Constructor
@@ -32,9 +34,8 @@ abstract class BaseType
      * @param mixed   $level
      * @param Options $options
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
         $this->id = 'ext_' . static::TYPE_ID . '_' . ((int) rand(1, 100));
     }
 
@@ -48,25 +49,42 @@ abstract class BaseType
         return $this->data;
     }
 
-    public function render($array_key = NULL, $format = 'html', $escape = false, $level = 1)
-    {
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/View');
-        $twig = new Twig_Environment($loader);
-
-        $result = $twig->render(static::TYPE_ID.'.'.$format.'.twig', array_merge(
-            array(
-                'imports' => array(file_get_contents(__DIR__.'/../../Asset/js/raphaeljs.js'))
-            ),//$this->getViewParameters(),
-            array('var' => $this, 'array_key' => $array_key, 'level' => $level)
-
-        ));
-
-        return $result;
-    }
-
     public function getId()
     {
         return $this->id;
     }
+
+    public function getParameters()
+    {
+        return array(
+            'var' => $this
+        );
+    }
+
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function getTemplateName()
+    {
+        return static::TYPE_ID;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
 
 }

@@ -12,7 +12,6 @@
 
 namespace Ladybug\Extension\Type;
 
-
 class SizeType extends BaseType
 {
 
@@ -36,37 +35,6 @@ class SizeType extends BaseType
 
     protected $unit = self::UNIT_BYTE;
 
-    /**
-     * Constructor
-     *
-     * @param string  $var
-     * @param mixed   $level
-     * @param Options $options
-     */
-    public function __construct($data, $unit = self::UNIT_BYTE)
-    {
-        $this->sizes[self::UNIT_BYTE] = 1;
-        $this->sizes[self::UNIT_KB] = $this->sizes[self::UNIT_BYTE] * 1024;
-        $this->sizes[self::UNIT_MB] = $this->sizes[self::UNIT_KB] * 1024;
-        $this->sizes[self::UNIT_GB] = $this->sizes[self::UNIT_MB] * 1024;
-        $this->sizes[self::UNIT_TB] = $this->sizes[self::UNIT_GB] * 1024;
-
-        // convert it to bytes
-        if ($unit != self::UNIT_BYTE) {
-            $data = $data * $this->sizes[$unit];
-        }
-
-        // calculate unit
-        if ($this->data < self::UNIT_MB) {
-            $this->unit = self::UNIT_KB;
-        } elseif ($this->data < self::UNIT_GB) {
-            $this->unit = self::UNIT_MB;
-        } else {
-            $this->unit = self::UNIT_GB;
-        }
-
-        parent::__construct($data);
-    }
 
     public function getUnit()
     {
@@ -100,6 +68,30 @@ class SizeType extends BaseType
         return $this->data / $this->sizes[$this->unit];
     }
 
+    public function getTemplateName()
+    {
+        return 'size';
+    }
+
+    public function load($var)
+    {
+        $this->sizes[self::UNIT_BYTE] = 1;
+        $this->sizes[self::UNIT_KB] = $this->sizes[self::UNIT_BYTE] * 1024;
+        $this->sizes[self::UNIT_MB] = $this->sizes[self::UNIT_KB] * 1024;
+        $this->sizes[self::UNIT_GB] = $this->sizes[self::UNIT_MB] * 1024;
+        $this->sizes[self::UNIT_TB] = $this->sizes[self::UNIT_GB] * 1024;
+
+        $this->data = (float) $var;
+
+        // calculate unit
+        if ($this->data < $this->sizes[self::UNIT_MB]) {
+            $this->unit = self::UNIT_KB;
+        } elseif ($this->data < $this->sizes[self::UNIT_GB]) {
+            $this->unit = self::UNIT_MB;
+        } else {
+            $this->unit = self::UNIT_GB;
+        }
+    }
 
 
 }

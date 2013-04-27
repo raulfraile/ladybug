@@ -12,14 +12,17 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
-use Pimple;
 use Ladybug\Extension\ExtensionInterface;
+use Ladybug\Container;
+use Ladybug\Type\Object;
+use Ladybug\ObjectMetadata\ObjectMetadataResolver;
 
 class ObjectType extends BaseType
 {
 
     const TYPE_ID = 'object';
+
+    const CLASSINFO_BUILTIN = 'built-in';
 
     protected $className = null;
     protected $classConstants = array();
@@ -35,219 +38,79 @@ class ObjectType extends BaseType
 
     protected $isLeaf;
 
-    protected $inspect_custom_data;
-    protected $isCustomData;
+    /** @var string $icon */
+    protected $icon;
 
-    public function __construct($var, $level, Pimple $container, $key = null)
+    /** @var string $helpLink */
+    protected $helpLink;
+
+    /** @var string $version */
+    protected $version;
+
+    protected $maxLevel;
+
+    /** @var FactoryType $factory */
+    protected $factory;
+
+    /** @var ObjectMetadataResolver $metadataResolver */
+    protected $metadataResolver;
+
+    public function __construct($level, $maxLevel, FactoryType $factory, ObjectMetadataResolver $metadataResolver)
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
+        parent::__construct();
 
-        $this->inspect_custom_data = true;
+        $this->type = self::TYPE_ID;
+        $this->level = $level;
+        $this->maxLevel = $maxLevel;
+        $this->factory = $factory;
+        $this->metadataResolver = $metadataResolver;
+    }
 
+    public function load($var, $key = null)
+    {
         $this->className = get_class($var);
 
         $this->toString = (method_exists($var, '__toString')) ? $var->__toString() : null;
 
-        if ($this->level < $this->getOption('object.max_nesting_level')) {
+        if ($this->level < $this->maxLevel) {
             $this->isLeaf = false;
 
-            $reflection_class = new \ReflectionClass($this->className);
+            $reflectedClass = new \ReflectionClass($this->className);
 
-            // class info
-            if ($this->getOption('object.show_classinfo')) {
-                $this->classFile = $reflection_class->getFileName();
-                if (empty($this->classFile)) $this->classFile = 'built-in';
-                $this->classInterfaces = implode(', ', $reflection_class->getInterfaceNames());
-                $this->classNamespace = $reflection_class->getNamespaceName();
-                $class_parent_obj = $reflection_class->getParentClass();
-                if ($class_parent_obj) $this->classParent = $class_parent_obj->getName();
-                else $this->classParent = '';
+            // Class info
+            $this->loadClassInfo($reflectedClass);
 
-                unset($class_parent_obj); $class_parent_obj = NULL;
-            }
-
-            if ($this->getOption('object.show_data')) {
-                // is there a class to show the object data?
-                $include_class = $this->getIncludeClass($this->className, 'object');
-
-                if (class_exists($include_class)) {
-
-                    /** @var $customDumper ExtensionInterface */
-                    $customDumper = new $include_class($var, $this->level, $this->container);
-                    $data = $customDumper->getData($var);
-                    $this->objectCustomData = FactoryType::factory($data, $this->level, $this->container);
-
-                    //$custom_dumper = new $include_class($var, $this->container);
-                    //$this->objectCustomData = FactoryType::factory(array($custom_dumper->getData($var)), $this->container);
-                    $this->isCustomData = TRUE;
-
-                    if (is_array($this->objectCustomData)) $this->inspect_custom_data = $customDumper->getInspect();
-                    else $this->inspect_custom_data = FALSE;
-                } else {
-                    $data = (array) $var;
-
-                    // unmangle private and protected
-                    $this->objectCustomData = array();
-                    foreach ($data as $key => $item) {
-
-                        $type = FactoryType::factory($item, $this->level, $this->container);
-$type=$item;
-                        if (0 === strpos($key, "\0*\0")) {
-                            $this->objectCustomData['protected ' . substr($key, 3)] = $type;
-                        } elseif (0 === strpos($key, "\0" . $this->className . "\0")) {
-                            $this->objectCustomData['private ' . substr($key, 2 + strlen($this->className))] = $type;
-                        } else {
-                            $this->objectCustomData['public ' . $key] = $type;
-                        }
-                    }
-
-                    $this->isCustomData = FALSE;
-                    $this->inspect_custom_data = TRUE;
-                }
-
-                // Custom/array-cast data & name normalization
-                if (!empty($this->objectCustomData) && is_array($this->objectCustomData)) {
-                    foreach ($this->objectCustomData as &$c) {
-                        $c = FactoryType::factory($c, $this->level, $this->container);
-                    }
-                }
-            }
+            // Object data
+            $this->loadData($var, $reflectedClass);
 
             // Class constants
-            if ($this->getOption('object.show_constants')) {
-                $this->classConstants = $reflection_class->getConstants();
-                if (!empty($this->classConstants)) {
-                    foreach ($this->classConstants as &$c) {
-                        $c = FactoryType::factory($c, $this->level, $this->container);
-                    }
-                }
-            }
+            $this->loadClassConstants($reflectedClass);
 
             // Object properties
-            if ($this->getOption('object.show_properties')) {
-                $object_properties = $reflection_class->getProperties();
-                $this->objectProperties = array();
-                if (!empty($object_properties)) {
-                    foreach ($object_properties as $property) {
-                        if ($property->isPublic()) {
-                            $property_value = $property->getValue($this->value);
-                            $this->object_properties[$property->getName()] = FactoryType::factory($property_value, $this->level, $this->container);
-                        }
-                    }
-                }
-            }
+            //$this->loadObjectProperties($reflectedClass);
 
             // Class methods
-            if ($this->getOption('object.show_methods')) {
-                $this->classMethods = array();
-                $class_methods = $reflection_class->getMethods();
-                if (!empty($class_methods)) {
-                    foreach ($class_methods as $k=>$v) {
-                        $method = $reflection_class->getMethod($v->name);
+            $this->loadClassMethods($reflectedClass);
 
-                        //if ($method->getName() == '__toString') $this->tostring = $var->__toString();
+            // metadata
 
-                        $method_syntax = '';
-
-                        if ($method->isStatic()) $method_syntax .= 'static ';
-                        elseif ($method->isPublic()) $method_syntax .= 'public ';
-                        elseif ($method->isProtected()) $method_syntax .= 'protected ';
-                        elseif ($method->isPrivate()) $method_syntax .= 'private ';
-
-                        $method_syntax .= $method->getName();
-
-                        $method_parameters = $method->getParameters();
-                        $method_syntax .= '(';
-                        $method_parameters_result = array();
-                        foreach ($method_parameters as $parameter) {
-                            $parameter_result = '';
-
-                            $class = $parameter->getClass();
-                            if ($class instanceof \ReflectionClass) {
-                                $parameter_result .= $class->getName().' ';
-                            }
-
-                            if ($parameter->isOptional()) $parameter_result .= '[';
-
-                            if ($parameter->isPassedByReference()) $parameter_result .= '&';
-                            $parameter_result .= '$' . $parameter->getName();
-
-                            $default = NULL;
-                            if ($parameter->isDefaultValueAvailable()) {
-                                $default = $parameter->getDefaultValue();
-
-                                if($default === null) $default = 'NULL';
-                                elseif(is_bool($default)) $default = $default ? 'TRUE' : 'FALSE';
-                                elseif(is_string($default)) $default = '"' . htmlentities($default, ENT_COMPAT) . '"';
-                                elseif(is_array($default)) $default = 'Array';
-
-                                $parameter_result .= ' = ' . $default;
-                            }
-
-                            if ($parameter->isOptional()) $parameter_result .= ']';
-
-                            $method_parameters_result[] = $parameter_result;
-                        }
-
-                        $method_syntax .= implode(', ', $method_parameters_result);
-                        $method_syntax .= ')';
-
-                        $this->classMethods[] = $method_syntax;
-                    }
-
-                    sort($this->classMethods, SORT_STRING);
-                }
+            $metadata = $this->metadataResolver->resolve($this->className);
+            if (array_key_exists('help_link', $metadata)) {
+                $this->helpLink = $metadata['help_link'];
             }
-        } else $this->isLeaf = TRUE;
 
+            if (array_key_exists('icon', $metadata)) {
+                $this->icon = $metadata['icon'];
+            }
 
-    }
+            if (array_key_exists('version', $metadata)) {
+                $this->version = $metadata['version'];
+            }
 
-    public function export()
-    {
-        $value = array();
-
-        // Class info
-        $value['class_info'] = array();
-        if (!empty($this->classFile)) $value['class_info']['filename'] = $this->classFile;
-        if (!empty($this->classInterfaces)) $value['class_info']['interfaces'] = $this->classInterfaces."\n";
-        if (!empty($this->classNamespace)) $value['class_info']['namespace'] = $this->classNamespace."\n";
-        if (!empty($this->classParent)) $value['class_info']['parent'] = $this->classParent."\n";
-
-        // Constants
-        $value['constants'] = array();
-        foreach ($this->classConstants as $k=>$v) {
-            if (is_string($v)) $value['constants'][$k] = $v;
-            else $value['constants'][$k] = $v->export();
+        } else {
+            $this->isLeaf = TRUE;
         }
 
-        // Properties
-        $value['public_properties'] = array();
-        foreach ($this->objectProperties as $k=>$v) {
-            if (is_string($v)) $value['public_properties'][$k] = $v;
-            else $value['public_properties'][$k] = $v->export();
-        }
-
-        // Static properties
-        /*$value['static_properties'] = array();
-        foreach ($this->class_static_properties as $k=>$v) {
-            if (is_string($v)) $value['static_properties'][$k] = $v;
-            else $value['static_properties'][$k] = $v->export();
-        }*/
-
-        // Methods
-        $value['methods'] = array();
-        foreach ($this->classMethods as $k=>$v) {
-            if (is_string($v)) $value['methods'][$k] = $v;
-            else $value['methods'][$k] = $v->export();
-        }
-
-        $return = array(
-            'type' => $this->type . '(' . $this->className . ')',
-            'value' => $value
-        );
-
-        return $return;
     }
 
     public function setClassConstants($classConstants)
@@ -330,16 +193,6 @@ $type=$item;
         return $this->classStaticProperties;
     }
 
-    public function setIsCustomData($isCustomData)
-    {
-        $this->isCustomData = $isCustomData;
-    }
-
-    public function getIsCustomData()
-    {
-        return $this->isCustomData;
-    }
-
     public function setIsLeaf($isLeaf)
     {
         $this->isLeaf = $isLeaf;
@@ -390,11 +243,214 @@ $type=$item;
         );
     }
 
-
-    public function getName()
+    public function getTemplateName()
     {
         return 'object';
     }
 
+    protected function loadClassInfo(\ReflectionClass $reflectedObject)
+    {
+        $this->classFile = $reflectedObject->getFileName();
+        if (empty($this->classFile)) {
+            $this->classFile = self::CLASSINFO_BUILTIN;
+        }
+        $this->classInterfaces = implode(', ', $reflectedObject->getInterfaceNames());
+        $this->classNamespace = $reflectedObject->getNamespaceName();
+        $parent = $reflectedObject->getParentClass();
+        if ($parent) {
+            $this->classParent = $parent->getName();
+        }
+    }
+
+    protected function loadClassConstants(\ReflectionClass $reflectedObject)
+    {
+        $this->classConstants = array();
+
+        $constants = $reflectedObject->getConstants();
+        if (!empty($constants)) {
+            foreach ($constants as $constantName => $constantValue) {
+                $valueType = $this->factory->factory($constantValue, $constantName, $this->level + 1);
+                $this->classConstants[] = new Object\Constant($constantName, $valueType);
+            }
+        }
+    }
+
+    protected function loadObjectProperties(\ReflectionClass $reflectedObject)
+    {
+        /*$properties = $reflectedObject->getProperties();
+        $this->objectProperties = array();
+        if (!empty($properties)) {
+            foreach ($properties as $property) {
+                if ($property->isPublic()) {
+                    $property_value = $property->getValue($this->value);
+
+                    $this->objectProperties[$property->getName()] = $this->factory->factory($constantValue, $constantName, $this->level);
+                        FactoryType::factory($property_value, $this->level, $this->container);
+                }
+            }
+        }*/
+    }
+
+    protected function loadClassMethods(\ReflectionClass $reflectedObject)
+    {
+        $this->classMethods = array();
+        $classMethods = $reflectedObject->getMethods();
+        if (!empty($classMethods)) {
+            foreach ($classMethods as $classMethod) {
+                $reflectedMethod = $reflectedObject->getMethod($classMethod->name);
+
+                $method = new Object\Method();
+                $method->setName($reflectedMethod->getName());
+
+                // static
+                if ($reflectedMethod->isStatic()) {
+                    $method->setIsStatic(true);
+                }
+
+                // visibility
+                if ($reflectedMethod->isPublic()) {
+                    $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PUBLIC);
+                } elseif ($reflectedMethod->isProtected()) {
+                    $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PROTECTED);
+                } elseif ($reflectedMethod->isPrivate()) {
+                    $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PRIVATE);
+                }
+
+                // phpdoc comment
+                $method->setComment($reflectedMethod->getDocComment());
+
+                // parameters
+                $methodParameters = $reflectedMethod->getParameters();
+
+                foreach ($methodParameters as $methodParameterReflected) {
+
+                    $methodParameter = new Object\MethodParameter();
+                    $methodParameter->setName($methodParameterReflected->getName());
+
+                    $class = $methodParameterReflected->getClass();
+
+                    if ($class instanceof \ReflectionClass) {
+                        $methodParameter->setType($class->getName());
+                    } elseif ($methodParameterReflected->isArray()) {
+                        $methodParameter->setType('array');
+                    }
+
+                    if ($methodParameterReflected->isPassedByReference()) {
+                        $methodParameter->setIsReference(true);
+                    }
+
+                    if ($methodParameterReflected->isDefaultValueAvailable()) {
+                        $default = $methodParameterReflected->getDefaultValue();
+                        $defaultValueType = $this->factory->factory($default, null, $this->level + 1);
+
+                        $methodParameter->setDefaultValue($defaultValueType);
+                    }
+
+                    $method->addMethodParameter($methodParameter);
+                }
+
+                $this->classMethods[] = $method;
+            }
+        }
+
+        // order methods
+        usort($this->classMethods, function(Object\Method $methodA, Object\Method $methodB) {
+
+            $orderValueA = $methodA->getVisibility() . $methodA->getName();
+            $orderValueB = $methodB->getVisibility() . $methodB->getName();
+
+            return strcasecmp($orderValueA, $orderValueB);
+        });
+
+    }
+
+    protected function loadData($var, \ReflectionClass $reflectedObject)
+    {
+        // is there a class to show the object data?
+        $includeClass = $this->getIncludeClass($this->className, 'object');
+
+        if (class_exists($includeClass)) {
+            /** @var $customDumper ExtensionInterface */
+            $customDumper = new $includeClass($this->factory);
+            $data = $customDumper->getData($var);
+            $this->objectCustomData = $data;//$this->factory->factory($data, null, $this->level + 1);
+
+        }
+
+        // properties
+        $data = (array) $var;
+
+        // unmangle private and protected
+        $this->objectProperties = array();
+        foreach ($data as $key => $item) {
+
+            if (0 === strpos($key, "\0*\0")) {
+                $propertyName = substr($key, 3);
+                $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PROTECTED;
+            } elseif (0 === strpos($key, "\0" . $this->className . "\0")) {
+                $propertyName = substr($key, 2 + strlen($this->className));
+                $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PRIVATE;
+            } else {
+                $propertyName = $key;
+                $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PUBLIC;
+            }
+
+            $objectProperty = new Object\Property();
+            $objectProperty->setName($propertyName);
+            $objectProperty->setVisibility($propertyVisibility);
+
+            $type = $this->factory->factory($item, $objectProperty, $this->level);
+
+            $this->objectProperties[] = $type;
+        }
+    }
+
+    /**
+     * @param string $helpLink
+     */
+    public function setHelpLink($helpLink)
+    {
+        $this->helpLink = $helpLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelpLink()
+    {
+        return $this->helpLink;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
 
 }

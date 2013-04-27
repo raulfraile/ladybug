@@ -19,41 +19,26 @@ class StringType extends BaseType
 
     const TYPE_ID = 'string';
 
-
-
     /**
      * Constructor
      * @param string  $var
      * @param int     $level
      * @param Options $options
      */
-    public function __construct($var, $level, $container, $key = null)
+    public function __construct()
     {
+        parent::__construct();
+
+        $this->type = self::TYPE_ID;
+
+    }
+
+    public function load($var, $key = null)
+    {
+        parent::load($var, $key);
+
         $this->encoding = mb_detect_encoding($var);
-        $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());        
+        $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());
 
-
-        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
-    }
-
-    public function getFormattedValue()
-    {
-
-        return $this->value;
-    }
-
-    public function export()
-    {
-        return array(
-            'type' => $this->type,
-            'value' => $this->value,
-            'length' => $this->length,
-            'encoding' => $this->encoding
-        );
-    }
-
-    public function getName()
-    {
-        return 'string';
     }
 }

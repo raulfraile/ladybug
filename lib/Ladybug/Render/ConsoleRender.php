@@ -17,11 +17,8 @@ use Ladybug\Format\FormatInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
-
 class ConsoleRender extends BaseRender implements RenderInterface
 {
-
-
 
     protected $console;
 
@@ -29,7 +26,6 @@ class ConsoleRender extends BaseRender implements RenderInterface
     {
 
         parent::__construct($theme, $format);
-
 
         $this->console = new ConsoleOutput();
 

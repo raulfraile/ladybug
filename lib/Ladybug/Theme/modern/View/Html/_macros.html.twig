@@ -1,11 +1,36 @@
 {% macro array_key(key) %}
     {% if key is not empty %}
-        <span class="">[{{ key }}]:</span>
+        <span class="array_key">
+
+            {% if key.visibility is defined %}
+                <span class="label {{ _self.visibility_color(method.visibility) }}">
+                    <i class="icon-eye-open icon-white"></i>
+                </span>
+            {% endif %}
+
+            <span class="label label-info">
+                {% if key.name is defined %}
+                    {{ key.name }}
+                {% else %}
+                    {{ key }}
+                {% endif %}
+            </span>
+        </span>
     {% endif %}
 {% endmacro %}
 
 
+{% macro visibility_symbol(value) %}
+        *
+    {% if value == 'public' %}
+        +
+    {% elseif value == 'protected' %}
+        #
+        {% else %}
+            -
+        {% endif %}
 
+{% endmacro %}
 
 {% macro array_block(title, data, level, show_keys) %}
 
@@ -27,4 +52,50 @@
         {% endfor %}
     </ol>
     {% endspaceless %}
+{% endmacro %}
+
+
+{% macro render_object_method(method) %}
+
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle">
+                <span class="label {{ _self.visibility_color(method.visibility) }}">
+                    <i class="icon-eye-open icon-white"></i>
+                </span>
+
+                <span>{{ method.name }}({% spaceless %}
+
+                {% for methodParameter in method.parameters %}
+                    {% if methodParameter.type is not empty %}
+                        {{ methodParameter.type }}
+                    {% endif %}
+                    ${{ methodParameter.name }}
+
+                    {% if methodParameter.defaultValue is not null %}
+                        = <span class="type_{{ methodParameter.defaultValue.type }}">{{ methodParameter.defaultValue.formattedValue }}</span>
+                    {% endif %}{% if not loop.last %},{% endif %}
+                {% endfor %}{% endspaceless %})
+                </span>
+            </a>
+        </div>
+    </div>
+
+
+
+
+{% endmacro %}
+
+{% macro render_object_constant(constantf) %}
+    {{ render_type(constantf.value)|raw }}
+{% endmacro %}
+
+{% macro visibility_color(visibility) %}
+    {% if visibility == constant('Ladybug\\Type\\Object\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+        label-important
+    {% elseif visibility == constant('Ladybug\\Type\\Object\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+        label-warning
+    {% else %}
+        label-success
+    {% endif %}
 {% endmacro %}

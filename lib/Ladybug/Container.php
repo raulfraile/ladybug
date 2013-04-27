@@ -21,19 +21,51 @@ class Container extends Pimple
     {
 
         // parameters
-        $this->setParameter('theme', 'modern');
+        $this->setParameter('theme', 'Modern');
         $this->setParameter('array.max_nesting_level', 8);
         $this->setParameter('object.max_nesting_level', 3);
 
-        $this->values['ladybug.level'] = 1;
+        $this->setAttribute('assets_loaded', false);
+
+        $this->values['ladybug.level'] = 0;
 
         // types
+        $this->values['ladybug.type.int'] = function ($c) {
+            return new \Ladybug\Type\IntType();
+        };
+        $this->values['ladybug.type.float'] = function ($c) {
+            return new \Ladybug\Type\FloatType();
+        };
+        $this->values['ladybug.type.bool'] = function ($c) {
+            return new \Ladybug\Type\BoolType();
+        };
+        $this->values['ladybug.type.null'] = function ($c) {
+            return new \Ladybug\Type\NullType();
+        };
+        $this->values['ladybug.type.string'] = function ($c) {
+            return new \Ladybug\Type\StringType();
+        };
+        $this->values['ladybug.type.array'] = function (Container $c) {
+            return new \Ladybug\Type\ArrayType($c['ladybug.level'], $c->getParameter('array.max_nesting_level'), $c->get('ladybug.type.__factory'));
+        };
+        $this->values['ladybug.type.object'] = function (Container $c) {
+            return new \Ladybug\Type\ObjectType($c['ladybug.level'], $c->getParameter('object.max_nesting_level'), $c->get('ladybug.type.__factory'), $c->get('metadata.resolver'));
+        };
+        $this->values['ladybug.type.resource'] = function (Container $c) {
+            return new \Ladybug\Type\ResourceType($c->get('ladybug.type.__factory'));
+        };
 
         $this->setShared('ladybug.type.__factory', function ($c) {
-            return new \Ladybug\Type\FactoryType();
+            return new \Ladybug\Type\FactoryType($c);
         });
 
-
+        // extension types
+        $this->values['ladybug.extension.type.collection'] = function (Container $c) {
+            return new \Ladybug\Extension\Type\CollectionType($c->get('ladybug.type.__factory'));
+        };
+        $this->values['ladybug.extension.type.code'] = function (Container $c) {
+            return new \Ladybug\Extension\Type\CodeType($c->get('ladybug.type.__factory'));
+        };
 
         // environments
         $this->setShared('environment.ajax', function ($c) {
@@ -48,7 +80,6 @@ class Container extends Pimple
         $this->setShared('environment.resolver', function ($c) {
             return new \Ladybug\Environment\EnvironmentResolver($c);
         });
-
 
         // format
         $this->setShared('format.console', function ($c) {
@@ -79,10 +110,7 @@ class Container extends Pimple
 
         $environment = $environmentResolver->resolve();
 
-        
         $this->setAttribute('format', $environment->getDefaultFormat());
-
-
 
         $this->setShared('theme.resolver', function (Container $c) {
             $formatAttribute = $c->getAttribute('format');
@@ -90,14 +118,7 @@ class Container extends Pimple
             return new \Ladybug\Theme\ThemeResolver($c, $c->get('format.' . $formatAttribute));
         });
 
-
         $this->values['__theme'] = $this->get('theme.resolver')->resolve();
-
-
-
-
-
-
 
         // render
         $this->values['render.html'] = $this->share(function (Container $c) {
@@ -110,14 +131,28 @@ class Container extends Pimple
             return new \Ladybug\Render\TextRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
         });
 
-
-
-
-
+        // metadata
+        $this->values['metadata.php_objects'] = $this->share(function (Container $c) {
+            return new \Ladybug\ObjectMetadata\PhpObjectsMetadata();
+        });
+        $this->values['metadata.symfony'] = $this->share(function (Container $c) {
+            return new \Ladybug\ObjectMetadata\SymfonyMetadata();
+        });
+        $this->values['metadata.aura'] = $this->share(function (Container $c) {
+            return new \Ladybug\ObjectMetadata\AuraMetadata();
+        });
+        $this->values['metadata.silex'] = $this->share(function (Container $c) {
+            return new \Ladybug\ObjectMetadata\SilexMetadata();
+        });
+        $this->values['metadata.twig'] = $this->share(function (Container $c) {
+            return new \Ladybug\ObjectMetadata\TwigMetadata();
+        });
+        $this->values['metadata.resolver'] = $this->share(function (Container $c) {
+            return new \Ladybug\ObjectMetadata\ObjectMetadataResolver($c);
+        });
 
         //$this->setAttribute('render', $this->values['render.' . $this->values['__format']->getName()];
     }
-
 
     public function set($key, $value)
     {
@@ -152,5 +187,10 @@ class Container extends Pimple
     public function get($key)
     {
         return $this->offsetGet($key);
+    }
+
+    public function has($key)
+    {
+        return $this->offsetExists($key);
     }
 }

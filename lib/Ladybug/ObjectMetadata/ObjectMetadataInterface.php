@@ -10,9 +10,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Processor;
+namespace Ladybug\ObjectMetadata;
 
-interface ProcessorInterface
+interface ObjectMetadataInterface
 {
     /**
      * Process the HTML code and make the proper changes
@@ -20,13 +20,8 @@ interface ProcessorInterface
      * @param  string $str html code
      * @return string modified html code
      */
-    public function process($str);
+    public function getMetadata($class);
 
-    /**
-     * Fast check to see if str is processable
-     *
-     * @param  string  $str html code
-     * @return boolean true if is processable
-     */
-    public function isProcessable($str);
+    public function hasMetadata($class);
+
 }

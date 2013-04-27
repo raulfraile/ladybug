@@ -14,6 +14,7 @@ namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Extension\Type;
 
 class ZipArchive extends ExtensionBase
 {
@@ -29,15 +30,27 @@ class ZipArchive extends ExtensionBase
         $files = array();
         for ($i=0; $i<$var->numFiles;$i++) {
             $stats_index = $var->statIndex($i);
-            $result['Files'][] = $stats_index['name'] . ' (' .$this->_formatSize($stats_index['size']) . ')';
+            $result['Files'][] = $stats_index['name'] . ' (' .$stats_index['size'] . ')';
         }
 
-        return $result;
-    }
+        $collection = Type\CollectionType::create(array(
+            Type\TextType::create($var->filename, 'Filename'),
+            $this->factory->factory($var->status, 'Status'),
+            $this->factory->factory($var->statusSys, 'StatusSys'),
+            $this->factory->factory($var->comment, 'Comment')
+        ));
 
-    public function getInspect()
-    {
-        return TRUE;
+        // files
+        $filesCollection = new Type\CollectionType();
+        $filesCollection->setTitle('Files');
+        for ($i=0; $i<$var->numFiles;$i++) {
+            $stats_index = $var->statIndex($i);
+            $filesCollection->add(Type\TextType::create($stats_index['name'] . ' (' .$stats_index['size'] . ')'));
+        }
+
+        $collection->add($filesCollection);
+
+        return $collection;
     }
 
 }

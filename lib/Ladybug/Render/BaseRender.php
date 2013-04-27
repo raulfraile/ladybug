@@ -55,10 +55,52 @@ abstract class BaseRender implements RenderInterface
         $format = $this->format->getName();
 
         $function2 = new Twig_SimpleFunction('render_type', function (TypeInterface $var) use ($twig, $format) {
-            return $twig->render($var->getName().'.'.$format.'.twig', $var->getParameters());
+
+            return $twig->render($var->getTemplateName().'.'.$format.'.twig', $var->getParameters());
         });
 
         $this->twig->addFunction($function2);
+
+        // css
+        $function3 = new Twig_SimpleFunction('minify_css', function ($filename) use ($twig, $format) {
+
+            $filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../Theme/\\1/Resources/', $filename);
+
+            $folder = pathinfo($filename, \PATHINFO_DIRNAME);
+
+            $content = file_get_contents($filename);
+            // comments
+            $content = preg_replace('!/\*.*?\*/!s','', $content);
+            $content = preg_replace('/\n\s*\n/',"\n", $content);
+
+// minify
+            $content = preg_replace('/[\n\r \t]/',' ', $content);
+            $content = preg_replace('/ +/',' ', $content);
+            $content = preg_replace('/ ?([,:;{}]) ?/','$1',$content);
+
+// trailing semicolon
+            $content = preg_replace('/;}/','}',$content);
+
+// replace images with data:uri
+            $urls = array();
+            preg_match_all('/url\(([^\)]+)\)/', $content, $urls);
+
+            foreach ($urls[1] as $url) {
+
+                // clean quotes
+                $url = preg_replace('/^\"|\'/', '', $url);
+                $url = preg_replace('/\"|\'$/', '', $url);
+
+                $data_uri = 'data:image/png;base64,' . base64_encode(file_get_contents($folder.'/'.$url));
+                $content = str_replace($url, $data_uri, $content);
+            }
+
+            $content = trim($content);
+
+            return $content;
+        });
+
+        $this->twig->addFunction($function3);
 
     }
 
@@ -69,7 +111,7 @@ abstract class BaseRender implements RenderInterface
         foreach ($nodes as $item) {
             /** @var TypeInterface $item */
 
-            $template = sprintf('t_%s.%s.twig', $item->getName(), $this->getFormat());
+            $template = sprintf('%s.%s.twig', $item->getTemplateName(), $this->getFormat());
             $content .= $this->twig->render($template, $item->getParameters());
         }
 
@@ -95,6 +137,13 @@ abstract class BaseRender implements RenderInterface
             $paths[] = $templatesDir;
         }
 
+        // extension templates
+        $extensionsDir = __DIR__ . '/../Extension/Type/View/'.ucfirst($this->format->getName()).'/';
+
+        if (file_exists($extensionsDir)) {
+            $paths[] = $extensionsDir;
+        }
+
         // parents
         /*$currentTheme = $this->theme;
         while (!is_null($currentTheme->getParent())) {
@@ -105,8 +154,6 @@ abstract class BaseRender implements RenderInterface
 
             //$themeClass = 'Ladybug\\Theme\\' . $currentTheme->getParent() . '\\' . $currentTheme->getParent() . 'Theme';
             //$currentTheme = new $themeClass;
-
-
 
         }*/
 

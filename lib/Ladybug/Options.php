@@ -51,7 +51,7 @@ class Options
     /**
      * Gets all options
      *
-     * @return mixed  Option value
+     * @return mixed Option value
      */
     public function getAll()
     {

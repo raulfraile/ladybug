@@ -17,7 +17,6 @@ use Ladybug\Extension\ExtensionBase;
 
 use Ladybug\Extension\Type;
 
-
 class Gd extends ExtensionBase
 {
     public function getData($var)
@@ -49,30 +48,29 @@ class Gd extends ExtensionBase
         if ($gd_info['XBM Support']) $gd_support[] = 'XBM';
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
 
-        // gd info
-        $result['GD'] = array(
-            'version' => new Type\TextType($gd_info['GD Version']),
-            'support' => new Type\TextType(implode(', ', $gd_support))
-        );
+        $gdCollection = new Type\CollectionType();
+        $gdCollection->setTitle('GD');
+        $gdCollection->loadFromArray(array(
+            Type\TextType::create($gd_info['GD Version'], 'version'),
+            Type\TextType::create(implode(', ', $gd_support), 'support')
+        ));
 
-        // image info
-        $result['image'] = array(
-            'width' => $width . 'px',
-            'height' => $height . 'px',
-            'colors_palette' => $colors_palette,
-            'true_color' => $is_true_color,
-            //'image' =>'<br/><img style="border:1px solid #ccc; padding:1px" src="data:image/png;base64,' . base64_encode($image) . '" />'
-            'image' => new Type\ImageType('data:image/png;base64,' . base64_encode($image)),
-        );
+        $imageCollection = new Type\CollectionType();
+        $imageCollection->setTitle('Image');
+        $imageCollection->loadFromArray(array(
+            Type\TextType::create(sprintf('%sx%s (px)', $width, $height), 'dimensions'),
+            Type\TextType::create($colors_palette, 'colors palette'),
+            $this->factory->factory($is_true_color, 'true color'),
+            Type\ImageType::create($image, 'Image'),
+        ));
 
-        /*$result = new Type\ImageType('data:image/png;base64,' . base64_encode($image));
-        $result->setWidth($width);
-        $result->setHeight($height);
-*/
+        $collection = new Type\CollectionType($result);
+        $collection->setTitle('Data');
+        $collection->loadFromArray(array(
+            'GD' => $gdCollection,
+            'Image' => $imageCollection
+        ));
 
-        return array(1,2,3);
-        return $result;
-        return new Type\CollectionType($result);
-
+        return $collection;
     }
 }

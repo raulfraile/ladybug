@@ -1,12 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
 //include_once __DIR__.'/../../../vendor/autoload.php';
 //$oCssParser = new Sabberworm\CSS\Parser(file_get_contents(__DIR__ . '/dependencies/bootstrap.css'));
 //$oCssDocument = $oCssParser->parse();
@@ -18,9 +11,6 @@
 //    /** @var $item Sabberworm\CSS\RuleSet\DeclarationBlock */
 //    $css .= '.ladybug ' . $item;
 //}
-
-
-
 
 $css = file_get_contents('tree.css');
 
@@ -46,7 +36,6 @@ foreach ($urls[1] as $url) {
 }
 
 $css = trim($css);
-
 
 // save file
 file_put_contents('tree.min.css', $css);

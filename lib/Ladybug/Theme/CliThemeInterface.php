@@ -1,11 +1,10 @@
 <?php
 
-
 namespace Ladybug\Theme;
 
 interface CliThemeInterface extends ThemeInterface
 {
-    function getCliColors();
+    public function getCliColors();
 
-    function getCliTags();
+    public function getCliTags();
 }

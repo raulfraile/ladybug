@@ -12,12 +12,29 @@
 
 namespace Ladybug\Extension\Type;
 
-
-
-
 class TextType extends BaseType
 {
 
     const TYPE_ID = 'text';
+
+
+    public function getTemplateName()
+    {
+        return static::TYPE_ID;
+    }
+
+    public function load($var, $key = null)
+    {
+        $this->data = $var;
+        $this->key = $key;
+    }
+
+    public static function create($var, $key = null)
+    {
+        $object = new static();
+        $object->load($var, $key);
+
+        return $object;
+    }
 
 }

@@ -14,6 +14,7 @@ namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Extension\Type;
 
 class SplQueue extends ExtensionBase
 {
@@ -21,12 +22,16 @@ class SplQueue extends ExtensionBase
     {
         /** @var $var \SplQueue */
 
-        $result = array(
-            'Count' => count($var),
-            'Queue' => iterator_to_array($var)
-        );
+        $arrayData = iterator_to_array($var);
 
-        return $result;
+        $collection = new Type\CollectionType();
+        $collection->setTitle(sprintf('Queue (%d)', count($arrayData)));
+
+        foreach ($arrayData as $item) {
+            $collection->add($this->factory->factory($item));
+        }
+
+        return $collection;
     }
 
 }

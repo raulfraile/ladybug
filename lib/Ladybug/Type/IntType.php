@@ -12,23 +12,16 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-
 class IntType extends BaseType
 {
 
     const TYPE_ID = 'int';
 
-    public function __construct($var, $level, $container, $key = null)
+    public function __construct()
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
-    }
+        parent::__construct();
 
-    public function getName()
-    {
-        return 'int';
+        $this->type = self::TYPE_ID;
     }
 
 }

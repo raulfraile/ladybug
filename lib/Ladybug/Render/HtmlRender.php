@@ -12,11 +12,7 @@
 
 namespace Ladybug\Render;
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Twig_SimpleFunction;
 use Ladybug\Theme\HtmlThemeInterface;
-use Ladybug\Type\TypeInterface;
 
 class HtmlRender extends BaseRender implements RenderInterface
 {
@@ -28,10 +24,14 @@ class HtmlRender extends BaseRender implements RenderInterface
 
     public function render(array $nodes)
     {
+
+        /** @var HtmlThemeInterface $theme */
+        $theme = $this->theme;
+
         $result = $this->twig->render('layout.html.twig', array(
             'nodes' => $nodes,
-            'css' => $this->theme->getHtmlCssDependencies(),
-            'js' => $this->theme->getHtmlJsDependencies()
+            'css' => $theme->getHtmlCssDependencies(),
+            'js' => $theme->getHtmlJsDependencies()
         ));
 
         return $result;

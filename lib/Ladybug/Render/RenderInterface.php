@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Render;
 
 interface RenderInterface
@@ -10,7 +9,7 @@ interface RenderInterface
     const FORMAT_CLI = 'cli';
     const FORMAT_TEXT = 'text';
 
-    function getFormat();
+    public function getFormat();
 
-    function render(array $nodes);
+    public function render(array $nodes);
 }

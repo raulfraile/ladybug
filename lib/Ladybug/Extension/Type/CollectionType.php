@@ -12,9 +12,6 @@
 
 namespace Ladybug\Extension\Type;
 
-
-
-
 class CollectionType extends BaseType
 {
 
@@ -22,6 +19,7 @@ class CollectionType extends BaseType
 
     protected $processedData;
 
+    protected $title;
 
     public function setProcessedData($processedData)
     {
@@ -33,5 +31,51 @@ class CollectionType extends BaseType
         return $this->processedData;
     }
 
+    public function getTemplateName()
+    {
+        return 'collection';
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function loadFromArray(array $data, $useKeys = true)
+    {
+        $this->data = array();
+
+        foreach ($data as $key => $item) {
+            $this->data[] = $item;
+
+        }
+    }
+
+    public function load($var, $key = null)
+    {
+        $this->data = array();
+
+        foreach ($var as $key => $item) {
+            $this->data[] = $item;
+        }
+    }
+
+    public function add($value)
+    {
+        $this->data[] = $value;
+    }
+
+    public static function create(array $var, $key = null)
+    {
+        $object = new static();
+        $object->load($var, $key);
+
+        return $object;
+    }
 
 }

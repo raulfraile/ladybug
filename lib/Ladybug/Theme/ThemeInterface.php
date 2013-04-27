@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Ladybug\Theme;
 
 use Ladybug\Format\FormatInterface;
 
 interface ThemeInterface
 {
-    function getName();
+    public function getName();
 
-    function getParent();
+    public function getParent();
 
-    function getFormats();
+    public function getFormats();
 
-    function supportsFormat(FormatInterface $format);
+    public function supportsFormat(FormatInterface $format);
 }

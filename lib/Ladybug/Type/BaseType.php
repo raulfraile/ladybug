@@ -12,12 +12,6 @@
 
 namespace Ladybug\Type;
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Pimple;
-
 /**
  * BaseType is the base type all specific types extends from
  */
@@ -45,18 +39,18 @@ abstract class BaseType implements TypeInterface
     /**
      * Constructor
      *
-     * @param string  $type
-     * @param mixed   $value
-     * @param int     $level
+     * @param string $type
+     * @param mixed  $value
+     * @param int    $level
      */
-    public function __construct($type, $value, $level, \Ladybug\Container $container, $key = null)
+    public function __construct(/*$type, $value, $level, \Ladybug\Container $container, $key = null*/)
     {
 
-        $this->type = $type;
+        /*$this->type = $type;
         $this->value = $value;
         $this->container = $container;
         $this->level = $level + 1;
-        $this->key = null;
+        $this->key = $key;*/
     }
 
     /**
@@ -66,7 +60,7 @@ abstract class BaseType implements TypeInterface
      */
     public function getType()
     {
-        return $this->type;
+        return static::TYPE_ID;
     }
 
     /**
@@ -124,36 +118,6 @@ abstract class BaseType implements TypeInterface
         $this->level = $level;
     }
 
-
-
-    /**
-     * Renders the variable node in the dump tree
-     *
-     * @param  mixed   $array_key if the variable is part of an array, its value
-     * @param  string  $format    Format: html or cli
-     * @param  boolean $escape
-     * @return string  Variable representation
-     */
-    public function render($array_key = NULL, $format = 'html', $escape = false)
-    {
-
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Theme/' . $this->getOption('theme') . '/' . $format);
-        $twig = new Twig_Environment($loader);
-
-        $result = $twig->render('t_'.static::TYPE_ID.'.'.$format.'.twig', array_merge(
-            array(),//$this->getViewParameters(),
-            array('var' => $this, 'array_key' => $array_key, 'level' => $this->level)
-        ));
-
-
-            return $result;
-
-    }
-
-
-
-
-
     protected function getIncludeClass($name, $type = 'object')
     {
         $class = '';
@@ -208,16 +172,6 @@ abstract class BaseType implements TypeInterface
         }
     }
 
-    public function getViewParameters()
-    {
-        return array(
-            'value' => $this->value,
-            'encoding' => $this->encoding,
-            'type' => $this->type,
-            'length' => $this->length
-        );
-    }
-
     public function getOption($key, $default = null)
     {
         return $this->container->getParameter($key);
@@ -233,7 +187,7 @@ abstract class BaseType implements TypeInterface
         return $this->length;
     }
 
-    function getParameters()
+    public function getParameters()
     {
         return array(
             'var' => $this,
@@ -252,5 +206,15 @@ abstract class BaseType implements TypeInterface
         return $this->key;
     }
 
+    public function getTemplateName()
+    {
+        return $this->type;
+    }
+
+    public function load($var, $key = null)
+    {
+        $this->value = $var;
+        $this->key = $key;
+    }
 
 }

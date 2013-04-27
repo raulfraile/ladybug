@@ -14,6 +14,7 @@ namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Extension\Type;
 
 abstract class SplHeap extends ExtensionBase
 {
@@ -21,12 +22,16 @@ abstract class SplHeap extends ExtensionBase
     {
         /** @var $var \SplHeap */
 
-        $result = array(
-            'Count' => count($var),
-            'Heap' => iterator_to_array($var)
-        );
+        $arrayData = iterator_to_array($var);
 
-        return $result;
+        $collection = new Type\CollectionType();
+        $collection->setTitle(sprintf('Heap (%d)', count($arrayData)));
+
+        foreach ($arrayData as $item) {
+            $collection->add($this->factory->factory($item));
+        }
+
+        return $collection;
     }
 
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Theme;
 
 use Ladybug\Container;
@@ -57,7 +56,6 @@ class ThemeResolver
                 return $item;
             }
         }
-
 
     }
 }

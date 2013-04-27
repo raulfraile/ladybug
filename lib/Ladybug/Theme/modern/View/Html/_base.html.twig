@@ -3,12 +3,14 @@
 <div class="accordion-group">
     <div class="accordion-heading">
         <a class="accordion-toggle"{# data-toggle="collapse" data-parent="#subb" href="#collapseThree"#}>
-            {{ m.array_key(array_key) }}
+            {% if var.key is not null %}
+                {{ m.array_key(var.key) }}
+            {% endif %}
 
-            <span class="label label-info">&nbsp;</span>
+
 
             <span class="">{% block type %}{{ var.type }}{% endblock %}</span>
-            <span style="">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+            <span class="type_{{ var.type }}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
         </a>
     </div>
     {#<div id="collapseThree" class="accordion-body collapse">

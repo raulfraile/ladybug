@@ -12,19 +12,13 @@
 
 namespace Ladybug\Extension\Type;
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-
-
 class ImageType extends BaseType
 {
 
     const TYPE_ID = 'image';
 
-
     protected $width;
     protected $height;
-
 
     public function setHeight($height)
     {
@@ -44,5 +38,19 @@ class ImageType extends BaseType
     public function getWidth()
     {
         return $this->width;
+    }
+
+    public function load($var, $key = null)
+    {
+        $this->data = base64_encode($var);
+        $this->key = $key;
+    }
+
+    public static function create($var, $key = null)
+    {
+        $object = new static();
+        $object->load($var, $key);
+
+        return $object;
     }
 }

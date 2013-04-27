@@ -14,6 +14,7 @@ namespace Ladybug\Extension\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Extension\Type;
 
 class SplStack extends ExtensionBase
 {
@@ -21,12 +22,16 @@ class SplStack extends ExtensionBase
     {
         /** @var $var \SplStack */
 
-        $result = array(
-            'Count' => count($var),
-            'Stack' => iterator_to_array($var)
-        );
+        $arrayData = iterator_to_array($var);
 
-        return $result;
+        $collection = new Type\CollectionType();
+        $collection->setTitle(sprintf('Stack (%d)', count($arrayData)));
+
+        foreach ($arrayData as $item) {
+            $collection->add($this->factory->factory($item));
+        }
+
+        return $collection;
     }
 
 }

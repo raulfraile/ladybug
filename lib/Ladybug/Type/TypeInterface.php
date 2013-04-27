@@ -1,11 +1,12 @@
 <?php
 
-
 namespace Ladybug\Type;
 
 interface TypeInterface
 {
-    function getName();
+    public function getTemplateName();
 
-    function getParameters();
+    public function load($var);
+
+    //public function getParameters();
 }

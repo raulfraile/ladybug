@@ -14,6 +14,7 @@ namespace Ladybug\Extension\Resource;
 
 use Ladybug\Dumper;
 use Ladybug\Extension\ExtensionBase;
+use Ladybug\Extension\Type;
 
 class MysqlResult extends ExtensionBase
 {
@@ -37,10 +38,16 @@ class MysqlResult extends ExtensionBase
             $i++;
         }
 
+        $table = new \Ladybug\Extension\Type\TableType();
+        $table->load($result);
+        $table->setHeader($columnNames);
 
-        $result = new \Ladybug\Extension\Type\TableType($result);
-        $result->setHeader($columnNames);
+        $collection = Type\CollectionType::create(array(
+            $table
+        ));
 
-        return $result;
+        $collection->setTitle('MySQL result');
+
+        return $collection;
     }
 }

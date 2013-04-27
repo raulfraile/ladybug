@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Environment;
 
 use Ladybug\Format;
@@ -18,7 +17,7 @@ class BrowserEnvironment extends BaseEnvironment
         return true;
     }
 
-    function getDefaultFormat()
+    public function getDefaultFormat()
     {
         return Format\HtmlFormat::FORMAT_NAME;
     }

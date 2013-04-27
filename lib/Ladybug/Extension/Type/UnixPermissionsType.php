@@ -12,9 +12,6 @@
 
 namespace Ladybug\Extension\Type;
 
-
-
-
 class UnixPermissionsType extends BaseType
 {
 
@@ -22,6 +19,18 @@ class UnixPermissionsType extends BaseType
 
     public function getFormattedValue()
     {
-        return decoct($this->data);
+        return $this->data;
     }
+
+    public function getTemplateName()
+    {
+        return 'unix_permissions';
+    }
+
+    public function load($var)
+    {
+        $this->data = decoct($var);
+    }
+
+
 }

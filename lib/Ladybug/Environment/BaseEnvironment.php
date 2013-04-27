@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Environment;
 
 use Ladybug\Container;

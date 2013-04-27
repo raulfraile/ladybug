@@ -1,9 +1,7 @@
 <?php
 
-
 namespace Ladybug\Environment;
 
-use Ladybug\Container;
 use Ladybug\Format;
 
 class AjaxEnvironment extends BaseEnvironment
@@ -14,11 +12,10 @@ class AjaxEnvironment extends BaseEnvironment
         return 'Ajax';
     }
 
-    function getDefaultFormat()
+    public function getDefaultFormat()
     {
         return Format\TextFormat::FORMAT_NAME;
     }
-
 
     public function isActive()
     {

@@ -6,4 +6,5 @@ Ladybug\Loader::loadHelpers();
 $zip = new ZipArchive();
 $zip->open('zip/example.zip');
 
-ladybug_dump($zip);
+$dumper = new \Ladybug\Dumper();
+echo $dumper->dump($zip);

@@ -13,15 +13,12 @@
 namespace Ladybug\Render;
 
 use Ladybug\Theme\ThemeInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class TextRender implements RenderInterface
 {
 
     /** @var ThemeInterface $theme */
     protected $theme;
-
 
     protected $console;
 

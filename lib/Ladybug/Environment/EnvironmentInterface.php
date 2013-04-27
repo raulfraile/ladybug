@@ -1,14 +1,13 @@
 <?php
 
-
 namespace Ladybug\Environment;
 
 interface EnvironmentInterface
 {
 
-    function getName();
+    public function getName();
 
-    function isActive();
+    public function isActive();
 
-    function getDefaultFormat();
+    public function getDefaultFormat();
 }

@@ -6,7 +6,6 @@
     <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ id }}">
             {{ m.array_key(array_key) }}
-            <span class="label label-success">&nbsp;</span>
             <span class="">{% block type %}{{ var.type }} ({{ var.length }}){% endblock %}</span>
 
         </a>
@@ -22,26 +21,3 @@
     </div>
 
 </div>
-
-{#
-
-{% spaceless %}
-    {% set id = random(1000) %}
-    <label for="tree_array_{{ id }}">
-        {% if array_key is not empty %}
-            <span class="key">[{{ array_key }}]:</span>
-        {% endif %}
-
-        <span class="switcher">array({{ var.length }})</span>
-    </label>
-    <input type="checkbox" id="tree_array_{{ id }}">
-    <ol>
-        {% for key,var in var.value %}
-            <li>
-                {{ var.render(key)|raw }}
-            </li>
-        {% endfor %}
-    </ol>
-{% endspaceless %}
-
-#}

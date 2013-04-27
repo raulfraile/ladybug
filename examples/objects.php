@@ -17,9 +17,13 @@ class Foo
     private $w = 1;
     protected $w2 = 2;
 
+    /**
+     * Constructor
+     * @return null
+     */
     public function __construct() {$this->a = new Foo2();}
-    public function getBar() { return $this->bar; }
-    public function setBar($bar = 1, $bar2 = TRUE, $bar3 = NULL, $bar4 = "<br/>") { $this->bar = $bar; }
+    protected function getBar() { return $this->bar; }
+    private function setBar($a,$b,$c,$d,$bar = 1, $bar2 = TRUE, $bar3 = NULL, $bar4 = "<br/>", array $bar5 = array(1,2,3)) { $this->bar = $bar; }
     public function __toString() {return $this->bar . ' - ' . $this->bar2; }
 }
 
@@ -31,7 +35,7 @@ $foo = new Foo();
 // DateTime object
 
 $date = new DateTime();
-//ladybug_dump($date);
+//ladybug_dump_die($date);
 
 $sXml = <<<XML
 <books>
@@ -48,8 +52,11 @@ XML;
 $dom = new DOMDocument();
 $dom->loadXml($sXml);
 
-ladybug_dump($dom);
+//ladybug_dump($dom);
 
 $reflected = new ReflectionClass('Foo');
 
 //ladybug_dump($reflected);
+
+$dumper = new \Ladybug\Dumper();
+echo $dumper->dump($foo, $date, $dom, $reflected);

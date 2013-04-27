@@ -12,7 +12,6 @@
 
 namespace Ladybug\Theme;
 
-use Ladybug\Render\RenderInterface;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Container;
 
@@ -43,6 +42,5 @@ abstract class BaseTheme implements ThemeInterface
     {
         return in_array($format->getName(), static::getFormats());
     }
-
 
 }

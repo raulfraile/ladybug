@@ -12,48 +12,45 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
-
 class ArrayType extends BaseType
 {
 
     const TYPE_ID = 'array';
 
-    public function __construct(array $var, $level, $container, $key = null)
+    protected $maxLevel;
+
+    /** @var FactoryType $factory */
+    protected $factory;
+
+    public function __construct($level, $maxLevel, FactoryType $factory)
     {
-        parent::__construct(self::TYPE_ID, array(), $level, $container, $key);
+        parent::__construct();
+
+        $this->type = self::TYPE_ID;
+        $this->level = $level;
+        $this->maxLevel = $maxLevel;
+        $this->factory = $factory;
+    }
+
+    public function load($var, $key = null)
+    {
+        $this->key = $key;
 
         $this->length = count($var);
-
-        if ($this->level < $this->getOption('array.max_nesting_level')) {
+        if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {
-                $this->add($v, $k);
+                $this->add($this->factory->factory($v, $k, $this->level + 1));
             }
         }
+
     }
 
-    public function add($var, $index = null)
+    public function add($var)
     {
-        $this->value[$index] = FactoryType::factory($var, $this->level, $this->container);
+        $this->value[] = $var;
     }
 
-    public function export()
-    {
-        $value = array();
-
-        foreach ($this->value as $k=>$v) {
-            $value[] = $v->export();
-        }
-
-        return array(
-            'type' => $this->type,
-            'value' => $value,
-            'length' => $this->length
-        );
-    }
-
-
-    public function getName()
+    public function getFormattedValue()
     {
         return 'array';
     }

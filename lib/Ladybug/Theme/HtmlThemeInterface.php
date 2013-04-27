@@ -1,11 +1,10 @@
 <?php
 
-
 namespace Ladybug\Theme;
 
 interface HtmlThemeInterface extends ThemeInterface
 {
-    function getHtmlCssDependencies();
+    public function getHtmlCssDependencies();
 
-    function getHtmlJsDependencies();
+    public function getHtmlJsDependencies();
 }

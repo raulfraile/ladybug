@@ -15,12 +15,10 @@ namespace Ladybug\Theme\Classic;
 use Ladybug\Theme\BaseTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
-use Ladybug\Theme\CliThemeInterface;
 use Ladybug\Format;
 
 class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface
 {
-
 
     public function getName()
     {
@@ -32,7 +30,6 @@ class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfa
         return 'Simple';
     }
 
-
     public function getHtmlCssDependencies()
     {
         return array(
@@ -40,7 +37,7 @@ class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfa
         );
     }
 
-    function getFormats()
+    public function getFormats()
     {
         return array(
             Format\HtmlFormat::FORMAT_NAME

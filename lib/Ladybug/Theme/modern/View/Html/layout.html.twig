@@ -1,6 +1,6 @@
 <style>
     {% for file in css %}
-    {{ include_file(file)|raw }}
+    {{ minify_css(file)|raw }}
     {% endfor %}
 </style>
 

@@ -12,16 +12,16 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
-
 class NullType extends BaseType
 {
 
     const TYPE_ID = 'null';
 
-    public function __construct($level, $container, $key = null)
+    public function __construct()
     {
-        parent::__construct(self::TYPE_ID, null, $level, $container, $key);
+        parent::__construct();
+
+        $this->type = self::TYPE_ID;
     }
 
     public function getValue()
@@ -29,7 +29,7 @@ class NullType extends BaseType
         return null;
     }
 
-    public function getName()
+    public function getFormattedValue()
     {
         return 'null';
     }

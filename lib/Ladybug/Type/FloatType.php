@@ -12,21 +12,16 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
-
 class FloatType extends BaseType
 {
 
     const TYPE_ID = 'float';
 
-    public function __construct($var, $level, $container, $key = null)
+    public function __construct()
     {
-        parent::__construct(self::TYPE_ID, $var, $level, $container, $key);
-    }
+        parent::__construct();
 
-    public function getName()
-    {
-        return 'float';
+        $this->type = self::TYPE_ID;
     }
 
 }

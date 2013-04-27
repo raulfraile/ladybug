@@ -13,15 +13,23 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
 use Ladybug\Exception\InvalidTypeException;
 use Ladybug\Type\BaseType;
 use Ladybug\Extension\Type\BaseType as ExtensionType;
-use Pimple;
+use Ladybug\Container;
 
 class FactoryType
 {
-    public static function factory($var, $level, Pimple $container, $key = null)
+
+    /** @var Container $container */
+    protected $container;
+
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
+
+    public function factory($var, $key = null, $level = 0)
     {
         $result = null;
 
@@ -38,21 +46,32 @@ class FactoryType
             //$result = new $class($var->getValue(), $level, $container);
             $result = $var;
         } elseif ($var === null) {
-            $result = new NullType($level, $container, $key);
+            $result = $this->container->get('ladybug.type.null');
+            $result->load($var, $key);
         } elseif (is_bool($var)) {
-            $result = new BoolType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.bool');
+            $result->load($var, $key);
         } elseif (is_string($var)) {
-            $result = new StringType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.string');
+            $result->load($var, $key);
         } elseif (is_int($var)) {
-            $result = new IntType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.int');
+            $result->load($var, $key);
         } elseif (is_float($var)) {
-            $result = new FloatType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.float');
+            $result->load($var, $key);
         } elseif (is_array($var)) {
-            $result = new ArrayType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.array');
+            $result->load($var, $key);
+
         } elseif (is_object($var)) {
-            $result = new ObjectType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.object');
+            $result->setLevel($level+1);
+            $result->load($var, $key);
         } elseif (is_resource($var)) {
-            $result = new ResourceType($var, $level, $container, $key);
+            $result = $this->container->get('ladybug.type.resource');
+            $result->setLevel($level++);
+            $result->load($var, $key);
         } else {
             throw new InvalidTypeException();
         }

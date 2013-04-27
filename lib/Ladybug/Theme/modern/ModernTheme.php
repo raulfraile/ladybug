@@ -20,7 +20,6 @@ use Ladybug\Format;
 class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface
 {
 
-
     public function getName()
     {
         return 'Modern';
@@ -31,13 +30,12 @@ class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
         return 'Simple';
     }
 
-
     public function getHtmlCssDependencies()
     {
         return array(
             '@SimpleTheme/lib/bootstrap/css/bootstrap.min.css',
             '@SimpleTheme/lib/codemirror/lib/codemirror.css',
-            '@ModernTheme/css/styles.css'
+            '@ModernTheme/css/tree.css'
         );
     }
 
@@ -51,7 +49,7 @@ class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
         );
     }
 
-    function getFormats()
+    public function getFormats()
     {
         return array(
             Format\HtmlFormat::FORMAT_NAME

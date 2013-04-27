@@ -12,22 +12,10 @@
 namespace Ladybug;
 
 use Ladybug\Type\FactoryType;
-use Ladybug\Exception\InvalidFormatException;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Pimple;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Twig_SimpleFunction;
-
-use Ladybug\Theme\ThemeInterface;
-use Ladybug\Exception\ThemeNotFoundException;
 use Ladybug\Render\RenderInterface;
-
 use Ladybug\Environment\EnvironmentResolver;
 use Ladybug\Theme\ThemeResolver;
 use Ladybug\Container;
-
 
 class Dumper
 {
@@ -37,7 +25,6 @@ class Dumper
 
     /** @var Container $container */
     protected $container;
-
 
     /**
      * Constructor
@@ -59,16 +46,6 @@ class Dumper
         $args = func_get_args();
         $this->nodes = $this->readVars($args);
 
-        //$env = $this->getEnvironment();
-
-        //$render = $this->getRender($env);
-
-        //return $render->render($this->nodes);
-        //return $this->container['__render']->render($this->nodes);
-
-
-
-
         return $this->getRender()->render($this->nodes);
     }
 
@@ -78,10 +55,12 @@ class Dumper
      */
     protected function readVars($vars)
     {
+        /** @var FactoryType $factoryType */
+        $factoryType = $this->container->get('ladybug.type.__factory');
         $nodes = array();
 
         foreach ($vars as $var) {
-            $nodes[] = FactoryType::factory($var, 0, $this->container);
+            $nodes[] = $factoryType->factory($var, null, $this->container->get('ladybug.level'));
         }
 
         return $nodes;
@@ -146,7 +125,6 @@ class Dumper
         $environmentResolver = $this->container->get('environment.resolver');
         $environment = $environmentResolver->resolve();
 
-
         $this->container->setAttribute('format', $environment->getDefaultFormat());
         $format = $this->container->get(sprintf('format.%s', $environment->getDefaultFormat()));
 
@@ -155,7 +133,6 @@ class Dumper
 
         $theme = $themeResolver->resolve();
         $this->container->setAttribute('theme', strtolower($theme->getName()));
-
 
         /** @var $render RenderInterface */
         $render = $this->container->get('render.' . $environment->getDefaultFormat());

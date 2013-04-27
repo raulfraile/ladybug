@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Format;
 
 class HtmlFormat implements FormatInterface

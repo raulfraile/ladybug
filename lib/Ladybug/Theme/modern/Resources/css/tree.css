@@ -1,0 +1,96 @@
+
+
+
+.ladybug .accordion-group {
+    background-color: #eee;
+}
+
+.ladybug .accordion-heading {
+    background-color: #ddd;
+}
+
+.ladybug .accordion-heading a {
+    color: #000;
+    font-weight: bold;
+}
+
+.ladybug .accordion-heading a:hover {
+    text-decoration: none;
+}
+
+.ladybug .CodeMirror {
+    font-weight: normal;
+}
+
+/* types */
+.type_int {
+    color: #800;
+}
+.type_float {
+    color: #800;
+}
+.type_string {
+    color: #080;
+}
+.type_bool {
+    color: #008;
+}
+
+.array_key {
+
+}
+
+.metadata-php
+{
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background: url(../images/php.png) right center no-repeat;
+}
+
+.metadata-symfony2
+{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background: url(../images/symfony.png) right center no-repeat;
+}
+
+.metadata-aura
+{
+    display: inline-block;
+    width: 39px;
+    height: 18px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background: url(../images/aura.png) right center no-repeat;
+}
+
+.metadata-silex
+{
+    display: inline-block;
+    width: 16px;
+    height: 18px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background: url(../images/silex.png) right center no-repeat;
+}
+
+.metadata-twig
+{
+    display: inline-block;
+    width: 12px;
+    height: 18px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background: url(../images/twig.png) right center no-repeat;
+}

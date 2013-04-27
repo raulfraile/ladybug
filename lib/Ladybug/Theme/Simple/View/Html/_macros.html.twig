@@ -22,7 +22,7 @@
     <ol>
         {% for key,var in data %}
         <li>
-            {{ var.render(key, 'html')|raw }}
+            {{ render_type(var)|raw }}
         </li>
         {% endfor %}
     </ol>

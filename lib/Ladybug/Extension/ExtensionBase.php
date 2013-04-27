@@ -12,56 +12,17 @@
 
 namespace Ladybug\Extension;
 
-use Pimple;
+use Ladybug\Type\FactoryType;
 
 abstract class ExtensionBase implements ExtensionInterface
 {
 
-    protected $var;
-    protected $inspect;
+    /** @var FactoryType $factory */
+    protected $factory;
 
-    protected $container;
-
-    protected $level;
-
-    public function __construct($var, $level, Pimple $container)
+    public function __construct(FactoryType $factory)
     {
-        $this->var = $var;
-        $this->inspect = true;
-        $this->container = $container;
-        $this->level = $level;
+        $this->factory = $factory;
     }
-
-    public function getInspect()
-    {
-        return $this->inspect;
-    }
-
-    protected function _formatSize($size, $unit = NULL)
-    {
-        $kb = 1024;
-        $mb = $kb * 1024;
-        $gb = $mb * 1024;
-
-        $result = '';
-
-        if ($size < $kb) $result = $size . ' bytes';
-        elseif ($size < $mb) $result = number_format($size/$kb, 2) . ' Kb';
-        elseif ($size < $gb) $result = number_format($size/$mb, 2) . ' Mb';
-        else $result = number_format($size/$gb, 2) . ' Gb';
-
-        return $result;
-    }
-
-    public function setLevel($level)
-    {
-        $this->level = $level;
-    }
-
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
 
 }

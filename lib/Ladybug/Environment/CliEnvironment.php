@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Environment;
 
 use Ladybug\Format;
@@ -18,7 +17,7 @@ class CliEnvironment extends BaseEnvironment
         return 'cli' === php_sapi_name();
     }
 
-    function getDefaultFormat()
+    public function getDefaultFormat()
     {
         return Format\ConsoleFormat::FORMAT_NAME;
     }

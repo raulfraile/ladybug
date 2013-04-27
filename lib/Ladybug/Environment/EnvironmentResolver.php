@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Ladybug\Environment;
 
 use Ladybug\Container;
@@ -44,7 +43,6 @@ class EnvironmentResolver
                 return $item;
             }
         }
-
 
     }
 }

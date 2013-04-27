@@ -22,7 +22,6 @@ use Ladybug\Format;
 class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface, CliThemeInterface
 {
 
-
     public function getName()
     {
         return 'Simple';
@@ -43,7 +42,7 @@ class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
         );
     }
 
-    function getCliTags()
+    public function getCliTags()
     {
         // TODO: Implement getCliTags() method.
     }
@@ -55,7 +54,7 @@ class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
         );
     }
 
-    function getFormats()
+    public function getFormats()
     {
         return array(
             Format\HtmlFormat::FORMAT_NAME,
@@ -63,6 +62,5 @@ class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
             Format\TextFormat::FORMAT_NAME
         );
     }
-
 
 }

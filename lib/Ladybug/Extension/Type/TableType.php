@@ -12,16 +12,12 @@
 
 namespace Ladybug\Extension\Type;
 
-
-
-
 class TableType extends BaseType
 {
 
     const TYPE_ID = 'table';
 
     protected $header;
-
 
     public function setHeader($header)
     {
@@ -32,4 +28,20 @@ class TableType extends BaseType
     {
         return $this->header;
     }
+
+    public function load($var, $key = null)
+    {
+        $this->data = $var;
+        $this->key = $key;
+    }
+
+
+    public static function create($var, $key = null)
+    {
+        $object = new static();
+        $object->load($var, $key);
+
+        return $object;
+    }
+
 }
