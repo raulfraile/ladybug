@@ -69,7 +69,7 @@ class ObjectType extends BaseType
 
     public function load($var, $key = null)
     {
-        if (!is_null($var)) {
+        if (!is_object($var)) {
             throw new InvalidVariableTypeException();
         }
 

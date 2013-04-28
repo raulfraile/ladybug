@@ -18,6 +18,7 @@ use Twig_SimpleFunction;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Type\TypeInterface;
 use Ladybug\Format\FormatInterface;
+use Ladybug\Render\Twig\Extension\LadybugExtension;
 
 abstract class BaseRender implements RenderInterface
 {
@@ -43,64 +44,20 @@ abstract class BaseRender implements RenderInterface
 
         $this->twig = new Twig_Environment($loader);
 
-        $function = new Twig_SimpleFunction('include_file', function ($filename) use ($theme) {
+        /*$function = new Twig_SimpleFunction('include_file', function ($filename) use ($theme) {
             $filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../Theme/\\1/Resources/', $filename);
 
             return file_get_contents($filename);
         });
 
-        $this->twig->addFunction($function);
+        $this->twig->addFunction($function);*/
 
-        $twig = $this->twig;
-        $format = $this->format->getName();
 
-        $function2 = new Twig_SimpleFunction('render_type', function (TypeInterface $var) use ($twig, $format) {
+        $extension = new LadybugExtension();
+        $extension->setFormat($this->format->getName());
 
-            return $twig->render($var->getTemplateName().'.'.$format.'.twig', $var->getParameters());
-        });
+        $this->twig->addExtension($extension);
 
-        $this->twig->addFunction($function2);
-
-        // css
-        $function3 = new Twig_SimpleFunction('minify_css', function ($filename) use ($twig, $format) {
-
-            $filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../Theme/\\1/Resources/', $filename);
-
-            $folder = pathinfo($filename, \PATHINFO_DIRNAME);
-
-            $content = file_get_contents($filename);
-            // comments
-            $content = preg_replace('!/\*.*?\*/!s','', $content);
-            $content = preg_replace('/\n\s*\n/',"\n", $content);
-
-// minify
-            $content = preg_replace('/[\n\r \t]/',' ', $content);
-            $content = preg_replace('/ +/',' ', $content);
-            $content = preg_replace('/ ?([,:;{}]) ?/','$1',$content);
-
-// trailing semicolon
-            $content = preg_replace('/;}/','}',$content);
-
-// replace images with data:uri
-            $urls = array();
-            preg_match_all('/url\(([^\)]+)\)/', $content, $urls);
-
-            foreach ($urls[1] as $url) {
-
-                // clean quotes
-                $url = preg_replace('/^\"|\'/', '', $url);
-                $url = preg_replace('/\"|\'$/', '', $url);
-
-                $data_uri = 'data:image/png;base64,' . base64_encode(file_get_contents($folder.'/'.$url));
-                $content = str_replace($url, $data_uri, $content);
-            }
-
-            $content = trim($content);
-
-            return $content;
-        });
-
-        $this->twig->addFunction($function3);
 
     }
 

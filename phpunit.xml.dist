@@ -22,5 +22,9 @@
             <group>benchmark</group>
         </exclude>
     </groups>
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener"></listener>
+    </listeners>
+
 
 </phpunit>

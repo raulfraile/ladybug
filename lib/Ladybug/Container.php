@@ -79,9 +79,9 @@ class Container extends Pimple
         });
         $this->setShared('environment.resolver', function ($c) {
             return new \Ladybug\Environment\EnvironmentResolver(array(
+                $c->get('environment.browser'),
                 $c->get('environment.ajax'),
-                $c->get('environment.cli'),
-                $c->get('environment.browser')
+                $c->get('environment.cli')
             ));
         });
 
