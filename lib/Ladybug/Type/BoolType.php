@@ -38,13 +38,13 @@ class BoolType extends BaseType
         return $this->value ? 'true' : 'false';
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         if (!is_bool($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var, $key);
+        parent::load($var);
     }
 
 }

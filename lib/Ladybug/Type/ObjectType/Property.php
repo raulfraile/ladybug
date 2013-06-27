@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\Object;
+namespace Ladybug\Type\ObjectType;
 
 class Property
 {
@@ -18,10 +18,14 @@ class Property
     /** @var string $name */
     protected $name;
 
+    /** @var mixed $value */
+    protected $value;
+
     /** @var string $name */
     protected $visibility;
 
     /**
+     * Set property name
      * @param string $name
      */
     public function setName($name)
@@ -30,6 +34,8 @@ class Property
     }
 
     /**
+     * Get property name
+     *
      * @return string
      */
     public function getName()
@@ -38,6 +44,7 @@ class Property
     }
 
     /**
+     * Set property visibility
      * @param string $visibility
      */
     public function setVisibility($visibility)
@@ -46,11 +53,30 @@ class Property
     }
 
     /**
+     * Get property visibility
+     *
      * @return string
      */
     public function getVisibility()
     {
         return $this->visibility;
     }
+
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
 
 }

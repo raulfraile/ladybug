@@ -24,14 +24,18 @@ class ConsoleRender extends BaseRender implements RenderInterface
 
     public function __construct(CliThemeInterface $theme, FormatInterface $format)
     {
-
         parent::__construct($theme, $format);
 
         $this->console = new ConsoleOutput();
 
         // load styles
         foreach ($this->theme->getCliColors() as $key => $item) {
-            $style = new OutputFormatterStyle($item);
+            if (is_array($item)) {
+                $style = new OutputFormatterStyle($item[0], $item[1]);
+            } else {
+                $style = new OutputFormatterStyle($item);
+            }
+
             $this->console->getFormatter()->setStyle($key, $style);
         }
     }

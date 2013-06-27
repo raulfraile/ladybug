@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Extension\ExtensionInterface;
 use Ladybug\Container;
-use Ladybug\Type\Object;
+use Ladybug\Type\ObjectType as Object;
 use Ladybug\ObjectMetadata\ObjectMetadataResolver;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
@@ -67,7 +67,7 @@ class ObjectType extends BaseType
         $this->metadataResolver = $metadataResolver;
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         if (!is_object($var)) {
             throw new InvalidVariableTypeException();
@@ -402,11 +402,10 @@ class ObjectType extends BaseType
 
             $objectProperty = new Object\Property();
             $objectProperty->setName($propertyName);
+            $objectProperty->setValue($this->factory->factory($item, $this->level));
             $objectProperty->setVisibility($propertyVisibility);
 
-            $type = $this->factory->factory($item, $objectProperty, $this->level);
-
-            $this->objectProperties[] = $type;
+            $this->objectProperties[] = $objectProperty;
         }
     }
 
@@ -457,5 +456,7 @@ class ObjectType extends BaseType
     {
         return $this->version;
     }
+
+
 
 }

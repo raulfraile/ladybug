@@ -12,6 +12,8 @@
 
 namespace Ladybug\Type;
 
+use Ladybug\Type\ArrayType\Item;
+
 class ArrayType extends BaseType
 {
 
@@ -22,30 +24,30 @@ class ArrayType extends BaseType
     /** @var FactoryType $factory */
     protected $factory;
 
-    public function __construct($level, $maxLevel, FactoryType $factory)
+    public function __construct($maxLevel, FactoryType $factory)
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
-        $this->level = $level;
+        $this->level = 0;
         $this->maxLevel = $maxLevel;
         $this->factory = $factory;
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
-        $this->key = $key;
-
         $this->length = count($var);
         if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {
-                $this->add($this->factory->factory($v, $k, $this->level + 1));
+                $arrayItem = new Item($k, $this->factory->factory($v, $this->level + 1));
+
+                $this->add($arrayItem);
             }
         }
 
     }
 
-    public function add($var)
+    public function add(Item $var)
     {
         $this->value[] = $var;
     }

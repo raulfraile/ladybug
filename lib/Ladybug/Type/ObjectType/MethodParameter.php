@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\Object;
+namespace Ladybug\Type\ObjectType;
 
 class MethodParameter
 {
@@ -28,6 +28,7 @@ class MethodParameter
     protected $defaultValue;
 
     /**
+     * Set default value
      * @param mixed $defaultValue
      */
     public function setDefaultValue($defaultValue)
@@ -36,6 +37,8 @@ class MethodParameter
     }
 
     /**
+     * Get default value
+     *
      * @return mixed
      */
     public function getDefaultValue()

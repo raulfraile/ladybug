@@ -36,12 +36,12 @@ class NullType extends BaseType
         return 'null';
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         if (!is_null($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var, $key);
+        parent::load($var);
     }
 }

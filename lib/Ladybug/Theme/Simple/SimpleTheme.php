@@ -38,7 +38,10 @@ class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
             't_string' => 'green',
             't_bool' => 'blue',
             't_float' => 'red',
-            't_int' => 'red'
+            't_int' => 'red',
+            't_array' => 'yellow',
+            't_object' => 'yellow',
+            't_array_block' => array('yellow', 'magenta')
         );
     }
 

@@ -38,7 +38,7 @@ class ResourceType extends BaseType
         $this->factory = $factory;
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         $this->resourceType = get_resource_type($var);
 

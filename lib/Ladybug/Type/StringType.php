@@ -34,13 +34,13 @@ class StringType extends BaseType
 
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         if (!is_string($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var, $key);
+        parent::load($var);
 
         $this->encoding = mb_detect_encoding($var);
         $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());

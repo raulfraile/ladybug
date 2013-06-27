@@ -34,7 +34,6 @@ abstract class BaseType implements TypeInterface
 
     protected $container;
 
-    protected $key;
 
     /**
      * Constructor
@@ -187,34 +186,26 @@ abstract class BaseType implements TypeInterface
         return $this->length;
     }
 
-    public function getParameters()
-    {
-        return array(
-            'var' => $this,
-            'array_key' => $this->key,
-            'level' => $this->level
-        );
-    }
-
-    public function setKey($key)
-    {
-        $this->key = $key;
-    }
-
-    public function getKey()
-    {
-        return $this->key;
-    }
-
     public function getTemplateName()
     {
         return $this->type;
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         $this->value = $var;
-        $this->key = $key;
     }
+
+    public function setVisibility($visibility)
+    {
+        $this->visibility = $visibility;
+    }
+
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+
 
 }

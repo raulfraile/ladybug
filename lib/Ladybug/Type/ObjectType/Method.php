@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\Object;
+namespace Ladybug\Type\ObjectType;
 
 class Method implements VisibilityInterface
 {
@@ -31,6 +31,7 @@ class Method implements VisibilityInterface
     protected $comment;
 
     /**
+     * Set method name
      * @param string $name
      */
     public function setName($name)
@@ -39,6 +40,8 @@ class Method implements VisibilityInterface
     }
 
     /**
+     * Get method name
+     *
      * @return string
      */
     public function getName()

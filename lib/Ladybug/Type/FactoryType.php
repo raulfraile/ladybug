@@ -29,7 +29,7 @@ class FactoryType
         $this->container = $container;
     }
 
-    public function factory($var, $key = null, $level = 0)
+    public function factory($var, $level = 0)
     {
         $result = null;
 
@@ -47,31 +47,32 @@ class FactoryType
             $result = $var;
         } elseif ($var === null) {
             $result = $this->container->get('ladybug.type.null');
-            $result->load($var, $key);
+            $result->load($var);
         } elseif (is_bool($var)) {
             $result = $this->container->get('ladybug.type.bool');
-            $result->load($var, $key);
+            $result->load($var);
         } elseif (is_string($var)) {
             $result = $this->container->get('ladybug.type.string');
-            $result->load($var, $key);
+            $result->load($var);
         } elseif (is_int($var)) {
             $result = $this->container->get('ladybug.type.int');
-            $result->load($var, $key);
+            $result->load($var);
+            $result->setLevel($level+1);
         } elseif (is_float($var)) {
             $result = $this->container->get('ladybug.type.float');
-            $result->load($var, $key);
+            $result->load($var);
         } elseif (is_array($var)) {
             $result = $this->container->get('ladybug.type.array');
-            $result->load($var, $key);
-
+            $result->setLevel($level+1);
+            $result->load($var);
         } elseif (is_object($var)) {
             $result = $this->container->get('ladybug.type.object');
             $result->setLevel($level+1);
-            $result->load($var, $key);
+            $result->load($var);
         } elseif (is_resource($var)) {
             $result = $this->container->get('ladybug.type.resource');
-            $result->setLevel($level++);
-            $result->load($var, $key);
+            $result->setLevel($level+1);
+            $result->load($var);
         } else {
             throw new InvalidTypeException();
         }

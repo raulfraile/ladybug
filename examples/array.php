@@ -24,4 +24,7 @@ $var1[2] = array(
     '<<age>>' => 2
 );
 
+//$var1[3] = new stdClass();
+//$var1[4] = fopen(__DIR__.'/images/ladybug.png', 'r');
+
 ladybug_dump($var1);

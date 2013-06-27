@@ -2,12 +2,25 @@
 
 {% spaceless %}
 
-    {{ m.array_key(array_key) }}
+    {% if visibility is not null %}
+        [{{ m.visibility_text(visibility) }}]
+    {% endif %}
+
+    {{ m.array_key(key) }}
 
     <t_object>object({{ var.className }})</t_object><intro>
 
     {% if var.objectCustomData is not empty %}
-        {{ m.array_block('Data', var.objectCustomData, var.level + 1) }}
+        {#{ m.array_block('Data', var.objectCustomData, var.level + 1) }#}
+        {{ render_type(var.objectCustomData)|raw }}
+    {% endif %}
+
+    {% if var.objectProperties is not empty %}
+        {{ m.indent(level) }}<t_array_block>Properties</t_array_block><intro>
+        {% for data in var.objectProperties %}
+            {{ m.indent(var.level) }} {{ render_type(data.value, data.name, data.visibility)|raw }}
+            <intro>
+        {% endfor %}
     {% endif %}
 
     {% if var.hasClassInfo() %}
@@ -33,15 +46,23 @@
             {% set class_info_data = class_info_data|merge({'Parent': var.classParent}) %}
         {% endif %}
 
-        {{ m.text_block('Class info', class_info_data, var.level + 1, true) }}
+        {{ m.text_block('Class info', class_info_data, var.level, true) }}
     {% endif %}
 
     {% if var.classConstants is not empty %}
-        {{ m.array_block('Constants', var.classConstants, var.level + 1) }}
+        {{ m.indent(var.level) }}<t_array_block>Constants</t_array_block><intro>
+        {% for constant in var.classConstants %}
+            {{ m.indent(var.level) }}{{ render_type(constant.value, constant.name)|raw }}
+                <intro>
+        {% endfor %}
     {% endif %}
 
     {% if var.classMethods is not empty %}
-        {{ m.text_block('Methods', var.classMethods, var.level + 1, false) }}
+        {{ m.indent(var.level) }}<t_array_block>Methods</t_array_block><intro>
+        {% for method in var.classMethods %}
+            {{ m.indent(var.level) }}{{ m.render_object_method(method) }}
+                    <intro>
+        {% endfor %}
     {% endif %}
 
 {% endspaceless %}

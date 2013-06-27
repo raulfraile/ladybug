@@ -1,6 +1,6 @@
 <?php
 
-namespace Ladybug\Type\Object;
+namespace Ladybug\Type\ObjectType;
 
 interface VisibilityInterface
 {

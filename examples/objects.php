@@ -59,4 +59,8 @@ $reflected = new ReflectionClass('Foo');
 //ladybug_dump($reflected);
 
 $dumper = new \Ladybug\Dumper();
-echo $dumper->dump($foo, $date, $dom, $reflected);
+
+$t = new stdClass();
+$t->a = 1;
+
+echo $dumper->dump($foo/*, $date, $dom, $reflected*/);

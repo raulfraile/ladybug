@@ -26,10 +26,32 @@ class Dumper
     /** @var Container $container */
     protected $container;
 
+    protected $callFile;
+    protected $callLine;
+    protected $callClass;
+    protected $callFunction;
+
     /**
      * Constructor
      */
     public function __construct()
+    {
+        $this->initializeNodes();
+        $this->initializeContainer();
+    }
+
+    /**
+     * Initialize the nodes array
+     */
+    protected function initializeNodes()
+    {
+        $this->nodes = array();
+    }
+
+    /**
+     * Initialize the dependency injection container
+     */
+    protected function initializeContainer()
     {
         $this->container = new Container();
         $this->container->load();
@@ -44,23 +66,23 @@ class Dumper
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
         $args = func_get_args();
-        $this->nodes = $this->readVars($args);
+        $this->nodes = $this->readVariables($args);
 
         return $this->getRender()->render($this->nodes);
     }
 
     /**
      * Reads variables and creates XType objects
-     * @param array $vars variables to dump
+     * @param array $variables variables to dump
      */
-    protected function readVars($vars)
+    protected function readVariables($variables)
     {
         /** @var FactoryType $factoryType */
         $factoryType = $this->container->get('ladybug.type.__factory');
         $nodes = array();
 
-        foreach ($vars as $var) {
-            $nodes[] = $factoryType->factory($var, null, $this->container->get('ladybug.level'));
+        foreach ($variables as $var) {
+            $nodes[] = $factoryType->factory($var, 0);
         }
 
         return $nodes;

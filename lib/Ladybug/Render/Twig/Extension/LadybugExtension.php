@@ -47,9 +47,16 @@ class LadybugExtension extends Twig_Extension
         return file_get_contents($filename);
     }
 
-    public function renderTypeFunction(Twig_Environment $environment, TypeInterface $var)
+    public function renderTypeFunction(Twig_Environment $environment, TypeInterface $var, $key = null, $visibility = null)
     {
-        return $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $var->getParameters());
+        $parameters = array(
+            'var' => $var,
+            'level' => $var->getLevel(),
+            'key' => $key,
+            'visibility' => $visibility
+        );
+
+        return $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
     }
 
     public function minifyCssFunction($filename)

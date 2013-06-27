@@ -1,13 +1,18 @@
 {% import "_macros.console.twig" as m %}
 
 {% spaceless %}
-    {{ m.array_key(array_key) }}
+    {% if visibility is not null %}
+        [{{ m.visibility_text(visibility) }}]
+    {% endif %}
+
+    {{ m.array_key(key) }}
 
     <t_array>array({{ var.length }})</t_array><intro>
 
-    {% for key,var in var.value %}
-        {{ m.indent(var.level) }}
-        {{ render_type(var)|raw }}
-    {% endfor %}
+        {% for item in var.value %}
+            {{ m.indent(var.level) }}
+            {{ render_type(item.value, item.key) }}
+        {% endfor %}
+
 
 {% endspaceless %}

@@ -1,21 +1,27 @@
 {% import "_macros.html.twig" as m %}
 
-
 {% set id = random(1000) %}
 
 <div class="accordion-group">
     <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#c{{ id }}">
-            {{ m.array_key(array_key) }}
+            <span class="array_key">
+                {% if visibility is not null %}
+                    <span class="label {{ m.visibility_color(visibility) }}">
+                        <i class="icon-eye-open icon-white"></i>
+                    </span>
+                {% endif %}
 
-            <span class="">{% block type %}{{ var.level}}Object ({{ var.className }}){% endblock %}</span>
+                {{ m.array_key(key) }}
 
+            </span>
+            <span class="">{% block type %}Object ({{ var.className }}){% endblock %}</span>
         </a>
     </div>
     <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
         <div class="accordion-inner">
 
-            <div style="height:30px; text-align:right">
+            <div style="height:30px; text-align:right{% if var.helpLink is empty %};display:none{% endif %}">
                 <a href="{{ var.helpLink }}" target="_blank" style="text-decoration: none">
                     <i class="metadata-{{ var.icon }}"></i>
                     <span class="muted" style="font-size:9px">{{ var.version }}</span>
@@ -32,10 +38,7 @@
                     </div>
                     <div id="object_data_{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
                         <div class="accordion-inner">
-
-
-                            {{ render_type(var.objectCustomData)|raw}}
-
+                            {{ render_type(var.objectCustomData)|raw }}
                         </div>
                     </div>
 
@@ -47,16 +50,15 @@
 
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#object_data_{{ id }}">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#object_data_{{ id }}">
                         Properties
                     </a>
                 </div>
                 <div id="object_data_{{ id }}" class="accordion-body collapse">
                     <div class="accordion-inner">
 
-
                         {% for data in var.objectProperties %}
-                            {{ render_type(data)|raw }}
+                            {{ render_type(data.value, data.name, data.visibility)|raw }}
                         {% endfor %}
 
                     </div>
@@ -108,7 +110,7 @@
                 <div id="object_constants_{{ id }}" class="accordion-body collapse">
                     <div class="accordion-inner">
                         {% for key,constant in var.classConstants %}
-                            {{ m.render_object_constant(constant)|raw }}
+                        {{ render_type(constant.value, constant.name)|raw }}
                         {% endfor %}
                     </div>
                 </div>

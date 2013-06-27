@@ -26,13 +26,13 @@ class FloatType extends BaseType
         $this->type = self::TYPE_ID;
     }
 
-    public function load($var, $key = null)
+    public function load($var)
     {
         if (!is_float($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var, $key);
+        parent::load($var);
     }
 
 

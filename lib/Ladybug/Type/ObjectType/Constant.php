@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\Object;
+namespace Ladybug\Type\ObjectType;
 
 use Ladybug\Type\TypeInterface;
 
@@ -26,6 +26,7 @@ class Constant
 
     /** @var TypeInterface $value */
     protected $value;
+
 
     public function __construct($name, TypeInterface $value)
     {
@@ -62,8 +63,6 @@ class Constant
      */
     public function getValue()
     {
-        $this->value->setKey($this->name);
-
         return $this->value;
     }
 }

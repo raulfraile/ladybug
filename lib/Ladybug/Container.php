@@ -46,7 +46,7 @@ class Container extends Pimple
             return new \Ladybug\Type\StringType();
         };
         $this->values['ladybug.type.array'] = function (Container $c) {
-            return new \Ladybug\Type\ArrayType($c['ladybug.level'], $c->getParameter('array.max_nesting_level'), $c->get('ladybug.type.__factory'));
+            return new \Ladybug\Type\ArrayType($c->getParameter('array.max_nesting_level'), $c->get('ladybug.type.__factory'));
         };
         $this->values['ladybug.type.object'] = function (Container $c) {
             return new \Ladybug\Type\ObjectType($c['ladybug.level'], $c->getParameter('object.max_nesting_level'), $c->get('ladybug.type.__factory'), $c->get('metadata.resolver'));
