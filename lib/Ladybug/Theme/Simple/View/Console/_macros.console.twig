@@ -34,7 +34,8 @@
         {{ _self.indent(level) }}
 
         {% if show_keys %}{{ key }}:<space>{% endif %}
-        {{ var|replace({' ': '<space>'})|raw }}<intro>
+        {{ var|replace({' ': '<space>'})|raw }}
+        {% if not loop.last %}<intro>{% endif %}
     {% endfor %}
 {% endmacro %}
 
@@ -75,5 +76,18 @@
         {% if not loop.last %},<space>{% endif %}
     {% endfor %}
         )
+
+{% endmacro %}
+
+{% macro visibility_block(visibility) %}
+    {% if visibility is not null %}
+        {% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+            <v_private>{-}</v_private><space>
+        {% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+                <v_protected>{% raw %}{#}{% endraw %}</v_protected><space>
+        {% else %}
+                <v_public>{+}</v_public><space>
+        {% endif %}
+    {% endif %}
 
 {% endmacro %}

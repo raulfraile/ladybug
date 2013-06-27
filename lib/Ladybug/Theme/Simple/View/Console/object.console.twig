@@ -2,13 +2,11 @@
 
 {% spaceless %}
 
-    {% if visibility is not null %}
-        [{{ m.visibility_text(visibility) }}]
-    {% endif %}
+    {{ m.visibility_block(visibility) }}
 
     {{ m.array_key(key) }}
 
-    <t_object>object({{ var.className }})</t_object><intro>
+    <t_object>object({{ var.className }})</t_object>
 
     {% if var.objectCustomData is not empty %}
         {#{ m.array_block('Data', var.objectCustomData, var.level + 1) }#}
@@ -16,10 +14,10 @@
     {% endif %}
 
     {% if var.objectProperties is not empty %}
-        {{ m.indent(level) }}<t_array_block>Properties</t_array_block><intro>
+        <intro>{{ m.indent(level) }}<t_array_block>Properties</t_array_block><intro>
         {% for data in var.objectProperties %}
             {{ m.indent(var.level) }} {{ render_type(data.value, data.name, data.visibility)|raw }}
-            <intro>
+            {% if not loop.last %}<intro>{% endif %}
         {% endfor %}
     {% endif %}
 
@@ -46,22 +44,22 @@
             {% set class_info_data = class_info_data|merge({'Parent': var.classParent}) %}
         {% endif %}
 
-        {{ m.text_block('Class info', class_info_data, var.level, true) }}
+        <intro>{{ m.text_block('Class info', class_info_data, var.level, true) }}
     {% endif %}
 
     {% if var.classConstants is not empty %}
-        {{ m.indent(var.level) }}<t_array_block>Constants</t_array_block><intro>
+        <intro>{{ m.indent(var.level) }}<t_array_block>Constants</t_array_block><intro>
         {% for constant in var.classConstants %}
             {{ m.indent(var.level) }}{{ render_type(constant.value, constant.name)|raw }}
-                <intro>
+            {% if not loop.last %}<intro>{% endif %}
         {% endfor %}
     {% endif %}
 
     {% if var.classMethods is not empty %}
-        {{ m.indent(var.level) }}<t_array_block>Methods</t_array_block><intro>
+        <intro>{{ m.indent(var.level) }}<t_array_block>Methods</t_array_block><intro>
         {% for method in var.classMethods %}
             {{ m.indent(var.level) }}{{ m.render_object_method(method) }}
-                    <intro>
+            {% if not loop.last %}<intro>{% endif %}
         {% endfor %}
     {% endif %}
 

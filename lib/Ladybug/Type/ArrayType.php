@@ -39,7 +39,7 @@ class ArrayType extends BaseType
         $this->length = count($var);
         if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {
-                $arrayItem = new Item($k, $this->factory->factory($v, $this->level + 1));
+                $arrayItem = new Item($k, $this->factory->factory($v, $this->level));
 
                 $this->add($arrayItem);
             }

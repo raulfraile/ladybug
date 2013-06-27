@@ -1,9 +1,7 @@
 {% import "_macros.console.twig" as m %}
 
 {% spaceless %}
-    {% if visibility is not null %}
-        [{{ m.visibility_text(visibility) }}]
-    {% endif %}
+    {{ m.visibility_block(visibility) }}
 
     {{ m.array_key(key) }}
 
@@ -12,6 +10,7 @@
         {% for item in var.value %}
             {{ m.indent(var.level) }}
             {{ render_type(item.value, item.key) }}
+            {% if not loop.last %}<intro>{% endif %}
         {% endfor %}
 
 
