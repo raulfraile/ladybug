@@ -59,6 +59,7 @@ class File extends ExtensionBase
         $result['permissions'] = implode(', ', $permissions);*/
 
         $collection->loadFromArray($result, true);
+        $collection->setLevel($this->level);
 
         return $collection;
     }

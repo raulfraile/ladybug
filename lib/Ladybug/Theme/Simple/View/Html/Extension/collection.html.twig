@@ -11,8 +11,8 @@
     </div>
     <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1 %}in{% endif %}">
         <div class="accordion-inner">
-            {% for key,item in var.data %}
-                {{ render_type(item)|raw }}
+            {% for item in var.data %}
+                {{ render_type(item, item.key)|raw }}
             {% endfor %}
         </div>
     </div>

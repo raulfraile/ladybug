@@ -54,6 +54,7 @@ class ResourceType extends BaseType
 
         // Resource data
         $this->loadData($var);
+
     }
 
 
@@ -88,11 +89,13 @@ class ResourceType extends BaseType
         if (class_exists($includeClass)) {
 
             /** @var $customDumper ExtensionInterface */
-            $customDumper = new $includeClass($this->factory);
+            $customDumper = new $includeClass($this->factory, $this->level);
             $data = $customDumper->getData($var);
-
+var_dump($this->level, $data->getLevel());
             $this->resourceCustomData = $data;
         }
+
+
     }
 
 }

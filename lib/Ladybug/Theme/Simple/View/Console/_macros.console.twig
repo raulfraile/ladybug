@@ -1,10 +1,10 @@
 {% macro indent(level) %}
 
     {% set limit = level %}
-   {# {% if limit > 1 %}
+    {% if limit > 1 %}
         {% set limit = limit -1 %}
     {% endif %}
-#}
+
     {% for i in 1..limit %}
         <tab>
     {% endfor %}
@@ -58,9 +58,7 @@
 {% endmacro %}
 
 {% macro render_object_method(method) %}
-    {% if visibility is not null %}
-        [{{ m.visibility_text(visibility) }}]
-    {% endif %}
+    {{ _self.visibility_block(method.visibility) }}
 
     {{ method.name }}(
 

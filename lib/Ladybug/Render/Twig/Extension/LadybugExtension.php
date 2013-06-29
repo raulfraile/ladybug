@@ -37,6 +37,11 @@ class LadybugExtension extends Twig_Extension
                 'minifyCssFunction',
                 array('is_safe' => array('html'))
             ),
+            'spaces_level' => new \Twig_Function_Method(
+                $this,
+                'getSpacesByLevel',
+                array()
+            ),
         );
     }
 
@@ -57,6 +62,11 @@ class LadybugExtension extends Twig_Extension
         );
 
         return $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
+    }
+
+    public function getSpacesByLevel($level)
+    {
+        return str_repeat('<space><space><space><space>', $level);
     }
 
     public function minifyCssFunction($filename)

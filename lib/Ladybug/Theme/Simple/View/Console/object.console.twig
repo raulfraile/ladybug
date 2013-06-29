@@ -9,7 +9,7 @@
     <t_object>object({{ var.className }})</t_object>
 
     {% if var.objectCustomData is not empty %}
-        {#{ m.array_block('Data', var.objectCustomData, var.level + 1) }#}
+        <intro>{{ m.indent(level) }}<t_array_block>Data</t_array_block><intro>
         {{ render_type(var.objectCustomData)|raw }}
     {% endif %}
 

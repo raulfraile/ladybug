@@ -23,12 +23,13 @@ class DOMDocument extends ExtensionBase
         /** @var \DOMDocument $var */
 
         $var->formatOutput = true;
-        $xml = htmlentities($var->saveXML());
+        $xml = $var->saveXML();
 
         $result = new Type\CodeType();
         $result->setLanguage('xml');
         $result->setData($xml);
         $result->setKey('Code');
+        $result->setLevel($this->level);
 
         return $result;
     }

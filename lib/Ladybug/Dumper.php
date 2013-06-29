@@ -59,7 +59,7 @@ class Dumper
 
     /**
      * Dumps one or more variables
-     * @param vars One or more variables to dump
+     * @param mixed One or more variables to dump
      *
      * @return string
      */

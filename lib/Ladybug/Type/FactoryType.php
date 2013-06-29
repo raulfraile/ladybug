@@ -36,7 +36,7 @@ class FactoryType
         if ($var instanceof \Ladybug\Extension\Type\CollectionType) {
             $data = array();
             foreach ($var->getData() as $key => $item) {
-                $data[$key] = FactoryType::factory($item, $level, $container);
+                $data[$key] = FactoryType::factory($item, $level);
             }
             $var->setProcessedData($data);
 

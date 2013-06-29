@@ -39,12 +39,14 @@ class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
             't_bool' => 'blue',
             't_float' => 'red',
             't_int' => 'red',
-            't_array' => 'yellow',
-            't_object' => 'yellow',
-            't_array_block' => array('yellow', 'magenta'),
+            't_array' => 'cyan',
+            't_object' => 'cyan',
+            't_resource' => 'cyan',
+            't_array_block' => array('white', 'magenta'),
             'v_public' => 'green',// array('white', 'green'),
             'v_protected' => 'yellow',// array('white', 'yellow'),
-            'v_private' => 'red'// array('white', 'red'),
+            'v_private' => 'red',// array('white', 'red'),
+            'f_tab' => 'white'
         );
     }
 

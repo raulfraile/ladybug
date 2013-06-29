@@ -1,0 +1,8 @@
+{% import "_macros.console.twig" as m %}
+
+{% spaceless %}
+{{ m.visibility_block(visibility) }}
+
+{{ m.array_key(key) }}
+{{ var.formattedValue }}
+{% endspaceless %}

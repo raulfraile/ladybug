@@ -116,6 +116,7 @@ class ObjectType extends BaseType
             $this->isLeaf = TRUE;
         }
 
+
     }
 
     public function setClassConstants($classConstants)
@@ -376,7 +377,7 @@ class ObjectType extends BaseType
 
         if (class_exists($includeClass)) {
             /** @var $customDumper ExtensionInterface */
-            $customDumper = new $includeClass($this->factory);
+            $customDumper = new $includeClass($this->factory, $this->level);
             $data = $customDumper->getData($var);
             $this->objectCustomData = $data;//$this->factory->factory($data, null, $this->level + 1);
 

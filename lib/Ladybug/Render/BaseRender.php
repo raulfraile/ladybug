@@ -96,23 +96,25 @@ abstract class BaseRender implements RenderInterface
 
         // extension templates
         $extensionsDir = __DIR__ . '/../Extension/Type/View/'.ucfirst($this->format->getName()).'/';
+        $extensionsDir = __DIR__ . '/../Theme/' . $this->theme->getName() . '/View/'.ucfirst($this->format->getName()).'/Extension';
 
         if (file_exists($extensionsDir)) {
             $paths[] = $extensionsDir;
         }
 
-        // parents
-        /*$currentTheme = $this->theme;
-        while (!is_null($currentTheme->getParent())) {
-            $templatesDir = __DIR__ . '/../Theme/' . $currentTheme->getParent() . '/View/'.ucfirst(static::getFormat()).'/';;
+        // parent
+        $parent = $this->theme->getParent();
+        if (!is_null($parent)) {
+            $templatesDir = __DIR__ . '/../Theme/' . $parent . '/View/'.ucfirst($this->format->getName()).'/';
             if (file_exists($templatesDir)) {
                 $paths[] = $templatesDir;
             }
 
-            //$themeClass = 'Ladybug\\Theme\\' . $currentTheme->getParent() . '\\' . $currentTheme->getParent() . 'Theme';
-            //$currentTheme = new $themeClass;
-
-        }*/
+            $templatesDir .= 'Extension/';
+            if (file_exists($templatesDir)) {
+                $paths[] = $templatesDir;
+            }
+        }
 
         return $paths;
     }

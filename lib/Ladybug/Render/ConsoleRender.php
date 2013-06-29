@@ -48,7 +48,7 @@ class ConsoleRender extends BaseRender implements RenderInterface
 
         $result = preg_replace('/\s/', '', $result);
         $result = str_replace('<intro>', PHP_EOL, $result);
-        $result = str_replace('<tab>', '   ', $result);
+        $result = str_replace('<tab>', '<f_tab> · </f_tab>', $result);
         $result = str_replace('<space>', ' ', $result);
 
         $this->console->writeln($result);

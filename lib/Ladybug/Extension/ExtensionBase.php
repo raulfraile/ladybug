@@ -20,9 +20,23 @@ abstract class ExtensionBase implements ExtensionInterface
     /** @var FactoryType $factory */
     protected $factory;
 
-    public function __construct(FactoryType $factory)
+    protected $level;
+
+    public function __construct(FactoryType $factory, $level = 0)
     {
         $this->factory = $factory;
+        $this->level = $level;
     }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
 
 }

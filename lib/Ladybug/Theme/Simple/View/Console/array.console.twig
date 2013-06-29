@@ -8,7 +8,7 @@
     <t_array>array({{ var.length }})</t_array><intro>
 
         {% for item in var.value %}
-            {{ m.indent(var.level) }}
+            {{ m.indent(var.level + 1) }}
             {{ render_type(item.value, item.key) }}
             {% if not loop.last %}<intro>{% endif %}
         {% endfor %}

@@ -34,6 +34,8 @@ abstract class BaseType implements TypeInterface
 
     protected $container;
 
+    protected $id;
+
 
     /**
      * Constructor
@@ -44,7 +46,7 @@ abstract class BaseType implements TypeInterface
      */
     public function __construct(/*$type, $value, $level, \Ladybug\Container $container, $key = null*/)
     {
-
+        $this->id = mt_rand(0, 10000);
         /*$this->type = $type;
         $this->value = $value;
         $this->container = $container;

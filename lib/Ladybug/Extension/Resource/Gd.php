@@ -54,6 +54,7 @@ class Gd extends ExtensionBase
             Type\TextType::create($gd_info['GD Version'], 'version'),
             Type\TextType::create(implode(', ', $gd_support), 'support')
         ));
+        $gdCollection->setLevel($this->level + 1);
 
         $imageCollection = new Type\CollectionType();
         $imageCollection->setTitle('Image');
@@ -63,6 +64,7 @@ class Gd extends ExtensionBase
             $this->factory->factory($is_true_color, 'true color'),
             Type\ImageType::create($image, 'Image'),
         ));
+        $imageCollection->setLevel($this->level + 1);
 
         $collection = new Type\CollectionType($result);
         $collection->setTitle('Data');
@@ -70,6 +72,8 @@ class Gd extends ExtensionBase
             'GD' => $gdCollection,
             'Image' => $imageCollection
         ));
+
+        $collection->setLevel($this->level);
 
         return $collection;
     }
