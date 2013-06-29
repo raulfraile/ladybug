@@ -323,7 +323,10 @@ class ObjectType extends BaseType
                 }
 
                 // phpdoc comment
-                $method->setComment($reflectedMethod->getDocComment());
+                $phpdoc = new \phpDocumentor\Reflection\DocBlock($reflectedMethod->getDocComment());
+
+                $method->setShortDescription($phpdoc->getShortDescription());
+                $method->setLongDescription($phpdoc->getLongDescription());
 
                 // parameters
                 $methodParameters = $reflectedMethod->getParameters();

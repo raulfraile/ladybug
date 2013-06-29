@@ -22,6 +22,14 @@ class Foo
      * @return null
      */
     public function __construct() {$this->a = new Foo2();}
+
+    /**
+     * Get bar
+     *
+     * Get the bar value
+     *
+     * @return int
+     */
     protected function getBar() { return $this->bar; }
     private function setBar($a,$b,$c,$d,$bar = 1, $bar2 = TRUE, $bar3 = NULL, $bar4 = "<br/>", array $bar5 = array(1,2,3)) { $this->bar = $bar; }
     public function __toString() {return $this->bar . ' - ' . $this->bar2; }

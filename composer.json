@@ -19,7 +19,8 @@
         "symfony/console": ">=2.0.4",
         "twig/twig": ">=v1.7.0",
         "pimple/pimple": ">=v1.0.2",
-        "sabberworm/php-css-parser": "*"
+        "sabberworm/php-css-parser": "*",
+        "phpdocumentor/reflection-docblock": "2.0.0a3"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "0.1.*@dev",

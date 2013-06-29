@@ -27,8 +27,11 @@ class Method implements VisibilityInterface
     /** @var MethodParameter[] $parameters */
     protected $parameters;
 
-    /** @var string $comment */
-    protected $comment;
+    /** @var string $shortDescription */
+    protected $shortDescription;
+
+    /** @var string $longDescription */
+    protected $longDescription;
 
     /**
      * Set method name
@@ -97,19 +100,35 @@ class Method implements VisibilityInterface
     }
 
     /**
-     * @param string $comment
+     * @param string $longDescription
      */
-    public function setComment($comment)
+    public function setLongDescription($longDescription)
     {
-        $this->comment = $comment;
+        $this->longDescription = $longDescription;
     }
 
     /**
      * @return string
      */
-    public function getComment()
+    public function getLongDescription()
     {
-        return $this->comment;
+        return $this->longDescription;
+    }
+
+    /**
+     * @param string $shortDescription
+     */
+    public function setShortDescription($shortDescription)
+    {
+        $this->shortDescription = $shortDescription;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
     }
 
 
