@@ -13,29 +13,26 @@
 namespace Ladybug\Render;
 
 use Ladybug\Theme\ThemeInterface;
+use Ladybug\Format\FormatInterface;
 
-class TextRender implements RenderInterface
+class TextRender extends BaseRender implements RenderInterface
 {
 
-    /** @var ThemeInterface $theme */
-    protected $theme;
-
-    protected $console;
-
-    public function __construct(ThemeInterface $theme)
+    public function getFormat()
     {
+        return self::FORMAT_TEXT;
+    }
 
-        $this->theme = $theme;
-
+    public function __construct(ThemeInterface $theme, FormatInterface $format)
+    {
+        parent::__construct($theme, $format);
     }
 
     public function render(array $nodes)
     {
-        $result = '';
-
-        foreach ($nodes as $var) {
-            $result .= $var->render(null, 'txt');
-        }
+        $result = $this->twig->render('layout.text.twig', array(
+            'nodes' => $nodes
+        ));
 
         $result = preg_replace('/\s/', '', $result);
         $result = str_replace('<intro>', PHP_EOL, $result);

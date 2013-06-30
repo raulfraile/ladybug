@@ -11,9 +11,9 @@
     </label>
     <input type="checkbox" id="tree_array_{{ id }}">
     <ol>
-        {% for key,var in var.value %}
+        {% for item in var.value %}
             <li>
-                {{ render_type(var)|raw }}
+                {{ render_type(item.value, item.key) }}
             </li>
         {% endfor %}
     </ol>

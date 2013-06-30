@@ -15,7 +15,7 @@ namespace Ladybug\Theme;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Container;
 
-abstract class BaseTheme implements ThemeInterface
+abstract class AbstractTheme implements ThemeInterface
 {
 
     /** @var Container $container */

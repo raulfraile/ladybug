@@ -66,6 +66,7 @@ $reflected = new ReflectionClass('Foo');
 
 //ladybug_dump($reflected);
 
+
 $dumper = new \Ladybug\Dumper();
 
 echo $dumper->dump($foo, $date, $dom, $reflected);

@@ -10,21 +10,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Theme\Simple;
+namespace Ladybug\Theme\Base;
 
-use Ladybug\Theme\BaseTheme;
+use Ladybug\Theme\AbstractTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Theme\CliThemeInterface;
 
 use Ladybug\Format;
 
-class SimpleTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface, CliThemeInterface
+class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterface, CliThemeInterface
 {
 
     public function getName()
     {
-        return 'Simple';
+        return 'Base';
     }
 
     public function getParent()

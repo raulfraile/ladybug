@@ -44,7 +44,7 @@
     <p>CodeMirror works with language-specific modes. Modes are
     JavaScript programs that help color (and optionally indent) text
     written in a given language. The distribution comes with a number
-    of modes (see the <a href="../mode/"><code>mode/</code></a>
+    of modes (see the <a href="../mode"><code>mode/</code></a>
     directory), and it isn't hard to <a href="#modeapi">write new
     ones</a> for other languages.</p>
 
@@ -144,7 +144,7 @@
       <dd>The theme to style the editor with. You must make sure the
       CSS file defining the corresponding <code>.cm-s-[name]</code>
       styles is loaded (see
-      the <a href="../theme/"><code>theme</code></a> directory in the
+      the <a href="../theme"><code>theme</code></a> directory in the
       distribution). The default is <code>"default"</code>, for which
       colors are included in <code>codemirror.css</code>. It is
       possible to use multiple theming classes at once—for
@@ -186,7 +186,7 @@
       <dd>Configures the keymap to use. The default
       is <code>"default"</code>, which is the only keymap defined
       in <code>codemirror.js</code> itself. Extra keymaps are found in
-      the <a href="../keymap/"><code>keymap</code></a> directory. See
+      the <a href="../keymap"><code>keymap</code></a> directory. See
       the <a href="#keymaps">section on keymaps</a> for more
       information.</dd>
 
@@ -670,7 +670,7 @@
 
     <p>Themes are also simply CSS files, which define colors for
     various syntactic elements. See the files in
-    the <a href="../theme/"><code>theme</code></a> directory.</p>
+    the <a href="../theme"><code>theme</code></a> directory.</p>
 
     <h2 id="api">Programming API</h2>
 
@@ -1468,7 +1468,7 @@
       language-specific function that also takes an instance and a
       line number, and returns an range to be folded, or null if no
       block is started on that line. There are files in
-      the <a href="../addon/fold/"><code>addon/fold/</code></a>
+      the <a href="../addon/fold"><code>addon/fold/</code></a>
       directory providing <code>CodeMirror.braceRangeFinder</code>,
       which finds blocks in brace languages (JavaScript, C, Java,
       etc), <code>CodeMirror.indentRangeFinder</code>, for languages
@@ -1522,7 +1522,7 @@
       and <code>to</code> give the start and end of the token that is
       being completed. Depends
       on <code>addon/hint/show-hint.css</code>. See the other files in
-      the <a href="../addon/hint/"><code>addon/hint</code></a> for
+      the <a href="../addon/hint"><code>addon/hint</code></a> for
       hint sources for various languages. Check
       out <a href="../demo/complete.html">the demo</a> for an
       example.</dd>

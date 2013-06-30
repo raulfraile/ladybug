@@ -12,12 +12,12 @@
 
 namespace Ladybug\Theme\Modern;
 
-use Ladybug\Theme\BaseTheme;
+use Ladybug\Theme\AbstractTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Format;
 
-class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface
+class ModernTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterface
 {
 
     public function getName()
@@ -27,14 +27,14 @@ class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
 
     public function getParent()
     {
-        return 'Simple';
+        return 'Base';
     }
 
     public function getHtmlCssDependencies()
     {
         return array(
-            '@SimpleTheme/lib/bootstrap/css/bootstrap.min.css',
-            '@SimpleTheme/lib/codemirror/lib/codemirror.css',
+            '@BaseTheme/lib/bootstrap/css/bootstrap.min.css',
+            '@BaseTheme/lib/codemirror/lib/codemirror.css',
             '@ModernTheme/css/tree.css'
         );
     }
@@ -42,10 +42,10 @@ class ModernTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfac
     public function getHtmlJsDependencies()
     {
         return array(
-            '@SimpleTheme/lib/jquery/jquery.min.js',
-            '@SimpleTheme/lib/bootstrap/js/bootstrap.min.js',
-            '@SimpleTheme/lib/codemirror/lib/codemirror.js',
-            '@SimpleTheme/lib/codemirror/mode/xml/xml.js'
+            '@BaseTheme/lib/jquery/jquery.min.js',
+            '@BaseTheme/lib/bootstrap/js/bootstrap.min.js',
+            '@BaseTheme/lib/codemirror/lib/codemirror.js',
+            '@BaseTheme/lib/codemirror/mode/xml/xml.js'
         );
     }
 

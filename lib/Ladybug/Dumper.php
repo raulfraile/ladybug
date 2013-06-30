@@ -3,7 +3,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ * @author Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -59,33 +59,32 @@ class Dumper
 
     /**
      * Dumps one or more variables
-     * @param mixed One or more variables to dump
+     * @param mixed[] One or more variables to dump
      *
      * @return string
      */
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
         $args = func_get_args();
-        $this->nodes = $this->readVariables($args);
+        $this->readVariables($args);
 
-        return $this->getRender()->render($this->nodes);
+        $render = $this->getRender();
+
+        return $render->render($this->nodes);
     }
 
     /**
-     * Reads variables and creates XType objects
+     * Read variables and fill nodes with TypeInterface objects
      * @param array $variables variables to dump
      */
     protected function readVariables($variables)
     {
         /** @var FactoryType $factoryType */
         $factoryType = $this->container->get('ladybug.type.__factory');
-        $nodes = array();
 
         foreach ($variables as $var) {
-            $nodes[] = $factoryType->factory($var, 0);
+            $this->nodes[] = $factoryType->factory($var, 0);
         }
-
-        return $nodes;
     }
 
     /**
@@ -148,7 +147,6 @@ class Dumper
         $environment = $environmentResolver->resolve();
 
         $this->container->setAttribute('format', $environment->getDefaultFormat());
-        $format = $this->container->get(sprintf('format.%s', $environment->getDefaultFormat()));
 
         /** @var $themeResolver ThemeResolver */
         $themeResolver = $this->container->get('theme.resolver');

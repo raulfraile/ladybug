@@ -13,6 +13,8 @@
 namespace Ladybug;
 
 use Pimple;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class Container extends Pimple
 {
@@ -24,6 +26,8 @@ class Container extends Pimple
         $this->setParameter('theme', 'Modern');
         $this->setParameter('array.max_nesting_level', 8);
         $this->setParameter('object.max_nesting_level', 3);
+
+
 
         $this->setAttribute('assets_loaded', false);
 
@@ -100,15 +104,17 @@ class Container extends Pimple
         });
 
         // themes
-        $this->setShared('theme.simple', function ($c) {
-            return new \Ladybug\Theme\Simple\SimpleTheme($c);
+        $this->setAttribute('themes.directories', array(__DIR__ . '/Theme'));
+        $this->loadThemes();
+        /*$this->setShared('theme.base', function ($c) {
+            return new \Ladybug\Theme\Base\BaseTheme($c);
         });
         $this->setShared('theme.classic', function ($c) {
             return new \Ladybug\Theme\Classic\ClassicTheme($c);
         });
         $this->setShared('theme.modern', function ($c) {
             return new \Ladybug\Theme\Modern\ModernTheme($c);
-        });
+        });*/
 
         $environmentResolver = $this->get('environment.resolver');
 
@@ -196,5 +202,34 @@ class Container extends Pimple
     public function has($key)
     {
         return $this->offsetExists($key);
+    }
+
+
+
+    protected function loadThemes()
+    {
+        $themesFinder = new Finder();
+        $themesFinder->directories();
+
+        foreach ($this->getAttribute('themes.directories') as $item) {
+            $themesFinder->in($item);
+        }
+
+        foreach ($themesFinder as $directory) {
+            /** @var $directory SplFileInfo */
+
+            $themeFile = $directory->getRealPath() . '/' . $directory->getFilename() . 'Theme.php';
+            $themeName = strtolower($directory->getFilename());
+            $themeClass = sprintf('\Ladybug\Theme\%s\%sTheme', $directory->getFilename(), $directory->getFilename());
+
+            if (!file_exists($themeFile)) {
+                continue;
+            }
+
+            $this->setShared(sprintf('theme.%s', $themeName), function ($c) use ($themeClass) {
+                return new $themeClass($c);
+            });
+        }
+
     }
 }

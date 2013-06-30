@@ -11,6 +11,5 @@ $var5 = false;
 $var6 = 'Hello world!';
 
 $dumper = new \Ladybug\Dumper();
-echo $dumper->dump($var1, $var2, $var3, $var4, $var5);
+ladybug_dump($var1, $var2, $var3, $var4, $var5);
 die();
-ladybug_dump($var1, $var2, $var3, $var4, $var5, $var6);
