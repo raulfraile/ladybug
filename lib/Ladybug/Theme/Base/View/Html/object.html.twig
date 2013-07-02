@@ -1,92 +1,80 @@
-{% import "_macros.html.twig" as m %}
+{% extends "_base.html.twig" %}
 
-{% spaceless %}
-    {% set id = random(1000) %}
-    <label for="tree_object_{{ id }}">
-        {% if array_key is not empty %}
-            <span class="key">[{{ array_key }}]:</span>
-        {% endif %}
-        <span class="switcher">
-            <span class="type">Object ({{ var.className }})</span>
-            {% if var.toString is not empty %}
-                <a class="tostring" href="javascript:void(0)" title="{{ var.toString }}"></a>
-            {% endif %}
-        </span>
-    </label>
-    <input type="checkbox" id="tree_object_{{ id }}">
+{% block type %}{{ parent() }}({{ var.className }}){% endblock %}
 
-    {% if not var.isLeaf %}
-        <ol>
+{% block value %}
 
+    {# Help link #}
 
-
-            {% if var.objectCustomData is not empty %}
-            <li>
-
-                {{ render_type(var.objectCustomData)|raw }}
-
-            </li>
-            {% endif %}
-
-            {% if var.objectCustomData is not empty %}
-            <li>
-                {#{ var.objectCustomData.render('Data') }#}
-                {{ render_type(var.objectCustomData)|raw }}
-
-            </li>
-            {% endif %}
-
-            {% if var.classFile is not empty %}
-            <li>
-                <label for="tree_object_classinfo_{{ id }}">
-                    <span class="switcher">Class info</span>
-                </label>
-                <input type="checkbox" id="tree_object_classinfo_{{ id }}">
-                <ol>
-                    {% if var.classFile is not empty %}
-                    <li><div class="final">Filename: {{ var.classFile }}</div></li>
-                    {% endif %}
-                    {% if var.classInterface is not empty %}
-                    <li><div class="final">Interfaces: {{ var.classInterface }}</div></li>
-                    {% endif %}
-                    {% if var.classNamespace is not empty %}
-                    <li><div class="final">Namespace: {{ var.classNamespace }}</div></li>
-                    {% endif %}
-                    {% if var.classParent is not empty %}
-                    <li><div class="final">Parent: {{ var.classParent }}</div></li>
-                    {% endif %}
-                </ol>
-            </li>
-            {% endif %}
-
-            {% if var.classConstants is not empty %}
-            <li>
-                <label for="tree_object_classconstants_{{ id }}">
-                    <span class="switcher">Class constants</span>
-                </label>
-                <input type="checkbox" id="tree_object_classconstants_{{ id }}">
-                <ol>
-                    {% for key,constant in classConstants %}
-                        <li>{{ render_type(constant)|raw }}</li>
-                    {% endfor %}
-                </ol>
-            </li>
-            {% endif %}
-
-            {% if var.classMethods is not empty %}
-            <li>
-                <label for="tree_object_methods_{{ id }}">
-                    <span class="switcher">Methods</span>
-                </label>
-                <input type="checkbox" id="tree_object_methods_{{ id }}">
-                <ol>
-                    {% for method in var.classMethods %}
-                    <li><div class="final">{{ method }}</div></li>
-                    {% endfor %}
-                </ol>
-            </li>
-            {% endif %}
-        </ol>
+    {% if var.helpLink is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Help link</div>
+        <div class="level_{{ var.level + 1 }}">
+            <a href="{{ var.helpLink }}" target="_blank">
+                {{ var.helpLink }}
+            </a>
+        </div>
     {% endif %}
 
-{% endspaceless %}
+    {# Custom data #}
+
+    {% if var.objectCustomData is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Data</div>
+        <div class="level_{{ var.level + 1 }}">
+            {{ render_type(var.objectCustomData)|raw }}
+        </div>
+    {% endif %}
+
+    {# Properties #}
+    {% if var.objectProperties is not empty %}
+
+        <div class="block_title level_{{ var.level + 1 }}">Properties</div>
+        <div class="level_{{ var.level + 1 }}">
+            {% for data in var.objectProperties %}
+                {{ render_type(data.value, data.name, data.visibility)|raw }}
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
+    {# Class info #}
+    {% if var.classFile is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Class info</div>
+        <div class="level_{{ var.level + 2 }}">
+            {% if var.classFile is not empty %}
+                <div>Filename: {{ var.classFile }}</div>
+            {% endif %}
+            {% if var.classInterface is not empty %}
+                <div>Interfaces: {{ var.classInterface }}</div>
+            {% endif %}
+            {% if var.classNamespace is not empty %}
+                <div>Namespace: {{ var.classNamespace }}</div>
+            {% endif %}
+            {% if var.classParent is not empty %}
+                <div>Parent: {{ var.classParent }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {# Class constants #}
+    {% if var.classConstants is not empty %}
+    <div class="block_title level_{{ var.level + 1 }}">Class constants</div>
+    <div class="level_{{ var.level + 1 }}">
+        {% for key,constant in var.classConstants %}
+            {{ render_type(constant.value, constant.name)|raw }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# Class methods #}
+    {% if var.classMethods is not empty %}
+    <div class="block_title level_{{ var.level + 1 }}">Methods</div>
+    <div class="level_{{ var.level + 1 }}">
+        {% for method in var.classMethods %}
+            {{ m.render_object_method(method) }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+
+{% endblock %}

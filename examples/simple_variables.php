@@ -11,5 +11,12 @@ $var5 = false;
 $var6 = 'Hello world!';
 
 $dumper = new \Ladybug\Dumper();
+$dumper->setTheme('modern');
+$dumper->setFormat(\Ladybug\Format\HtmlFormat::FORMAT_NAME);
+echo $dumper->dump($var1, $var2, $var3, $var4, $var5);
+
+
+
+die();
 ladybug_dump($var1, $var2, $var3, $var4, $var5);
 die();

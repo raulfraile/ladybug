@@ -1,0 +1,20 @@
+{% import "_macros.html.twig" as m %}
+
+{% set id = random(1000) %}
+
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ id }}">
+            {{ var.title }}
+        </a>
+    </div>
+    <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1 %}in{% endif %}">
+        <div class="accordion-inner">
+            {% for item in var.data %}
+            {{ render_type(item, item.key)|raw }}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>

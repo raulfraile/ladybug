@@ -18,7 +18,7 @@ use Ladybug\Type\ObjectType as Object;
 use Ladybug\ObjectMetadata\ObjectMetadataResolver;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
-class ObjectType extends BaseType
+class ObjectType extends AbstractType
 {
 
     const TYPE_ID = 'object';
@@ -376,15 +376,21 @@ class ObjectType extends BaseType
     protected function loadData($var, \ReflectionClass $reflectedObject)
     {
         // is there a class to show the object data?
+        $service = str_replace('\\', '.', strtolower($this->className));
+
+        if ($this->container->offsetExists($service)) {
+            $inspector = $this->container->get($service);
+            $this->objectCustomData = $inspector->getData($var);
+        }
+/*
         $includeClass = $this->getIncludeClass($this->className, 'object');
 
         if (class_exists($includeClass)) {
-            /** @var $customDumper ExtensionInterface */
+
             $customDumper = new $includeClass($this->factory, $this->level);
             $data = $customDumper->getData($var);
-            $this->objectCustomData = $data;//$this->factory->factory($data, null, $this->level + 1);
-
-        }
+            $this->objectCustomData = $data;
+        }*/
 
         // properties
         $data = (array) $var;

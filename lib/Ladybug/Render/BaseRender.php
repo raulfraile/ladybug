@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Type/BaseType: Base type
+ * Type/AbstractType: Base type
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *

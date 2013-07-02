@@ -1,0 +1,77 @@
+.ladybug {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+}
+
+.ladybug .type {
+    font-style: italic;
+}
+
+.ladybug .value {
+    margin-left: 5px;
+}
+
+.ladybug .key {
+    padding-right: 5px;
+}
+
+.ladybug .separator {
+    height: 15px;
+}
+
+.ladybug .block_title {
+    font-weight: bold;
+}
+
+.ladybug .level_1 {
+    margin-left: 10px;
+}
+
+.ladybug .level_2 {
+    margin-left: 20px;
+}
+
+.ladybug .level_3 {
+    margin-left: 30px;
+}
+
+.ladybug .level_4 {
+    margin-left: 40px;
+}
+
+.ladybug .level_5 {
+    margin-left: 50px;
+}
+
+.ladybug .level_6 {
+    margin-left: 60px;
+}
+
+.ladybug .level_7 {
+    margin-left: 70px;
+}
+
+.ladybug .level_8 {
+    margin-left: 80px;
+}
+
+.ladybug .ext_code {
+    width: 50%;
+    max-height: 168px;
+    overflow-y: scroll;
+    margin: 0;
+}
+
+.ladybug .ext_image {
+    padding: 3px;
+    border: 1px dotted #eee;
+}
+
+.ladybug .ext_table td {
+    border: 1px solid #ccc;
+    padding: 4px;
+}
+
+.ladybug .ext_table th {
+    border: 1px solid #ccc;
+    padding: 5px;
+}

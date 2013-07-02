@@ -14,7 +14,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Exception\InvalidTypeException;
-use Ladybug\Type\BaseType;
+use Ladybug\Type\AbstractType;
 use Ladybug\Extension\Type\BaseType as ExtensionType;
 use Ladybug\Container;
 
@@ -47,19 +47,23 @@ class FactoryType
             $result = $var;
         } elseif ($var === null) {
             $result = $this->container->get('ladybug.type.null');
+            $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_bool($var)) {
             $result = $this->container->get('ladybug.type.bool');
+            $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_string($var)) {
             $result = $this->container->get('ladybug.type.string');
+            $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_int($var)) {
             $result = $this->container->get('ladybug.type.int');
-            $result->load($var);
             $result->setLevel($level+1);
+            $result->load($var);
         } elseif (is_float($var)) {
             $result = $this->container->get('ladybug.type.float');
+            $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_array($var)) {
             $result = $this->container->get('ladybug.type.array');

@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Type/BaseType: Base type
+ * Type/AbstractType: Base type
  *
  * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
  *
@@ -12,12 +12,12 @@
 
 namespace Ladybug\Theme\Classic;
 
-use Ladybug\Theme\BaseTheme;
+use Ladybug\Theme\AbstractTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Format;
 
-class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterface
+class ClassicTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterface
 {
 
     public function getName()
@@ -27,7 +27,7 @@ class ClassicTheme extends BaseTheme implements ThemeInterface, HtmlThemeInterfa
 
     public function getParent()
     {
-        return 'Simple';
+        return 'Base';
     }
 
     public function getHtmlCssDependencies()

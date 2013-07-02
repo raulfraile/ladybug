@@ -13,9 +13,11 @@ class ThemeResolver
 
     protected $format;
 
+
     public function __construct(Container $container, FormatInterface $format)
     {
         /** @var $theme ThemeInterface */
+        var_dump('theme.' . strtolower($container->getParameter('theme')));
         $theme = $container['theme.' . strtolower($container->getParameter('theme'))];
         $this->register($theme);
 
@@ -49,6 +51,7 @@ class ThemeResolver
      */
     public function resolve()
     {
+
         foreach ($this->themes as $item) {
             /** @var ThemeInterface $item */
 

@@ -1,20 +1,9 @@
-{% import "_macros.html.twig" as m %}
+{% extends "_base.html.twig" %}
 
-{% spaceless %}
-    {% set id = random(1000) %}
-    <label for="tree_array_{{ id }}">
-        {% if array_key is not empty %}
-            <span class="key">[{{ array_key }}]:</span>
-        {% endif %}
+{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
 
-        <span class="switcher">array({{ var.length }})</span>
-    </label>
-    <input type="checkbox" id="tree_array_{{ id }}">
-    <ol>
-        {% for var in var.value %}
-            <li>
-                {{ render_type(var)|raw }}
-            </li>
-        {% endfor %}
-    </ol>
-{% endspaceless %}
+{% block value %}
+    {% for item in var.value %}
+        {{ render_type(item.value, item.key) }}
+    {% endfor %}
+{% endblock %}

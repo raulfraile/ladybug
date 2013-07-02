@@ -15,7 +15,7 @@ namespace Ladybug\Type;
 use Ladybug\Extension\ExtensionInterface;
 use Ladybug\Extension\Type\CollectionType;
 
-class ResourceType extends BaseType
+class ResourceType extends AbstractType
 {
 
     const TYPE_ID = 'resource';
@@ -91,7 +91,7 @@ class ResourceType extends BaseType
             /** @var $customDumper ExtensionInterface */
             $customDumper = new $includeClass($this->factory, $this->level);
             $data = $customDumper->getData($var);
-var_dump($this->level, $data->getLevel());
+
             $this->resourceCustomData = $data;
         }
 

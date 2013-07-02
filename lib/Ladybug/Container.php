@@ -16,23 +16,74 @@ use Pimple;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+use Ladybug\Format;
+
 class Container extends Pimple
 {
 
     public function load()
     {
+        // set default parameters
+        $this->setDefaultParameters();
 
-        // parameters
-        $this->setParameter('theme', 'Modern');
-        $this->setParameter('array.max_nesting_level', 8);
-        $this->setParameter('object.max_nesting_level', 3);
+        // load classes
+        $this->loadTypes();
+        $this->loadEnvironments();
+        $this->loadFormats();
+        $this->loadInspectors();
+        $this->loadThemes();
+        $this->loadMetadata();
+        $this->loadRenders();
+    }
+
+    public function set($key, $value)
+    {
+        $this->offsetSet($key, $value);
+    }
+
+    public function setShared($key, $value)
+    {
+        $this->offsetSet($key, $this->share($value));
+    }
+
+    public function setParameter($key, $value)
+    {
+        $this->offsetSet(sprintf('parameter.%s', $key), $value);
+    }
+
+    public function getParameter($key)
+    {
+        return $this->offsetGet(sprintf('parameter.%s', $key));
+    }
+
+    public function setAttribute($key, $value)
+    {
+        $this->offsetSet(sprintf('attribute.%s', $key), $value);
+    }
+
+    public function getAttribute($key, $default = null)
+    {
+        $attr = sprintf('attribute.%s', $key);
+
+        return $this->offsetExists($attr) ? $this->offsetGet($attr) : $default;
+    }
+
+    public function get($key)
+    {
+        return $this->offsetGet($key);
+    }
+
+    public function has($key)
+    {
+        return $this->offsetExists($key);
+    }
 
 
-
-        $this->setAttribute('assets_loaded', false);
-
-        $this->values['ladybug.level'] = 0;
-
+    /**
+     * Load types
+     */
+    protected function loadTypes()
+    {
         // types
         $this->values['ladybug.type.int'] = function ($c) {
             return new \Ladybug\Type\IntType();
@@ -63,14 +114,18 @@ class Container extends Pimple
             return new \Ladybug\Type\FactoryType($c);
         });
 
-        // extension types
+        // extended
         $this->values['ladybug.extension.type.collection'] = function (Container $c) {
-            return new \Ladybug\Extension\Type\CollectionType($c->get('ladybug.type.__factory'));
+            return new \Ladybug\Type\Extended\CollectionType($c->get('ladybug.type.__factory'));
         };
         $this->values['ladybug.extension.type.code'] = function (Container $c) {
-            return new \Ladybug\Extension\Type\CodeType($c->get('ladybug.type.__factory'));
+            return new \Ladybug\Type\Extended\CodeType($c->get('ladybug.type.__factory'));
         };
 
+    }
+
+    protected function loadEnvironments()
+    {
         // environments
         $this->setShared('environment.ajax', function ($c) {
             return new \Ladybug\Environment\AjaxEnvironment();
@@ -88,7 +143,10 @@ class Container extends Pimple
                 $c->get('environment.cli')
             ));
         });
+    }
 
+    protected function loadFormats()
+    {
         // format
         $this->setShared('format.console', function ($c) {
             return new \Ladybug\Format\ConsoleFormat();
@@ -102,116 +160,18 @@ class Container extends Pimple
         $this->setShared('format.xml', function ($c) {
             return new \Ladybug\Format\XmlFormat();
         });
-
-        // themes
-        $this->setAttribute('themes.directories', array(__DIR__ . '/Theme'));
-        $this->loadThemes();
-        /*$this->setShared('theme.base', function ($c) {
-            return new \Ladybug\Theme\Base\BaseTheme($c);
-        });
-        $this->setShared('theme.classic', function ($c) {
-            return new \Ladybug\Theme\Classic\ClassicTheme($c);
-        });
-        $this->setShared('theme.modern', function ($c) {
-            return new \Ladybug\Theme\Modern\ModernTheme($c);
-        });*/
-
-        $environmentResolver = $this->get('environment.resolver');
-
-        $environment = $environmentResolver->resolve();
-
-        $this->setAttribute('format', $environment->getDefaultFormat());
-
-        $this->setShared('theme.resolver', function (Container $c) {
-            $formatAttribute = $c->getAttribute('format');
-
-            return new \Ladybug\Theme\ThemeResolver($c, $c->get('format.' . $formatAttribute));
-        });
-
-        $this->values['__theme'] = $this->get('theme.resolver')->resolve();
-
-        // render
-        $this->values['render.html'] = $this->share(function (Container $c) {
-            return new \Ladybug\Render\HtmlRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
-        });
-        $this->values['render.console'] = $this->share(function (Container $c) {
-            return new \Ladybug\Render\ConsoleRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
-        });
-        $this->values['render.text'] = $this->share(function (Container $c) {
-            return new \Ladybug\Render\TextRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
-        });
-
-        // metadata
-        $this->values['metadata.php_objects'] = $this->share(function (Container $c) {
-            return new \Ladybug\ObjectMetadata\PhpObjectsMetadata();
-        });
-        $this->values['metadata.symfony'] = $this->share(function (Container $c) {
-            return new \Ladybug\ObjectMetadata\SymfonyMetadata();
-        });
-        $this->values['metadata.aura'] = $this->share(function (Container $c) {
-            return new \Ladybug\ObjectMetadata\AuraMetadata();
-        });
-        $this->values['metadata.silex'] = $this->share(function (Container $c) {
-            return new \Ladybug\ObjectMetadata\SilexMetadata();
-        });
-        $this->values['metadata.twig'] = $this->share(function (Container $c) {
-            return new \Ladybug\ObjectMetadata\TwigMetadata();
-        });
-        $this->values['metadata.resolver'] = $this->share(function (Container $c) {
-            return new \Ladybug\ObjectMetadata\ObjectMetadataResolver($c);
-        });
-
-        //$this->setAttribute('render', $this->values['render.' . $this->values['__format']->getName()];
-    }
-
-    public function set($key, $value)
-    {
-        $this->offsetSet($key, $value);
-    }
-
-    public function setShared($key, $value)
-    {
-        $this->offsetSet($key, $this->share($value));
-    }
-
-    public function setParameter($key, $value)
-    {
-        $this->offsetSet(sprintf('parameter.%s', $key), $value);
-    }
-
-    public function getParameter($key)
-    {
-        return $this->offsetGet(sprintf('parameter.%s', $key));
-    }
-
-    public function setAttribute($key, $value)
-    {
-        $this->offsetSet(sprintf('attribute.%s', $key), $value);
-    }
-
-    public function getAttribute($key)
-    {
-        return $this->offsetGet(sprintf('attribute.%s', $key));
-    }
-
-    public function get($key)
-    {
-        return $this->offsetGet($key);
-    }
-
-    public function has($key)
-    {
-        return $this->offsetExists($key);
     }
 
 
-
+    /**
+     * Check themes directories and load found themes
+     */
     protected function loadThemes()
     {
         $themesFinder = new Finder();
         $themesFinder->directories();
 
-        foreach ($this->getAttribute('themes.directories') as $item) {
+        foreach ($this->getParameter('theme.directories') as $item) {
             $themesFinder->in($item);
         }
 
@@ -231,5 +191,108 @@ class Container extends Pimple
             });
         }
 
+    }
+
+    /**
+     * Check extensions directories and load found extensions
+     */
+    protected function loadInspectors()
+    {
+        $inspectorsFinder = new Finder();
+        $inspectorsFinder->files();
+
+        foreach ($this->getParameter('inspector.directories') as $item) {
+            $inspectorsFinder->in($item);
+        }
+
+        $inspectorsFinder->name('*.php')->depth('<10')->depth('>0');
+
+
+        foreach ($inspectorsFinder as $inspectorFile) {
+            /** @var $inspectorFile SplFileInfo */
+
+            $inspectorParts = explode('/', $inspectorFile->getRelativePath() . '/' . str_replace('.php', '', $inspectorFile->getFilename()));
+
+            $inspectorName = strtolower(implode('.', $inspectorParts));
+            $inspectorClass = sprintf('\Ladybug\Inspector\%s', implode('\\', $inspectorParts));
+
+            if (!file_exists($inspectorFile)) {
+                continue;
+            }
+
+            $this->setShared(sprintf('inspector.%s', $inspectorName), function ($c) use ($inspectorClass) {
+                return new $inspectorClass($c);
+            });
+        }
+
+    }
+
+    protected function loadMetadata()
+    {
+        $metadataFinder = new Finder();
+        $metadataFinder->files();
+
+        foreach ($this->getParameter('metadata.directories') as $item) {
+            $metadataFinder->in($item);
+        }
+
+        $metadataFinder->name('*Metadata.php');
+
+        foreach ($metadataFinder as $metadataFile) {
+            /** @var $metadataFile SplFileInfo */
+
+            $metadataParts = explode('/', $metadataFile->getRelativePath() . '/' . str_replace('.php', '', $metadataFile->getFilename()));
+
+            $metadataName = strtolower(implode('.', $metadataParts));
+            $metadataClass = sprintf('\Ladybug\Metadata\%s', implode('\\', $metadataParts));
+
+            if (!file_exists($metadataFile)) {
+                continue;
+            }
+
+            $this->setShared(sprintf('metadata.%s', $metadataName), function ($c) use ($metadataClass) {
+                return new $metadataClass($c);
+            });
+        }
+
+    }
+
+    protected function loadRenders()
+    {
+        $this->values['render.html'] = $this->share(function (Container $c) {
+            return new \Ladybug\Render\HtmlRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
+        });
+        $this->values['render.console'] = $this->share(function (Container $c) {
+            return new \Ladybug\Render\ConsoleRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
+        });
+        $this->values['render.text'] = $this->share(function (Container $c) {
+            return new \Ladybug\Render\TextRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
+        });
+    }
+
+    protected function setDefaultParameters()
+    {
+        $this->setParameter('theme', 'base');
+        $this->setParameter('format', Format\HtmlFormat::FORMAT_NAME);
+
+        $this->setParameter('array.max_nesting_level', 8);
+        $this->setParameter('object.max_nesting_level', 3);
+
+        $this->setParameter('environment.directories', array(__DIR__ . '/Environment'));
+        $this->setParameter('theme.directories', array(__DIR__ . '/Theme'));
+        $this->setParameter('format.directories', array(__DIR__ . '/Format'));
+        $this->setParameter('metadata.directories', array(__DIR__ . '/Metadata'));
+        $this->setParameter('inspector.directories', array(__DIR__ . '/Inspector'));
+        $this->setParameter('render.directories', array(__DIR__ . '/Render'));
+
+        $this->setParameter('_ladybug.assets.loaded', false);
+        $this->setParameter('_ladybug.level', 0);
+    }
+
+
+
+    public function restoreDefaults()
+    {
+        $this->setDefaultParameters();
     }
 }

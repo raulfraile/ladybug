@@ -1,24 +1,15 @@
-{% import "_macros.html.twig" as m %}
+{% extends "_base.html.twig" %}
 
-{% spaceless %}
-{% set id = random(1000) %}
-<label for="tree_resource_{{ id }}">
-    {% if array_key is not empty %}
-    <span class="key">[{{ array_key }}]:</span>
+{% block type %}{{ parent() }}({{ var.resourceType }}){% endblock %}
+
+{% block value %}
+
+    {# Data #}
+    {% if var.resourceCustomData is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Data</div>
+        <div class="level_{{ var.level + 1 }}">
+            {{ render_type(var.resourceCustomData)|raw }}
+        </div>
     {% endif %}
-        <span class="switcher">
-            <span class="type">Resource ({{ var.resourceType }})</span>
-        </span>
-</label>
-<input type="checkbox" id="tree_resource_{{ id }}">
 
-{% if not var.isLeaf %}
-<ol>
-
-    {% if var.isCustomData %}
-        <li style="border-left: 3px solid #eee">{{ var.resourceCustomData.render()|raw }}</li>
-    {% endif %}
-</ol>
-{% endif %}
-
-{% endspaceless %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "_base.html.twig" %}
+
+{% block value %}
+<textarea id="code" style="font-weight: normal">{{ var.data|raw }}</textarea>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: {name: "xml", alignCDATA: true},
+        lineNumbers: true,
+        height: '40'
+    });
+    editor.setSize(null, 160);
+</script>
+
+{% endblock %}

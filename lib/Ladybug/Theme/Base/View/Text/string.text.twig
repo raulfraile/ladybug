@@ -1,5 +1,5 @@
-{% import "_macros.text.twig" as m %}
+{% extends "_base.text.twig" %}
 
-{{ m.array_key(array_key) }}
+{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
 
-string({{ length }}) <space> "{{ value|convert_encoding('UTF-8', encoding)|replace({' ': '<space>'})|raw }}" <intro>
+{% block value %}"{{ var.formattedValue }}"{% endblock %}

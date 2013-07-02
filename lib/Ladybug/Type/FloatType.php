@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
-class FloatType extends BaseType
+class FloatType extends AbstractType
 {
 
     const TYPE_ID = 'float';

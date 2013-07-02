@@ -32,21 +32,8 @@
 
 {% macro property_visibility(var) %}
     {% if var is not empty %}
-    <span class="array_key">
-
-                {% if key.visibility is defined %}
-                    <span class="label {{ _self.visibility_color(method.visibility) }}">
-                        <i class="icon-eye-open icon-white"></i>
-                    </span>
-                {% endif %}
-
-                <span class="label label-info">
-                    {% if key.name is defined %}
-                        {{ key.name }}
-                    {% else %}
-                        {{ key }}
-                    {% endif %}
-                </span>
-            </span>
+        {% if key.visibility is defined %}
+            {{ _self.visibility_name(key.visibility) }}
         {% endif %}
+    {% endif %}
 {% endmacro %}

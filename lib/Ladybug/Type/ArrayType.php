@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\ArrayType\Item;
 
-class ArrayType extends BaseType
+class ArrayType extends AbstractType
 {
 
     const TYPE_ID = 'array';

@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
-class IntType extends BaseType
+class IntType extends AbstractType
 {
 
     const TYPE_ID = 'int';

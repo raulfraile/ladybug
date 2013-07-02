@@ -146,20 +146,43 @@ class Dumper
         $environmentResolver = $this->container->get('environment.resolver');
         $environment = $environmentResolver->resolve();
 
-        $this->container->setAttribute('format', $environment->getDefaultFormat());
+        if (!$this->container->getAttribute('format_force', false)) {
+            $this->container->setAttribute('format', $environment->getDefaultFormat());
+        }
 
         /** @var $themeResolver ThemeResolver */
-        $themeResolver = $this->container->get('theme.resolver');
+        //$themeResolver = $this->container->get('theme.resolver');
 
-        $theme = $themeResolver->resolve();
+        $theme = $this->getTheme();
         $this->container->setAttribute('theme', strtolower($theme->getName()));
 
         /** @var $render RenderInterface */
-        $render = $this->container->get('render.' . $environment->getDefaultFormat());
+        $render = $this->container->get('render.' . $this->container->getAttribute('format'));
 
         $this->container->setAttribute('render', $render);
 
         return $render;
+    }
+
+    public function setTheme($theme)
+    {
+        $this->container->setParameter('theme', $theme);
+    }
+
+    public function getTheme()
+    {
+        return $this->container->get('theme.' . $this->container->getParameter('theme'));
+    }
+
+    public function setFormat($format)
+    {
+        $this->container->setAttribute('format', $format);
+        $this->container->setAttribute('format_force', true);
+    }
+
+    public function getFormat()
+    {
+        return $this->container->get('format.' . $this->container->getParameter('format'));
     }
 
 }

@@ -15,7 +15,7 @@ namespace Ladybug\Type;
 use Ladybug\Options;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
-class StringType extends BaseType
+class StringType extends AbstractType
 {
 
     const TYPE_ID = 'string';

@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
-class BoolType extends BaseType
+class BoolType extends AbstractType
 {
 
     const TYPE_ID = 'bool';
