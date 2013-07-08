@@ -18,6 +18,8 @@
         "symfony/yaml": ">=2.0.4",
         "symfony/console": ">=2.0.4",
         "symfony/finder": ">=2.0.4",
+        "symfony/dependency-injection": ">=2.0.4",
+        "symfony/config": ">=2.0.4",
         "twig/twig": ">=v1.7.0",
         "pimple/pimple": ">=v1.0.2",
         "sabberworm/php-css-parser": "*",

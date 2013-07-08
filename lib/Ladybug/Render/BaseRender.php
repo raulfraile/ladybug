@@ -20,6 +20,9 @@ use Ladybug\Type\TypeInterface;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\LadybugExtension;
 
+use Ladybug\Theme\ThemeResolver;
+use Ladybug\Format\FormatResolver;
+
 abstract class BaseRender implements RenderInterface
 {
 
@@ -32,37 +35,46 @@ abstract class BaseRender implements RenderInterface
     /** @var FormatInterface $format */
     protected $format;
 
+    protected $isLoaded = false;
+
     /**
      * @param ThemeInterface $theme
      */
-    public function __construct(ThemeInterface $theme, FormatInterface $format)
+    public function __construct()
     {
-        $this->theme = $theme;
-        $this->format = $format;
 
-        $loader = new Twig_Loader_Filesystem($this->getPaths());
+    }
 
-        $this->twig = new Twig_Environment($loader);
+    protected function load()
+    {
+        if (!$this->isLoaded) {
+            $loader = new Twig_Loader_Filesystem($this->getPaths());
 
-        /*$function = new Twig_SimpleFunction('include_file', function ($filename) use ($theme) {
-            $filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../Theme/\\1/Resources/', $filename);
+            $this->twig = new Twig_Environment($loader);
 
-            return file_get_contents($filename);
-        });
+            /*$function = new Twig_SimpleFunction('include_file', function ($filename) use ($theme) {
+                $filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../Theme/\\1/Resources/', $filename);
 
-        $this->twig->addFunction($function);*/
+                return file_get_contents($filename);
+            });
 
-
-        $extension = new LadybugExtension();
-        $extension->setFormat($this->format->getName());
-
-        $this->twig->addExtension($extension);
+            $this->twig->addFunction($function);*/
 
 
+            $extension = new LadybugExtension();
+            $extension->setFormat($this->format->getName());
+
+            $this->twig->addExtension($extension);
+
+            $this->isLoaded = true;
+        }
     }
 
     public function render(array $nodes)
     {
+
+        $this->load();
+
         $content = '';
 
         foreach ($nodes as $item) {
@@ -118,5 +130,38 @@ abstract class BaseRender implements RenderInterface
 
         return $paths;
     }
+
+    /**
+     * @param \Ladybug\Format\FormatInterface $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * @return \Ladybug\Format\FormatInterface
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * @param \Ladybug\Theme\ThemeInterface $theme
+     */
+    public function setTheme(ThemeInterface $theme)
+    {
+        $this->theme = $theme;
+    }
+
+    /**
+     * @return \Ladybug\Theme\ThemeInterface
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
 
 }

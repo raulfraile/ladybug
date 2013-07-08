@@ -18,7 +18,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 use Ladybug\Format;
 
-class Container extends Pimple
+class ContainerBak extends Pimple
 {
 
     public function load()
@@ -259,15 +259,17 @@ class Container extends Pimple
 
     protected function loadRenders()
     {
-        $this->values['render.html'] = $this->share(function (Container $c) {
-            return new \Ladybug\Render\HtmlRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
-        });
-        $this->values['render.console'] = $this->share(function (Container $c) {
-            return new \Ladybug\Render\ConsoleRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
-        });
-        $this->values['render.text'] = $this->share(function (Container $c) {
-            return new \Ladybug\Render\TextRender($c->get(sprintf('theme.%s', $c->getAttribute('theme'))), $c->get(sprintf('format.%s', $c->getAttribute('format'))));
-        });
+        $this->set('render.html', $this->share(function (Container $c) {
+            return new \Ladybug\Render\HtmlRender($c->get(sprintf('theme.%s', $c->getParameter('theme'))), $c->get(sprintf('format.%s', $c->getParameter('format'))));
+        }));
+
+        $this->set('render.console', $this->share(function (Container $c) {
+            return new \Ladybug\Render\ConsoleRender($c->get(sprintf('theme.%s', $c->getParameter('theme'))), $c->get(sprintf('format.%s', $c->getParameter('format'))));
+        }));
+
+        $this->set('render.text', $this->share(function (Container $c) {
+            return new \Ladybug\Render\TextRender($c->get(sprintf('theme.%s', $c->getParameter('theme'))), $c->get(sprintf('format.%s', $c->getParameter('format'))));
+        }));
     }
 
     protected function setDefaultParameters()
@@ -283,7 +285,9 @@ class Container extends Pimple
         $this->setParameter('format.directories', array(__DIR__ . '/Format'));
         $this->setParameter('metadata.directories', array(__DIR__ . '/Metadata'));
         $this->setParameter('inspector.directories', array(__DIR__ . '/Inspector'));
-        $this->setParameter('render.directories', array(__DIR__ . '/Render'));
+        $this->setParameter('render.services', array(
+            'render.html' =>
+        ));
 
         $this->setParameter('_ladybug.assets.loaded', false);
         $this->setParameter('_ladybug.level', 0);

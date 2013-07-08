@@ -15,7 +15,9 @@ use Ladybug\Type\FactoryType;
 use Ladybug\Render\RenderInterface;
 use Ladybug\Environment\EnvironmentResolver;
 use Ladybug\Theme\ThemeResolver;
-use Ladybug\Container;
+use Ladybug\Render\RenderResolver;
+use Ladybug\Application;
+use Ladybug\Format\FormatResolver;
 
 class Dumper
 {
@@ -23,8 +25,8 @@ class Dumper
     /** @var array $nodes */
     private $nodes;
 
-    /** @var Container $container */
-    protected $container;
+    /** @var Application $container */
+    protected $application;
 
     protected $callFile;
     protected $callLine;
@@ -53,8 +55,9 @@ class Dumper
      */
     protected function initializeContainer()
     {
-        $this->container = new Container();
-        $this->container->load();
+
+        $this->application = new Application();
+        $this->application->build();
     }
 
     /**
@@ -80,7 +83,7 @@ class Dumper
     protected function readVariables($variables)
     {
         /** @var FactoryType $factoryType */
-        $factoryType = $this->container->get('ladybug.type.__factory');
+        $factoryType = $this->application->container->get('type_factory');
 
         foreach ($variables as $var) {
             $this->nodes[] = $factoryType->factory($var, 0);
@@ -119,7 +122,7 @@ class Dumper
      */
     public function setOption($key, $value)
     {
-        $this->container->setAttribute($key, $value);
+        $this->application->setAttribute($key, $value);
     }
 
     /**
@@ -130,7 +133,7 @@ class Dumper
      */
     public function getOption($key)
     {
-        return $this->container->getAttribute($key);
+        return $this->application->getAttribute($key);
     }
 
     /**
@@ -143,46 +146,58 @@ class Dumper
         // environment
 
         /** @var $environmentResolver EnvironmentResolver */
-        $environmentResolver = $this->container->get('environment.resolver');
+        $environmentResolver = $this->application->container->get('environment_resolver');
         $environment = $environmentResolver->resolve();
 
-        if (!$this->container->getAttribute('format_force', false)) {
-            $this->container->setAttribute('format', $environment->getDefaultFormat());
+        $format = $environment->getDefaultFormat();
+        if ($this->application->container->hasParameter('format')) {
+            $format = $this->application->container->getParameter('format');
         }
 
+        /** @var $formatResolver FormatResolver */
+        $formatResolver = $this->application->container->get('format_resolver');
+        $format = $formatResolver->getFormat($format);
+
+
         /** @var $themeResolver ThemeResolver */
-        //$themeResolver = $this->container->get('theme.resolver');
+        $themeResolver = $this->application->container->get('theme_resolver');
 
-        $theme = $this->getTheme();
-        $this->container->setAttribute('theme', strtolower($theme->getName()));
+        if ($this->application->container->hasParameter('theme')) {
+            $theme = $themeResolver->getTheme($this->application->container->getParameter('theme'), $format);
+        } else {
+            $theme = $themeResolver->resolve($format);
+        }
 
-        /** @var $render RenderInterface */
-        $render = $this->container->get('render.' . $this->container->getAttribute('format'));
 
-        $this->container->setAttribute('render', $render);
+        /** @var $renderResolver RenderResolver */
+        $renderResolver = $this->application->container->get('render_resolver');
+
+        $render = $renderResolver->resolve($format);
+        $render->setTheme($theme);
+        $render->setFormat($format);
 
         return $render;
     }
 
     public function setTheme($theme)
     {
-        $this->container->setParameter('theme', $theme);
+        $this->application->container->setParameter('theme', $theme);
     }
 
     public function getTheme()
     {
-        return $this->container->get('theme.' . $this->container->getParameter('theme'));
+        return $this->application->container->get('theme.' . $this->application->container->getParameter('theme'));
     }
 
     public function setFormat($format)
     {
-        $this->container->setAttribute('format', $format);
-        $this->container->setAttribute('format_force', true);
+        $this->application->container->setParameter('format', $format);
+        $this->application->container->setParameter('format_force', true);
     }
 
     public function getFormat()
     {
-        return $this->container->get('format.' . $this->container->getParameter('format'));
+        return $this->application->container->get('format.' . $this->application->getParameter('format'));
     }
 
 }

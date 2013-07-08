@@ -56,12 +56,12 @@ class ObjectType extends AbstractType
     /** @var ObjectMetadataResolver $metadataResolver */
     protected $metadataResolver;
 
-    public function __construct($level, $maxLevel, FactoryType $factory, ObjectMetadataResolver $metadataResolver = null)
+    public function __construct($maxLevel, FactoryType $factory, ObjectMetadataResolver $metadataResolver = null)
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
-        $this->level = $level;
+        $this->level = 0;
         $this->maxLevel = $maxLevel;
         $this->factory = $factory;
         $this->metadataResolver = $metadataResolver;

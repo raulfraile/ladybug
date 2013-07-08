@@ -22,26 +22,31 @@ class ConsoleRender extends BaseRender implements RenderInterface
 
     protected $console;
 
-    public function __construct(CliThemeInterface $theme, FormatInterface $format)
+
+    protected function load()
     {
-        parent::__construct($theme, $format);
+        if (!$this->isLoaded) {
+            parent::load();
 
-        $this->console = new ConsoleOutput();
+            $this->console = new ConsoleOutput();
 
-        // load styles
-        foreach ($this->theme->getCliColors() as $key => $item) {
-            if (is_array($item)) {
-                $style = new OutputFormatterStyle($item[0], $item[1]);
-            } else {
-                $style = new OutputFormatterStyle($item);
+            // load styles
+            foreach ($this->theme->getCliColors() as $key => $item) {
+                if (is_array($item)) {
+                    $style = new OutputFormatterStyle($item[0], $item[1]);
+                } else {
+                    $style = new OutputFormatterStyle($item);
+                }
+
+                $this->console->getFormatter()->setStyle($key, $style);
             }
-
-            $this->console->getFormatter()->setStyle($key, $style);
         }
     }
 
     public function render(array $nodes)
     {
+        $this->load();
+
         $result = $this->twig->render('layout.console.twig', array(
             'nodes' => $nodes
         ));
@@ -56,7 +61,7 @@ class ConsoleRender extends BaseRender implements RenderInterface
 
     public function getFormat()
     {
-        return self::FORMAT_CLI;
+        return self::FORMAT_CONSOLE;
     }
 
 }

@@ -13,11 +13,11 @@ class EnvironmentResolver
     /**
      * @param EnvironmentInterface[] $environments
      */
-    public function __construct(array $environments)
+    public function __construct()
     {
-        foreach ($environments as $item) {
+        /*foreach ($environments as $item) {
             $this->register($item);
-        }
+        }*/
     }
 
     /**

@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="theme">modern</parameter>
+
+        <parameter key="array_max_nesting_level">8</parameter>
+        <parameter key="object_max_nesting_level">3</parameter>
+
+    </parameters>
+
+    <services>
+
+        <!-- Themes -->
+
+        <service id="theme_base" class="Ladybug\Theme\Base\BaseTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
+        <service id="theme_classic" class="Ladybug\Theme\Classic\ClassicTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
+        <service id="theme_modern" class="Ladybug\Theme\Modern\ModernTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
+        <service id="theme_resolver" class="Ladybug\Theme\ThemeResolver">
+
+        </service>
+
+        <!-- Environments -->
+
+
+
+        <service id="environment_browser" class="Ladybug\Environment\BrowserEnvironment">
+            <tag name="ladybug.environment" />
+        </service>
+
+        <service id="environment_ajax" class="Ladybug\Environment\AjaxEnvironment">
+            <tag name="ladybug.environment" />
+        </service>
+
+        <service id="environment_cli" class="Ladybug\Environment\CliEnvironment">
+            <tag name="ladybug.environment" />
+        </service>
+
+        <service id="environment_resolver" class="Ladybug\Environment\EnvironmentResolver" />
+
+        <!-- Types -->
+
+        <service id="type_null" class="Ladybug\Type\NullType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_bool" class="Ladybug\Type\BoolType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_int" class="Ladybug\Type\IntType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_float" class="Ladybug\Type\FloatType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_string" class="Ladybug\Type\StringType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_array" class="Ladybug\Type\ArrayType">
+            <argument>%array_max_nesting_level%</argument>
+            <argument type="service" id="type_factory"></argument>
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_object" class="Ladybug\Type\ObjectType">
+            <argument>%object_max_nesting_level%</argument>
+            <argument type="service" id="type_factory"></argument>
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_resource" class="Ladybug\Type\ResourceType">
+            <argument type="service" id="type_factory"></argument>
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_factory" class="Ladybug\Type\FactoryType" />
+
+        <!-- Formats -->
+
+        <service id="format_console" class="Ladybug\Format\ConsoleFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_html" class="Ladybug\Format\HtmlFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_json" class="Ladybug\Format\JsonFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_text" class="Ladybug\Format\TextFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_xml" class="Ladybug\Format\XmlFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_yaml" class="Ladybug\Format\YamlFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_resolver" class="Ladybug\Format\FormatResolver">
+        </service>
+
+        <!-- Render -->
+
+        <service id="render_html" class="Ladybug\Render\HtmlRender">
+            <tag name="ladybug.render" />
+        </service>
+
+        <service id="render_console" class="Ladybug\Render\ConsoleRender">
+            <tag name="ladybug.render" />
+        </service>
+
+        <service id="render_text" class="Ladybug\Render\TextRender">
+            <tag name="ladybug.render" />
+        </service>
+
+        <service id="render_resolver" class="Ladybug\Render\RenderResolver"></service>
+
+
+
+    </services>
+</container>

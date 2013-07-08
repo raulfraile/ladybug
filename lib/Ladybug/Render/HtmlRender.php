@@ -24,6 +24,8 @@ class HtmlRender extends BaseRender implements RenderInterface
 
     public function render(array $nodes)
     {
+        $this->load();
+
         /** @var HtmlThemeInterface $theme */
         $theme = $this->theme;
 

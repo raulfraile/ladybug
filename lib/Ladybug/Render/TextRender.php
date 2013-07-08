@@ -23,13 +23,10 @@ class TextRender extends BaseRender implements RenderInterface
         return self::FORMAT_TEXT;
     }
 
-    public function __construct(ThemeInterface $theme, FormatInterface $format)
-    {
-        parent::__construct($theme, $format);
-    }
-
     public function render(array $nodes)
     {
+        $this->load();
+
         $result = $this->twig->render('layout.text.twig', array(
             'nodes' => $nodes
         ));

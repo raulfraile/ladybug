@@ -24,16 +24,24 @@ class FactoryType
     /** @var Container $container */
     protected $container;
 
-    public function __construct($container)
+
+    protected $types;
+
+    public function __construct()
     {
-        $this->container = $container;
+
+    }
+
+    public function add(TypeInterface $type, $key = null)
+    {
+        $this->types[!is_null($key) ? $key : get_class($type)] = $type;
     }
 
     public function factory($var, $level = 0)
     {
         $result = null;
 
-        if ($var instanceof \Ladybug\Extension\Type\CollectionType) {
+        if ($var instanceof \Ladybug\Type\Extended\CollectionType) {
             $data = array();
             foreach ($var->getData() as $key => $item) {
                 $data[$key] = FactoryType::factory($item, $level);
@@ -46,35 +54,35 @@ class FactoryType
             //$result = new $class($var->getValue(), $level, $container);
             $result = $var;
         } elseif ($var === null) {
-            $result = $this->container->get('ladybug.type.null');
+            $result = $this->types['type_null'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_bool($var)) {
-            $result = $this->container->get('ladybug.type.bool');
+            $result = $this->types['type_bool'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_string($var)) {
-            $result = $this->container->get('ladybug.type.string');
+            $result = $this->types['type_string'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_int($var)) {
-            $result = $this->container->get('ladybug.type.int');
+            $result = $this->types['type_int'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_float($var)) {
-            $result = $this->container->get('ladybug.type.float');
+            $result = $this->types['type_float'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_array($var)) {
-            $result = $this->container->get('ladybug.type.array');
+            $result = $this->types['type_array'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_object($var)) {
-            $result = $this->container->get('ladybug.type.object');
+            $result = $this->types['type_object'];
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_resource($var)) {
-            $result = $this->container->get('ladybug.type.resource');
+            $result = $this->types['type_resource'];
             $result->setLevel($level+1);
             $result->load($var);
         } else {

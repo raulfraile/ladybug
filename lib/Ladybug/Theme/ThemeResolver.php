@@ -9,27 +9,15 @@ class ThemeResolver
 {
 
     /** @var array $themes */
-    protected $themes = array();
+    protected $themes;
 
-    protected $format;
+    protected $defaultTheme;
 
 
-    public function __construct(Container $container, FormatInterface $format)
+    public function __construct()
     {
-        /** @var $theme ThemeInterface */
-        var_dump('theme.' . strtolower($container->getParameter('theme')));
-        $theme = $container['theme.' . strtolower($container->getParameter('theme'))];
-        $this->register($theme);
+        $this->themes = array();
 
-        while (!is_null($theme->getParent())) {
-
-            /** @var $theme ThemeInterface */
-            $theme = $container['theme.' . strtolower($theme->getParent())];
-            $this->register($theme);
-
-        }
-
-        $this->format = $format;
     }
 
     /**
@@ -39,9 +27,9 @@ class ThemeResolver
      *
      * @param ThemeInterface $theme
      */
-    public function register(ThemeInterface $theme)
+    public function register(ThemeInterface $theme, $key)
     {
-        array_push($this->themes, $theme);
+        $this->themes[$key] = $theme;
     }
 
     /**
@@ -49,16 +37,35 @@ class ThemeResolver
      *
      * @return ThemeInterface
      */
-    public function resolve()
+    public function resolve($format)
     {
+        foreach ($this->themes as $theme) {
+            /** @var $theme ThemeInterface */
 
-        foreach ($this->themes as $item) {
-            /** @var ThemeInterface $item */
-
-            if ($item->supportsFormat($this->format)) {
-                return $item;
+            if (in_array($format, $theme->getFormats())) {
+                return $theme;
             }
         }
+
+        throw new \Exception('');
+    }
+
+    public function getTheme($key, FormatInterface $format)
+    {
+        /** @var $theme ThemeInterface */
+        $theme = $this->themes['theme_'.$key];
+
+        if ($theme->supportsFormat($format)) {
+            return $theme;
+        }
+
+        while ($theme = $this->themes['theme_'.$theme->getParent()]) {
+            if ($theme->supportsFormat($format)) {
+                return $theme;
+            }
+        }
+
+        throw new \Exception('theme not found');
 
     }
 }
