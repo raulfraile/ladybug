@@ -37,6 +37,12 @@ class FactoryType
         $this->types[!is_null($key) ? $key : get_class($type)] = $type;
     }
 
+    /**
+     * @param $var
+     * @param int $level
+     * @return TypeInterface
+     * @throws \Ladybug\Exception\InvalidTypeException
+     */
     public function factory($var, $level = 0)
     {
         $result = null;
@@ -54,35 +60,35 @@ class FactoryType
             //$result = new $class($var->getValue(), $level, $container);
             $result = $var;
         } elseif ($var === null) {
-            $result = $this->types['type_null'];
+            $result = clone($this->types['type_null']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_bool($var)) {
-            $result = $this->types['type_bool'];
+            $result = clone($this->types['type_bool']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_string($var)) {
-            $result = $this->types['type_string'];
+            $result = clone($this->types['type_string']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_int($var)) {
-            $result = $this->types['type_int'];
+            $result = clone($this->types['type_int']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_float($var)) {
-            $result = $this->types['type_float'];
+            $result = clone($this->types['type_float']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_array($var)) {
-            $result = $this->types['type_array'];
+            $result = clone($this->types['type_array']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_object($var)) {
-            $result = $this->types['type_object'];
+            $result = clone($this->types['type_object']);
             $result->setLevel($level+1);
             $result->load($var);
         } elseif (is_resource($var)) {
-            $result = $this->types['type_resource'];
+            $result = clone($this->types['type_resource']);
             $result->setLevel($level+1);
             $result->load($var);
         } else {

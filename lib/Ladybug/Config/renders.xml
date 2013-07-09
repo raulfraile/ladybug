@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="render_html" class="Ladybug\Render\HtmlRender">
+            <tag name="ladybug.render" />
+        </service>
+
+        <service id="render_console" class="Ladybug\Render\ConsoleRender">
+            <tag name="ladybug.render" />
+        </service>
+
+        <service id="render_text" class="Ladybug\Render\TextRender">
+            <tag name="ladybug.render" />
+        </service>
+
+    </services>
+</container>

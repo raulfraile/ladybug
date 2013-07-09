@@ -1,0 +1,21 @@
+{% import "_macros.console.twig" as m %}
+
+    {% for item in var.header %}
+        {{ item }}
+
+        {% if not loop.last %}<space>|<space>{% endif %}
+
+    {% endfor %}
+
+    <intro>
+
+    {% for item in var.data %}
+        {{ m.indent(var.level) }}
+        {% for subitem in item %}
+            {{ subitem }}
+
+            {% if not loop.last %}<space>|<space>{% endif %}
+        {% endfor %}
+        <intro>
+    {% endfor %}
+

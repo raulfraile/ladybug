@@ -15,7 +15,7 @@ namespace Ladybug\Type;
 use Ladybug\Extension\ExtensionInterface;
 use Ladybug\Container;
 use Ladybug\Type\ObjectType as Object;
-use Ladybug\ObjectMetadata\ObjectMetadataResolver;
+
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ObjectType extends AbstractType
@@ -56,7 +56,9 @@ class ObjectType extends AbstractType
     /** @var ObjectMetadataResolver $metadataResolver */
     protected $metadataResolver;
 
-    public function __construct($maxLevel, FactoryType $factory, ObjectMetadataResolver $metadataResolver = null)
+    protected $inspectorFactory;
+
+    public function __construct($maxLevel, FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
 
@@ -65,6 +67,8 @@ class ObjectType extends AbstractType
         $this->maxLevel = $maxLevel;
         $this->factory = $factory;
         $this->metadataResolver = $metadataResolver;
+
+        $this->inspectorFactory = $inspectorFactory;
     }
 
     public function load($var)
@@ -99,7 +103,9 @@ class ObjectType extends AbstractType
 
             // metadata
 
-            $metadata = $this->metadataResolver->resolve($this->className);
+
+            $metadata = $this->metadataResolver->getMetadata($this->className);
+
             if (array_key_exists('help_link', $metadata)) {
                 $this->helpLink = $metadata['help_link'];
             }
@@ -111,6 +117,8 @@ class ObjectType extends AbstractType
             if (array_key_exists('version', $metadata)) {
                 $this->version = $metadata['version'];
             }
+
+
 
         } else {
             $this->isLeaf = TRUE;
@@ -376,10 +384,10 @@ class ObjectType extends AbstractType
     protected function loadData($var, \ReflectionClass $reflectedObject)
     {
         // is there a class to show the object data?
-        $service = str_replace('\\', '.', strtolower($this->className));
+        $service = 'inspector_object_'.str_replace('\\', '_', strtolower($this->className));
 
-        if ($this->container->offsetExists($service)) {
-            $inspector = $this->container->get($service);
+        if ($this->inspectorFactory->has($service)) {
+            $inspector = $this->inspectorFactory->factory($service);
             $this->objectCustomData = $inspector->getData($var);
         }
 /*

@@ -13,7 +13,8 @@
 namespace Ladybug\Type;
 
 use Ladybug\Extension\ExtensionInterface;
-use Ladybug\Extension\Type\CollectionType;
+use Ladybug\Inspector\InspectorFactory;
+use Ladybug\Metadata\MetadataResolver;
 
 class ResourceType extends AbstractType
 {
@@ -29,13 +30,22 @@ class ResourceType extends AbstractType
     /** @var FactoryType $factory */
     protected $factory;
 
+    /** @var InspectorFactory $inspectorFactory */
+    protected $inspectorFactory;
 
-    public function __construct(FactoryType $factory)
+    /** @var MetadataResolver $metadataResolver */
+    protected $metadataResolver;
+
+
+    public function __construct(FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
         $this->factory = $factory;
+
+        $this->metadataResolver = $metadataResolver;
+        $this->inspectorFactory = $inspectorFactory;
     }
 
     public function load($var)
@@ -85,15 +95,17 @@ class ResourceType extends AbstractType
 
     protected function loadData($var)
     {
-        $includeClass = $this->getIncludeClass($this->resourceType, 'resource');
-        if (class_exists($includeClass)) {
 
-            /** @var $customDumper ExtensionInterface */
-            $customDumper = new $includeClass($this->factory, $this->level);
-            $data = $customDumper->getData($var);
+        // is there a class to show the object data?
+        $service = 'inspector_resource_'.str_replace(array('\\', ' '), '_', strtolower($this->resourceType));
 
-            $this->resourceCustomData = $data;
+        if ($this->inspectorFactory->has($service)) {
+            $inspector = $this->inspectorFactory->factory($service);
+            $inspector->setLevel($this->level + 1);
+            $this->resourceCustomData = $inspector->getData($var);
         }
+
+
 
 
     }

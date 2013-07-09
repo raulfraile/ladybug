@@ -27,4 +27,7 @@ $var1[2] = array(
 //$var1[3] = new stdClass();
 //$var1[4] = fopen(__DIR__.'/images/ladybug.png', 'r');
 
-ladybug_dump($var1);
+$dumper = new \Ladybug\Dumper();
+//$dumper->setTheme('base');
+//$dumper->setFormat(\Ladybug\Format\HtmlFormat::FORMAT_NAME);
+echo $dumper->dump($var1);

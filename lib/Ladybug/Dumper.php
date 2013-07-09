@@ -25,8 +25,13 @@ class Dumper
     /** @var array $nodes */
     private $nodes;
 
-    /** @var Application $container */
+    /** @var Application $application */
     protected $application;
+
+    protected $theme;
+
+    protected $format;
+
 
     protected $callFile;
     protected $callLine;
@@ -38,6 +43,9 @@ class Dumper
      */
     public function __construct()
     {
+        $this->theme = null;
+        $this->format = null;
+
         $this->initializeNodes();
         $this->initializeContainer();
     }
@@ -55,7 +63,6 @@ class Dumper
      */
     protected function initializeContainer()
     {
-
         $this->application = new Application();
         $this->application->build();
     }
@@ -150,7 +157,9 @@ class Dumper
         $environment = $environmentResolver->resolve();
 
         $format = $environment->getDefaultFormat();
-        if ($this->application->container->hasParameter('format')) {
+        if (!is_null($this->format)) {
+            $format = $this->format;
+        } elseif ($this->application->container->hasParameter('format')) {
             $format = $this->application->container->getParameter('format');
         }
 
@@ -162,7 +171,9 @@ class Dumper
         /** @var $themeResolver ThemeResolver */
         $themeResolver = $this->application->container->get('theme_resolver');
 
-        if ($this->application->container->hasParameter('theme')) {
+        if (!is_null($this->theme)) {
+            $theme = $themeResolver->getTheme($this->theme, $format);
+        } elseif ($this->application->container->hasParameter('theme')) {
             $theme = $themeResolver->getTheme($this->application->container->getParameter('theme'), $format);
         } else {
             $theme = $themeResolver->resolve($format);
@@ -181,7 +192,7 @@ class Dumper
 
     public function setTheme($theme)
     {
-        $this->application->container->setParameter('theme', $theme);
+        $this->theme = $theme;
     }
 
     public function getTheme()
@@ -191,8 +202,7 @@ class Dumper
 
     public function setFormat($format)
     {
-        $this->application->container->setParameter('format', $format);
-        $this->application->container->setParameter('format_force', true);
+        $this->format = $format;
     }
 
     public function getFormat()

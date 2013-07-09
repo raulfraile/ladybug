@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="inspector_object_domdocument" class="Ladybug\Inspector\Object\DOMDocument">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+        <service id="inspector_object_splmaxheap" class="Ladybug\Inspector\Object\SplMaxHeap">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+        <service id="inspector_object_splminheap" class="Ladybug\Inspector\Object\SplMinHeap">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+        <service id="inspector_resource_file" class="Ladybug\Inspector\Resource\File">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+        <service id="inspector_resource_gd" class="Ladybug\Inspector\Resource\Gd">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+        <service id="inspector_resource_mysql_link" class="Ladybug\Inspector\Resource\MysqlLink">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+        <service id="inspector_resource_mysql_result" class="Ladybug\Inspector\Resource\MysqlResult">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+        </service>
+
+    </services>
+</container>

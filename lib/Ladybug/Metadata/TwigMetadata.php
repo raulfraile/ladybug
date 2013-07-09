@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\ObjectMetadata;
+namespace Ladybug\Metadata;
 
 class TwigMetadata extends AbstractMetadata
 {

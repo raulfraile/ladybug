@@ -36,6 +36,8 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\ThemeCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\FormatCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\RenderCompilerPass());
+        $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
+        $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
 
         $loader = new XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
         $loader->load('container.xml');

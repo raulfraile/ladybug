@@ -41,6 +41,7 @@ class MysqlResult extends AbstractInspector
         $table = new Type\Extended\TableType();
         $table->load($result);
         $table->setHeader($columnNames);
+        $table->setLevel($this->level);
 
         $collection = Type\Extended\CollectionType::create(array(
             $table

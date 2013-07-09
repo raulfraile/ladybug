@@ -10,9 +10,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\ObjectMetadata;
+namespace Ladybug\Metadata;
 
-interface ObjectMetadataInterface
+interface MetadataInterface
 {
     /**
      * Process the HTML code and make the proper changes

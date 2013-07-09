@@ -24,9 +24,9 @@ class ObjectMetadataResolver
      *
      * When resolving, this environment is preferred over previously registered ones.
      *
-     * @param ObjectMetadataInterface $environment
+     * @param MetadataInterface $environment
      */
-    public function register(ObjectMetadataInterface $metadata)
+    public function register(MetadataInterface $metadata)
     {
         array_unshift($this->metadatas, $metadata);
     }
@@ -34,12 +34,12 @@ class ObjectMetadataResolver
     /**
      * Resolve environment
      *
-     * @return ObjectMetadataInterface
+     * @return MetadataInterface
      */
     public function resolve($class)
     {
         foreach ($this->metadatas as $item) {
-            /** @var ObjectMetadataInterface $item */
+            /** @var MetadataInterface $item */
 
             if ($item->hasMetadata($class)) {
                 return $item->getMetadata($class);

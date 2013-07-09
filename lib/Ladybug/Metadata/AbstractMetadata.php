@@ -10,9 +10,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\ObjectMetadata;
+namespace Ladybug\Metadata;
 
-abstract class AbstractMetadata implements ObjectMetadataInterface
+abstract class AbstractMetadata implements MetadataInterface
 {
 
     const ICON = 'base';

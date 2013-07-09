@@ -1,5 +1,8 @@
 
-
+.ladybug .dump-block {
+    margin-bottom: 3px;
+    display: block;
+}
 
 .ladybug .accordion-group {
     background-color: #eee;

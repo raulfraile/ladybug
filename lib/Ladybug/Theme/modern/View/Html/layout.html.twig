@@ -12,6 +12,8 @@
 
 <div class="ladybug" style="width:700px; margin:10px">
     {% for node in nodes %}
-        {{ render_type(node)|raw }}
+        <span class="dump-block">
+            {{ render_type(node)|raw }}
+        </span>
     {% endfor %}
 </div>
