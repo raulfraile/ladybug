@@ -18,5 +18,9 @@
             <tag name="ladybug.render" />
         </service>
 
+        <service id="render_json" class="Ladybug\Render\JsonRender">
+            <tag name="ladybug.render" />
+        </service>
+
     </services>
 </container>

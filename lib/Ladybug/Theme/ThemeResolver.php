@@ -53,19 +53,25 @@ class ThemeResolver
     public function getTheme($key, FormatInterface $format)
     {
         /** @var $theme ThemeInterface */
-        $theme = $this->themes['theme_'.$key];
+        $theme = $this->themes['theme_' . $key];
 
-        if ($theme->supportsFormat($format)) {
-            return $theme;
-        }
-
-        while ($theme = $this->themes['theme_'.$theme->getParent()]) {
+        while (!is_null($theme)) {
             if ($theme->supportsFormat($format)) {
                 return $theme;
             }
+
+            $parent = $theme->getParent();
+            if (is_null($parent)) {
+                throw new \Exception('theme not found');
+            }
+
+            $theme = $this->themes['theme_'.$parent];
+
+
+
         }
 
-        throw new \Exception('theme not found');
+
 
     }
 }

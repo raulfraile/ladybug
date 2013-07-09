@@ -18,6 +18,8 @@ namespace Ladybug\Type;
 abstract class AbstractType implements TypeInterface
 {
 
+    protected $id;
+
     /** @var string $type */
     protected $type;
 
@@ -34,7 +36,7 @@ abstract class AbstractType implements TypeInterface
 
     protected $container;
 
-    protected $id;
+
 
 
     /**
@@ -208,6 +210,31 @@ abstract class AbstractType implements TypeInterface
         return $this->visibility;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $encoding
+     */
+    public function setEncoding($encoding)
+    {
+        $this->encoding = $encoding;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
+    }
 
 
 }

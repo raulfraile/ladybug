@@ -9,7 +9,7 @@ class JsonFormat implements FormatInterface
 
     public function getName()
     {
-        return 'Json';
+        return self::FORMAT_NAME;
     }
 
 }

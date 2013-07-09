@@ -9,7 +9,7 @@ class YamlFormat implements FormatInterface
 
     public function getName()
     {
-        return 'Yml';
+        return self::FORMAT_NAME;
     }
 
 }

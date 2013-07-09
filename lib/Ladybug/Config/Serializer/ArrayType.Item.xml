@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Ladybug\Type\ArrayType\Item" exclusion-policy="ALL" xml-root-name="item"
+           access-type="public_method">
+
+        <property name="key" expose="true"></property>
+        <property name="value" expose="true"></property>
+
+    </class>
+</serializer>

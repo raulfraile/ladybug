@@ -9,7 +9,7 @@ class XmlFormat implements FormatInterface
 
     public function getName()
     {
-        return 'Xml';
+        return self::FORMAT_NAME;
     }
 
 }

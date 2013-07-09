@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Ladybug\Type\StringType" exclusion-policy="ALL" xml-root-name="var"
+           access-type="public_method">
+        <property name="level" expose="true">
+
+        </property>
+
+    </class>
+</serializer>

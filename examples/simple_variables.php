@@ -11,6 +11,9 @@ $var5 = false;
 $var6 = 'Hello world!';
 
 $dumper = new \Ladybug\Dumper();
-$dumper->setTheme('modern');
-//$dumper->setFormat(\Ladybug\Format\TextFormat::FORMAT_NAME);
-echo $dumper->dump($var1, $var2, $var3, $var4, $var5);
+$dumper->setTheme('base');
+$dumper->setFormat(\Ladybug\Format\JsonFormat::FORMAT_NAME);
+
+
+$file = fopen(__DIR__ . '/../LICENSE', 'r');
+echo $dumper->dump($file/*$var1, $var2, $var3, $var4, $var5*/);
