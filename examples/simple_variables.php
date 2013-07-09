@@ -12,8 +12,6 @@ $var6 = 'Hello world!';
 
 $dumper = new \Ladybug\Dumper();
 $dumper->setTheme('base');
-$dumper->setFormat(\Ladybug\Format\JsonFormat::FORMAT_NAME);
+$dumper->setFormat(\Ladybug\Format\XmlFormat::FORMAT_NAME);
 
-
-$file = fopen(__DIR__ . '/../LICENSE', 'r');
-echo $dumper->dump($file/*$var1, $var2, $var3, $var4, $var5*/);
+echo $dumper->dump($var1, $var2, $var3, $var4, $var5);

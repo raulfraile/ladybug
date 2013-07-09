@@ -5,6 +5,6 @@
 
         <property name="resourceType" expose="true" />
         <property name="resourceCustomData" expose="true" />
-        
+
     </class>
 </serializer>

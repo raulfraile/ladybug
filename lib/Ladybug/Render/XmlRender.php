@@ -14,12 +14,12 @@ namespace Ladybug\Render;
 
 use Ladybug\Theme\ThemeInterface;
 
-class JsonRender extends AbstractRender implements RenderInterface
+class XmlRender extends AbstractRender implements RenderInterface
 {
 
     public function getFormat()
     {
-        return \Ladybug\Format\JsonFormat::FORMAT_NAME;
+        return \Ladybug\Format\XmlFormat::FORMAT_NAME;
     }
 
     public function render(array $nodes)
@@ -33,8 +33,7 @@ class JsonRender extends AbstractRender implements RenderInterface
             ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
             ->build();
 
-
-        return $serializer->serialize($nodes, 'json');
+        return $serializer->serialize($nodes, 'xml');
 
     }
 }

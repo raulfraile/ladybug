@@ -68,7 +68,9 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
             Format\HtmlFormat::FORMAT_NAME,
             Format\ConsoleFormat::FORMAT_NAME,
             Format\TextFormat::FORMAT_NAME,
-            Format\JsonFormat::FORMAT_NAME
+            Format\JsonFormat::FORMAT_NAME,
+            Format\XmlFormat::FORMAT_NAME,
+            Format\YamlFormat::FORMAT_NAME
         );
     }
 

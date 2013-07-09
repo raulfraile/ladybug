@@ -23,7 +23,7 @@ use Ladybug\Render\Twig\Extension\LadybugExtension;
 use Ladybug\Theme\ThemeResolver;
 use Ladybug\Format\FormatResolver;
 
-abstract class BaseRender implements RenderInterface
+abstract class AbstractRender implements RenderInterface
 {
 
     /** @var ThemeInterface $theme */

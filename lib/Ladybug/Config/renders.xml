@@ -22,5 +22,10 @@
             <tag name="ladybug.render" />
         </service>
 
+        <service id="render_xml" class="Ladybug\Render\XmlRender">
+            <tag name="ladybug.render" />
+        </service>
+
+
     </services>
 </container>

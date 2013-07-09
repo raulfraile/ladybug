@@ -15,7 +15,7 @@ namespace Ladybug\Render;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Format\FormatInterface;
 
-class TextRender extends BaseRender implements RenderInterface
+class TextRender extends AbstractRender implements RenderInterface
 {
 
     public function getFormat()
