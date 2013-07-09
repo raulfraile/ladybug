@@ -14,20 +14,21 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "symfony/serializer": ">=2.0.4",
-        "symfony/yaml": ">=2.0.4",
+
         "symfony/console": ">=2.0.4",
         "symfony/finder": ">=2.0.4",
         "symfony/dependency-injection": ">=2.0.4",
         "symfony/config": ">=2.0.4",
         "twig/twig": ">=v1.7.0",
-        "sabberworm/php-css-parser": "*",
         "phpdocumentor/reflection-docblock": "2.0.0a3",
         "jms/serializer": ">=0.11.0"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "0.1.*@dev",
         "mockery/mockery": "0.8.0"
+    },
+    "suggest": {
+        "symfony/yaml": "Required to serialize data to YAML format"
     },
     "autoload": {
         "psr-0": { "Ladybug": "lib/" }
