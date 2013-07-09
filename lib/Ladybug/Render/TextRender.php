@@ -23,7 +23,7 @@ class TextRender extends AbstractRender implements RenderInterface
         return self::FORMAT_TEXT;
     }
 
-    public function render(array $nodes)
+    public function render(array $nodes, array $extraData = array())
     {
         $this->load();
 

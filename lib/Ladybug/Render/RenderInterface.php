@@ -11,7 +11,7 @@ interface RenderInterface
 
     public function getFormat();
 
-    public function render(array $nodes);
+    public function render(array $nodes, array $extraData = array());
 
     public function setTheme(\Ladybug\Theme\ThemeInterface $theme);
 

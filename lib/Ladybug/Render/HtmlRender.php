@@ -22,18 +22,18 @@ class HtmlRender extends AbstractRender implements RenderInterface
         return self::FORMAT_HTML;
     }
 
-    public function render(array $nodes)
+    public function render(array $nodes, array $extraData = array())
     {
         $this->load();
 
         /** @var HtmlThemeInterface $theme */
         $theme = $this->theme;
 
-        $result = $this->twig->render('layout.html.twig', array(
+        $result = $this->twig->render('layout.html.twig', array_merge(array(
             'nodes' => $nodes,
             'css' => $theme->getHtmlCssDependencies(),
             'js' => $theme->getHtmlJsDependencies()
-        ));
+        ), $extraData));
 
         return $result;
     }

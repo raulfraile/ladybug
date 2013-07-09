@@ -22,7 +22,7 @@ class XmlRender extends AbstractRender implements RenderInterface
         return \Ladybug\Format\XmlFormat::FORMAT_NAME;
     }
 
-    public function render(array $nodes)
+    public function render(array $nodes, array $extraData = array())
     {
         $this->load();
 

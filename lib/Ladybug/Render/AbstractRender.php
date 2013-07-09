@@ -70,7 +70,7 @@ abstract class AbstractRender implements RenderInterface
         }
     }
 
-    public function render(array $nodes)
+    public function render(array $nodes, array $extraData = array())
     {
 
         $this->load();

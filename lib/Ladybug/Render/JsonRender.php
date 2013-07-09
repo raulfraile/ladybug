@@ -22,7 +22,7 @@ class JsonRender extends AbstractRender implements RenderInterface
         return \Ladybug\Format\JsonFormat::FORMAT_NAME;
     }
 
-    public function render(array $nodes)
+    public function render(array $nodes, array $extraData = array())
     {
         $this->load();
 

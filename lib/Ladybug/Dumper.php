@@ -32,11 +32,8 @@ class Dumper
 
     protected $format;
 
-
-    protected $callFile;
-    protected $callLine;
-    protected $callClass;
-    protected $callFunction;
+    protected $callFile = null;
+    protected $callLine = null;
 
     /**
      * Constructor
@@ -77,10 +74,14 @@ class Dumper
     {
         $args = func_get_args();
         $this->readVariables($args);
+        $this->getCallLocationInfos();
 
         $render = $this->getRender();
 
-        return $render->render($this->nodes);
+        return $render->render($this->nodes, array(
+            'callFile' => $this->callFile,
+            'callLine' => $this->callLine
+        ));
     }
 
     /**
@@ -102,24 +103,19 @@ class Dumper
      *
      * @return array
      */
-    public static function getCallLocationInfos()
+    public function getCallLocationInfos()
     {
-        $idx = 7;
-        $bt = debug_backtrace();
+        $idx = 1;
+        $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
         // Check if Ladybug was called from the helpers shortcuts
-        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+        /*$caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
         if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
             $idx = $idx - 2;
-        }
+        }*/
 
-        return array(
-            'caller'   => isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '',
-            'file'     => isset($bt[$idx]['file']) ? $bt[$idx]['file'] : '',
-            'line'     => isset($bt[$idx]['line']) ? $bt[$idx]['line'] : '',
-            'class'    => isset($bt[$idx + 1]['class'])    ? $bt[$idx + 1]['class'] : '',
-            'function' => isset($bt[$idx + 1]['function']) ? $bt[$idx + 1]['function'] : ''
-        );
+        $this->callFile = isset($bt[$idx]['file']) ? $bt[$idx]['file'] : null;
+        $this->callLine = isset($bt[$idx]['line']) ? $bt[$idx]['line'] : null;
     }
 
     /**
