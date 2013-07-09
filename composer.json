@@ -21,7 +21,6 @@
         "symfony/dependency-injection": ">=2.0.4",
         "symfony/config": ">=2.0.4",
         "twig/twig": ">=v1.7.0",
-        "pimple/pimple": ">=v1.0.2",
         "sabberworm/php-css-parser": "*",
         "phpdocumentor/reflection-docblock": "2.0.0a3"
     },
