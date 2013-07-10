@@ -14,20 +14,17 @@
 namespace Ladybug\Type;
 
 use Ladybug\Exception\InvalidTypeException;
-use Ladybug\Extension\Type\BaseType as ExtensionType;
 use Ladybug\Container;
 
 class FactoryType
 {
 
-    /** @var Container $container */
-    protected $container;
-
+    /** @var array $types */
     protected $types;
 
     public function __construct()
     {
-
+        $this->types = array();
     }
 
     public function add(TypeInterface $type, $key = null)
