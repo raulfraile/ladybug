@@ -13,6 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Type\ArrayType\Item;
+use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ArrayType extends AbstractType
 {
@@ -36,6 +37,10 @@ class ArrayType extends AbstractType
 
     public function load($var)
     {
+        if (!is_array($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
         $this->length = count($var);
         if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {

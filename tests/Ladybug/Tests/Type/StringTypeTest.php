@@ -7,42 +7,33 @@ use Ladybug\Type;
 class StringTypeTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testLoaderIsCorrect()
+    /** @var Type\StringType $type */
+    protected $type;
+
+    public function setUp()
     {
-        $var = 'value';
-        $key = 'key';
-
-        $type = new Type\StringType();
-
-        // null key
-        $type->load($var);
-        $this->assertSame($var, $type->getValue());
-        $this->assertNull($type->getKey());
-
-        // not null key
-        $type->load($var, $key);
-        $this->assertSame($var, $type->getValue());
-        $this->assertSame($key, $type->getKey());
+        $this->type = new Type\StringType();
     }
 
-    public function testInvalidValue()
+    public function testLoaderForValidValues()
+    {
+        $var = 'tést';
+        $encoding = 'UTF-8';
+        $length = 4;
+
+        $this->type->load($var);
+        $this->assertEquals($var, $this->type->getValue());
+        $this->assertEquals($encoding, $this->type->getEncoding());
+        $this->assertEquals($length, $this->type->getLength());
+    }
+
+    public function testLoaderForOtherType()
     {
         $this->setExpectedException('Ladybug\Type\Exception\InvalidVariableTypeException');
 
         $var = 1;
 
-        $type = new Type\StringType();
-        $type->load($var);
-    }
-
-    public function testUtf8Length()
-    {
-        $var = 'Россия';
-
-        $type = new Type\StringType();
-
-        $type->load($var);
-        $this->assertEquals(6, $type->getLength());
+        $this->type->load($var);
     }
 
 }

@@ -7,32 +7,28 @@ use Ladybug\Type;
 class IntTypeTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testLoaderIsCorrect()
+    protected $type;
+
+    public function setUp()
     {
-        $var = 1;
-        $key = 'key';
-
-        $type = new Type\IntType();
-
-        // null key
-        $type->load($var);
-        $this->assertSame($var, $type->getValue());
-        $this->assertNull($type->getKey());
-
-        // not null key
-        $type->load($var, $key);
-        $this->assertSame($var, $type->getValue());
-        $this->assertSame($key, $type->getKey());
+        $this->type = new Type\IntType();
     }
 
-    public function testInvalidValue()
+    public function testLoaderForValidValues()
+    {
+        $var = 1;
+
+        $this->type->load($var);
+        $this->assertEquals($var, $this->type->getValue());
+    }
+
+    public function testLoaderForOtherType()
     {
         $this->setExpectedException('Ladybug\Type\Exception\InvalidVariableTypeException');
 
         $var = 'test';
 
-        $type = new Type\IntType();
-        $type->load($var);
+        $this->type->load($var);
     }
 
 }

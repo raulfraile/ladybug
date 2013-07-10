@@ -7,32 +7,33 @@ use Ladybug\Type;
 class BoolTypeTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testLoaderIsCorrect()
+    protected $type;
+
+    public function setUp()
     {
-        $var = true;
-        $key = 'key';
-
-        $type = new Type\BoolType();
-
-        // null key
-        $type->load($var);
-        $this->assertSame($var, $type->getValue());
-        $this->assertNull($type->getKey());
-
-        // not null key
-        $type->load($var, $key);
-        $this->assertSame($var, $type->getValue());
-        $this->assertSame($key, $type->getKey());
+        $this->type = new Type\BoolType();
     }
 
-    public function testInvalidValue()
+    public function testLoaderForValidValues()
+    {
+        // true
+        $var = true;
+        $this->type->load($var);
+        $this->assertTrue($this->type->getValue());
+
+        // false
+        $var = false;
+        $this->type->load($var);
+        $this->assertFalse($this->type->getValue());
+    }
+
+    public function testLoaderForOtherType()
     {
         $this->setExpectedException('Ladybug\Type\Exception\InvalidVariableTypeException');
 
         $var = 'test';
 
-        $type = new Type\BoolType();
-        $type->load($var);
+        $this->type->load($var);
     }
 
 }
