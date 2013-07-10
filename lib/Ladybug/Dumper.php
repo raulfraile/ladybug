@@ -74,7 +74,7 @@ class Dumper
     {
         $args = func_get_args();
         $this->readVariables($args);
-        $this->getCallLocationInfos();
+        $this->loadCallLocationInfo();
 
         $render = $this->getRender();
 
@@ -103,19 +103,19 @@ class Dumper
      *
      * @return array
      */
-    public function getCallLocationInfos()
+    public function loadCallLocationInfo()
     {
-        $idx = 1;
-        $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $index = 5;
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 6);
 
         // Check if Ladybug was called from the helpers shortcuts
-        /*$caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+        $caller = isset($trace[$index]['function']) ? $trace[$index]['function'] : '';
         if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
-            $idx = $idx - 2;
-        }*/
+            $index = $index - 4;
+        }
 
-        $this->callFile = isset($bt[$idx]['file']) ? $bt[$idx]['file'] : null;
-        $this->callLine = isset($bt[$idx]['line']) ? $bt[$idx]['line'] : null;
+        $this->callFile = isset($trace[$index]['file']) ? $trace[$index]['file'] : null;
+        $this->callLine = isset($trace[$index]['line']) ? $trace[$index]['line'] : null;
     }
 
     /**

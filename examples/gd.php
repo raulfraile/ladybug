@@ -5,4 +5,6 @@ Ladybug\Loader::loadHelpers();
 
 $img = imagecreatefrompng(__DIR__ . '/images/apilinks_example.png');
 
-ladybug_dump($img);
+$dumper = new \Ladybug\Dumper();
+
+echo $dumper->dump($img);
