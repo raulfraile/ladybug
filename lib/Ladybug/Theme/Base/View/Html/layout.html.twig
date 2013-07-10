@@ -16,5 +16,7 @@
         {{ render_type(node)|raw }}
         <div class="separator"></div>
     {% endfor %}
+
+    <div class="level_1"><em>{{ callFile }}:{{ callLine }}</em></div>
 </div>
 {% endspaceless %}
