@@ -35,5 +35,4 @@ class FloatType extends AbstractType
         parent::load($var);
     }
 
-
 }

@@ -12,9 +12,6 @@
 
 namespace Ladybug\Render;
 
-use Ladybug\Theme\ThemeInterface;
-use Ladybug\Format\FormatInterface;
-
 class TextRender extends AbstractRender implements RenderInterface
 {
 

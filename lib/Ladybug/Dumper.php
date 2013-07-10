@@ -105,17 +105,12 @@ class Dumper
      */
     public function loadCallLocationInfo()
     {
-        $index = 5;
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 6);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 7);
 
-        // Check if Ladybug was called from the helpers shortcuts
-        $caller = isset($trace[$index]['function']) ? $trace[$index]['function'] : '';
-        if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
-            $index = $index - 4;
-        }
+        $lastTrace = array_pop($trace);
 
-        $this->callFile = isset($trace[$index]['file']) ? $trace[$index]['file'] : null;
-        $this->callLine = isset($trace[$index]['line']) ? $trace[$index]['line'] : null;
+        $this->callFile = isset($lastTrace['file']) ? $lastTrace['file'] : null;
+        $this->callLine = isset($lastTrace['line']) ? $lastTrace['line'] : null;
     }
 
     /**
@@ -163,7 +158,6 @@ class Dumper
         $formatResolver = $this->application->container->get('format_resolver');
         $format = $formatResolver->getFormat($format);
 
-
         /** @var $themeResolver ThemeResolver */
         $themeResolver = $this->application->container->get('theme_resolver');
 
@@ -174,7 +168,6 @@ class Dumper
         } else {
             $theme = $themeResolver->resolve($format);
         }
-
 
         /** @var $renderResolver RenderResolver */
         $renderResolver = $this->application->container->get('render_resolver');

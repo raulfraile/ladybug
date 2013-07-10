@@ -12,7 +12,6 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Extension\ExtensionInterface;
 use Ladybug\Container;
 use Ladybug\Type\ObjectType as Object;
 
@@ -103,7 +102,6 @@ class ObjectType extends AbstractType
 
             // metadata
 
-
             $metadata = $this->metadataResolver->getMetadata($this->className);
 
             if (array_key_exists('help_link', $metadata)) {
@@ -118,12 +116,9 @@ class ObjectType extends AbstractType
                 $this->version = $metadata['version'];
             }
 
-
-
         } else {
             $this->isLeaf = TRUE;
         }
-
 
     }
 
@@ -474,7 +469,5 @@ class ObjectType extends AbstractType
     {
         return $this->version;
     }
-
-
 
 }

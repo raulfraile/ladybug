@@ -2,7 +2,6 @@
 
 namespace Ladybug\Theme;
 
-use Ladybug\Container;
 use Ladybug\Format\FormatInterface;
 
 class ThemeResolver
@@ -12,7 +11,6 @@ class ThemeResolver
     protected $themes;
 
     protected $defaultTheme;
-
 
     public function __construct()
     {
@@ -67,11 +65,7 @@ class ThemeResolver
 
             $theme = $this->themes['theme_'.$parent];
 
-
-
         }
-
-
 
     }
 }

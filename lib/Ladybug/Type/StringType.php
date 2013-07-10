@@ -12,26 +12,20 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Options;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class StringType extends AbstractType
 {
-
     const TYPE_ID = 'string';
 
     /**
      * Constructor
-     * @param string  $var
-     * @param int     $level
-     * @param Options $options
      */
     public function __construct()
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
-
     }
 
     public function load($var)

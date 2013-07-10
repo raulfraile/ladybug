@@ -38,5 +38,4 @@ abstract class AbstractInspector implements InspectorInterface
         return $this->level;
     }
 
-
 }

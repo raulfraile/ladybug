@@ -45,7 +45,6 @@ class ArrayType extends AbstractType
             }
         }
 
-
     }
 
     public function add(Item $var)

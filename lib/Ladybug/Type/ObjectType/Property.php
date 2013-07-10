@@ -78,5 +78,4 @@ class Property
         return $this->value;
     }
 
-
 }

@@ -35,7 +35,6 @@ class TableType extends BaseType
         $this->key = $key;
     }
 
-
     public static function create($var, $key = null)
     {
         $object = new static();

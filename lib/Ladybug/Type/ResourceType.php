@@ -12,7 +12,6 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Extension\ExtensionInterface;
 use Ladybug\Inspector\InspectorFactory;
 use Ladybug\Metadata\MetadataResolver;
 
@@ -35,7 +34,6 @@ class ResourceType extends AbstractType
 
     /** @var MetadataResolver $metadataResolver */
     protected $metadataResolver;
-
 
     public function __construct(FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
@@ -66,7 +64,6 @@ class ResourceType extends AbstractType
         $this->loadData($var);
 
     }
-
 
     public function setResourceCustomData($resourceCustomData)
     {
@@ -104,9 +101,6 @@ class ResourceType extends AbstractType
             $inspector->setLevel($this->level + 1);
             $this->resourceCustomData = $inspector->getData($var);
         }
-
-
-
 
     }
 

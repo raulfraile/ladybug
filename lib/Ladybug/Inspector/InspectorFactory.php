@@ -14,9 +14,6 @@
 namespace Ladybug\Inspector;
 
 use Ladybug\Exception\InvalidTypeException;
-use Ladybug\Type\AbstractType;
-use Ladybug\Extension\Type\BaseType as ExtensionType;
-use Ladybug\Container;
 
 class InspectorFactory
 {
@@ -35,7 +32,7 @@ class InspectorFactory
 
     /**
      * @param $var
-     * @param int $level
+     * @param  int                                     $level
      * @return TypeInterface
      * @throws \Ladybug\Exception\InvalidTypeException
      */

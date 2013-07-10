@@ -12,8 +12,6 @@
 
 namespace Ladybug\Render;
 
-use Ladybug\Theme\CliThemeInterface;
-use Ladybug\Format\FormatInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
@@ -21,7 +19,6 @@ class ConsoleRender extends AbstractRender implements RenderInterface
 {
 
     protected $console;
-
 
     protected function load()
     {

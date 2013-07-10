@@ -14,7 +14,6 @@
 namespace Ladybug\Type;
 
 use Ladybug\Exception\InvalidTypeException;
-use Ladybug\Type\AbstractType;
 use Ladybug\Extension\Type\BaseType as ExtensionType;
 use Ladybug\Container;
 
@@ -23,7 +22,6 @@ class FactoryType
 
     /** @var Container $container */
     protected $container;
-
 
     protected $types;
 
@@ -39,7 +37,7 @@ class FactoryType
 
     /**
      * @param $var
-     * @param int $level
+     * @param  int                                     $level
      * @return TypeInterface
      * @throws \Ladybug\Exception\InvalidTypeException
      */

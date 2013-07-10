@@ -31,11 +31,8 @@ class File extends AbstractInspector
 
         $result['file'] = $realPath;
 
-
         $collection = new Type\Extended\CollectionType($this->factory);
         $collection->setTitle('File');
-
-
 
         $result = array();
         $result['mode'] = $this->factory->factory($fstat['mode'], 'mode');

@@ -32,5 +32,4 @@ class UnixPermissionsType extends BaseType
         $this->data = decoct($var);
     }
 
-
 }

@@ -27,7 +27,6 @@ class Constant
     /** @var TypeInterface $value */
     protected $value;
 
-
     public function __construct($name, TypeInterface $value)
     {
         $this->name = $name;

@@ -38,5 +38,4 @@ abstract class ExtensionBase implements ExtensionInterface
         return $this->level;
     }
 
-
 }

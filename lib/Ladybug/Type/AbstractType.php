@@ -18,6 +18,7 @@ namespace Ladybug\Type;
 abstract class AbstractType implements TypeInterface
 {
 
+    /** @var string $id */
     protected $id;
 
     /** @var string $type */
@@ -32,32 +33,38 @@ abstract class AbstractType implements TypeInterface
     /** @var string $encoding */
     protected $encoding;
 
+    /** @var int $length */
     protected $length;
-
-    protected $container;
-
-
-
 
     /**
      * Constructor
-     *
-     * @param string $type
-     * @param mixed  $value
-     * @param int    $level
      */
-    public function __construct(/*$type, $value, $level, \Ladybug\Container $container, $key = null*/)
+    public function __construct()
     {
         $this->id = uniqid();
-        /*$this->type = $type;
-        $this->value = $value;
-        $this->container = $container;
-        $this->level = $level + 1;
-        $this->key = $key;*/
     }
 
     /**
-     * Gets the variable type
+     * Get id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     * @param $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get type
      *
      * @return string Variable type
      */
@@ -121,34 +128,6 @@ abstract class AbstractType implements TypeInterface
         $this->level = $level;
     }
 
-    protected function getIncludeClass($name, $type = 'object')
-    {
-        $class = '';
-        $path_array = explode('\\', $name);
-        $path_number = count($path_array);
-        $class_name = '';
-
-        for ($i=0;$i<$path_number;$i++) {
-            $class_name .= str_replace(' ', '', ucwords($path_array[$i]));
-            if (($i+1) < $path_number) $class_name .= '\\';
-        }
-
-        if ($type == 'object') $class = 'Ladybug\\Extension\\Object\\'.$class_name;
-        elseif ($type == 'resource') $class = 'Ladybug\\Extension\\Resource\\'.$class_name;
-
-        return $class;
-    }
-
-    public function export()
-    {
-        $return = array(
-            'type' => $this->type,
-            'value' => $this->value
-        );
-
-        return $return;
-    }
-
     protected function _getEncodingForHtmlentities()
     {
         $validEncodings = array(
@@ -175,11 +154,6 @@ abstract class AbstractType implements TypeInterface
         }
     }
 
-    public function getOption($key, $default = null)
-    {
-        return $this->container->getParameter($key);
-    }
-
     public function setLength($length)
     {
         $this->length = $length;
@@ -190,6 +164,11 @@ abstract class AbstractType implements TypeInterface
         return $this->length;
     }
 
+    /**
+     * Get the template name that must be used to render this type
+     *
+     * @return string
+     */
     public function getTemplateName()
     {
         return $this->type;
@@ -200,27 +179,8 @@ abstract class AbstractType implements TypeInterface
         $this->value = $var;
     }
 
-    public function setVisibility($visibility)
-    {
-        $this->visibility = $visibility;
-    }
-
-    public function getVisibility()
-    {
-        return $this->visibility;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
     /**
+     * Set encoding
      * @param string $encoding
      */
     public function setEncoding($encoding)
@@ -229,12 +189,13 @@ abstract class AbstractType implements TypeInterface
     }
 
     /**
+     * Get encoding
+     *
      * @return string
      */
     public function getEncoding()
     {
         return $this->encoding;
     }
-
 
 }

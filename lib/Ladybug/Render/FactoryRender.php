@@ -35,5 +35,4 @@ class FactoryRender
         return $this->renders['render_'.$format->getName()];
     }
 
-
 }

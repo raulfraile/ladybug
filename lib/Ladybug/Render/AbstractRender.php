@@ -20,9 +20,6 @@ use Ladybug\Type\TypeInterface;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\LadybugExtension;
 
-use Ladybug\Theme\ThemeResolver;
-use Ladybug\Format\FormatResolver;
-
 abstract class AbstractRender implements RenderInterface
 {
 
@@ -59,7 +56,6 @@ abstract class AbstractRender implements RenderInterface
             });
 
             $this->twig->addFunction($function);*/
-
 
             $extension = new LadybugExtension();
             $extension->setFormat($this->format->getName());
@@ -162,6 +158,5 @@ abstract class AbstractRender implements RenderInterface
     {
         return $this->theme;
     }
-
 
 }

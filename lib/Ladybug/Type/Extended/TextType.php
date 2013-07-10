@@ -17,7 +17,6 @@ class TextType extends BaseType
 
     const TYPE_ID = 'text';
 
-
     public function getTemplateName()
     {
         return static::TYPE_ID;

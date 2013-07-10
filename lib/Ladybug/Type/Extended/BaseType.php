@@ -86,5 +86,4 @@ abstract class BaseType implements TypeInterface
         return $this->level;
     }
 
-
 }

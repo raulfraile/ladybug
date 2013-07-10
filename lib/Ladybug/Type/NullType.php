@@ -16,7 +16,6 @@ use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class NullType extends AbstractType
 {
-
     const TYPE_ID = 'null';
 
     public function __construct()

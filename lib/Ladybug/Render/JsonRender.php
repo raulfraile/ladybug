@@ -33,7 +33,6 @@ class JsonRender extends AbstractRender implements RenderInterface
             ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
             ->build();
 
-
         return $serializer->serialize($nodes, 'json');
 
     }

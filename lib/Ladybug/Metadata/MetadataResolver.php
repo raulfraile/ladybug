@@ -13,11 +13,6 @@
 
 namespace Ladybug\Metadata;
 
-use Ladybug\Exception\InvalidTypeException;
-use Ladybug\Type\AbstractType;
-use Ladybug\Extension\Type\BaseType as ExtensionType;
-use Ladybug\Container;
-
 class MetadataResolver
 {
 
@@ -32,7 +27,6 @@ class MetadataResolver
     {
         $this->metadatas[] = $metadata;
     }
-
 
     public function resolve($className)
     {

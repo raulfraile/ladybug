@@ -2,7 +2,6 @@
 
 namespace Ladybug\Format;
 
-use Ladybug\Container;
 use Ladybug\Format\FormatInterface;
 
 class FormatResolver
@@ -10,7 +9,6 @@ class FormatResolver
 
     /** @var array $formats */
     protected $formats;
-
 
     public function __construct($defaultFormat = null)
     {

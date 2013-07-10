@@ -13,7 +13,6 @@
 namespace Ladybug\Render;
 
 use Ladybug\Format\FormatInterface;
-use Ladybug\Theme\ThemeInterface;
 
 class RenderResolver
 {
@@ -47,6 +46,5 @@ class RenderResolver
 
         throw new \Exception('Render not found');
     }
-
 
 }

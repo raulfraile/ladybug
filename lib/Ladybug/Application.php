@@ -15,8 +15,6 @@ namespace Ladybug;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 use Ladybug\Format;
 use Ladybug\DependencyInjection;
@@ -43,9 +41,6 @@ class Application
         $loader->load('container.xml');
 
         $this->container->compile();
-
-
-
 
         //var_dump($this->container->getParameter('format'));
         //var_dump($this->container->get('render_html'));

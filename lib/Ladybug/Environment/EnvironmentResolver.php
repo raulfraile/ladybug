@@ -2,8 +2,6 @@
 
 namespace Ladybug\Environment;
 
-use Ladybug\Container;
-
 class EnvironmentResolver
 {
 

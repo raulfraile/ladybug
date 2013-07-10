@@ -35,7 +35,6 @@ class SizeType extends BaseType
 
     protected $unit = self::UNIT_BYTE;
 
-
     public function getUnit()
     {
         return $this->unit;
@@ -92,6 +91,5 @@ class SizeType extends BaseType
             $this->unit = self::UNIT_GB;
         }
     }
-
 
 }

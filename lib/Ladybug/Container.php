@@ -18,7 +18,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 use Ladybug\Format;
 
-class ContainerBak extends Pimple
+class Container extends Pimple
 {
 
     public function load()
@@ -77,7 +77,6 @@ class ContainerBak extends Pimple
     {
         return $this->offsetExists($key);
     }
-
 
     /**
      * Load types
@@ -162,7 +161,6 @@ class ContainerBak extends Pimple
         });
     }
 
-
     /**
      * Check themes directories and load found themes
      */
@@ -206,7 +204,6 @@ class ContainerBak extends Pimple
         }
 
         $inspectorsFinder->name('*.php')->depth('<10')->depth('>0');
-
 
         foreach ($inspectorsFinder as $inspectorFile) {
             /** @var $inspectorFile SplFileInfo */
@@ -292,8 +289,6 @@ class ContainerBak extends Pimple
         $this->setParameter('_ladybug.assets.loaded', false);
         $this->setParameter('_ladybug.level', 0);
     }
-
-
 
     public function restoreDefaults()
     {

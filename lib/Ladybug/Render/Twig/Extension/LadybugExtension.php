@@ -3,7 +3,6 @@
 namespace Ladybug\Render\Twig\Extension;
 
 use Twig_Extension;
-use Twig_SimpleFunction;
 use Twig_Environment;
 use Ladybug\Type\TypeInterface;
 
@@ -11,8 +10,6 @@ class LadybugExtension extends Twig_Extension
 {
 
     protected $format;
-
-
 
     public function getName()
     {
