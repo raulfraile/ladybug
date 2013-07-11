@@ -14,6 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Inspector\InspectorFactory;
 use Ladybug\Metadata\MetadataResolver;
+use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ResourceType extends AbstractType
 {
@@ -48,6 +49,10 @@ class ResourceType extends AbstractType
 
     public function load($var)
     {
+        if (!is_resource($var)) {
+            throw new InvalidVariableTypeException();
+        }
+
         $this->resourceType = get_resource_type($var);
 
         if ($this->resourceType == 'stream') {
