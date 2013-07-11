@@ -18,6 +18,10 @@
             <tag name="ladybug.format" />
         </service>
 
+        <service id="format_php" class="Ladybug\Format\PhpFormat">
+            <tag name="ladybug.format" />
+        </service>
+
         <service id="format_text" class="Ladybug\Format\TextFormat">
             <tag name="ladybug.format" />
         </service>

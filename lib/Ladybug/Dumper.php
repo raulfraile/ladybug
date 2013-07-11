@@ -113,26 +113,7 @@ class Dumper
         $this->callLine = isset($lastTrace['line']) ? $lastTrace['line'] : null;
     }
 
-    /**
-     * Set option value
-     * @param string $key   Option key
-     * @param mixed  $value Option value
-     */
-    public function setOption($key, $value)
-    {
-        $this->application->setAttribute($key, $value);
-    }
 
-    /**
-     * Get option value
-     * @param mixed $key Option key
-     *
-     * @return mixed
-     */
-    public function getOption($key)
-    {
-        return $this->application->getAttribute($key);
-    }
 
     /**
      * Get render object
@@ -186,7 +167,7 @@ class Dumper
 
     public function getTheme()
     {
-        return $this->application->container->get('theme.' . $this->application->container->getParameter('theme'));
+        return $this->theme;
     }
 
     public function setFormat($format)
@@ -196,7 +177,7 @@ class Dumper
 
     public function getFormat()
     {
-        return $this->application->container->get('format.' . $this->application->getParameter('format'));
+        return $this->format;
     }
 
 }

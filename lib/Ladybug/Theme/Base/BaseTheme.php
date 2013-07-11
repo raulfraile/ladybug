@@ -62,6 +62,11 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
         );
     }
 
+    public function getHtmlJsDependencies()
+    {
+        return array();
+    }
+
     public function getFormats()
     {
         return array(
@@ -70,7 +75,8 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
             Format\TextFormat::FORMAT_NAME,
             Format\JsonFormat::FORMAT_NAME,
             Format\XmlFormat::FORMAT_NAME,
-            Format\YamlFormat::FORMAT_NAME
+            Format\YamlFormat::FORMAT_NAME,
+            Format\PhpFormat::FORMAT_NAME
         );
     }
 

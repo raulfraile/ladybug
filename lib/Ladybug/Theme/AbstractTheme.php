@@ -21,22 +21,8 @@ abstract class AbstractTheme implements ThemeInterface
     /** @var Container $container */
     protected $container;
 
+    /** @var array $formats */
     protected $formats;
-
-    public function __construct()
-    {
-        //$this->container = $container;
-    }
-
-    public function getHtmlCssDependencies()
-    {
-        return array();
-    }
-
-    public function getHtmlJsDependencies()
-    {
-        return array();
-    }
 
     public function supportsFormat(FormatInterface $format)
     {

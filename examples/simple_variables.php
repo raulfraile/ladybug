@@ -15,7 +15,7 @@ $dumper->setTheme('base');
 //$dumper->setFormat(\Ladybug\Format\XmlFormat::FORMAT_NAME);
 
 
-ladybug_set_theme('modern');
+ladybug_set_theme('base');
 ldd($var2);
 
 echo $dumper->dump($var1, $var2, $var3, $var4, $var5);

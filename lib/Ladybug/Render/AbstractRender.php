@@ -34,13 +34,6 @@ abstract class AbstractRender implements RenderInterface
 
     protected $isLoaded = false;
 
-    /**
-     * @param ThemeInterface $theme
-     */
-    public function __construct()
-    {
-
-    }
 
     protected function load()
     {

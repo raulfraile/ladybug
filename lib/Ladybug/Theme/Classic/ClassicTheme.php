@@ -37,6 +37,11 @@ class ClassicTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInt
         );
     }
 
+    public function getHtmlJsDependencies()
+    {
+        return array();
+    }
+
     public function getFormats()
     {
         return array(
