@@ -4,7 +4,7 @@ namespace Ladybug\Environment;
 
 use Ladybug\Format;
 
-class BrowserEnvironment extends BaseEnvironment
+class BrowserEnvironment extends AbstractEnvironment
 {
 
     public function getName()

@@ -4,7 +4,7 @@ namespace Ladybug\Environment;
 
 use Ladybug\Format;
 
-class AjaxEnvironment extends BaseEnvironment
+class AjaxEnvironment extends AbstractEnvironment
 {
 
     protected $httpXRequestedWith = null;

@@ -4,7 +4,7 @@ namespace Ladybug\Environment;
 
 use Ladybug\Format;
 
-class CliEnvironment extends BaseEnvironment
+class CliEnvironment extends AbstractEnvironment
 {
 
     protected $sapiName;
