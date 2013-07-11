@@ -50,10 +50,6 @@ class FactoryType
             $var->setProcessedData($data);
 
             return $var;
-        } elseif ($var instanceof ExtensionType) {
-            //$class = get_class($var);
-            //$result = new $class($var->getValue(), $level, $container);
-            $result = $var;
         } elseif ($var === null) {
             $result = clone($this->types['type_null']);
             $result->setLevel($level+1);
@@ -86,8 +82,6 @@ class FactoryType
             $result = clone($this->types['type_resource']);
             $result->setLevel($level+1);
             $result->load($var);
-        } else {
-            throw new InvalidTypeException();
         }
 
         return $result;

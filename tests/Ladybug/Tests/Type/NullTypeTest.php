@@ -7,6 +7,7 @@ use Ladybug\Type;
 class NullTypeTest extends \PHPUnit_Framework_TestCase
 {
 
+    /** @var Type\NullType $type */
     protected $type;
 
     public function setUp()
@@ -20,6 +21,7 @@ class NullTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->type->load($var);
         $this->assertNull($this->type->getValue());
+        $this->assertEquals('null', $this->type->getFormattedValue());
     }
 
     public function testLoaderForOtherType()

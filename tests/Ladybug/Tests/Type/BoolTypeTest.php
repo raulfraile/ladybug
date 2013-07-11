@@ -20,11 +20,13 @@ class BoolTypeTest extends \PHPUnit_Framework_TestCase
         $var = true;
         $this->type->load($var);
         $this->assertTrue($this->type->getValue());
+        $this->assertEquals('true', $this->type->getFormattedValue());
 
         // false
         $var = false;
         $this->type->load($var);
         $this->assertFalse($this->type->getValue());
+        $this->assertEquals('false', $this->type->getFormattedValue());
     }
 
     public function testLoaderForOtherType()

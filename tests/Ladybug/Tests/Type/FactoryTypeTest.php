@@ -18,6 +18,13 @@ class FactoryTypeTest extends \PHPUnit_Framework_TestCase
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
 */
+
+        $factoryInspectorMock = m::mock('Ladybug\Inspector\InspectorFactory');
+        $factoryInspectorMock->shouldReceive('has')->andReturn(false);
+
+        $metadataResolverMock = m::mock('Ladybug\Metadata\MetadataResolver');
+        $metadataResolverMock->shouldReceive('has')->andReturn(false);
+
         $this->factory = new Type\FactoryType();
         $this->factory->add(new Type\IntType(), 'type_int');
         $this->factory->add(new Type\BoolType(), 'type_bool');
@@ -25,6 +32,8 @@ class FactoryTypeTest extends \PHPUnit_Framework_TestCase
         $this->factory->add(new Type\FloatType(), 'type_float');
         $this->factory->add(new Type\StringType(), 'type_string');
         $this->factory->add(new Type\ArrayType(8, $this->factory), 'type_array');
+        $this->factory->add(new Type\ObjectType(8, $this->factory, $factoryInspectorMock, $metadataResolverMock), 'type_object');
+        $this->factory->add(new Type\ResourceType($this->factory, $factoryInspectorMock, $metadataResolverMock), 'type_resource');
     }
 
     public function tearDown()
@@ -72,6 +81,20 @@ class FactoryTypeTest extends \PHPUnit_Framework_TestCase
         $var = array(1, 2, 3);
         $type = $this->factory->factory($var);
         $this->assertEquals('Ladybug\\Type\\ArrayType', get_class($type));
+    }
+
+    public function testFactoryForObjectValues()
+    {
+        $var = new \stdClass();
+        $type = $this->factory->factory($var);
+        $this->assertInstanceOf('Ladybug\\Type\\ObjectType', $type);
+    }
+
+    public function testFactoryForResourceValues()
+    {
+        $var = fopen(__DIR__ . '/../../../files/test.txt', 'rb');
+        $type = $this->factory->factory($var);
+        $this->assertInstanceOf('Ladybug\\Type\\ResourceType', $type);
     }
 
     /*public function testLoaderForOtherType()

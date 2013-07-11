@@ -8,6 +8,7 @@ use \Mockery as m;
 class ArrayTypeTest extends \PHPUnit_Framework_TestCase
 {
 
+    /** @var Type\ArrayType */
     protected $type;
 
     public function setUp()
@@ -31,6 +32,11 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->type->load($var);
         $this->assertEquals(3, $this->type->getLength());
+
+        $items = $this->type->getValue();
+        $this->assertCount(3, $items);
+        $this->assertEquals(0, $items[0]->getKey());
+        $this->assertInstanceOf('Ladybug\Type\IntType', $items[0]->getValue());
     }
 
     public function testLoaderForOtherType()

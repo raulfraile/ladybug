@@ -21,24 +21,10 @@ abstract class AbstractMetadata implements MetadataInterface
     /** @var string $version */
     protected $version = null;
 
-    public function __construct()
-    {
 
-    }
+    abstract public function hasMetadata($class);
 
-    public function hasMetadata($class)
-    {
-        return false;
-    }
-
-    public function getMetadata($class)
-    {
-        return array(
-            'help_link' => str_replace('%version%', $this->version, self::URL) . urlencode($class),
-            'icon' => self::ICON,
-            'version' => $this->version
-        );
-    }
+    abstract public function getMetadata($class);
 
     public function generateHelpLinkUrl(array $parameters = array())
     {
