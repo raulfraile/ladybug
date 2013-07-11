@@ -30,12 +30,16 @@ class TwigMetadata extends AbstractMetadata
 
     public function getMetadata($class)
     {
-        return array(
-            'help_link' => $this->generateHelpLinkUrl(array(
-                '%class%' => urlencode($class)
-            )),
-            'icon' => self::ICON
-        );
+        if ($this->hasMetadata($class)) {
+            return array(
+                'help_link' => $this->generateHelpLinkUrl(array(
+                    '%class%' => urlencode($class)
+                )),
+                'icon' => self::ICON
+            );
+        }
+
+        return array();
     }
 
 }

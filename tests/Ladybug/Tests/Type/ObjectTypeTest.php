@@ -145,8 +145,6 @@ class Bar extends Foo implements \Serializable
     protected $protectedProperty;
     public $publicProperty;
 
-    static $staticProperty;
-
     const CONSTANT = 1;
 
     public function __construct()

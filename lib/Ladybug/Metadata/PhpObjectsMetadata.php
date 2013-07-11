@@ -141,13 +141,17 @@ class PhpObjectsMetadata extends AbstractMetadata
 
     public function getMetadata($class)
     {
-        return array(
-            'help_link' => $this->generateHelpLinkUrl(array(
-                '%file%' => $this->classes[$class]
-            )),
-            'icon' => self::ICON,
-            'version' => $this->version
-        );
+        if ($this->hasMetadata($class)) {
+            return array(
+                'help_link' => $this->generateHelpLinkUrl(array(
+                    '%file%' => $this->classes[$class]
+                )),
+                'icon' => self::ICON,
+                'version' => $this->version
+            );
+        }
+
+        return array();
     }
 
     /**

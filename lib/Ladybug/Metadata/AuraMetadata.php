@@ -30,15 +30,19 @@ class AuraMetadata extends AbstractMetadata
 
     public function getMetadata($class)
     {
-        return array(
-            'help_link' => $this->generateHelpLinkUrl(array(
-                '%version%' => $this->version,
-                '%component%' => $this->getComponent($class),
-                '%class%' => str_replace('\\', '.', $class)
-            )),
-            'icon' => self::ICON,
-            'version' => $this->version
-        );
+        if ($this->hasMetadata($class)) {
+            return array(
+                'help_link' => $this->generateHelpLinkUrl(array(
+                    '%version%' => $this->version,
+                    '%component%' => $this->getComponent($class),
+                    '%class%' => str_replace('\\', '.', $class)
+                )),
+                'icon' => self::ICON,
+                'version' => $this->version
+            );
+        }
+
+        return array();
     }
 
     protected function getComponent($class)

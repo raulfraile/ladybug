@@ -35,14 +35,18 @@ class SymfonyMetadata extends AbstractMetadata
 
     public function getMetadata($class)
     {
-        return array(
-            'help_link' => $this->generateHelpLinkUrl(array(
-                '%version%' => $this->version,
-                '%class%' => urlencode($class)
-            )),
-            'icon' => self::ICON,
-            'version' => $this->version
-        );
+        if ($this->hasMetadata($class)) {
+            return array(
+                'help_link' => $this->generateHelpLinkUrl(array(
+                    '%version%' => $this->version,
+                    '%class%' => urlencode($class)
+                )),
+                'icon' => self::ICON,
+                'version' => $this->version
+            );
+        }
+
+        return array();
     }
 
 }
