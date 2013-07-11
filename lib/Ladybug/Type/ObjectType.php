@@ -101,19 +101,20 @@ class ObjectType extends AbstractType
             $this->loadClassMethods($reflectedClass);
 
             // metadata
+            if ($this->metadataResolver->has($this->className)) {
+                $metadata = $this->metadataResolver->getMetadata($this->className);
 
-            $metadata = $this->metadataResolver->getMetadata($this->className);
+                if (array_key_exists('help_link', $metadata)) {
+                    $this->helpLink = $metadata['help_link'];
+                }
 
-            if (array_key_exists('help_link', $metadata)) {
-                $this->helpLink = $metadata['help_link'];
-            }
+                if (array_key_exists('icon', $metadata)) {
+                    $this->icon = $metadata['icon'];
+                }
 
-            if (array_key_exists('icon', $metadata)) {
-                $this->icon = $metadata['icon'];
-            }
-
-            if (array_key_exists('version', $metadata)) {
-                $this->version = $metadata['version'];
+                if (array_key_exists('version', $metadata)) {
+                    $this->version = $metadata['version'];
+                }
             }
 
         } else {
@@ -130,6 +131,32 @@ class ObjectType extends AbstractType
     public function getClassConstants()
     {
         return $this->classConstants;
+    }
+
+    public function getConstantByName($name)
+    {
+        foreach ($this->classConstants as $constant) {
+            /** @var Object\Constant $constant */
+
+            if ($constant->getName() === $name) {
+                return $constant;
+            }
+        }
+
+        return null;
+    }
+
+    public function getMethodByName($name)
+    {
+        foreach ($this->classMethods as $method) {
+            /** @var Object\Method $method */
+
+            if ($method->getName() === $name) {
+                return $method;
+            }
+        }
+
+        return null;
     }
 
     public function setClassFile($classFile)
@@ -232,6 +259,20 @@ class ObjectType extends AbstractType
         return $this->objectProperties;
     }
 
+    public function getObjectProperty($name, $visibility)
+    {
+        foreach ($this->objectProperties as $property) {
+            /** @var Object\Property $property */
+
+            if ($property->getName() === $name && $property->getVisibility() === $visibility) {
+                return $property;
+            }
+        }
+
+        return null;
+    }
+
+
     public function setToString($toString)
     {
         $this->toString = $toString;
@@ -278,7 +319,7 @@ class ObjectType extends AbstractType
         $constants = $reflectedObject->getConstants();
         if (!empty($constants)) {
             foreach ($constants as $constantName => $constantValue) {
-                $valueType = $this->factory->factory($constantValue, $constantName, $this->level + 1);
+                $valueType = $this->factory->factory($constantValue, $this->level + 1);
                 $this->classConstants[] = new Object\Constant($constantName, $valueType);
             }
         }
@@ -353,7 +394,7 @@ class ObjectType extends AbstractType
 
                     if ($methodParameterReflected->isDefaultValueAvailable()) {
                         $default = $methodParameterReflected->getDefaultValue();
-                        $defaultValueType = $this->factory->factory($default, null, $this->level + 1);
+                        $defaultValueType = $this->factory->factory($default, $this->level + 1);
 
                         $methodParameter->setDefaultValue($defaultValueType);
                     }

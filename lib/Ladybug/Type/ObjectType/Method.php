@@ -94,6 +94,18 @@ class Method implements VisibilityInterface
         return $this->parameters;
     }
 
+    public function getParameterByName($name)
+    {
+        foreach ($this->parameters as $parameter) {
+            /** @var MethodParameter $parameter */
+            if ($parameter->getName() === $name) {
+                return $parameter;
+            }
+        }
+
+        return null;
+    }
+
     public function addMethodParameter(MethodParameter $methodParameter)
     {
         $this->parameters[] = $methodParameter;

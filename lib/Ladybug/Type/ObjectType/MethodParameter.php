@@ -22,10 +22,10 @@ class MethodParameter
     protected $type;
 
     /** @var bool $isReference */
-    protected $isReference;
+    protected $isReference = false;
 
     /** @var mixed $defaultValue */
-    protected $defaultValue;
+    protected $defaultValue = null;
 
     /**
      * Set default value
