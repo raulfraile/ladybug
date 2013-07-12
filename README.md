@@ -53,7 +53,7 @@ It is possible to dump any variable, including arrays, objects and resources:
     ladybug_dump($var)
 ```
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/object_example.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/object_modern.png" />
 
 ### Dumping a mysql resultset
 
@@ -65,7 +65,7 @@ It is possible to dump any variable, including arrays, objects and resources:
 
     ladybug_dump($result);
 ```
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/db_example.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/db_modern.png" />
 
 ### Dumping a GD image
 
@@ -75,7 +75,7 @@ It is possible to dump any variable, including arrays, objects and resources:
     ladybug_dump($img);
 ```
     
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/gd_example.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/gd_modern.png" />
     
 ### CLI (Command-line interface) support
 
@@ -83,20 +83,19 @@ It is possible to dump any variable, including arrays, objects and resources:
 $ php examples/array.php
 ```
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/array_cli_example.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/array_cli_modern.png" />
 
 There are more examples in `examples` directory.
 
-## Installation
+## Installation using Composer
 
-### Using Composer (recommended)
 [Composer](http://packagist.org/about-composer) is a project dependency manager for PHP. You have to list
 your dependencies in a `composer.json` file:
 
 ``` json
 {
     "require": {
-        "raulfraile/ladybug": "master-dev"
+        "raulfraile/ladybug": "1.0.0-alpha1"
     }
 }
 ```
@@ -121,94 +120,28 @@ Ladybug\Loader::loadHelpers();
 ladybug_dump($var1);
 ```
 
-### Git submodule
-If you want to clone the project, you will have to execute `git submodule init` and `git submodule update` in
-order to download the dependencies.
-
-### Download zip file
-
-As easy as [download](https://github.com/raulfraile/Ladybug/raw/master/Ladybug.zip), include the library and use the provided helpers.
-
-``` php
-<?php
-require_once 'lib/Ladybug/Autoloader.php';
-Ladybug\Autoloader::register();
-
-// alternatively, use another PSR-0 compliant autoloader (like the Symfony2 ClassLoader
-// for instance) and load the helpers manually: Ladybug\Loader::loadHelpers();
-
-ladybug_dump($var1);
-```
-
 ## Helpers
 
-The are 5 helpers:
+The are 2 helpers:
 
 `ladybug_dump($var1[, $var2[, ...]])`: Dumps one or more variables
 
 `ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and 
 terminates the current script
-
-`ladybug_dump_return($format, $var1[, $var2[, ...]])`: Dumps one or more variables and
-returns the dump in any of the following formats:
-
-* yaml: Returns the dump in YAML
-* json: Returns the dump in JSON
-* xml: Returns the dump in XML
-* php: Returns the dump in PHP arrays
-        
-`ladybug_dump_ini([$extension])`: Dumps all configuration options 
-        
-`ladybug_dump_ext()`: Dumps loaded extensions
         
 There are also some shortcuts in case you are not using this function names:
         
 `ld($var1[, $var2[, ...]])`: shortcut for ladybug_dump
         
 `ldd($var1[, $var2[, ...]])`: shortcut for ladybug_dump_die
-        
-`ldr($format, $var1[, $var2[, ...]])`: shortcut for ladybug_return
 
 ## Customizable
 
-Almost any display option can be easily customizable, using the function 
-`ladybug_set($key, $value)`. Available options and default values:
-        
-* `general.expanded = false`
-* `general.show_backtrace = true`
-* `array.max_nesting_level = 8`
-* `object.max_nesting_level = 3`
-* `object.show_data = true`
-* `object.show_classinfo = true`
-* `object.show_constants = true`
-* `object.show_methods = true`
-* `object.show_properties = true`
-* `processor.active = true`
-* `bool.html_color = '#008'`
-* `bool.cli_color = 'blue'`
-* `float.html_color = '#800'`
-* `float.cli_color = 'red'`
-* `int.html_color = '#800'`
-* `int.cli_color = 'red'`
-* `string.html_color = '#080'`
-* `string.cli_color = 'green'`
-* `string.show_quotes = true`
-* `string.show_quotes = '/Asset/tree.min.css'`
+to-do
         
 ## Extensible
 
-The library is easily extensible by adding new classes in `lib/Ladybug/Extension/Object` 
-and `lib/Ladybug/Extension/Resource` directories. These new classes will have to
-extend from `LadybugExtension` class.
-
-For example, there is already an extension to dump the rows of a mysql resultset,
-in `lib/Ladybug/Extension/Resource/MysqlResult.php`, so once is defined, Ladybug
-will be able to find it and use its `dump` method.
-
-If you want to add a new dumper for DateTime object, you should 
-create a new class in `lib/Ladybug/Extension/Object/Datetime.php`, that will 
-extend from `LadybugExtension` and will have to provide a public method called
-`dump`.
+to-do
         
 ## Symfony2 users
         
