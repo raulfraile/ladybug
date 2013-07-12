@@ -24,7 +24,7 @@ class SymfonyMetadata extends AbstractMetadata
 
         // determine symfony version
         if (class_exists('Symfony\\Component\\HttpKernel\\Kernel')) {
-            $this->version = sprintf('%s.%s', Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION, Symfony\Component\HttpKernel\Kernel::MINOR_VERSION);
+            $this->version = sprintf('%s.%s', \Symfony\Component\HttpKernel\Kernel::MAJOR_VERSION, Symfony\Component\HttpKernel\Kernel::MINOR_VERSION);
         }
     }
 
