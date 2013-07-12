@@ -1,6 +1,0 @@
-[submodule "lib/Symfony/Component/Serializer"]
-	path = lib/Symfony/Component/Serializer
-	url = http://github.com/symfony/Serializer.git
-[submodule "lib/Symfony/Component/Yaml"]
-	path = lib/Symfony/Component/Yaml
-	url = http://github.com/symfony/Yaml.git
