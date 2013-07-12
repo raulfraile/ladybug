@@ -1,0 +1,22 @@
+<style>
+    {% for file in css %}
+        {{ minify_css(file)|raw }}
+    {% endfor %}
+</style>
+
+<script>
+    {% for file in js %}
+        {{ include_file(file)|raw }}
+    {% endfor %}
+</script>
+
+{% spaceless %}
+<div class="ladybug">
+    {% for node in nodes %}
+        {{ render_type(node)|raw }}
+        <div class="separator"></div>
+    {% endfor %}
+
+    <div class="level_1"><em>{{ callFile }}:{{ callLine }}</em></div>
+</div>
+{% endspaceless %}

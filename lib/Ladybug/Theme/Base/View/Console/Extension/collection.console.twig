@@ -1,0 +1,7 @@
+{% import "_macros.console.twig" as m %}
+
+{{ m.indent(var.level) }}<t_array_block>{{ var.title }}</t_array_block><intro>
+
+{% for item in var.data %}
+    {{ m.indent(item.level) }} {{ render_type(item, item.key)|raw }}<intro>
+{% endfor %}

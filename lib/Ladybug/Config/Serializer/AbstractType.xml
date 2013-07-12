@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Ladybug\Type\AbstractType" exclusion-policy="ALL" xml-root-name="var"
+           access-type="public_method">
+
+        <property name="id" expose="true"></property>
+        <property name="type" expose="true" xml-attribute="true"></property>
+        <property name="value" expose="true"></property>
+        <property name="length" expose="true"></property>
+        <property name="encoding" expose="true"></property>
+
+    </class>
+</serializer>

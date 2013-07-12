@@ -9,10 +9,11 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
+         bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Ladybug Test Suite">
-            <directory>./tests/</directory>
+            <directory>./Tests/Ladybug</directory>
         </testsuite>
     </testsuites>
 
@@ -21,5 +22,9 @@
             <group>benchmark</group>
         </exclude>
     </groups>
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener"></listener>
+    </listeners>
+
 
 </phpunit>

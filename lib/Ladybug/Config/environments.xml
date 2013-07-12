@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="environment_browser" class="Ladybug\Environment\BrowserEnvironment">
+            <tag name="ladybug.environment" />
+        </service>
+
+        <service id="environment_ajax" class="Ladybug\Environment\AjaxEnvironment">
+            <tag name="ladybug.environment" />
+        </service>
+
+        <service id="environment_cli" class="Ladybug\Environment\CliEnvironment">
+            <tag name="ladybug.environment" />
+        </service>
+
+    </services>
+</container>

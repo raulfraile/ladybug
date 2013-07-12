@@ -1,0 +1,8 @@
+{% import "_macros.text.twig" as m %}
+
+{% spaceless %}
+    {{ m.property_visibility(var) }}
+    {{ m.array_key(key) }}
+    {% block type %}{{ var.type }}{% endblock %}<space>
+    {% block value %}{{ var.formattedValue }}{% endblock %}
+{% endspaceless%}

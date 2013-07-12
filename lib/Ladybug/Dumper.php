@@ -3,7 +3,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ * @author Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,284 +11,91 @@
 
 namespace Ladybug;
 
-use Ladybug\Type\TFactory;
-use Ladybug\Exception\InvalidFormatException;
+use Ladybug\Type\FactoryType;
+use Ladybug\Render\RenderInterface;
+use Ladybug\Environment\EnvironmentResolver;
+use Ladybug\Theme\ThemeResolver;
+use Ladybug\Render\RenderResolver;
+use Ladybug\Application;
+use Ladybug\Format\FormatResolver;
 
 class Dumper
 {
-    const EXPORT_FORMAT_PHP  = 'php';
-    const EXPORT_FORMAT_YAML = 'yaml';
-    const EXPORT_FORMAT_JSON = 'json';
-    const EXPORT_FORMAT_XML  = 'xml';
 
-    private static $instance = null;
-
-    private static $tree_counter = 0;
-
-    private $isCssLoaded;
+    /** @var array $nodes */
     private $nodes;
-    private $options;
+
+    /** @var Application $application */
+    protected $application;
+
+    protected $theme;
+
+    protected $format;
+
+    protected $callFile = null;
+    protected $callLine = null;
 
     /**
-     * Constructor. Private (singleton pattern)
-     * @return Get singleton instance
+     * Constructor
      */
     public function __construct()
     {
-        $this->isCssLoaded = false;
-        $this->options = new Options();
+        $this->theme = null;
+        $this->format = null;
+
+        $this->initializeNodes();
+        $this->initializeContainer();
     }
 
     /**
-     * Singleton method
-     * @return Get singleton instance
+     * Initialize the nodes array
      */
-    public static function getInstance()
+    protected function initializeNodes()
     {
-        return (self::$instance !== null) ? self::$instance : (self::$instance = new Dumper());
+        $this->nodes = array();
+    }
+
+    /**
+     * Initialize the dependency injection container
+     */
+    protected function initializeContainer()
+    {
+        $this->application = new Application();
+        $this->application->build();
     }
 
     /**
      * Dumps one or more variables
-     * @param vars one or more variables to dump
+     * @param mixed[] One or more variables to dump
+     *
      * @return string
      */
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
         $args = func_get_args();
-        $this->nodes = $this->_readVars($args);
+        $this->readVariables($args);
+        $this->loadCallLocationInfo();
 
-        // generate CONSOLE code
-        if (true === $this->_isCli()) {
-            return $this->_render('cli');
-        }
-        // generate TEXT code
-        if ($this->isXmlHttpRequest()) {
-            return $this->_render('txt');
-        }
-        // generate HTML code
-        $html = $this->_render('html');
+        $render = $this->getRender();
 
-        // post-processors
-        $html = $this->_postProcess($html);
-
-        return $html;
+        return $render->render($this->nodes, array(
+            'callFile' => $this->callFile,
+            'callLine' => $this->callLine
+        ));
     }
 
     /**
-     * Exports one or more variables to the selected format
-     * Available formats: php (for testing purposes), yaml, xml and json
-     * @param vars format and variables to dump
+     * Read variables and fill nodes with TypeInterface objects
+     * @param array $variables variables to dump
      */
-    public function export(/*$format, $var1 [, $var2...$varN]*/)
+    protected function readVariables($variables)
     {
-        $args = func_get_args();
+        /** @var FactoryType $factoryType */
+        $factoryType = $this->application->container->get('type_factory');
 
-        $format = strtolower($args[0]);
-        $vars = array_slice($args, 1);
-
-        $this->nodes = $this->_readVars($vars);
-
-        $response = null;
-
-        $exportArray = array();
-        $i=1;
-        foreach ($this->nodes as $v) {
-            $exportArray['var' . $i] = $v->export();
-            $i++;
+        foreach ($variables as $var) {
+            $this->nodes[] = $factoryType->factory($var, 0);
         }
-
-        switch ($format) {
-            case self::EXPORT_FORMAT_PHP:
-                $response = $exportArray;
-                break;
-            case self::EXPORT_FORMAT_YAML:
-                $yaml = new \Symfony\Component\Yaml\Yaml();
-                $response = $yaml->dump($exportArray);
-                break;
-            case self::EXPORT_FORMAT_XML:
-                $serializer = new \Symfony\Component\Serializer\Encoder\XmlEncoder();
-                $response = $serializer->encode($exportArray, 'xml');
-                break;
-            case self::EXPORT_FORMAT_JSON:
-                $response = json_encode($exportArray);
-                break;
-            default:
-                throw new InvalidFormatException();
-        }
-
-        return $response;
-    }
-
-    /**
-     * Reads variables and creates TType objects
-     * @param array $vars variables to dump
-     */
-    private function _readVars($vars)
-    {
-        $nodes = array();
-
-        foreach ($vars as $var) {
-            $nodes[] = TFactory::factory($var, 0, $this->options);
-        }
-
-        return $nodes;
-    }
-
-    /**
-     * Renders the variables into the selected format
-     * @param string $format dump format (html, cli)
-     */
-    private function _render($format = 'html')
-    {
-        if ($format == 'html') {
-            return $this->_renderHTML();
-        }
-        if ($format == 'txt') {
-            return $this->_renderTXT();
-        }
-        return $this->_renderCLI();
-    }
-
-    /**
-     * Renders the variables into HTML format
-     */
-    private function _renderHTML()
-    {
-        $html = '';
-        $css = '';
-
-        foreach ($this->nodes as $var) {
-            $html .= '<li>'.$var->render().'</li>';
-        }
-
-        if (!$this->isCssLoaded) {
-            $this->isCssLoaded = true;
-            $css = '<style>' . file_get_contents($this->options->getOption('css.path')) . '</style>';
-        }
-
-        $call = '';
-        if ($this->options->getOption('general.show_backtrace')) {
-            $locationInfo = self::getCallLocationInfos();
-            $call = '<div class="call_info"><span>' . $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'] . '</span></div>';
-        }
-
-        $html = '<pre class="ladybug">' . $call . '<ol class="tree">' . $html . '</ol></pre>';
-
-        return $css . $html;
-    }
-
-    /**
-     * Renders the variables into CLI format
-     * @return string
-     */
-    private function _renderCLI()
-    {
-        $result = '';
-
-        foreach ($this->nodes as $var) {
-            $result .= $var->render(null, 'cli');
-        }
-
-        $call = '';
-        if ($this->options->getOption('general.show_backtrace')) {
-            $locationInfo = self::getCallLocationInfos();
-            $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
-        }
-
-        $result .= CLIColors::getColoredString($call, 'light_cyan') . "\n";
-
-        return $result;
-    }
-
-    /**
-     * Renders the variables into TXT format
-     * @return string
-     */
-    private function _renderTXT()
-    {
-        $result = '';
-
-        foreach ($this->nodes as $var) {
-            $result .= $var->render(null, 'txt');
-        }
-
-        $call = '';
-        if ($this->options->getOption('general.show_backtrace')) {
-            $locationInfo = self::getCallLocationInfos();
-            $call = $locationInfo['caller'] . '() called at ' . $locationInfo['file'] . ':' . $locationInfo['line'];
-        }
-
-        $result .= $call . "\n";
-
-        return $result;
-    }
-
-    /**
-     * Triggers the html post-processors
-     * @param  string $str HTML code
-     * @return string processed string
-     */
-    private function _postProcess($str)
-    {
-        $result = $str;
-
-        if ($this->options->getOption('processor.active')) {
-            $dir = dir(__DIR__. '/Processor');
-
-            while (false !== ($file = $dir->read())) {
-                if (strpos($file, '.php') !== false && strpos($file, 'Interface.php') === false) {
-                    $class = 'Ladybug\\Processor\\' . str_replace('.php', '', $file);
-
-                    $processorObject = new $class();
-
-                    if ($processorObject->isProcessable($result)) {
-                        $result = $processorObject->process($result);
-                    }
-
-                    unset($processorObject);
-                }
-            }
-            $dir->close();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Increments and returns the tree counter
-     * @return int tree id
-     */
-    public static function getTreeId()
-    {
-        return ++self::$tree_counter;
-    }
-
-    /**
-     * Returns true if the script is being executed in CLI
-     * @return boolean
-     */
-    private function _isCli()
-    {
-        return 'cli' === php_sapi_name();
-    }
-
-    /**
-     * Returns true if the request is a XMLHttpRequest.
-     *
-     * It works if your JavaScript library set an X-Requested-With HTTP header.
-     * It is known to work with Prototype, Mootools, jQuery.
-     *
-     * @return Boolean true if the request is an XMLHttpRequest, false otherwise
-     */
-    public function isXmlHttpRequest()
-    {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
-    }
-
-    public function setOption($key, $value)
-    {
-        $this->options->setOption($key, $value);
     }
 
     /**
@@ -296,23 +103,81 @@ class Dumper
      *
      * @return array
      */
-    public static function getCallLocationInfos()
+    public function loadCallLocationInfo()
     {
-        $idx = 7;
-        $bt = debug_backtrace();
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 7);
 
-        // Check if Ladybug was called from the helpers shortcuts
-        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
-        if (!in_array($caller, array('ld', 'ldd', 'ldr'))) {
-            $idx = $idx - 2;
+        $lastTrace = array_pop($trace);
+
+        $this->callFile = isset($lastTrace['file']) ? $lastTrace['file'] : null;
+        $this->callLine = isset($lastTrace['line']) ? $lastTrace['line'] : null;
+    }
+
+
+
+    /**
+     * Get render object
+     *
+     * @return RenderInterface
+     */
+    protected function getRender()
+    {
+        // environment
+
+        /** @var $environmentResolver EnvironmentResolver */
+        $environmentResolver = $this->application->container->get('environment_resolver');
+        $environment = $environmentResolver->resolve();
+
+        $format = $environment->getDefaultFormat();
+        if (!is_null($this->format)) {
+            $format = $this->format;
+        } elseif ($this->application->container->hasParameter('format')) {
+            $format = $this->application->container->getParameter('format');
         }
 
-        return array(
-            'caller'   => isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '',
-            'file'     => isset($bt[$idx]['file']) ? $bt[$idx]['file'] : '',
-            'line'     => isset($bt[$idx]['line']) ? $bt[$idx]['line'] : '',
-            'class'    => isset($bt[$idx + 1]['class'])    ? $bt[$idx + 1]['class'] : '',
-            'function' => isset($bt[$idx + 1]['function']) ? $bt[$idx + 1]['function'] : ''
-        );
+        /** @var $formatResolver FormatResolver */
+        $formatResolver = $this->application->container->get('format_resolver');
+        $format = $formatResolver->getFormat($format);
+
+        /** @var $themeResolver ThemeResolver */
+        $themeResolver = $this->application->container->get('theme_resolver');
+
+        if (!is_null($this->theme)) {
+            $theme = $themeResolver->getTheme($this->theme, $format);
+        } elseif ($this->application->container->hasParameter('theme')) {
+            $theme = $themeResolver->getTheme($this->application->container->getParameter('theme'), $format);
+        } else {
+            $theme = $themeResolver->resolve($format);
+        }
+
+        /** @var $renderResolver RenderResolver */
+        $renderResolver = $this->application->container->get('render_resolver');
+
+        $render = $renderResolver->resolve($format);
+        $render->setTheme($theme);
+        $render->setFormat($format);
+
+        return $render;
     }
+
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+    }
+
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
 }

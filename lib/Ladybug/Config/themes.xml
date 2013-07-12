@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="theme_base" class="Ladybug\Theme\Base\BaseTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
+        <service id="theme_classic" class="Ladybug\Theme\Classic\ClassicTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
+        <service id="theme_modern" class="Ladybug\Theme\Modern\ModernTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
+    </services>
+</container>

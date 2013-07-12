@@ -1,0 +1,5 @@
+{% extends "_base.html.twig" %}
+
+{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
+
+{% block value %}"{{ var.formattedValue }}"{% endblock %}

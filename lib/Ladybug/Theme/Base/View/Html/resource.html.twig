@@ -1,0 +1,15 @@
+{% extends "_base.html.twig" %}
+
+{% block type %}{{ parent() }}({{ var.resourceType }}){% endblock %}
+
+{% block value %}
+
+    {# Data #}
+    {% if var.resourceCustomData is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Data</div>
+        <div class="level_{{ var.level + 1 }}">
+            {{ render_type(var.resourceCustomData)|raw }}
+        </div>
+    {% endif %}
+
+{% endblock %}

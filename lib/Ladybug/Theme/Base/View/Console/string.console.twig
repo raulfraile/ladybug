@@ -1,0 +1,5 @@
+{% extends "_base.console.twig" %}
+
+{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
+
+{% block value %}"{{ var.formattedValue()|replace({' ': '<space>'})|raw }}"{% endblock %}

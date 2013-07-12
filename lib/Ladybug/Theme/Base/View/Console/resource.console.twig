@@ -1,0 +1,16 @@
+{% import "_macros.console.twig" as m %}
+
+{% spaceless %}
+
+{{ m.visibility_block(visibility) }}
+
+{{ m.array_key(key) }}
+
+<t_resource>resource({{ var.resourceType }})</t_resource>
+
+{% if var.resourceCustomData is not empty %}
+        <intro>
+    {{ render_type(var.resourceCustomData)|raw }}
+{% endif %}
+
+{% endspaceless %}

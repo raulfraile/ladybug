@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="types.xml"></import>
+        <import resource="themes.xml"></import>
+        <import resource="inspectors.xml"></import>
+        <import resource="renders.xml"></import>
+        <import resource="formats.xml"></import>
+        <import resource="environments.xml"></import>
+        <import resource="metadatas.xml"></import>
+    </imports>
+
+    <parameters>
+        <parameter key="theme">modern</parameter>
+        <parameter key="array_max_nesting_level">8</parameter>
+        <parameter key="object_max_nesting_level">3</parameter>
+    </parameters>
+
+    <services>
+        <service id="theme_resolver" class="Ladybug\Theme\ThemeResolver" />
+        <service id="environment_resolver" class="Ladybug\Environment\EnvironmentResolver" />
+        <service id="type_factory" class="Ladybug\Type\FactoryType" />
+        <service id="format_resolver" class="Ladybug\Format\FormatResolver" />
+        <service id="render_resolver" class="Ladybug\Render\RenderResolver" />
+        <service id="inspector_factory" class="Ladybug\Inspector\InspectorFactory" />
+        <service id="metadata_resolver" class="Ladybug\Metadata\MetadataResolver" />
+    </services>
+</container>

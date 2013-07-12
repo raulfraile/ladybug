@@ -1,0 +1,33 @@
+{% import "_macros.html.twig" as m %}
+
+{% set id = random(1000) %}
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ id }}">
+            <span class="array_key">
+                {% if visibility is not null %}
+                    <span class="label {{ _self.visibility_color(visibility) }}">
+                        <i class="icon-eye-open icon-white"></i>
+                    </span>
+                {% endif %}
+
+                {{ m.array_key(key) }}
+
+            </span>
+
+            <span class="">{% block type %}Resource ({{ var.resourceType }}){% endblock %}</span>
+
+        </a>
+    </div>
+    <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
+        <div class="accordion-inner">
+
+            {% if var.resourceCustomData is not empty %}
+                {{ render_type(var.resourceCustomData)|raw}}
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,28 @@
+{% extends "_base.html.twig" %}
+
+{% block value %}
+
+        <table class="ext_table">
+
+            <thead>
+                <tr>
+                    {% for item in var.header %}
+                        <th>{{ item }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in var.data %}
+                    <tr>
+                        {% for subitem in item %}
+                            <td>{{ subitem }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+{% endblock %}

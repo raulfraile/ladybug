@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="type_null" class="Ladybug\Type\NullType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_bool" class="Ladybug\Type\BoolType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_int" class="Ladybug\Type\IntType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_float" class="Ladybug\Type\FloatType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_string" class="Ladybug\Type\StringType">
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_array" class="Ladybug\Type\ArrayType">
+            <argument>%array_max_nesting_level%</argument>
+            <argument type="service" id="type_factory"></argument>
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_object" class="Ladybug\Type\ObjectType">
+            <argument>%object_max_nesting_level%</argument>
+            <argument type="service" id="type_factory"></argument>
+            <argument type="service" id="inspector_factory"></argument>
+            <argument type="service" id="metadata_resolver"></argument>
+
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_resource" class="Ladybug\Type\ResourceType">
+            <argument type="service" id="type_factory"></argument>
+            <argument type="service" id="inspector_factory"></argument>
+            <argument type="service" id="metadata_resolver"></argument>
+            <tag name="ladybug.type" />
+        </service>
+
+        <service id="type_extended_code" class="Ladybug\Type\Extended\CodeType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
+    </services>
+</container>

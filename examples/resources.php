@@ -5,4 +5,5 @@ Ladybug\Loader::loadHelpers();
 
 $file = fopen(__DIR__ . '/../LICENSE', 'r');
 
-ladybug_dump($file);
+$dumper = new \Ladybug\Dumper();
+echo $dumper->dump($file);

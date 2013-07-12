@@ -1,0 +1,10 @@
+{% import "_macros.html.twig" as m %}
+
+{% spaceless %}
+<div class="level_{{ var.level }}">
+    {{ m.property_visibility(var) }}
+    {{ m.array_key(key) }}
+    <span class="type">{% block type %}{{ var.type }}{% endblock %}</span>
+    <span class="value">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+</div>
+{% endspaceless %}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Ladybug\Type\ObjectType" exclusion-policy="ALL" xml-root-name="var"
+           access-type="public_method">
+
+        <property name="className" expose="true" />
+        <property name="classNamespace" expose="true" />
+        <property name="classParent" expose="true" />
+        <property name="classInterfaces" expose="true" />
+        <property name="classFile" expose="true" />
+        <property name="classConstants" expose="true" xml-key-value-pairs="true" />
+        <property name="objectCustomData" expose="true" />
+    </class>
+</serializer>

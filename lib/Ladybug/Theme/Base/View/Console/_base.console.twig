@@ -1,0 +1,11 @@
+{% import "_macros.console.twig" as m %}
+
+{{ m.visibility_block(visibility) }}
+
+{{ m.array_key(key) }}
+
+{% block type %}{{ var.type }}{% endblock %}
+
+    {% if var.type != 'null' %}
+        <space> <t_{{ var.type }}>{% block value %}{{ var.formattedValue()|raw }}{% endblock %}</t_{{ var.type }}>
+    {% endif %}

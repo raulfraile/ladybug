@@ -19,12 +19,7 @@ projects. For example, with this library, the following is possible:
 
 As a result:
 
-<pre><strong><em>NULL</em></strong>
-<strong><em>int</em></strong> <span style="color:#800">15</span>
-<strong><em>float</em></strong> <span style="color:#800">15.5</span>
-<strong><em>string(12)</em></strong> <span style="color:#080">"hello world!"</span>
-<strong><em>bool</em></strong> <span style="color:#008">FALSE</span>
-</pre>
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/simple_variables_modern.png" />
 
 ## Examples
 
@@ -48,7 +43,7 @@ It is possible to dump any variable, including arrays, objects and resources:
     ladybug_dump($var)
 ```
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/examples/images/array_example.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/array_modern.png" />
 
 ### Dumping an object
 

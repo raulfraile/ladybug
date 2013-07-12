@@ -1,0 +1,68 @@
+
+{% macro array_key(key) %}
+    {% if key is not empty %}
+        <span class="key">[{{ key }}]</span>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro property_visibility(var) %}
+    {% if var is not empty %}
+        {% if key.visibility is defined %}
+            <span class="visibility">{{ _self.visibility_name(key.visibility) }}</span>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro visibility_name(visibility) %}
+{% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+private
+{% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+protected
+{% else %}
+public
+{% endif %}
+{% endmacro %}
+
+
+
+{% macro array_block(title, data, level, show_keys) %}
+
+    {% spaceless %}
+    {% set id = random(1000) %}
+    <label for="tree_array_{{ id }}">
+        {% if array_key is not empty %}
+            <span class="key">[{{ title }}]:</span>
+        {% endif %}
+
+        <span class="switcher">{{ title }}</span>
+    </label>
+    <input type="checkbox" id="tree_array_{{ id }}">
+    <ol>
+        {% for key,var in data %}
+        <li>
+            {{ render_type(var)|raw }}
+        </li>
+        {% endfor %}
+    </ol>
+    {% endspaceless %}
+{% endmacro %}
+
+
+{% macro render_object_method(method) %}
+    <div class="level_1">
+        <span>{{ method.name }}({% spaceless %}
+
+            {% for methodParameter in method.parameters %}
+                {% if methodParameter.type is not empty %}
+                    {{ methodParameter.type }}
+                {% endif %}
+                ${{ methodParameter.name }}
+
+                {% if methodParameter.defaultValue is not null %}
+                    = <span class="type_{{ methodParameter.defaultValue.type }}">{{ methodParameter.defaultValue.formattedValue }}</span>
+                {% endif %}{% if not loop.last %},{% endif %}
+            {% endfor %}{% endspaceless %})
+            </span>
+    </div>
+{% endmacro %}

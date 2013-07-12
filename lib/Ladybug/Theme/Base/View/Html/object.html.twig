@@ -1,0 +1,80 @@
+{% extends "_base.html.twig" %}
+
+{% block type %}{{ parent() }}({{ var.className }}){% endblock %}
+
+{% block value %}
+
+    {# Help link #}
+
+    {% if var.helpLink is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Help link</div>
+        <div class="level_{{ var.level + 1 }}">
+            <a href="{{ var.helpLink }}" target="_blank">
+                {{ var.helpLink }}
+            </a>
+        </div>
+    {% endif %}
+
+    {# Custom data #}
+
+    {% if var.objectCustomData is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Data</div>
+        <div class="level_{{ var.level + 1 }}">
+            {{ render_type(var.objectCustomData)|raw }}
+        </div>
+    {% endif %}
+
+    {# Properties #}
+    {% if var.objectProperties is not empty %}
+
+        <div class="block_title level_{{ var.level + 1 }}">Properties</div>
+        <div class="level_{{ var.level + 1 }}">
+            {% for data in var.objectProperties %}
+                {{ render_type(data.value, data.name, data.visibility)|raw }}
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
+    {# Class info #}
+    {% if var.classFile is not empty %}
+        <div class="block_title level_{{ var.level + 1 }}">Class info</div>
+        <div class="level_{{ var.level + 2 }}">
+            {% if var.classFile is not empty %}
+                <div>Filename: {{ var.classFile }}</div>
+            {% endif %}
+            {% if var.classInterface is not empty %}
+                <div>Interfaces: {{ var.classInterface }}</div>
+            {% endif %}
+            {% if var.classNamespace is not empty %}
+                <div>Namespace: {{ var.classNamespace }}</div>
+            {% endif %}
+            {% if var.classParent is not empty %}
+                <div>Parent: {{ var.classParent }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {# Class constants #}
+    {% if var.classConstants is not empty %}
+    <div class="block_title level_{{ var.level + 1 }}">Class constants</div>
+    <div class="level_{{ var.level + 1 }}">
+        {% for key,constant in var.classConstants %}
+            {{ render_type(constant.value, constant.name)|raw }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# Class methods #}
+    {% if var.classMethods is not empty %}
+    <div class="block_title level_{{ var.level + 1 }}">Methods</div>
+    <div class="level_{{ var.level + 1 }}">
+        {% for method in var.classMethods %}
+            {{ m.render_object_method(method) }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+
+{% endblock %}

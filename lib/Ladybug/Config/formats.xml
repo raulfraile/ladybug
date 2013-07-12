@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="format_console" class="Ladybug\Format\ConsoleFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_html" class="Ladybug\Format\HtmlFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_json" class="Ladybug\Format\JsonFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_php" class="Ladybug\Format\PhpFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_text" class="Ladybug\Format\TextFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_xml" class="Ladybug\Format\XmlFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+        <service id="format_yaml" class="Ladybug\Format\YamlFormat">
+            <tag name="ladybug.format" />
+        </service>
+
+    </services>
+</container>

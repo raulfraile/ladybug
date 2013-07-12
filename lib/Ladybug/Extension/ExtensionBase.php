@@ -12,36 +12,30 @@
 
 namespace Ladybug\Extension;
 
+use Ladybug\Type\FactoryType;
+
 abstract class ExtensionBase implements ExtensionInterface
 {
 
-    protected $var;
-    protected $inspect;
+    /** @var FactoryType $factory */
+    protected $factory;
 
-    public function __construct($var)
+    protected $level;
+
+    public function __construct(FactoryType $factory, $level = 0)
     {
-        $this->var = $var;
-        $this->inspect = true;
+        $this->factory = $factory;
+        $this->level = $level;
     }
 
-    public function getInspect()
+    public function setLevel($level)
     {
-        return $this->inspect;
+        $this->level = $level;
     }
 
-    protected function _formatSize($size, $unit = NULL)
+    public function getLevel()
     {
-        $kb = 1024;
-        $mb = $kb * 1024;
-        $gb = $mb * 1024;
-
-        $result = '';
-
-        if ($size < $kb) $result = $size . ' bytes';
-        elseif ($size < $mb) $result = number_format($size/$kb, 2) . ' Kb';
-        elseif ($size < $gb) $result = number_format($size/$mb, 2) . ' Mb';
-        else $result = number_format($size/$gb, 2) . ' Gb';
-
-        return $result;
+        return $this->level;
     }
+
 }
