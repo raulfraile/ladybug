@@ -12,7 +12,6 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Container;
 use Ladybug\Type\ObjectType as Object;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;

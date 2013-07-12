@@ -12,7 +12,6 @@
 
 namespace Ladybug\Inspector\Object;
 
-use Ladybug\Dumper;
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Type;
 
