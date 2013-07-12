@@ -4,24 +4,19 @@ require_once __DIR__.'/../vendor/autoload.php';
 Ladybug\Loader::loadHelpers();
 
 // user class
-class Foo3 {public $a; public function __construct() {$this->a = new DateTime();}}
-class Foo2 {public $a; public function __construct() {$this->a = new Foo3();}}
 class Foo
 {
-    const www = 1;
+    const TEST = 1;
 
     public $bar = 1;
-    public $bar2 = 2;
-    public $a;
-    public $b = array(1, 2, 3);
-    private $w = 1;
-    protected $w2 = 2;
+
 
     /**
      * Constructor
+     *
      * @return null
      */
-    public function __construct() {$this->a = new Foo2();}
+    public function __construct() {}
 
     /**
      * Get bar
@@ -31,8 +26,8 @@ class Foo
      * @return int
      */
     protected function getBar() { return $this->bar; }
-    private function setBar($a,$b,$c,$d,$bar = 1, $bar2 = TRUE, $bar3 = NULL, $bar4 = "<br/>", array $bar5 = array(1,2,3)) { $this->bar = $bar; }
-    public function __toString() {return $this->bar . ' - ' . $this->bar2; }
+    private function setBar($bar) { $this->bar = $bar; }
+    public function __toString() {return $this->bar; }
 }
 
 $foo = new Foo();
@@ -69,4 +64,4 @@ $reflected = new ReflectionClass('Foo');
 
 $dumper = new \Ladybug\Dumper();
 
-echo $dumper->dump($foo, $date, $dom, $reflected);
+echo $dumper->dump($foo);
