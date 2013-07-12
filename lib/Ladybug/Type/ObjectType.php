@@ -272,7 +272,6 @@ class ObjectType extends AbstractType
         return null;
     }
 
-
     public function setToString($toString)
     {
         $this->toString = $toString;

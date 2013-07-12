@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Theme\Modern;
+namespace Ladybug\Theme\modern;
 
 use Ladybug\Theme\AbstractTheme;
 use Ladybug\Theme\ThemeInterface;

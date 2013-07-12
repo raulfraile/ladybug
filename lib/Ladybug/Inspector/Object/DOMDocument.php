@@ -20,7 +20,7 @@ class DOMDocument extends AbstractInspector
 {
 
     /**
-     * @param string $var
+     * @param  string                          $var
      * @return \Ladybug\Type\Extended\CodeType
      */
     public function getData($var)

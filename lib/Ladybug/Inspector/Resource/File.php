@@ -19,7 +19,7 @@ use Ladybug\Type;
 class File extends AbstractInspector
 {
     /**
-     * @param string $var
+     * @param  string                                $var
      * @return \Ladybug\Type\Extended\CollectionType
      */
     public function getData($var)

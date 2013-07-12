@@ -83,5 +83,4 @@ class CollectionType extends BaseType implements \Countable
         return count($this->data);
     }
 
-
 }

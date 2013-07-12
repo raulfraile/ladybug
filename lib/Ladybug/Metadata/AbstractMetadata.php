@@ -21,7 +21,6 @@ abstract class AbstractMetadata implements MetadataInterface
     /** @var string $version */
     protected $version = null;
 
-
     abstract public function hasMetadata($class);
 
     abstract public function getMetadata($class);

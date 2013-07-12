@@ -14,7 +14,6 @@
 namespace Ladybug\Type;
 
 use Ladybug\Exception\InvalidTypeException;
-use Ladybug\Container;
 
 class FactoryType
 {

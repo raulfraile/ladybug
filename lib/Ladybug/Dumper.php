@@ -113,8 +113,6 @@ class Dumper
         $this->callLine = isset($lastTrace['line']) ? $lastTrace['line'] : null;
     }
 
-
-
     /**
      * Get render object
      *

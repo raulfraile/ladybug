@@ -16,7 +16,6 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Twig_SimpleFunction;
 use Ladybug\Theme\ThemeInterface;
-use Ladybug\Type\TypeInterface;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\LadybugExtension;
 
@@ -33,7 +32,6 @@ abstract class AbstractRender implements RenderInterface
     protected $format;
 
     protected $isLoaded = false;
-
 
     protected function load()
     {

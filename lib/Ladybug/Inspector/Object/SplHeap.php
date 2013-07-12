@@ -20,7 +20,7 @@ abstract class SplHeap extends AbstractInspector
 {
 
     /**
-     * @param string $var
+     * @param  string                                            $var
      * @return \Ladybug\Type\Extended\CollectionType
      * @throws \Ladybug\Exception\InvalidInspectorClassException
      */

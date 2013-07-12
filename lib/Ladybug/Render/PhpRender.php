@@ -12,8 +12,6 @@
 
 namespace Ladybug\Render;
 
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Ladybug\Format;
 
 class PhpRender extends AbstractRender implements RenderInterface
