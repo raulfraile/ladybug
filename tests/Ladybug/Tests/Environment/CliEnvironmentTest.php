@@ -15,6 +15,7 @@ class CliEnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         $this->environment = new Environment\CliEnvironment('cli');
         $this->assertTrue($this->environment->isActive());
+        $this->assertEquals('Cli', $this->environment->getName());
     }
 
     public function testNotValidDetection()

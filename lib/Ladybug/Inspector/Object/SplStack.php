@@ -20,6 +20,11 @@ class SplStack extends AbstractInspector
 {
     public function getData($var)
     {
+
+        if (!$var instanceof \SplStack) {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         /** @var $var \SplStack */
 
         $arrayData = iterator_to_array($var);
@@ -28,7 +33,7 @@ class SplStack extends AbstractInspector
         $collection->setTitle(sprintf('Stack (%d)', count($arrayData)));
 
         foreach ($arrayData as $item) {
-            $collection->add($this->factory->factory($item));
+            $collection->add($this->factory->factory($item, $this->level));
         }
 
         return $collection;

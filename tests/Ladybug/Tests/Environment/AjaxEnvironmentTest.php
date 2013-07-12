@@ -15,6 +15,7 @@ class AjaxEnvironmentTest extends \PHPUnit_Framework_TestCase
     {
         $this->environment = new Environment\AjaxEnvironment('XMLHttpRequest');
         $this->assertTrue($this->environment->isActive());
+        $this->assertEquals('Ajax', $this->environment->getName());
     }
 
     public function testNotValidDetection()

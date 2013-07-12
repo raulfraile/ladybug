@@ -20,6 +20,11 @@ class SplQueue extends AbstractInspector
 {
     public function getData($var)
     {
+
+        if (!$var instanceof \SplQueue) {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         /** @var $var \SplQueue */
 
         $arrayData = iterator_to_array($var);
@@ -28,7 +33,7 @@ class SplQueue extends AbstractInspector
         $collection->setTitle(sprintf('Queue (%d)', count($arrayData)));
 
         foreach ($arrayData as $item) {
-            $collection->add($this->factory->factory($item));
+            $collection->add($this->factory->factory($item, $this->level));
         }
 
         return $collection;

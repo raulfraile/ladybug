@@ -73,18 +73,25 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Ladybug\Type\IntType', $constant->getValue());
 
         // methods
-        $this->assertEquals(5, count($this->type->getClassMethods()));
+        $this->assertEquals(6, count($this->type->getClassMethods()));
 
         $constructMethod = $this->type->getMethodByName('__construct');
         $protectedMethod = $this->type->getMethodByName('protectedMethod');
         $privateMethod = $this->type->getMethodByName('privateMethod');
+        $staticMethod = $this->type->getMethodByName('staticMethod');
 
         $this->assertEquals('__construct', $constructMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PUBLIC, $constructMethod->getVisibility());
+        $this->assertFalse($constructMethod->getIsStatic());
         $this->assertEquals('protectedMethod', $protectedMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PROTECTED, $protectedMethod->getVisibility());
+        $this->assertFalse($protectedMethod->getIsStatic());
         $this->assertEquals('privateMethod', $privateMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PRIVATE, $privateMethod->getVisibility());
+        $this->assertFalse($privateMethod->getIsStatic());
+        $this->assertEquals('staticMethod', $staticMethod->getName());
+        $this->assertEquals(VisibilityInterface::VISIBILITY_PUBLIC, $staticMethod->getVisibility());
+        $this->assertTrue($staticMethod->getIsStatic());
 
         // method parameters
         $this->assertCount(5, $privateMethod->getParameters());
@@ -177,6 +184,11 @@ class Bar extends Foo implements \Serializable
      * @return string test result
      */
     private function privateMethod($p1, &$p2, array $p3, \DateTime $p4, $p5 = 1)
+    {
+
+    }
+
+    public static function staticMethod()
     {
 
     }

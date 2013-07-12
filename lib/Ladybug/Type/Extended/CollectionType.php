@@ -12,7 +12,7 @@
 
 namespace Ladybug\Type\Extended;
 
-class CollectionType extends BaseType
+class CollectionType extends BaseType implements \Countable
 {
 
     const TYPE_ID = 'collection';
@@ -77,5 +77,11 @@ class CollectionType extends BaseType
 
         return $object;
     }
+
+    public function count()
+    {
+        return count($this->data);
+    }
+
 
 }

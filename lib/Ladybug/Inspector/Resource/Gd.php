@@ -18,8 +18,13 @@ use Ladybug\Type;
 
 class Gd extends AbstractInspector
 {
+
     public function getData($var)
     {
+        if (!is_resource($var) || get_resource_type($var) != 'gd') {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         $result = array();
 
         $gd_info = gd_info();

@@ -20,12 +20,19 @@ class ConsoleRender extends AbstractRender implements RenderInterface
 
     protected $console;
 
+    public function __construct(\Symfony\Component\Console\Output\ConsoleOutputInterface $console = null)
+    {
+        if (!is_null($console)) {
+            $this->console = $console;
+        } else {
+            $this->console = new ConsoleOutput();
+        }
+    }
+
     protected function load()
     {
         if (!$this->isLoaded) {
             parent::load();
-
-            $this->console = new ConsoleOutput();
 
             // load styles
             foreach ($this->theme->getCliColors() as $key => $item) {
@@ -54,6 +61,8 @@ class ConsoleRender extends AbstractRender implements RenderInterface
         $result = str_replace('<space>', ' ', $result);
 
         $this->console->writeln($result);
+
+        return $result;
     }
 
     public function getFormat()

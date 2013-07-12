@@ -85,4 +85,16 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $dump[0]->value);
     }
 
+    public function testDumpXmlFormat()
+    {
+        $var = 1;
+
+        $this->dumper->setFormat(Format\XmlFormat::FORMAT_NAME);
+        $dump = new \SimpleXMLElement($this->dumper->dump($var));
+
+        $this->assertEquals(1, $dump->entry->count());
+        $this->assertEquals('int', $dump->entry[0]['type']);
+        $this->assertEquals('1', $dump->entry[0]->value);
+    }
+
 }

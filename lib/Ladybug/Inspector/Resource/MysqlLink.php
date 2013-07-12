@@ -20,6 +20,10 @@ class MysqlLink extends AbstractInspector
 {
     public function getData($var)
     {
+        if (!is_resource($var) || get_resource_type($var) != 'mysql link') {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         $collection = Type\Extended\CollectionType::create(array(
             Type\Extended\TextType::create(mysql_get_host_info($var), 'Host info'),
             Type\Extended\TextType::create(mysql_get_proto_info($var), 'Protocol version'),

@@ -19,11 +19,6 @@ use Ladybug\Format;
 class PhpRender extends AbstractRender implements RenderInterface
 {
 
-    protected function load()
-    {
-        parent::load();
-    }
-
     public function render(array $nodes, array $extraData = array())
     {
         return array_merge(array(

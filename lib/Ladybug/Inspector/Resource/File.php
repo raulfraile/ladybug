@@ -18,8 +18,17 @@ use Ladybug\Type;
 
 class File extends AbstractInspector
 {
+    /**
+     * @param string $var
+     * @return \Ladybug\Type\Extended\CollectionType
+     */
     public function getData($var)
     {
+
+        if (!is_resource($var) || get_resource_type($var) != 'stream') {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         /** @var resource $var */
 
         $result = array();
@@ -35,7 +44,7 @@ class File extends AbstractInspector
         $collection->setTitle('File');
 
         $result = array();
-        $result['mode'] = $this->factory->factory($fstat['mode'], 'mode');
+        $result['mode'] = $this->factory->factory($fstat['mode'], $this->level);
 
         $mode = new Type\Extended\UnixPermissionsType();
         $mode->setKey('Permissions');

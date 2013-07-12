@@ -25,6 +25,7 @@ class PhpObjectsMetadataTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('help_link', $metadata);
         $this->assertArrayHasKey('icon', $metadata);
         $this->assertArrayHasKey('version', $metadata);
+        $this->assertEquals(phpversion(), $this->metadata->getVersion());
     }
 
     public function testMetadataForInvalidValues()

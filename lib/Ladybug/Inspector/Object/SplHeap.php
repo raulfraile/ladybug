@@ -18,8 +18,18 @@ use Ladybug\Type;
 
 abstract class SplHeap extends AbstractInspector
 {
+
+    /**
+     * @param string $var
+     * @return \Ladybug\Type\Extended\CollectionType
+     * @throws \Ladybug\Exception\InvalidInspectorClassException
+     */
     public function getData($var)
     {
+        if (!$var instanceof \SplHeap) {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         /** @var $var \SplHeap */
 
         $arrayData = iterator_to_array($var);
@@ -28,7 +38,7 @@ abstract class SplHeap extends AbstractInspector
         $collection->setTitle(sprintf('Heap (%d)', count($arrayData)));
 
         foreach ($arrayData as $item) {
-            $collection->add($this->factory->factory($item));
+            $collection->add($this->factory->factory($item, $this->level));
         }
 
         return $collection;

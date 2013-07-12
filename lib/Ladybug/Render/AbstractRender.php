@@ -59,32 +59,6 @@ abstract class AbstractRender implements RenderInterface
         }
     }
 
-    public function render(array $nodes, array $extraData = array())
-    {
-
-        $this->load();
-
-        $content = '';
-
-        foreach ($nodes as $item) {
-            /** @var TypeInterface $item */
-
-            $template = sprintf('%s.%s.twig', $item->getTemplateName(), $this->getFormat());
-            $content .= $this->twig->render($template, $item->getParameters());
-        }
-
-        $layoutTemplate = sprintf('layout.%s.twig', $this->getFormat());
-
-        $result = $this->twig->render($layoutTemplate, array(
-            'content' => $content,
-            'nodes' => $nodes,
-            'css' => $this->theme->getHtmlCssDependencies(),
-            'js' => $this->theme->getHtmlJsDependencies()
-        ));
-
-        return $result;
-    }
-
     protected function getPaths()
     {
         $paths = array();

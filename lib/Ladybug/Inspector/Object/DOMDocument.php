@@ -18,8 +18,17 @@ use Ladybug\Type;
 
 class DOMDocument extends AbstractInspector
 {
+
+    /**
+     * @param string $var
+     * @return \Ladybug\Type\Extended\CodeType
+     */
     public function getData($var)
     {
+        if (!$var instanceof \DOMDocument) {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         /** @var \DOMDocument $var */
 
         $var->formatOutput = true;
