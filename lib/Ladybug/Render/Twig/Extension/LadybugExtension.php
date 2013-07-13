@@ -5,6 +5,7 @@ namespace Ladybug\Render\Twig\Extension;
 use Twig_Extension;
 use Twig_Environment;
 use Ladybug\Type\TypeInterface;
+use Sabberworm\CSS\Parser as CssParser;
 
 class LadybugExtension extends Twig_Extension
 {
@@ -73,6 +74,10 @@ class LadybugExtension extends Twig_Extension
         $folder = pathinfo($filename, \PATHINFO_DIRNAME);
 
         $content = file_get_contents($filename);
+
+
+        //$content = $oCss->__toString();
+
         // comments
         $content = preg_replace('!/\*.*?\*/!s','', $content);
         $content = preg_replace('/\n\s*\n/',"\n", $content);

@@ -1,24 +1,43 @@
-<style>
+<script type="text/template" id="ladybug_css_{{ id }}">
     {% for file in css %}
-    {{ minify_css(file)|raw }}
-    {% endfor %}
-</style>
-
-<script>
-    {% for file in js %}
-    {{ include_file(file)|raw }}
+        {{ minify_css(file)|raw }}
     {% endfor %}
 </script>
 
-<div class="ladybug" style="width:700px; margin:10px">
-    {% for node in nodes %}
-        <span class="dump-block">
-            {{ render_type(node)|raw }}
-        </span>
+<script type="text/template" id="ladybug_js_{{ id }}">
+    {% for file in js %}
+        {{ include_file(file)|raw }}
     {% endfor %}
+</script>
 
-    <div class="clearfix">
-        <span class="label label-important pull-right">{{ callFile }} : {{ callLine }}</span>
+<script type="text/template" id="ladybug_content_{{ id }}">
+
+    <div class="ladybug" style="width:700px; margin:10px">
+        {% for node in nodes %}
+            <span class="dump-block">
+                {{ render_type(node)|raw }}
+            </span>
+        {% endfor %}
+
+        <div class="clearfix">
+            <span class="label label-important pull-right">{{ callFile }} : {{ callLine }}</span>
+        </div>
+
     </div>
 
-</div>
+</script>
+
+<iframe id="ladybug_iframe_{{ id }}" frameborder="0" width="500" height="200"></iframe>
+<script>
+var ladybug_iframe_{{ id }} = document.getElementById("ladybug_iframe_{{ id }}").contentWindow.document;
+ladybug_iframe_{{ id }}.open();
+ladybug_iframe_{{ id }}.write(
+    "<style>" + document.getElementById("ladybug_css_{{ id }}").innerHTML + "</style>" +
+    "<script>" + document.getElementById("ladybug_js_{{ id }}").innerHTML + "\<\/script>" +
+    document.getElementById("ladybug_content_{{ id }}").innerHTML);
+ladybug_iframe_{{ id }}.close();
+var height = ladybug_iframe_{{ id }}.body.scrollHeight;
+var width = ladybug_iframe_{{ id }}.body.scrollWidth;
+document.getElementById("ladybug_iframe_{{ id }}").height = (height+10) + "px";
+document.getElementById("ladybug_iframe_{{ id }}").width = (width+10) + "px";
+</script>

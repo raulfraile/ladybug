@@ -80,8 +80,28 @@ class Dumper
 
         return $render->render($this->nodes, array(
             'callFile' => $this->callFile,
-            'callLine' => $this->callLine
+            'callLine' => $this->callLine,
+            'id' => uniqid()
         ));
+
+        echo '<iframe id="i" frameborder="0" width="500" height="100"></iframe>
+<script>
+        var l=document.getElementById("i").contentWindow.document;
+        l.open();
+        l.write("<style>" + document.getElementById("ladybug_css").innerHTML + "</style>" +
+         "<script>" + document.getElementById("ladybug_js").innerHTML + "\<\/script>" + document.getElementById("ladybug_content").innerHTML);
+        l.close();
+        var height = l.body.scrollHeight;
+        var width = l.body.scrollWidth;
+        document.getElementById("i").height = (height+10) + "px";
+        document.getElementById("i").width = (width+10) + "px";
+        console.log(height + "px");
+        </script>';
+        /*die();
+        return $render->render($this->nodes, array(
+            'callFile' => $this->callFile,
+            'callLine' => $this->callLine
+        ));*/
     }
 
     /**

@@ -80,4 +80,9 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
         );
     }
 
+    public function buildResources()
+    {
+
+    }
+
 }
