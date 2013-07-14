@@ -77,11 +77,14 @@ class Dumper
         $this->loadCallLocationInfo();
 
         $render = $this->getRender();
+        $render->setGlobals(array(
+            'id' => uniqid(),
+            'expanded' => $this->getParameter('expanded', false)
+        ));
 
         return $render->render($this->nodes, array(
             'callFile' => $this->callFile,
-            'callLine' => $this->callLine,
-            'id' => uniqid()
+            'callLine' => $this->callLine
         ));
     }
 
@@ -177,6 +180,16 @@ class Dumper
     public function getFormat()
     {
         return $this->format;
+    }
+
+    public function setParameter($name, $value)
+    {
+        $this->application->container->setParameter($name, $value);
+    }
+
+    public function getParameter($name, $default = null)
+    {
+        return $this->application->container->hasParameter($name) ? $this->application->container->getParameter($name) : $default;
     }
 
 }

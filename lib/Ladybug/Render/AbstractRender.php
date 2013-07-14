@@ -48,6 +48,18 @@ abstract class AbstractRender implements RenderInterface
         }
     }
 
+    public function setGlobals(array $globals)
+    {
+        if (!$this->isLoaded) {
+            $this->load();
+        }
+
+        foreach ($globals as $key => $value) {
+            $this->twig->addGlobal($key, $value);
+        }
+
+    }
+
     protected function getPaths()
     {
         $paths = array();

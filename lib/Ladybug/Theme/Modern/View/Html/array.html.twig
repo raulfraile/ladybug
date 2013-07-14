@@ -1,12 +1,8 @@
 {% import "_macros.html.twig" as m %}
 
-
-
-{% set id = random(1000) %}
-
 <div class="accordion-group">
     <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ id }}">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ var.id }}">
             <span class="array_key">
                 {% if visibility is not null %}
                     <span class="label {{ m.visibility_color(visibility) }}">
@@ -22,7 +18,7 @@
 
         </a>
     </div>
-    <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
+    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
         <div class="accordion-inner">
             {% for item in var.value %}
                 {{ render_type(item.value, item.key) }}

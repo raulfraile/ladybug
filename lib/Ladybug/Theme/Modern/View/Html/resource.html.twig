@@ -20,7 +20,7 @@
 
         </a>
     </div>
-    <div id="c{{ id }}" class="accordion-body collapse {% if var.level == 1%}in{% endif %}">
+    <div id="c{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
         <div class="accordion-inner">
 
             {% if var.resourceCustomData is not empty %}
