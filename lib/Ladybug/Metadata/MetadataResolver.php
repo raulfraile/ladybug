@@ -50,8 +50,14 @@ class MetadataResolver
         return array();
     }
 
-    public function has($key)
+    public function has($className)
     {
-        return array_key_exists($key, $this->metadatas);
+        foreach ($this->metadatas as $metadata) {
+            if ($metadata->hasMetadata($className)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

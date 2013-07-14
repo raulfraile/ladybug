@@ -34,14 +34,14 @@ class Foo
 }
 
 $foo = new Foo();
-ladybug_dump($foo);
+//ladybug_dump($foo);
 
 
 
 // DateTime object
 
 $date = new DateTime();
-ladybug_dump($date);
+ladybug_dump_die($date);
 
 $sXml = <<<XML
 <books>
