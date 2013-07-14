@@ -198,4 +198,10 @@ abstract class AbstractType implements TypeInterface
         return $this->encoding;
     }
 
+    function __clone()
+    {
+        $this->id = uniqid();
+    }
+
+
 }
