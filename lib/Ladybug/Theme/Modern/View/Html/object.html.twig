@@ -16,8 +16,10 @@
             <span class="">{% block type %}Object ({{ var.className }}){% endblock %}</span>
         </a>
     </div>
-    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
+    <div id="c{{ var.id }}" class="accordion-body collapse {% if (expanded or var.level == 1) and not var.terminal %}in{% endif %}">
         <div class="accordion-inner">
+
+            {% if not var.terminal %}
 
             <div style="height:30px; text-align:right{% if var.helpLink is empty %};display:none{% endif %}">
                 <a href="{{ var.helpLink }}" target="_blank" style="text-decoration: none">
@@ -132,6 +134,10 @@
                 </div>
 
             </div>
+            {% endif %}
+
+            {% else %}
+                <span class="muted"><i class="icon-warning-sign"></i> Object max nesting level reached</span>
             {% endif %}
 
 

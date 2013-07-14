@@ -21,5 +21,4 @@ $var = array(
     )
 );
 
-ladybug_set_option('array_max_nesting_level', 2);
 ladybug_dump($var);

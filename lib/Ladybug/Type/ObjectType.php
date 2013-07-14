@@ -35,7 +35,7 @@ class ObjectType extends AbstractType
     protected $classParent = null;
     protected $toString = null;
 
-    protected $isLeaf;
+    protected $terminal;
 
     /** @var string $icon */
     protected $icon;
@@ -80,7 +80,7 @@ class ObjectType extends AbstractType
         $this->toString = (method_exists($var, '__toString')) ? $var->__toString() : null;
 
         if ($this->level < $this->maxLevel) {
-            $this->isLeaf = false;
+            $this->terminal = false;
 
             $reflectedClass = new \ReflectionClass($this->className);
 
@@ -117,7 +117,7 @@ class ObjectType extends AbstractType
             }
 
         } else {
-            $this->isLeaf = TRUE;
+            $this->terminal = true;
         }
 
     }
@@ -228,14 +228,14 @@ class ObjectType extends AbstractType
         return $this->classStaticProperties;
     }
 
-    public function setIsLeaf($isLeaf)
+    public function setTerminal($isLeaf)
     {
-        $this->isLeaf = $isLeaf;
+        $this->terminal = $isLeaf;
     }
 
-    public function getIsLeaf()
+    public function getTerminal()
     {
-        return $this->isLeaf;
+        return $this->terminal;
     }
 
     public function setObjectCustomData($objectCustomData)

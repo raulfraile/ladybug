@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-Ladybug\Loader::loadHelpers();
 
 // user class
 class Foo
@@ -9,6 +8,7 @@ class Foo
     const TEST = 1;
 
     public $bar = 1;
+    protected $extra;
 
 
     /**
@@ -16,7 +16,10 @@ class Foo
      *
      * @return null
      */
-    public function __construct() {}
+    public function __construct() {
+        $this->extra = new \stdClass();
+        $this->extra->a1 = 1;
+    }
 
     /**
      * Get bar
@@ -31,14 +34,14 @@ class Foo
 }
 
 $foo = new Foo();
-//ld($foo);
+ladybug_dump($foo);
 
 
 
 // DateTime object
 
 $date = new DateTime();
-//ladybug_dump_die($date);
+ladybug_dump($date);
 
 $sXml = <<<XML
 <books>
@@ -55,13 +58,8 @@ XML;
 $dom = new DOMDocument();
 $dom->loadXml($sXml);
 
-//ladybug_dump($dom);
+ladybug_dump($dom);
 
 $reflected = new ReflectionClass('Foo');
 
-//ladybug_dump($reflected);
-
-
-$dumper = new \Ladybug\Dumper();
-
-echo $dumper->dump($foo);
+ladybug_dump($reflected);
