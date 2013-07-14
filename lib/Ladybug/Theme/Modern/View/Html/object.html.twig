@@ -1,10 +1,8 @@
 {% import "_macros.html.twig" as m %}
 
-{% set id = random(1000) %}
-
 <div class="accordion-group">
     <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#c{{ id }}">
+        <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#c{{ var.id }}">
             <span class="array_key">
                 {% if visibility is not null %}
                     <span class="label {{ m.visibility_color(visibility) }}">
@@ -18,7 +16,7 @@
             <span class="">{% block type %}Object ({{ var.className }}){% endblock %}</span>
         </a>
     </div>
-    <div id="c{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
+    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
         <div class="accordion-inner">
 
             <div style="height:30px; text-align:right{% if var.helpLink is empty %};display:none{% endif %}">
@@ -32,11 +30,11 @@
 
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#object_data_{{ id }}">
+                        <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#object_data_{{ var.id }}">
                             Data
                         </a>
                     </div>
-                    <div id="object_data_{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
+                    <div id="object_data_{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
                         <div class="accordion-inner">
                             {{ render_type(var.objectCustomData)|raw }}
                         </div>
@@ -50,11 +48,11 @@
 
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" href="#object_data_{{ id }}">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#object_data_{{ var.id }}">
                         Properties
                     </a>
                 </div>
-                <div id="object_data_{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
+                <div id="object_data_{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
                     <div class="accordion-inner">
 
                         {% for data in var.objectProperties %}
@@ -75,11 +73,11 @@
             {% if var.classFile is not empty %}
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#c{{ id }}"#} href="#object_info_{{ id }}">
+                    <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#c{{ var.id }}"#} href="#object_info_{{ var.id }}">
                         Class info
                     </a>
                 </div>
-                <div id="object_info_{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
+                <div id="object_info_{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
                     <div class="accordion-inner">
                         {% if var.classFile is not empty %}
                             <div class="final">Filename: {{ var.classFile }}</div>
@@ -103,11 +101,11 @@
             {% if var.classConstants is not empty %}
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ id }}" href="#object_constants_{{ id }}">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ var.id }}" href="#object_constants_{{ var.id }}">
                         Class constants
                     </a>
                 </div>
-                <div id="object_constants_{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
+                <div id="object_constants_{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
                     <div class="accordion-inner">
                         {% for key,constant in var.classConstants %}
                         {{ render_type(constant.value, constant.name)|raw }}
@@ -121,11 +119,11 @@
             {% if var.classMethods is not empty %}
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ id }}" href="#object_methods_{{ id }}">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ var.id }}" href="#object_methods_{{ var.id }}">
                         Methods
                     </a>
                 </div>
-                <div id="object_methods_{{ id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
+                <div id="object_methods_{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
                     <div class="accordion-inner">
                         {% for method in var.classMethods %}
                             {{ m.render_object_method(method) }}
