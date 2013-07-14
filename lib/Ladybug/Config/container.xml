@@ -16,7 +16,7 @@
 
     <parameters>
         <parameter key="theme">modern</parameter>
-        <parameter key="array_max_nesting_level">8</parameter>
+        <parameter key="array_max_nesting_level">9</parameter>
         <parameter key="object_max_nesting_level">3</parameter>
         <parameter key="expanded">true</parameter>
     </parameters>

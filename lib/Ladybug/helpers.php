@@ -25,6 +25,12 @@ function ladybug_set_format($format)
     $ladybug->setFormat($format);
 }
 
+function ladybug_set_option($name, $value)
+{
+    $ladybug = getLadybug();
+    $ladybug->setOption($name, $value);
+}
+
 function ladybug_dump(/*$var1 [, $var2...$varN]*/)
 {
     $ladybug = getLadybug();

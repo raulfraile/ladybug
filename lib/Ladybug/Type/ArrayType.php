@@ -25,6 +25,8 @@ class ArrayType extends AbstractType
     /** @var FactoryType $factory */
     protected $factory;
 
+    protected $terminal;
+
     public function __construct($maxLevel, FactoryType $factory)
     {
         parent::__construct();
@@ -33,6 +35,7 @@ class ArrayType extends AbstractType
         $this->level = 0;
         $this->maxLevel = $maxLevel;
         $this->factory = $factory;
+        $this->terminal = false;
     }
 
     public function load($var)
@@ -48,6 +51,8 @@ class ArrayType extends AbstractType
 
                 $this->add($arrayItem);
             }
+        } else {
+            $this->terminal = true;
         }
 
     }
@@ -61,4 +66,16 @@ class ArrayType extends AbstractType
     {
         return 'array';
     }
+
+    public function setTerminal($terminal)
+    {
+        $this->terminal = $terminal;
+    }
+
+    public function getTerminal()
+    {
+        return $this->terminal;
+    }
+
+
 }

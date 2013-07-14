@@ -28,12 +28,16 @@ class Dumper
     /** @var Application $application */
     protected $application;
 
+    protected $applicationInitialized;
+
     protected $theme;
 
     protected $format;
 
     protected $callFile = null;
     protected $callLine = null;
+
+    protected $options;
 
     /**
      * Constructor
@@ -42,9 +46,11 @@ class Dumper
     {
         $this->theme = null;
         $this->format = null;
+        $this->options = array();
+        $this->applicationInitialized = false;
 
         $this->initializeNodes();
-        $this->initializeContainer();
+
     }
 
     /**
@@ -58,10 +64,14 @@ class Dumper
     /**
      * Initialize the dependency injection container
      */
-    protected function initializeContainer()
+    protected function initializeApplication()
     {
+        if ($this->applicationInitialized) {
+            return;
+        }
+
         $this->application = new Application();
-        $this->application->build();
+        $this->application->build($this->options);
     }
 
     /**
@@ -72,6 +82,8 @@ class Dumper
      */
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
+        $this->initializeApplication();
+
         $args = func_get_args();
         $this->readVariables($args);
         $this->loadCallLocationInfo();
@@ -79,7 +91,7 @@ class Dumper
         $render = $this->getRender();
         $render->setGlobals(array(
             'id' => uniqid(),
-            'expanded' => $this->getParameter('expanded', false)
+            'expanded' => $this->application->container->getParameter('expanded')
         ));
 
         return $render->render($this->nodes, array(
@@ -164,32 +176,33 @@ class Dumper
 
     public function setTheme($theme)
     {
-        $this->theme = $theme;
+        $this->setOption('theme', $theme);
     }
 
     public function getTheme()
     {
-        return $this->theme;
+        return $this->getOption('theme', 'base');
     }
 
     public function setFormat($format)
     {
-        $this->format = $format;
+        $this->setOption('format', $format);
     }
 
     public function getFormat()
     {
-        return $this->format;
+        return $this->getOption('format');
     }
 
-    public function setParameter($name, $value)
+    public function setOption($name, $value)
     {
-        $this->application->container->setParameter($name, $value);
+        $this->options[$name] = $value;
     }
 
-    public function getParameter($name, $default = null)
+    public function getOption($name, $default = null)
     {
-        return $this->application->container->hasParameter($name) ? $this->application->container->getParameter($name) : $default;
+        return array_key_exists($name, $this->options) ? $this->options[$name] : $default;
     }
+
 
 }

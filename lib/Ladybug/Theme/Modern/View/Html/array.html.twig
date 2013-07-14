@@ -18,11 +18,19 @@
 
         </a>
     </div>
-    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
-        <div class="accordion-inner">
-            {% for item in var.value %}
-                {{ render_type(item.value, item.key) }}
-            {% endfor %}
+
+
+        <div id="c{{ var.id }}" class="accordion-body collapse {% if (expanded or var.level == 1) and not var.terminal %}in{% endif %}">
+            <div class="accordion-inner">
+                {% if not var.terminal %}
+                    {% for item in var.value %}
+                        {{ render_type(item.value, item.key) }}
+                    {% endfor %}
+                {% else %}
+                    <span class="muted"><i class="icon-warning-sign"></i> Array max nesting level reached</span>
+                {% endif %}
+            </div>
         </div>
-    </div>
+
+
 </div>

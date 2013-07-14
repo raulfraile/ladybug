@@ -25,7 +25,7 @@ class Application
     /** @var ContainerBuilder $container */
     public $container;
 
-    public function build()
+    public function build($parameters = array())
     {
         $this->container = new ContainerBuilder();
 
@@ -39,6 +39,11 @@ class Application
 
         $loader = new XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
         $loader->load('container.xml');
+
+        // override parameters
+        foreach ($parameters as $parameterKey => $parameterValue) {
+            $this->container->setParameter($parameterKey, $parameterValue);
+        }
 
         $this->container->compile();
 
