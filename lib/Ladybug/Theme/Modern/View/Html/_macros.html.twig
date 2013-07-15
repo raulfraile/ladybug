@@ -92,11 +92,13 @@
                 </span>
             </a>
         </div>
-        <div id="c{{ id }}" class="accordion-body collapse">
-            <div class="accordion-inner">
-                {{ method.shortDescription }}
+        {% if method.shortDescription is not empty %}
+            <div id="c{{ id }}" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    {{ method.shortDescription }}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
 
