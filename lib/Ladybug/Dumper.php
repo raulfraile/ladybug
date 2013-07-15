@@ -204,5 +204,11 @@ class Dumper
         return array_key_exists($name, $this->options) ? $this->options[$name] : $default;
     }
 
+    public function setOptions(array $options)
+    {
+        foreach ($options as $name => $value) {
+            $this->setOption($name, $value);
+        }
+    }
 
 }
