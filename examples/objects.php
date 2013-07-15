@@ -34,7 +34,8 @@ class Foo
 }
 
 $foo = new Foo();
-//ladybug_dump($foo);
+ladybug_set_option('expanded', false);
+ladybug_dump($foo);
 
 
 
