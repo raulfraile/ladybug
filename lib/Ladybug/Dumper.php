@@ -121,12 +121,21 @@ class Dumper
      */
     public function loadCallLocationInfo()
     {
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 7);
+        $idx = 5;
+        $bt = debug_backtrace();
 
-        $lastTrace = array_pop($trace);
+        // Check if Ladybug was called from the helpers shortcuts
+        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+        if (!in_array($caller, array('ld', 'ldd'))) {
+            $idx -= 2;
+            $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
+            if (!in_array($caller, array('ladybug_dump', 'ladybug_dump_die'))) {
+                $idx = $idx - 2;
+            }
+        }
 
-        $this->callFile = isset($lastTrace['file']) ? $lastTrace['file'] : null;
-        $this->callLine = isset($lastTrace['line']) ? $lastTrace['line'] : null;
+        $this->callFile = isset($bt[$idx]['file']) ? $bt[$idx]['file'] : null;
+        $this->callLine = isset($bt[$idx]['line']) ? $bt[$idx]['line'] : null;
     }
 
     /**
