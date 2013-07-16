@@ -1,0 +1,17 @@
+{% import "_macros.html.twig" as m %}
+
+{% spaceless %}
+<label for="tree_collection_{{ var.id }}">
+    {% if array_key is not empty %}
+    <span class="key">[{{ array_key }}]:</span>
+    {% endif %}
+
+    <span class="switcher"></span>
+</label>
+<input type="checkbox" id="tree_collection_{{ var.id }}">
+<ol>
+    {% for item in var.data %}
+        <li>{{ render_type(item, item.key)|raw }}</li>
+    {% endfor %}
+</ol>
+{% endspaceless %}

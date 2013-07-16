@@ -1,8 +1,7 @@
 {% import "_macros.html.twig" as m %}
 
 {% spaceless %}
-    {% set id = random(1000) %}
-    <label for="tree_object_{{ id }}">
+    <label for="tree_object_{{ var.id }}">
         {% if array_key is not empty %}
             <span class="key">[{{ array_key }}]:</span>
         {% endif %}
@@ -13,12 +12,10 @@
             {% endif %}
         </span>
     </label>
-    <input type="checkbox" id="tree_object_{{ id }}">
+    <input type="checkbox" id="tree_object_{{ var.id }}">
 
-    {% if not var.isLeaf %}
+    {% if not var.terminal %}
         <ol>
-
-
 
             {% if var.objectCustomData is not empty %}
                 <li>
@@ -36,10 +33,10 @@
 
             {% if var.classFile is not empty %}
                 <li>
-                    <label for="tree_object_classinfo_{{ id }}">
+                    <label for="tree_object_classinfo_{{ var.id }}">
                         <span class="switcher">Class info</span>
                     </label>
-                    <input type="checkbox" id="tree_object_classinfo_{{ id }}">
+                    <input type="checkbox" id="tree_object_classinfo_{{ var.id }}">
                     <ol>
                         {% if var.classFile is not empty %}
                             <li><div class="final">Filename: {{ var.classFile }}</div></li>
@@ -59,10 +56,10 @@
 
             {% if var.classConstants is not empty %}
                 <li>
-                    <label for="tree_object_classconstants_{{ id }}">
+                    <label for="tree_object_classconstants_{{ var.id }}">
                         <span class="switcher">Class constants</span>
                     </label>
-                    <input type="checkbox" id="tree_object_classconstants_{{ id }}">
+                    <input type="checkbox" id="tree_object_classconstants_{{ var.id }}">
                     <ol>
                         {% for key,constant in classConstants %}
                             <li>{{ constant.render(key)|raw }}</li>
@@ -73,13 +70,13 @@
 
             {% if var.classMethods is not empty %}
                 <li>
-                    <label for="tree_object_methods_{{ id }}">
+                    <label for="tree_object_methods_{{ var.id }}">
                         <span class="switcher">Methods</span>
                     </label>
-                    <input type="checkbox" id="tree_object_methods_{{ id }}">
+                    <input type="checkbox" id="tree_object_methods_{{ var.id }}">
                     <ol>
                         {% for method in var.classMethods %}
-                            <li><div class="final">{{ method }}</div></li>
+                            <li><div class="final">{{ method.name }}</div></li>
                         {% endfor %}
                     </ol>
                 </li>
