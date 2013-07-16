@@ -1,10 +1,10 @@
 {% import "_macros.text.twig" as m %}
 
-{{ m.array_key(array_key) }}
+{{ m.array_key(key) }}
 
-array({{ length }}) <intro>
+array({{ var.length }}) <intro>
 
-{% for key,var in value %}
+{% for item in var.value %}
     {{ m.indent(level) }}
-    {{ var.render(key, 'txt')|raw }}
+    {{ render_type(item.value, item.key) }}<intro>
 {% endfor %}
