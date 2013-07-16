@@ -1,6 +1,9 @@
 {% extends "_base.html.twig" %}
 
 {% block value %}
+
+{{ m.array_key(var.key) }}
+
 <textarea id="code" style="font-weight: normal">{{ var.data|raw }}</textarea>
 
 <script>

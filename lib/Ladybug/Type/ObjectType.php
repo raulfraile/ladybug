@@ -424,15 +424,6 @@ class ObjectType extends AbstractType
             $inspector = $this->inspectorFactory->factory($service);
             $this->objectCustomData = $inspector->getData($var);
         }
-/*
-        $includeClass = $this->getIncludeClass($this->className, 'object');
-
-        if (class_exists($includeClass)) {
-
-            $customDumper = new $includeClass($this->factory, $this->level);
-            $data = $customDumper->getData($var);
-            $this->objectCustomData = $data;
-        }*/
 
         // properties
         $data = (array) $var;
@@ -459,6 +450,7 @@ class ObjectType extends AbstractType
 
             $this->objectProperties[] = $objectProperty;
         }
+
     }
 
     /**

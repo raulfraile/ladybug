@@ -36,7 +36,7 @@
                             Data
                         </a>
                     </div>
-                    <div id="object_data_{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1%}in{% endif %}">
+                    <div id="object_data_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
                         <div class="accordion-inner">
                             {{ render_type(var.objectCustomData)|raw }}
                         </div>
