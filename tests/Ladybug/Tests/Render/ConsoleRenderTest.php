@@ -13,14 +13,14 @@ class ConsoleRenderTest extends \PHPUnit_Framework_TestCase
     /** @var Render\ConsoleRender $render */
     protected $render;
 
-    /** @var ConsoleOutput $consoleOutput */
-    protected $consoleOutput;
-
     public function setUp()
     {
-        $this->consoleOutput = new ConsoleOutput();
-        $this->consoleOutput->setVerbosity(0);
-        $this->render = new Render\ConsoleRender($this->consoleOutput);
+        $consoleOutputMock = m::mock('Symfony\Component\Console\Output\ConsoleOutput');
+        $consoleOutputMock->shouldReceive('writeln')->andReturnUsing(function($messages) {
+            return $messages;
+        });
+
+        $this->render = new Render\ConsoleRender($consoleOutputMock);
 
         $themeMock = m::mock('Ladybug\Theme\Base\BaseTheme');
         $themeMock->shouldReceive('getName')->andReturn('Base');

@@ -60,9 +60,7 @@ class ConsoleRender extends AbstractRender implements RenderInterface
         $result = str_replace('<tab>', '<f_tab> · </f_tab>', $result);
         $result = str_replace('<space>', ' ', $result);
 
-        $this->console->writeln($result);
-
-        return $result;
+        return $this->console->writeln($result);
     }
 
     public function getFormat()
