@@ -29,12 +29,10 @@ class HtmlRender extends AbstractRender implements RenderInterface
         /** @var HtmlThemeInterface $theme */
         $theme = $this->theme;
 
-        $result = $this->twig->render('layout.html.twig', array_merge(array(
+        return $this->twig->render('layout.html.twig', array_merge(array(
             'nodes' => $nodes,
             'css' => $theme->getHtmlCssDependencies(),
             'js' => $theme->getHtmlJsDependencies()
         ), $extraData));
-
-        return $result;
     }
 }

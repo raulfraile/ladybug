@@ -59,7 +59,11 @@ class LadybugExtension extends Twig_Extension
             'visibility' => $visibility
         );
 
-        return $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
+        $code = $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
+
+        $code = str_replace(array('<script>', '</script>'), array('<ladybug_script>', '</ladybug_script>'), $code);
+
+        return $code;
     }
 
     public function getSpacesByLevel($level)

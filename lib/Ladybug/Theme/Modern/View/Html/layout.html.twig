@@ -34,7 +34,7 @@ ladybug_iframe_{{ id }}.open();
 ladybug_iframe_{{ id }}.write(
     "<style>" + document.getElementById("ladybug_css_{{ id }}").innerHTML + "</style>" +
     "<script>" + document.getElementById("ladybug_js_{{ id }}").innerHTML + "\<\/script>" +
-    document.getElementById("ladybug_content_{{ id }}").innerHTML);
+    document.getElementById("ladybug_content_{{ id }}").innerHTML.replace(/\<ladybug_script\>/, "<script>").replace(/\<\/ladybug_script\>/, "\<\/script>"));
 ladybug_iframe_{{ id }}.close();
 var height = ladybug_iframe_{{ id }}.body.scrollHeight;
 var width = ladybug_iframe_{{ id }}.body.scrollWidth;

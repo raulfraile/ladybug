@@ -34,15 +34,10 @@ class Foo
 }
 
 $foo = new Foo();
-ladybug_set_option('expanded', false);
-ladybug_dump($foo);
-
-
 
 // DateTime object
 
 $date = new DateTime();
-ladybug_dump_die($date);
 
 $sXml = <<<XML
 <books>
@@ -59,8 +54,6 @@ XML;
 $dom = new DOMDocument();
 $dom->loadXml($sXml);
 
-ladybug_dump($dom);
-
 $reflected = new ReflectionClass('Foo');
 
-ladybug_dump($reflected);
+ladybug_dump($foo, $date, $dom, $reflected);
