@@ -1,6 +1,16 @@
 {% import "_macros.html.twig" as m %}
 
 {% spaceless %}
-<li><code>{{ var.formattedValue }}</code></li>
+<label for="tree_code_{{ var.id }}">
+    <span class="switcher">Code</span>
+</label>
+<input type="checkbox" id="tree_code_{{ var.id }}">
+<ol>
+    <li>
+        <pre>
+            <code>{{ var.data|e }}</code>
+        </pre>
+    </li>
+</ol>
 {% endspaceless %}
 

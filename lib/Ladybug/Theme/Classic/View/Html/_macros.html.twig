@@ -29,3 +29,34 @@
     {% endspaceless %}
 {% endmacro %}
 
+{% macro visibility_value(visibility) %}
+    {% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+        private
+    {% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+        protected
+    {% else %}
+        public
+    {% endif %}
+{% endmacro %}
+
+{% macro render_object_method(method) %}
+    <span>{{ _self.visibility_value(method.visibility) }}</span>
+    <span>{{ method.name }}</span>
+    <span>(</span>
+
+    {% for methodParameter in method.parameters %}
+
+        {% if methodParameter.type is not empty %}
+            <span>{{ methodParameter.type }}</span>
+        {% endif %}
+
+        <span>${{ methodParameter.name }}</span>
+        {% if methodParameter.defaultValue is not null %}
+            <span> = {{ methodParameter.defaultValue.type }} {{ methodParameter.defaultValue.formattedValue }}</span>
+        {% endif %}
+
+        <span>{% if not loop.last %}, {% endif %}</span>
+    {% endfor %}
+
+    <span>)</span>
+{% endmacro %}

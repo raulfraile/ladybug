@@ -29,7 +29,7 @@ class Foo
      * @return int
      */
     protected function getBar() { return $this->bar; }
-    private function setBar($bar) { $this->bar = $bar; }
+    private function setBar($bar=array(1,2)) { $this->bar = $bar; }
     public function __toString() {return $this->bar; }
 }
 
@@ -56,4 +56,4 @@ $dom->loadXml($sXml);
 
 $reflected = new ReflectionClass('Foo');
 
-ladybug_dump($foo, $dom);
+ladybug_dump($foo, $dom, $reflected, $date);

@@ -64,7 +64,13 @@ class ArrayType extends AbstractType
 
     public function getFormattedValue()
     {
-        return 'array';
+        $values = array();
+        foreach ($this->value as $value) {
+            /** @var Item $value */
+            $values[] = (string) $value->getValue()->getFormattedValue();
+        }
+
+        return sprintf('array(%s)', implode(', ', $values));
     }
 
     public function setTerminal($terminal)

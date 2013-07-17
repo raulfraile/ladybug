@@ -6,7 +6,7 @@
             <span class="key">[{{ array_key }}]:</span>
         {% endif %}
         <span class="switcher">
-            <span class="type">Object ({{ var.className }})</span>
+            <span class="type"> object({% if var.helpLink is not empty %}<a href="{{ var.helpLink }}" class="doc {{ var.icon }}"></a>{% endif %}{{ var.className }})</span>
             {% if var.toString is not empty %}
                 <a class="tostring" href="javascript:void(0)" title="{{ var.toString }}"></a>
             {% endif %}
@@ -19,7 +19,17 @@
 
             {% if var.objectCustomData is not empty %}
                 <li>
-                    {{ render_type(var.objectCustomData)|raw }}
+                    <label for="tree_custom_data_{{ var.id }}">
+                        <span class="switcher">Data</span>
+                    </label>
+                    <input type="checkbox" id="tree_custom_data_{{ var.id }}">
+                    <ol>
+                        <li>
+                            {{ render_type(var.objectCustomData)|raw }}
+                        </li>
+                    </ol>
+
+
                 </li>
             {% endif %}
 
@@ -68,7 +78,7 @@
                     <input type="checkbox" id="tree_object_methods_{{ var.id }}">
                     <ol>
                         {% for method in var.classMethods %}
-                            <li><div class="final">{{ method.name }}</div></li>
+                            <li>{{ m.render_object_method(method) }}</li>
                         {% endfor %}
                     </ol>
                 </li>
