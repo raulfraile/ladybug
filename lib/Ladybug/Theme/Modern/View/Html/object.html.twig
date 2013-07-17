@@ -110,7 +110,7 @@
                 <div id="object_constants_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
                     <div class="accordion-inner">
                         {% for key,constant in var.classConstants %}
-                        {{ render_type(constant.value, constant.name)|raw }}
+                            {{ render_type(constant.value, constant.name)|raw }}
                         {% endfor %}
                     </div>
                 </div>

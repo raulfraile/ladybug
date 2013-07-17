@@ -56,4 +56,4 @@ $dom->loadXml($sXml);
 
 $reflected = new ReflectionClass('Foo');
 
-ladybug_dump($dom);
+ladybug_dump($foo, $dom);

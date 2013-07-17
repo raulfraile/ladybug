@@ -19,16 +19,8 @@
 
             {% if var.objectCustomData is not empty %}
                 <li>
-                    {{ var.objectCustomData.render('Data')|raw }}
-
+                    {{ render_type(var.objectCustomData)|raw }}
                 </li>
-            {% endif %}
-
-            {% if var.objectCustomData is not empty %}
-            <li>
-                {{ var.objectCustomData.render('Data') }}
-
-            </li>
             {% endif %}
 
             {% if var.classFile is not empty %}
@@ -61,8 +53,8 @@
                     </label>
                     <input type="checkbox" id="tree_object_classconstants_{{ var.id }}">
                     <ol>
-                        {% for key,constant in classConstants %}
-                            <li>{{ constant.render(key)|raw }}</li>
+                        {% for key,constant in var.classConstants %}
+                            <li>{{ render_type(constant.value, constant.name)|raw }}</li>
                         {% endfor %}
                     </ol>
                 </li>
