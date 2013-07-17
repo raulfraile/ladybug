@@ -8,7 +8,7 @@
 
     <span class="switcher">{{ var.title }}</span>
 </label>
-<input type="checkbox" id="tree_collection_{{ var.id }}">
+<input type="checkbox" id="tree_collection_{{ var.id }}" {% if expanded %}checked{% endif %} />
 <ol>
     {% for item in var.data %}
         <li>{{ render_type(item, item.key)|raw }}</li>

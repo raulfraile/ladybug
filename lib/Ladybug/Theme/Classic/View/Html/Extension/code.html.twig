@@ -4,7 +4,7 @@
 <label for="tree_code_{{ var.id }}">
     <span class="switcher">Code</span>
 </label>
-<input type="checkbox" id="tree_code_{{ var.id }}">
+<input type="checkbox" id="tree_code_{{ var.id }}" {% if expanded %}checked{% endif %} />
 <ol>
     <li>
         <pre>

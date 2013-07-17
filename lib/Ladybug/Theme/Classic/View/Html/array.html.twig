@@ -8,7 +8,7 @@
 
         <span class="switcher">array({{ var.length }})</span>
     </label>
-    <input type="checkbox" id="tree_array_{{ var.id }}">
+    <input type="checkbox" id="tree_array_{{ var.id }}" {% if expanded %}checked{% endif %} />
     <ol>
         {% for item in var.value %}
             <li>

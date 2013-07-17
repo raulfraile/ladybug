@@ -19,7 +19,7 @@
             <label for="tree_custom_data_{{ var.id }}">
                 <span class="switcher">Data</span>
             </label>
-            <input type="checkbox" id="tree_custom_data_{{ var.id }}">
+            <input type="checkbox" id="tree_custom_data_{{ var.id }}" {% if expanded %}checked{% endif %} />
             <ol>
                 <li>
                     {{ render_type(var.resourceCustomData)|raw}}

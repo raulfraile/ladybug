@@ -12,7 +12,7 @@
             {% endif %}
         </span>
     </label>
-    <input type="checkbox" id="tree_object_{{ var.id }}">
+    <input type="checkbox" id="tree_object_{{ var.id }}" {% if expanded %}checked{% endif %} />
 
     {% if not var.terminal %}
         <ol>
@@ -22,7 +22,7 @@
                     <label for="tree_custom_data_{{ var.id }}">
                         <span class="switcher">Data</span>
                     </label>
-                    <input type="checkbox" id="tree_custom_data_{{ var.id }}">
+                    <input type="checkbox" id="tree_custom_data_{{ var.id }}" {% if expanded %}checked{% endif %} />
                     <ol>
                         <li>
                             {{ render_type(var.objectCustomData)|raw }}
@@ -38,7 +38,7 @@
                     <label for="tree_object_classinfo_{{ var.id }}">
                         <span class="switcher">Class info</span>
                     </label>
-                    <input type="checkbox" id="tree_object_classinfo_{{ var.id }}">
+                    <input type="checkbox" id="tree_object_classinfo_{{ var.id }}" {% if expanded %}checked{% endif %} />
                     <ol>
                         {% if var.classFile is not empty %}
                             <li><div class="final">Filename: {{ var.classFile }}</div></li>
@@ -61,7 +61,7 @@
                     <label for="tree_object_classconstants_{{ var.id }}">
                         <span class="switcher">Class constants</span>
                     </label>
-                    <input type="checkbox" id="tree_object_classconstants_{{ var.id }}">
+                    <input type="checkbox" id="tree_object_classconstants_{{ var.id }}" {% if expanded %}checked{% endif %} />
                     <ol>
                         {% for key,constant in var.classConstants %}
                             <li>{{ render_type(constant.value, constant.name)|raw }}</li>
@@ -75,7 +75,7 @@
                     <label for="tree_object_methods_{{ var.id }}">
                         <span class="switcher">Methods</span>
                     </label>
-                    <input type="checkbox" id="tree_object_methods_{{ var.id }}">
+                    <input type="checkbox" id="tree_object_methods_{{ var.id }}" {% if expanded %}checked{% endif %} />
                     <ol>
                         {% for method in var.classMethods %}
                             <li>{{ m.render_object_method(method) }}</li>
