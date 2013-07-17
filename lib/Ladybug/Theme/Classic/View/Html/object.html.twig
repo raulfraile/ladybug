@@ -6,7 +6,7 @@
             <span class="key">[{{ array_key }}]:</span>
         {% endif %}
         <span class="switcher">
-            <span class="type"> object({% if var.helpLink is not empty %}<a href="{{ var.helpLink }}" class="doc {{ var.icon }}"></a>{% endif %}{{ var.className }})</span>
+            <span class="type"> object({% if var.helpLink is not empty %}<a href="{{ var.helpLink }}" target="_blank" class="doc {{ var.icon }}"></a>{% endif %}{{ var.className }})</span>
             {% if var.toString is not empty %}
                 <a class="tostring" href="javascript:void(0)" title="{{ var.toString }}"></a>
             {% endif %}

@@ -6,10 +6,10 @@
         <span class="key">[{{ key }}]:</span>
     {% endif %}
 
-    <span class="switcher">collection</span>
+    <span class="switcher">{{ var.title }}</span>
 </label>
 <input type="checkbox" id="tree_collection_{{ var.id }}">
-<ol><li>***</li>
+<ol>
     {% for item in var.data %}
         <li>{{ render_type(item, item.key)|raw }}</li>
     {% endfor %}
