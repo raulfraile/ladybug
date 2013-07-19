@@ -1,15 +1,16 @@
-<style>
+<script type="text/template" id="ladybug_css_{{ id }}">
     {% for file in css %}
         {{ include_file(file)|raw }}
     {% endfor %}
-</style>
+</script>
 
-<script>
+<script type="text/template" id="ladybug_js_{{ id }}">
     {% for file in js %}
         {{ include_file(file)|raw }}
     {% endfor %}
 </script>
 
+<script type="text/template" id="ladybug_content_{{ id }}">
 {% spaceless %}
 <div class="ladybug">
 
@@ -21,3 +22,6 @@
 
 </div>
 {% endspaceless %}
+</script>
+
+{% include "iframe.html.twig" %}

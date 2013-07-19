@@ -22,3 +22,4 @@ $var = array(
 );
 
 ladybug_dump($var);
+//ladybug_dump(1);

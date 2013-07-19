@@ -1,22 +1,26 @@
-<style>
+<script type="text/template" id="ladybug_css_{{ id }}">
     {% for file in css %}
         {{ minify_css(file)|raw }}
     {% endfor %}
-</style>
+</script>
 
-<script>
+<script type="text/template" id="ladybug_js_{{ id }}">
     {% for file in js %}
         {{ include_file(file)|raw }}
     {% endfor %}
 </script>
 
-{% spaceless %}
-<div class="ladybug">
-    {% for node in nodes %}
-        {{ render_type(node)|raw }}
-        <div class="separator"></div>
-    {% endfor %}
+<script type="text/template" id="ladybug_content_{{ id }}">
+    {% spaceless %}
+    <div class="ladybug">
+        {% for node in nodes %}
+            {{ render_type(node)|raw }}
+            <div class="separator"></div>
+        {% endfor %}
 
-    <div class="level_1"><em>{{ callFile }}:{{ callLine }}</em></div>
-</div>
+        <div class="level_1"><em>{{ callFile }}:{{ callLine }}</em></div>
+    </div>
 {% endspaceless %}
+</script>
+
+{% include "iframe.html.twig" %}

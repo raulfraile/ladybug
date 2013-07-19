@@ -83,6 +83,7 @@ class Dumper
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
         $this->initializeApplication();
+        $this->initializeNodes();
 
         $args = func_get_args();
         $this->readVariables($args);
