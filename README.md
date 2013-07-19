@@ -1,7 +1,10 @@
-Ladybug: Simple and Extensible PHP Dumper
+Ladybug: PHP 5.3+ Extensible Dumper
 =========================================
 
-[![Build Status](https://secure.travis-ci.org/raulfraile/Ladybug.png)](http://travis-ci.org/raulfraile/Ladybug)
+[![Build Status](https://secure.travis-ci.org/raulfraile/ladybug.png)](http://travis-ci.org/raulfraile/ladybug)
+[![Latest Stable Version](https://poser.pugx.org/raulfraile/ladybug/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
+[![Total Downloads](https://poser.pugx.org/raulfraile/ladybug/downloads.png)](https://packagist.org/packages/raulfraile/ladybug)
+[![Latest Unstable Version](https://poser.pugx.org/raulfraile/ladybug/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
 
 Ladybug provides an easy and extensible var_dump/print_r replacement for PHP 5.3+
 projects. For example, with this library, the following is possible:
