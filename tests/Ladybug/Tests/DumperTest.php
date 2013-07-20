@@ -46,19 +46,6 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Format\XmlFormat::FORMAT_NAME, $this->dumper->getFormat());
     }
 
-    public function testDumpHtmlFormat()
-    {
-        $var = 1;
-
-        $this->dumper->setFormat(Format\HtmlFormat::FORMAT_NAME);
-        $dump = $this->dumper->dump($var);
-var_dump($dump);
-        $crawler = new Crawler($dump);
-
-        $this->assertEquals('int', $crawler->filterXPath('//span[@class="type"]')->text());
-        $this->assertEquals(1, $crawler->filterXPath('//span[@class="value"]')->text());
-    }
-
     public function testDumpTextFormat()
     {
         $var = 1;
