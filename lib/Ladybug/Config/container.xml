@@ -19,6 +19,7 @@
         <parameter key="array_max_nesting_level">9</parameter>
         <parameter key="object_max_nesting_level">3</parameter>
         <parameter key="expanded">true</parameter>
+        <parameter key="silenced">false</parameter>
     </parameters>
 
     <services>

@@ -83,6 +83,11 @@ class Dumper
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
         $this->initializeApplication();
+
+        if ($this->application->container->getParameter('silenced', false)) {
+            return null;
+        }
+
         $this->initializeNodes();
 
         $args = func_get_args();
