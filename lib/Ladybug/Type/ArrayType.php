@@ -36,6 +36,7 @@ class ArrayType extends AbstractType
         $this->maxLevel = $maxLevel;
         $this->factory = $factory;
         $this->terminal = false;
+        $this->value = array();
     }
 
     public function load($var)
