@@ -52,7 +52,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
 
         $this->dumper->setFormat(Format\HtmlFormat::FORMAT_NAME);
         $dump = $this->dumper->dump($var);
-
+var_dump($dump);
         $crawler = new Crawler($dump);
 
         $this->assertEquals('int', $crawler->filterXPath('//span[@class="type"]')->text());
