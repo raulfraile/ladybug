@@ -31,6 +31,13 @@ function ladybug_set_option($name, $value)
     $ladybug->setOption($name, $value);
 }
 
+function ladybug_set_options(array $options)
+{
+    foreach ($options as $name => $value) {
+        ladybug_set_option($name, $value);
+    }
+}
+
 function ladybug_dump(/*$var1 [, $var2...$varN]*/)
 {
     $ladybug = getLadybug();
