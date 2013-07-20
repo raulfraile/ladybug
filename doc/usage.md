@@ -48,4 +48,6 @@ terminates the current script
 
 `ladybug_set_format($formatName)`: Set format (e.g. "html")
 
+***
+
 Next: [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
