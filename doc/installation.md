@@ -1,6 +1,6 @@
 # Installation
 
-The recommended way to install Geocoder is through [Composer](http://packagist.org/about-composer). Just create a composer.json file for your project:
+The recommended way to install Ladybug is through [Composer](http://packagist.org/about-composer). Just create a composer.json file for your project:
 
 ``` json
 {
@@ -19,7 +19,7 @@ curl -O http://getcomposer.org/composer.phar
 php composer.phar install
 ```
 
-After running the install command, you must see a new vendor directory that must contain the Ladybug code.
+After running the `install` command, you must see a new vendor directory that must contain the Ladybug code.
 Once added the autoloader you will have access to the library:
 
 ``` php
@@ -30,3 +30,8 @@ require 'vendor/autoload.php';
 
 [![Latest Stable Version](https://poser.pugx.org/raulfraile/ladybug/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
 [![Latest Unstable Version](https://poser.pugx.org/raulfraile/ladybug/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
+
+***
+
+Next: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
+Back: [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
