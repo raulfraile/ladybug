@@ -11,32 +11,21 @@ projects. You can easily dump any PHP variable, object or resource:
 
 ``` php
 <?php
-$var1 = NULL;
-$var2 = 15;
-$var3 = 15.5;
-$var4 = 'hello world!';
-$var5 = false;
+$var = array(
+    array(
+        'name' => 'Raul',
+        'age' => 29
+    ),
+    array(
+        'name' => 'John',
+        'age' => 27
+    )
+);
 
-ladybug_dump($var1, $var2, $var3, $var4, $var5);
-```
-
-As a result:
-
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/simple_variables_modern.png" />
-
-It is also possible to dump arrays, objects and resources:
-
-``` php
-<?php
-$var = new Foo();
 ladybug_dump($var)
 ```
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/object_modern.png" />
-
-## Themes
-
-There are 3 built-in themes: `base`, `classic` and `modern`. If you want to add your own themes, see the [extending section](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md)
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/array_modern.png" />
 
 ## Documentation
 
@@ -46,13 +35,13 @@ There are 3 built-in themes: `base`, `classic` and `modern`. If you want to add 
 4. [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
 5. [Reference](https://github.com/raulfraile/ladybug/blob/master/doc/reference.md).
 
-## Support for frameworks
+## Support for other libraries/frameworks
 
 * Symfony2 [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
 
 ## Credits
 
-* Raul Fraile ([@raulfraile](https://twitter.com/raulfraile)
+* Raul Fraile ([@raulfraile](https://twitter.com/raulfraile))
 * [All contributors](https://github.com/raulfraile/ladybug/contributors)
 
 ## License
