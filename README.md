@@ -151,3 +151,11 @@ to-do
 ## Symfony2 users
         
 Take a look at [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
+
+## Credits
+
+Raul Fraile ([@raulfraile](https://twitter.com/raulfraile)
+
+## License
+
+Ladybug is released under the MIT License. See the bundled LICENSE file for details.

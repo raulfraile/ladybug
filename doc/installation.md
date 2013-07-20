@@ -1,7 +1,6 @@
 # Installation
 
-[Composer](http://packagist.org/about-composer) is a project dependency manager for PHP. You have to list
-your dependencies in a `composer.json` file:
+The recommended way to install Geocoder is through [Composer](http://packagist.org/about-composer). Just create a composer.json file for your project:
 
 ``` json
 {
@@ -9,6 +8,7 @@ your dependencies in a `composer.json` file:
         "raulfraile/ladybug": "1.0.0-alpha1"
     }
 }
+
 ```
 To actually install Ladybug in your project, download the composer binary and run it:
 
@@ -21,3 +21,13 @@ php composer.phar install
 ```
 
 After running the install command, you must see a new vendor directory that must contain the Ladybug code.
+Once added the autoloader you will have access to the library:
+
+``` php
+<?php
+
+require 'vendor/autoload.php';
+```
+
+[![Latest Stable Version](https://poser.pugx.org/raulfraile/ladybug/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
+[![Latest Unstable Version](https://poser.pugx.org/raulfraile/ladybug/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
