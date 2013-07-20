@@ -90,7 +90,7 @@ $ php examples/array.php
 
 There are more examples in `examples` directory.
 
-1. [Instalation](https://github.com/raulfraile/ladybug/doc/installation.rst).
+1. [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
 
 ## Installation using Composer
 
