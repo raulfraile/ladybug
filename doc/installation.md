@@ -19,7 +19,9 @@ curl -O http://getcomposer.org/composer.phar
 php composer.phar install
 ```
 
-After running the `install` command, you must see a new vendor directory that must contain the Ladybug code.
+After running the `install` command, you must see a new vendor directory that must contain the Ladybug code, as well as all
+the required dependencies.
+
 Once added the autoloader you will have access to the library:
 
 ``` php
@@ -33,5 +35,6 @@ require 'vendor/autoload.php';
 
 ***
 
-Next: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
-Back: [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
+Next section: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
+
+Previous section: [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).

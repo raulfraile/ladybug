@@ -51,4 +51,4 @@ terminates the current script
 
 ***
 
-Next: [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
+Next section: [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).

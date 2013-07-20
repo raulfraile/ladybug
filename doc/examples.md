@@ -19,7 +19,7 @@ As a result:
 
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/simple_variables_modern.png" />
 
-## Array
+## Arrays
 
 ``` php
 <?php
@@ -39,7 +39,7 @@ ladybug_dump($var)
 
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/array_modern.png" />
 
-## Object
+## Objects
 
 ``` php
 <?php
@@ -51,7 +51,7 @@ ladybug_dump($var)
 
 ## Other formats
 
-Ladybug detects the environment being used (Browser, CLI or Ajax) and choose the right format:
+Ladybug detects the environment being used (Browser, CLI or Ajax) and chooses the right format:
 
 * Browser -> Html
 * CLI -> Console
@@ -69,19 +69,31 @@ $ php examples/array.php
 
 ```
 array(2)
-   [0]: array(2)
-      [name]: string(4) "Raul"
-      [age]: int 29
+    [0]: array(2)
+        [name]: string(4) "Raul"
+        [age]: int 29
+    [1]: array(2)
+        [name]: string(4) "John"
+        [age]: int 27
+```
 
-   [1]: array(2)
-      [name]: string(4) "John"
-      [age]: int 27
+### Other formats
+
+Variable dumps can be exported to some other formats, like XML or JSON:
+
+``` php
+<?php
+$var = 1;
+
+$dumper = new \Ladybug\Dumper();
+$dumper->setFormat('json');
+$json = $dumper->dump($var);
 ```
 
 ## Extended objects/resources
 
 Ladybug allows extending some objects or resources to display richer information. They are called `inspectors`.
-For example, there is a inspector for MySQL resultsets or GD images:
+For example, there are built-in inspectors for MySQL resultsets or GD images:
 
 ``` php
 <?php
@@ -105,11 +117,19 @@ New inspectors can be added easily, see the [extending](https://github.com/raulf
 
 ### Object metadata
 
-Ladybug detects automatically some classes to display an icon and a link to the documentation.
+Ladybug also detects automatically some classes to display an icon and a link to the documentation. For example, provides built-in
+support for PHP objects and Symfony2 classes:
 
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/metadata_php_modern.png" />
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/metadata_symfony_modern.png" />
 
 ## More examples
 
-There are lots of examples in the [/examples directory](https://github.com/raulfraile/ladybug/blob/master/examples)` directory.
+There are lots of examples in the [/examples directory](https://github.com/raulfraile/ladybug/blob/master/examples).
+
+
+***
+
+Next section: [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
+
+Previous section: [Installation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
