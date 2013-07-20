@@ -46,21 +46,6 @@ There are 3 built-in themes: `base`, `classic` and `modern`. If you want to add 
 4. [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
 5. [Reference](https://github.com/raulfraile/ladybug/blob/master/doc/reference.md).
 
-## Helpers
-
-The are 2 helpers:
-
-`ladybug_dump($var1[, $var2[, ...]])`: Dumps one or more variables
-
-`ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and 
-terminates the current script
-        
-There are also some shortcuts in case you are not using this function names:
-        
-`ld($var1[, $var2[, ...]])`: shortcut for ladybug_dump
-        
-`ldd($var1[, $var2[, ...]])`: shortcut for ladybug_dump_die
-
 ## Support for frameworks
 
 * Symfony2 [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
