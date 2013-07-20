@@ -34,6 +34,7 @@ ladybug_dump($var)
 3. [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
 4. [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
 5. [Reference](https://github.com/raulfraile/ladybug/blob/master/doc/reference.md).
+6. [Tests](https://github.com/raulfraile/ladybug/blob/master/doc/tests.md).
 
 ## Support for other libraries/frameworks
 

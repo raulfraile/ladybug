@@ -92,3 +92,10 @@ Finally, include the service in the `MyExtension\Config\services.xml` file.
 
 
 ### Renders
+
+
+***
+
+Next section: [Reference](https://github.com/raulfraile/ladybug/blob/master/doc/reference.md).
+
+Previous section: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
