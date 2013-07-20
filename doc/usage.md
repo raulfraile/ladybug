@@ -10,7 +10,7 @@ require 'vendor/autoload.php';
 $var = 1;
 
 ladybug_dump($var); // or ld($var);
-ladybug_dump_die($var); // or ldd($var);
+// ladybug_dump_die($var); // or ldd($var);
 ```
 
 Creating an instance of the `Dumper`:
@@ -23,17 +23,27 @@ $dumper = new \Ladybug\Dumper();
 echo $dumper->dump($var);
 ```
 
+In both cases the result is the same:
+
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/int_modern.png" />
+
 ## Helpers
 
-The library provides 2 helpers:
+The library provides some helpers and shortcuts for easier use:
+
+### Dump variables
 
 `ladybug_dump($var1[, $var2[, ...]])`: Dumps one or more variables
 
 `ladybug_dump_die($var1[, $var2[, ...]])`: Dumps one or more variables and
 terminates the current script
 
-There are also some shortcuts in case you are not using this function names:
+`ld($var1[, $var2[, ...]])`: Shortcut for ladybug_dump
 
-`ld($var1[, $var2[, ...]])`: shortcut for ladybug_dump
+`ldd($var1[, $var2[, ...]])`: Shortcut for ladybug_dump_die
 
-`ldd($var1[, $var2[, ...]])`: shortcut for ladybug_dump_die
+### Configure
+
+`ladybug_set_theme($themeName)`: Set theme (e.g. "classic")
+
+`ladybug_set_format($formatName)`: Set format (e.g. "html")
