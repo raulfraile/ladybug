@@ -6,7 +6,7 @@ Ladybug: PHP 5.3+ Extensible Dumper
 [![Total Downloads](https://poser.pugx.org/raulfraile/ladybug/downloads.png)](https://packagist.org/packages/raulfraile/ladybug)
 [![Latest Unstable Version](https://poser.pugx.org/raulfraile/ladybug/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
 
-Ladybug provides an easy and extensible var_dump/print_r replacement for PHP 5.3+
+Ladybug provides an easy and extensible `var_dump`/`print_r` replacement for PHP 5.3+
 projects. You can easily dump any PHP variable, object or resource:
 
 ``` php
@@ -22,108 +22,29 @@ ladybug_dump($var1, $var2, $var3, $var4, $var5);
 
 As a result:
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/simple_variables_modern.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/simple_variables_modern.png" />
 
-## Examples
-
-It is possible to dump any variable, including arrays, objects and resources:
-    
-### Dumping an array
+It is also possible to dump arrays, objects and resources:
 
 ``` php
 <?php
-    $var = array(
-        array(
-            'name' => 'Raul',
-            'age' => 29
-        ),
-        array(
-            'name' => 'John',
-            'age' => 27
-        )
-    );
-    
-    ladybug_dump($var)
+$var = new Foo();
+ladybug_dump($var)
 ```
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/array_modern.png" />
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/object_modern.png" />
 
-### Dumping an object
+## Themes
 
-``` php
-<?php
-    $var = new Foo();
-    ladybug_dump($var)
-```
+There are 3 built-in themes: `base`, `classic` and `modern`. If you want to add your own themes, see the [extending section](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md)
 
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/object_modern.png" />
+## Documentation
 
-### Dumping a mysql resultset
-
-``` php
-<?php
-    $connection = mysql_connect('localhost', 'dbuser', 'dbpassword');
-    mysql_select_db('dbname', $connection);
-    $result = mysql_query('SELECT * FROM user', $connection);
-
-    ladybug_dump($result);
-```
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/db_modern.png" />
-
-### Dumping a GD image
-
-``` php
-<?php
-    $img = imagecreatefrompng(__DIR__ . '/images/ladybug.png');
-    ladybug_dump($img);
-```
-    
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/gd_modern.png" />
-    
-### CLI (Command-line interface) support
-
-``` bash
-$ php examples/array.php
-```
-
-<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/Ladybug/raw/master/doc/images/array_cli_modern.png" />
-
-There are more examples in `examples` directory.
-
-1. [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
-
-## Installation using Composer
-
-[Composer](http://packagist.org/about-composer) is a project dependency manager for PHP. You have to list
-your dependencies in a `composer.json` file:
-
-``` json
-{
-    "require": {
-        "raulfraile/ladybug": "1.0.0-alpha1"
-    }
-}
-```
-To actually install Ladybug in your project, download the composer binary and run it:
-
-``` bash
-wget http://getcomposer.org/composer.phar
-# or
-curl -O http://getcomposer.org/composer.phar
-
-php composer.phar install
-```
-
-After running the install command, you must see a new vendor directory that must contain the Ladybug code. Then,
-you must load ladybug helpers:
-
-``` php
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-
-$var1 = 1;
-ladybug_dump($var1);
-```
+1. [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
+2. [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
+3. [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
+4. [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
+5. [Reference](https://github.com/raulfraile/ladybug/blob/master/doc/reference.md).
 
 ## Helpers
 
@@ -140,21 +61,14 @@ There are also some shortcuts in case you are not using this function names:
         
 `ldd($var1[, $var2[, ...]])`: shortcut for ladybug_dump_die
 
-## Customizable
+## Support for frameworks
 
-to-do
-        
-## Extensible
-
-to-do
-        
-## Symfony2 users
-        
-Take a look at [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
+* Symfony2 [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
 
 ## Credits
 
-Raul Fraile ([@raulfraile](https://twitter.com/raulfraile)
+* Raul Fraile ([@raulfraile](https://twitter.com/raulfraile)
+* [All contributors](https://github.com/raulfraile/ladybug/contributors)
 
 ## License
 

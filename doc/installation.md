@@ -8,7 +8,6 @@ The recommended way to install Geocoder is through [Composer](http://packagist.o
         "raulfraile/ladybug": "1.0.0-alpha1"
     }
 }
-
 ```
 To actually install Ladybug in your project, download the composer binary and run it:
 
