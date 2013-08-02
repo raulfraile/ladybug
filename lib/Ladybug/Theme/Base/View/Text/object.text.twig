@@ -1,43 +1,65 @@
-{% import "_macros.txt.twig" as m %}
+{% extends "_base.text.twig" %}
 
-{{ m.array_key(array_key) }}
+{% block type %}{{ var.type }}({{ var.className }}){% endblock type %}
+{% block value %}
 
-object({{ class_name }}) <intro>
+    <intro>
 
-    {% if object_custom_data is not empty %}
-        {{ m.array_block('Data', object_custom_data, level) }}
+    {# Custom data #}
+
+    {% if var.objectCustomData is not empty %}
+        {{ m.indent(level + 1) }}#<space>Data<intro>
+        {{ render_type(var.objectCustomData)|raw }}<intro>
     {% endif %}
 
-    {% if class_file is not empty %}
-        {% set class_info_data = {} %}
+    {# Properties #}
+    {% if var.objectProperties is not empty %}
+        {{ m.indent(level + 1) }}#<space>Properties<intro>
 
-        {# Filename #}
-        {% if class_file is not empty %}
-            {% set class_info_data = class_info_data|merge({'Filename': class_file}) %}
+        {% for data in var.objectProperties %}
+            {{ render_type(data.value, data.name, data.visibility)|raw }}
+            {#% if not loop.last %}<intro>{% endif %#}
+            {% if not data.value.composed %}<intro>{% endif %}
+        {% endfor %}
+
         {% endif %}
 
-        {# Interfaces #}
-        {% if class_interfaces is not empty %}
-            {% set class_info_data = class_info_data|merge({'Interfaces': class_interfaces}) %}
+    {# Class info #}
+    {% if var.classFile is not empty %}
+        {{ m.indent(level + 1) }}#<space>Class<space>info<intro>
+
+        {% if var.classFile is not empty %}
+            {{ m.indent(level+1) }}Filename:<space>{{ var.classFile }}<intro>
+        {% endif %}
+        {% if var.classInterface is not empty %}
+            {{ m.indent(level+1) }}Interfaces:<space>{{ var.classInterface }}<intro>
+        {% endif %}
+        {% if var.classNamespace is not empty %}
+            {{ m.indent(level+1) }}Namespace:<space>{{ var.classNamespace }}<intro>
+        {% endif %}
+        {% if var.classParent is not empty %}
+            {{ m.indent(level+1) }}Parent:<space>{{ var.classParent }}<intro>
         {% endif %}
 
-        {# Namespace #}
-        {% if class_namespace is not empty %}
-            {% set class_info_data = class_info_data|merge({'Namespace': class_namespace}) %}
-        {% endif %}
-
-        {# Parent #}
-        {% if class_parent is not empty %}
-            {% set class_info_data = class_info_data|merge({'Parent': class_parent}) %}
-        {% endif %}
-
-        {{ m.text_block('Class info', class_info_data, level, true) }}
     {% endif %}
 
-    {% if class_constants is not empty %}
-        {{ m.array_block('Constants', class_constants, level) }}
+    {# Class constants #}
+    {% if var.classConstants is not empty %}
+        {{ m.indent(level + 1) }}#<space>Constants<intro>
+        {% for key,constant in var.classConstants %}
+            {{ render_type(constant.value, constant.name)|raw }}
+            <intro>
+        {% endfor %}
     {% endif %}
 
-    {% if class_methods is not empty %}
-        {{ m.text_block('Methods', class_methods, level, false) }}
+    {# Class methods #}
+    {% if var.classMethods is not empty %}
+        {{ m.indent(level + 1) }}#<space>Methods<intro>
+        {% for method in var.classMethods %}
+            {{ m.render_object_method(method, level + 1) }}
+            <intro>
+        {% endfor %}
     {% endif %}
+
+
+{% endblock %}

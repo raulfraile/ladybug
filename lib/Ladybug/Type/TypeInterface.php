@@ -9,4 +9,6 @@ interface TypeInterface
     public function load($var);
 
     //public function getParameters();
+
+    public function isComposed();
 }

@@ -1,5 +1,5 @@
 {% macro indent(level) %}
-    {% for i in 1..level %}
+    {% for i in 2..level if level>1 %}
         <tab>
     {% endfor %}
 {% endmacro %}
@@ -35,5 +35,34 @@
         {% if key.visibility is defined %}
             {{ _self.visibility_name(key.visibility) }}
         {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_object_method(method, level) %}
+    {{ _self.indent(level) }}
+    {{ _self.visibility_name(method.visibility) }}<space>
+    {{ method.name }}(
+
+    {% for methodParameter in method.parameters %}
+        {% if methodParameter.type is not empty %}
+            {{ methodParameter.type }}
+        {% endif %}
+        ${{ methodParameter.name }}
+
+        {% if methodParameter.defaultValue is not null %}
+            <space>=<space> {{ methodParameter.defaultValue.formattedValue }}
+        {% endif %}{% if not loop.last %},<space>{% endif %}
+    {% endfor %}
+                    )
+{% endmacro %}
+
+
+{% macro visibility_name(visibility) %}
+    {% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+        private
+    {% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+        protected
+    {% else %}
+        public
     {% endif %}
 {% endmacro %}

@@ -1,0 +1,5 @@
+{% import "_macros.text.twig" as m %}
+
+{{ m.indent(level+1) }}
+{{ var.data|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(level+1) })|raw }}
+

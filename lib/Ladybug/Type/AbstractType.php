@@ -203,5 +203,8 @@ abstract class AbstractType implements TypeInterface
         $this->id = uniqid();
     }
 
-
+    public function isComposed()
+    {
+        return false;
+    }
 }

@@ -317,7 +317,7 @@ class ObjectType extends AbstractType
         $constants = $reflectedObject->getConstants();
         if (!empty($constants)) {
             foreach ($constants as $constantName => $constantValue) {
-                $valueType = $this->factory->factory($constantValue, $this->level + 1);
+                $valueType = $this->factory->factory($constantValue, $this->level);
                 $this->classConstants[] = new Object\Constant($constantName, $valueType);
             }
         }
@@ -499,6 +499,11 @@ class ObjectType extends AbstractType
     public function getVersion()
     {
         return $this->version;
+    }
+
+    public function isComposed()
+    {
+        return true;
     }
 
 }

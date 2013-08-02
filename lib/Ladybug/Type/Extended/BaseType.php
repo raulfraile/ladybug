@@ -86,4 +86,9 @@ abstract class BaseType implements TypeInterface
         return $this->level;
     }
 
+    public function isComposed()
+    {
+        return false;
+    }
+
 }
