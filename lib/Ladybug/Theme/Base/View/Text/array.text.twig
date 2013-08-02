@@ -1,10 +1,11 @@
-{% import "_macros.text.twig" as m %}
+{% extends "_base.text.twig" %}
 
-{{ m.array_key(key) }}
+{% block type %}array({{ var.length }}){% endblock type %}
 
-array({{ var.length }}) <intro>
-
-{% for item in var.value %}
-    {{ m.indent(level) }}
-    {{ render_type(item.value, item.key) }}<intro>
-{% endfor %}
+{% block value %}
+    <intro>
+    {% for item in var.value %}
+        {{ render_type(item.value, item.key) }}
+        {% if not item.value.composed %}<intro>{% endif %}
+    {% endfor %}
+{% endblock %}

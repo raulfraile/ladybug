@@ -84,5 +84,8 @@ class ArrayType extends AbstractType
         return $this->terminal;
     }
 
-
+    public function isComposed()
+    {
+        return true;
+    }
 }

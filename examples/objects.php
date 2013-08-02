@@ -56,6 +56,4 @@ $dom->loadXml($sXml);
 
 $reflected = new ReflectionClass('Foo');
 
-ladybug_set_format('text');
-
 ladybug_dump($foo, $dom, $reflected, $date);
