@@ -86,8 +86,11 @@
                         {% if var.classFile is not empty %}
                             <div class="final clearfix">Filename: {{ var.classFile }}</div>
                         {% endif %}
-                        {% if var.classInterface is not empty %}
-                            <div class="final">Interfaces: {{ var.classInterface }}</div>
+                        {% if var.classInterfaces is not empty %}
+                            <div class="final">Interfaces: {{ var.classInterfaces }}</div>
+                        {% endif %}
+                        {% if var.classTraits is not empty %}
+                            <div class="final">Traits: {{ var.classTraits }}</div>
                         {% endif %}
                         {% if var.classNamespace is not empty %}
                             <div class="final">Namespace: {{ var.classNamespace }}</div>

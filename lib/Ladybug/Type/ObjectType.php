@@ -33,6 +33,7 @@ class ObjectType extends AbstractType
     protected $classInterfaces = array();
     protected $classNamespace = null;
     protected $classParent = null;
+    protected $classTraits = array();
     protected $toString = null;
 
     /** @var boolean $abstract */
@@ -315,6 +316,10 @@ class ObjectType extends AbstractType
             $this->classParent = $parent->getName();
         }
 
+        if (version_compare(phpversion(), '5.4', '>=')) {
+            $this->classTraits = implode(', ', $reflectedObject->getTraitNames());
+        }
+
         $this->abstract = $reflectedObject->isAbstract();
         $this->final = $reflectedObject->isFinal();
     }
@@ -547,7 +552,15 @@ class ObjectType extends AbstractType
         return $this->final;
     }
 
+    public function setClassTraits($classTraits)
+    {
+        $this->classTraits = $classTraits;
+    }
 
+    public function getClassTraits()
+    {
+        return $this->classTraits;
+    }
 
 
 }

@@ -2,6 +2,11 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+trait TraitFoo
+{
+    public function a() {}
+}
+
 // user class
 final class Foo
 {
@@ -10,6 +15,7 @@ final class Foo
     public $bar = 1;
     protected $extra;
 
+    use TraitFoo;
 
     /**
      * Constructor
