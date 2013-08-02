@@ -81,8 +81,10 @@
                 </div>
                 <div id="object_info_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
                     <div class="accordion-inner">
+                        {% if var.abstract %}<span class="label label-warning pull-right">abstract</span>{% endif %}
+                        {% if var.final %}<span class="label label-warning pull-right">final</span>{% endif %}
                         {% if var.classFile is not empty %}
-                            <div class="final">Filename: {{ var.classFile }}</div>
+                            <div class="final clearfix">Filename: {{ var.classFile }}</div>
                         {% endif %}
                         {% if var.classInterface is not empty %}
                             <div class="final">Interfaces: {{ var.classInterface }}</div>

@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 // user class
-class Foo
+final class Foo
 {
     const TEST = 1;
 
@@ -32,6 +32,7 @@ class Foo
     private function setBar($bar=array(1,2)) { $this->bar = $bar; }
     public function __toString() {return $this->bar; }
 }
+
 
 $foo = new Foo();
 

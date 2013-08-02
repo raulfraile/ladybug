@@ -35,6 +35,12 @@ class ObjectType extends AbstractType
     protected $classParent = null;
     protected $toString = null;
 
+    /** @var boolean $abstract */
+    protected $abstract;
+
+    /** @var boolean $final */
+    protected $final;
+
     protected $terminal;
 
     /** @var string $icon */
@@ -308,6 +314,9 @@ class ObjectType extends AbstractType
         if ($parent) {
             $this->classParent = $parent->getName();
         }
+
+        $this->abstract = $reflectedObject->isAbstract();
+        $this->final = $reflectedObject->isFinal();
     }
 
     protected function loadClassConstants(\ReflectionClass $reflectedObject)
@@ -505,5 +514,40 @@ class ObjectType extends AbstractType
     {
         return true;
     }
+
+    /**
+     * @param boolean $abstract
+     */
+    public function setAbstract($abstract)
+    {
+        $this->abstract = $abstract;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAbstract()
+    {
+        return $this->abstract;
+    }
+
+    /**
+     * @param boolean $final
+     */
+    public function setFinal($final)
+    {
+        $this->final = $final;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFinal()
+    {
+        return $this->final;
+    }
+
+
+
 
 }
