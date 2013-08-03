@@ -1,3 +1,30 @@
+{% extends "_base.console.twig" %}
+
+{% import "_macros_table.console.twig" as mt %}
+
+{% block type %}{{ m.indent(var.level) }}{{ var.title }}{% endblock type %}
+
+{% block value %}
+<intro>
+    {{ mt.render_row_separator(var) }}
+    <intro>
+        {{ mt.render_header(var) }}
+
+        <intro>
+
+            {{ mt.render_row_separator(var) }}
+            <intro>
+
+                {% for row in var.rows %}
+                {{ mt.render_row(row, var) }}
+                <intro>
+                    {% endfor %}
+
+                    {{ mt.render_row_separator(var) }}
+
+                    {% endblock %}
+
+{#
 {% import "_macros.console.twig" as m %}
 
     {% for item in var.header %}
@@ -9,7 +36,7 @@
 
     <intro>
 
-    {% for item in var.data %}
+    {% for item in var.rows %}
         {{ m.indent(var.level) }}
         {% for subitem in item %}
             {{ subitem }}
@@ -18,3 +45,4 @@
         {% endfor %}
         <intro>
     {% endfor %}
+#}

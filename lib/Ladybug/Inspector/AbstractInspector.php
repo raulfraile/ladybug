@@ -13,18 +13,23 @@
 namespace Ladybug\Inspector;
 
 use Ladybug\Type\FactoryType;
+use Ladybug\Type\Extended\ExtendedTypeFactory;
 
 abstract class AbstractInspector implements InspectorInterface
 {
 
-    /** @var FactoryType $factory */
-    protected $factory;
+    /** @var FactoryType $typeFactory */
+    protected $typeFactory;
+
+    /** @var ExtendedTypeFactory $extendedTypeFactory */
+    protected $extendedTypeFactory;
 
     protected $level;
 
-    public function __construct(FactoryType $factory, $level = 0)
+    public function __construct(FactoryType $typeFactory, ExtendedTypeFactory $extendedTypeFactory, $level = 0)
     {
-        $this->factory = $factory;
+        $this->typeFactory = $typeFactory;
+        $this->extendedTypeFactory = $extendedTypeFactory;
         $this->level = $level;
     }
 

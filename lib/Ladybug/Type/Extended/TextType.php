@@ -28,10 +28,11 @@ class TextType extends BaseType
         $this->key = $key;
     }
 
-    public static function create($var, $key = null)
+    public static function create($var, $key = null, $level = 1)
     {
         $object = new static();
         $object->load($var, $key);
+        $object->setLevel($level);
 
         return $object;
     }

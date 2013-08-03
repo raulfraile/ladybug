@@ -39,11 +39,11 @@ class File extends AbstractInspector
 
         $result['file'] = $realPath;
 
-        $collection = new Type\Extended\CollectionType($this->factory);
+        $collection = new Type\Extended\CollectionType($this->typeFactory);
         $collection->setTitle('File');
 
         $result = array();
-        $result['mode'] = $this->factory->factory($fstat['mode'], $this->level);
+        $result['mode'] = $this->typeFactory->factory($fstat['mode'], $this->level);
 
         $mode = new Type\Extended\UnixPermissionsType();
         $mode->setKey('Permissions');

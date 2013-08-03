@@ -40,6 +40,29 @@ class LadybugExtension extends Twig_Extension
                 'getSpacesByLevel',
                 array()
             ),
+
+
+        );
+    }
+
+    public function getFilters()
+    {
+        return array(
+            'tags' => new \Twig_Filter_Method(
+                $this,
+                'getTags',
+                array()
+            ),
+            'repeat' => new \Twig_Filter_Method(
+                $this,
+                'getRepeat',
+                array()
+            ),
+            'pad' => new \Twig_Filter_Method(
+                $this,
+                'getPad',
+                array()
+            ),
         );
     }
 
@@ -69,6 +92,23 @@ class LadybugExtension extends Twig_Extension
     public function getSpacesByLevel($level)
     {
         return str_repeat('<space><space><space><space>', $level);
+    }
+
+    public function getTags($text)
+    {
+        $textTags = str_replace(' ', '<space>', $text);
+
+        return $textTags;
+    }
+
+    public function getRepeat($text, $times)
+    {
+        return str_repeat($text, $times);
+    }
+
+    public function getPad($text, $length)
+    {
+        return str_pad($text, $length);
     }
 
     public function minifyCssFunction($filename)

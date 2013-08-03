@@ -52,5 +52,9 @@
             <tag name="ladybug.type.extended" />
         </service>
 
+        <service id="type_extended_table" class="Ladybug\Type\Extended\TableType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
     </services>
 </container>

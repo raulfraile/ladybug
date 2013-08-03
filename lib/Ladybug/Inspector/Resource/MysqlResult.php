@@ -21,34 +21,30 @@ class MysqlResult extends AbstractInspector
 
     public function getData($var)
     {
-        $result = array();
-        $i = 1;
-        $columnNames = array();
-
+        $headers = array();
+        $rows = array();
+        $first = true;
         while ($row = mysql_fetch_assoc($var)) {
 
-            $values = array();
+            $rowData = array();
             foreach ($row as $k => $v) {
-                if ($i == 1) $columnNames[] = $k;
-                $values[] = $v;
+                if ($first) {
+                    $headers[] = $k;
+                }
+                $rowData[] = $v;
             }
 
-            $result[$i] = $row;
-
-            $i++;
+            $rows[] = $rowData;
+            $first = false;
         }
 
-        $table = new Type\Extended\TableType();
-        $table->load($result);
-        $table->setHeader($columnNames);
-        $table->setLevel($this->level);
+        /** @var $table Type\Extended\TableType */
+        $table = $this->extendedTypeFactory->factory('table', $this->level);
 
-        $collection = Type\Extended\CollectionType::create(array(
-            $table
-        ));
+        $table->setHeaders($headers);
+        $table->setRows($rows);
+        $table->setTitle('MySQL result');
 
-        $collection->setTitle('MySQL result');
-
-        return $collection;
+        return $table;
     }
 }

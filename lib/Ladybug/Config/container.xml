@@ -18,7 +18,7 @@
         <parameter key="theme">modern</parameter>
         <parameter key="array_max_nesting_level">9</parameter>
         <parameter key="object_max_nesting_level">3</parameter>
-        <parameter key="expanded">true</parameter>
+        <parameter key="expanded">false</parameter>
         <parameter key="silenced">false</parameter>
     </parameters>
 
@@ -26,6 +26,7 @@
         <service id="theme_resolver" class="Ladybug\Theme\ThemeResolver" />
         <service id="environment_resolver" class="Ladybug\Environment\EnvironmentResolver" />
         <service id="type_factory" class="Ladybug\Type\FactoryType" />
+        <service id="type_extended_factory" class="Ladybug\Type\Extended\ExtendedTypeFactory" />
         <service id="format_resolver" class="Ladybug\Format\FormatResolver" />
         <service id="render_resolver" class="Ladybug\Render\RenderResolver" />
         <service id="inspector_factory" class="Ladybug\Inspector\InspectorFactory" />

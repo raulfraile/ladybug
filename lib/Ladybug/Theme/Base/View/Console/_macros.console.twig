@@ -1,13 +1,6 @@
 {% macro indent(level) %}
 
-    {% set limit = level %}
-    {% if limit > 1 %}
-        {% set limit = limit -1 %}
-    {% endif %}
-
-    {% for i in 1..limit %}
-        <tab>
-    {% endfor %}
+{{ '<tab>'|repeat(level-1)|tags|raw }}
 {% endmacro %}
 
 {% macro array_block(title, data, level, show_keys) %}

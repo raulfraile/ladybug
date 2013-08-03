@@ -17,6 +17,7 @@
         {{ m.indent(level + 1) }}#<space>Properties<intro>
 
         {% for data in var.objectProperties %}
+            {{ m.indent(level+1) }}
             {{ render_type(data.value, data.name, data.visibility)|raw }}
             {#% if not loop.last %}<intro>{% endif %#}
             {% if not data.value.composed %}<intro>{% endif %}
@@ -47,6 +48,7 @@
     {% if var.classConstants is not empty %}
         {{ m.indent(level + 1) }}#<space>Constants<intro>
         {% for key,constant in var.classConstants %}
+            {{ m.indent(constant.value.level) }}
             {{ render_type(constant.value, constant.name)|raw }}
             <intro>
         {% endfor %}
@@ -56,6 +58,7 @@
     {% if var.classMethods is not empty %}
         {{ m.indent(level + 1) }}#<space>Methods<intro>
         {% for method in var.classMethods %}
+            {{ m.indent(level) }}
             {{ m.render_object_method(method, level + 1) }}
             <intro>
         {% endfor %}

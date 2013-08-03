@@ -7,14 +7,14 @@
 
         <thead>
         <tr>
-            {% for item in var.header %}
+            {% for item in var.headers %}
             <th>{{ item }}</th>
             {% endfor %}
         </tr>
         </thead>
 
         <tbody>
-        {% for item in var.data %}
+        {% for item in var.rows %}
         <tr>
             {% for subitem in item %}
             <td>{{ subitem }}</td>

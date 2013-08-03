@@ -29,5 +29,22 @@ class TypeCompilerPass implements CompilerPassInterface
                 array(new Reference($id), $id)
             );
         }
+
+        // extended types
+
+        $definition = $container->getDefinition(
+            'type_extended_factory'
+        );
+
+        $taggedServices = $container->findTaggedServiceIds(
+            'ladybug.type.extended'
+        );
+
+        foreach ($taggedServices as $id => $attributes) {
+            $definition->addMethodCall(
+                'add',
+                array(new Reference($id), $id)
+            );
+        }
     }
 }

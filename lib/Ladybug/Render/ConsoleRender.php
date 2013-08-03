@@ -59,6 +59,8 @@ class ConsoleRender extends AbstractRender implements RenderInterface
         $result = str_replace('<intro>', PHP_EOL, $result);
         $result = str_replace('<tab>', '<f_tab> · </f_tab>', $result);
         $result = str_replace('<space>', ' ', $result);
+        $result = str_replace('<t_>', '', $result);
+        $result = str_replace('</t_>', '', $result);
 
         return $this->console->writeln($result);
     }

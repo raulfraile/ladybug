@@ -1,0 +1,11 @@
+{% extends "_base.text.twig" %}
+
+{% block type %}{{ m.indent(level) }}{{ var.title|tags|raw }}{% endblock type %}
+
+{% block value %}
+<intro>
+{% for item in var.data %}
+    {{ m.indent(item.level) }} {{ render_type(item, item.key)|raw }}<intro>
+{% endfor %}
+
+{% endblock %}

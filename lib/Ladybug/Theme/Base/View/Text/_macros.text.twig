@@ -1,7 +1,5 @@
 {% macro indent(level) %}
-    {% for i in 2..level if level > 1 %}
-        <tab>
-    {% endfor %}
+    {{ '<tab>'|repeat(level-1)|tags|raw }}
 {% endmacro %}
 
 {% macro array_block(title, data, level, show_keys) %}

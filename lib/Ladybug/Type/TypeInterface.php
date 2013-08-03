@@ -10,5 +10,9 @@ interface TypeInterface
 
     //public function getParameters();
 
+    /**
+     * @abstract
+     * @return mixed
+     */
     public function isComposed();
 }

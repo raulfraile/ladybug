@@ -14,7 +14,7 @@ namespace Ladybug\Type\Extended;
 
 use Ladybug\Type\TypeInterface;
 
-abstract class BaseType implements TypeInterface
+abstract class BaseType implements ExtendedTypeInterface
 {
 
     const TYPE_ID = 'base';
@@ -29,10 +29,6 @@ abstract class BaseType implements TypeInterface
 
     /**
      * Constructor
-     *
-     * @param string  $var
-     * @param mixed   $level
-     * @param Options $options
      */
     public function __construct()
     {
