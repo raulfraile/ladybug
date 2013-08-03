@@ -33,13 +33,15 @@ class DOMDocument extends AbstractInspector
         $var->formatOutput = true;
         $xml = $var->saveXML();
 
-        $result = new Type\Extended\CodeType();
-        $result->setLanguage('xml');
-        $result->setData($xml);
-        $result->setKey('Code');
-        $result->setLevel($this->level + 1);
+        /** @var $code Type\Extended\CodeType */
+        $code = $this->extendedTypeFactory->factory('code', $this->level);
 
-        return $result;
+        $code->setLanguage('xml');
+        $code->setData($xml);
+        $code->setKey('Code');
+        $code->setLevel($this->level + 1);
+
+        return $code;
     }
 
 }

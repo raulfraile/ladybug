@@ -39,29 +39,25 @@ class File extends AbstractInspector
 
         $result['file'] = $realPath;
 
-        $collection = new Type\Extended\CollectionType($this->typeFactory);
+        /** @var $collection Type\Extended\CollectionType */
+        $collection = $this->extendedTypeFactory->factory('collection', $this->level);
         $collection->setTitle('File');
 
         $result = array();
         $result['mode'] = $this->typeFactory->factory($fstat['mode'], $this->level);
 
-        $mode = new Type\Extended\UnixPermissionsType();
+        /** @var $mode Type\Extended\UnixPermissionsType */
+        $mode = $this->extendedTypeFactory->factory('unixpermissions', $this->level);
         $mode->setKey('Permissions');
         $mode->load($fstat['mode']);
         $result['mode'] = $mode;
 
-        $size = new Type\Extended\SizeType();
+        /** @var $size Type\Extended\SizeType */
+        $size = $this->extendedTypeFactory->factory('size', $this->level);
         $size->setKey('Size');
         $size->load($fstat['size']);
         $result['size'] = $size;
 
-        /*$permissions = array('read');
-        if (is_writable($real_path)) $permissions[] = 'write';
-        if (is_executable($real_path)) $permissions[] = 'execute';
-        if (is_link($real_path)) $permissions[] = 'link';
-        if (is_dir($real_path)) $permissions[] = 'directory';
-
-        $result['permissions'] = implode(', ', $permissions);*/
 
         $collection->loadFromArray($result, true);
         $collection->setLevel($this->level);

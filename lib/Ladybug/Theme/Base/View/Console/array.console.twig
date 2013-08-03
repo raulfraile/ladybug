@@ -1,17 +1,12 @@
-{% import "_macros.console.twig" as m %}
+{% extends "_base.console.twig" %}
 
-{% spaceless %}
-    {{ m.visibility_block(visibility) }}
+{% block type %}<t_array>{{ parent() }}({{ var.length }})</t_array><space>{% endblock %}
 
-    {{ m.array_key(key) }}
-
-    <t_array>array({{ var.length }})</t_array><intro>
-
-        {% for item in var.value %}
-            {{ m.indent(var.level + 1) }}
-            {{ render_type(item.value, item.key) }}
-            {% if not loop.last %}<intro>{% endif %}
-        {% endfor %}
-
-
-{% endspaceless %}
+{% block value %}
+    <intro>
+    {% for item in var.value %}
+        {{ m.indent(var.level + 1) }}
+        {{ render_type(item.value, item.key) }}
+        {% if not loop.last %}<intro>{% endif %}
+    {% endfor %}
+{% endblock %}

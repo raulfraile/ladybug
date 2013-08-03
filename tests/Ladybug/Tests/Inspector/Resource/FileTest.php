@@ -17,7 +17,12 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::any(), m::any())->andReturn(new Type\IntType());
 
-        $this->inspector = new Inspector\Resource\File($factoryTypeMock);
+        $extendedTypeFactoryMock = m::mock('Ladybug\Type\Extended\ExtendedTypeFactory');
+        $extendedTypeFactoryMock->shouldReceive('factory')->with('collection', m::any())->andReturn(new Type\Extended\CollectionType());
+        $extendedTypeFactoryMock->shouldReceive('factory')->with('unixpermissions', m::any())->andReturn(new Type\Extended\UnixPermissionsType());
+        $extendedTypeFactoryMock->shouldReceive('factory')->with('size', m::any())->andReturn(new Type\Extended\SizeType());
+
+        $this->inspector = new Inspector\Resource\File($factoryTypeMock, $extendedTypeFactoryMock);
     }
 
     public function testForValidValues()

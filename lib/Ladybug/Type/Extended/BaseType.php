@@ -32,7 +32,7 @@ abstract class BaseType implements ExtendedTypeInterface
      */
     public function __construct()
     {
-        $this->id = 'ext_' . static::TYPE_ID . '_' . ((int) rand(1, 100));
+        $this->id = uniqid('ext_' . static::TYPE_ID . '_');
     }
 
     public function setData($data)
@@ -85,6 +85,11 @@ abstract class BaseType implements ExtendedTypeInterface
     public function isComposed()
     {
         return false;
+    }
+
+    function __clone()
+    {
+        $this->id = uniqid('ext_' . static::TYPE_ID . '_');
     }
 
 }

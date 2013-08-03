@@ -21,6 +21,16 @@ class CollectionType extends BaseType implements \Countable
 
     protected $title;
 
+    protected $items;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->items = array();
+    }
+
+
     public function setProcessedData($processedData)
     {
         $this->processedData = $processedData;
@@ -48,26 +58,34 @@ class CollectionType extends BaseType implements \Countable
 
     public function loadFromArray(array $data, $useKeys = true)
     {
-        $this->data = array();
+        $this->items = array();
 
+        $i = 0;
         foreach ($data as $key => $item) {
-            $this->data[] = $item;
+            $this->items[] = $item;
+/*
+            if ($item instanceof CollectionType) {
+                $this->items[$i]->setLevel($this->level + 1);
+            }
 
+            $i++;*/
         }
+
+        //$this->setLevel($this->level);
     }
 
     public function load($var, $key = null)
     {
-        $this->data = array();
+        $this->items = array();
 
         foreach ($var as $key => $item) {
-            $this->data[] = $item;
+            $this->items[] = $item;
         }
     }
 
     public function add($value)
     {
-        $this->data[] = $value;
+        $this->items[] = $value;
     }
 
     public static function create(array $var, $key = null)
@@ -80,7 +98,27 @@ class CollectionType extends BaseType implements \Countable
 
     public function count()
     {
-        return count($this->data);
+        return count($this->items);
     }
+
+    public function setLevel($level)
+    {
+        parent::setLevel($level);
+
+        foreach ($this->items as $item) {
+            $item->setLevel($level + 1);
+        }
+    }
+
+    public function setItems($items)
+    {
+        $this->items = $items;
+    }
+
+    public function getItems()
+    {
+        return $this->items;
+    }
+
 
 }

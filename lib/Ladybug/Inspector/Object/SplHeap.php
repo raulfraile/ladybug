@@ -33,7 +33,9 @@ abstract class SplHeap extends AbstractInspector
 
         $arrayData = iterator_to_array($var);
 
-        $collection = new Type\Extended\CollectionType();
+        /** @var $collection Type\Extended\CollectionType */
+        $collection = $this->extendedTypeFactory->factory('collection', $this->level);
+
         $collection->setTitle(sprintf('Heap (%d)', count($arrayData)));
 
         foreach ($arrayData as $item) {

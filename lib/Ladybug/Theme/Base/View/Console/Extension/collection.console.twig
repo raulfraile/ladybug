@@ -1,7 +1,12 @@
-{% import "_macros.console.twig" as m %}
+{% extends "_base.console.twig" %}
 
-{{ m.indent(var.level) }}<t_array_block>{{ var.title }}</t_array_block><intro>
+{% block type %}
+<t_array_block>{{ var.title }}</t_array_block><intro>
+{% endblock %}
 
-{% for item in var.data %}
-    {{ m.indent(item.level) }} {{ render_type(item, item.key)|raw }}<intro>
+{% block value %}
+{% for item in var.items %}
+    {{ m.indent(item.level) }} {{ render_type(item, item.key)|raw }}
+    {% if not loop.last %}<intro>{% endif %}
 {% endfor %}
+{% endblock %}

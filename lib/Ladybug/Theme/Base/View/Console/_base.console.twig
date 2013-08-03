@@ -4,8 +4,10 @@
 
 {{ m.array_key(key) }}
 
-{% block type %}{{ var.type }}{% endblock %}
+{% block type %}{{ var.type }}<space>{% endblock %}
 
-    {% if var.type != 'null' %}
-        <space> <t_{{ var.type }}>{% block value %}{{ var.formattedValue()|raw }}{% endblock %}</t_{{ var.type }}>
-    {% endif %}
+{% if var.type != 'null' %}
+    {% if not var.composed %}<t_{{ var.type }}>{% endif %}
+    {% block value %}{{ var.formattedValue()|raw }}{% endblock %}
+    {% if not var.composed %}</t_{{ var.type }}>{% endif %}
+{% endif %}

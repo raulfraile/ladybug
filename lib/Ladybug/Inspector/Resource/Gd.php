@@ -52,25 +52,28 @@ class Gd extends AbstractInspector
         if ($gd_info['XBM Support']) $gd_support[] = 'XBM';
         if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
 
-        $gdCollection = new Type\Extended\CollectionType();
+        /** @var $gdCollection Type\Extended\CollectionType */
+        $gdCollection = $this->extendedTypeFactory->factory('collection', $this->level);
         $gdCollection->setTitle('GD');
         $gdCollection->loadFromArray(array(
-            Type\Extended\TextType::create($gd_info['GD Version'], 'Version'),
-            Type\Extended\TextType::create(implode(', ', $gd_support), 'Support')
+            $this->createTextType($gd_info['GD Version'], 'Version'),
+            $this->createTextType(implode(', ', $gd_support), 'Support')
         ));
         $gdCollection->setLevel($this->level + 1);
 
-        $imageCollection = new Type\Extended\CollectionType();
+        /** @var $imageCollection Type\Extended\CollectionType */
+        $imageCollection = $this->extendedTypeFactory->factory('collection', $this->level);
         $imageCollection->setTitle('Image');
         $imageCollection->loadFromArray(array(
-            Type\Extended\TextType::create(sprintf('%sx%s (px)', $width, $height), 'Dimensions'),
-            Type\Extended\TextType::create($colors_palette, 'Colors palette'),
-            Type\Extended\TextType::create($isTrueColor, 'True color'),
-            Type\Extended\ImageType::create($image, 'Image'),
+            $this->createTextType(sprintf('%sx%s (px)', $width, $height), 'Dimensions'),
+            $this->createTextType($colors_palette, 'Colors palette'),
+            $this->createTextType($isTrueColor, 'True color'),
+            $this->createImageType($image, 'Image')
         ));
         $imageCollection->setLevel($this->level + 1);
 
-        $collection = new Type\Extended\CollectionType($result);
+        /** @var $collection Type\Extended\CollectionType */
+        $collection = $this->extendedTypeFactory->factory('collection', $this->level);
         $collection->setTitle('Data');
         $collection->loadFromArray(array(
             'GD' => $gdCollection,

@@ -6,4 +6,7 @@
 {{ m.array_key(key) }}
 {{ spaces_level(var.level)|raw }}
 {{ var.data|replace({' ': '<space>', '\n': '<intro>' ~ spaces_level(var.level)})|raw }}
+<intro>
     {% endspaceless %}
+
+

@@ -37,4 +37,9 @@ class TextType extends BaseType
         return $object;
     }
 
+    public function setText($text)
+    {
+        $this->data = $text;
+    }
+
 }

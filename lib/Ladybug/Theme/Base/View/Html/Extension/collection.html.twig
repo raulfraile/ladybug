@@ -3,7 +3,7 @@
 {% block value %}
     <div class="block_title level_{{ var.level + 1 }}">{{ var.title }}</div>
     <div class="level_{{ var.level + 1 }}">
-        {% for item in var.data %}
+        {% for item in var.items %}
             {{ render_type(item, item.key)|raw }}
         {% endfor %}
     </div>

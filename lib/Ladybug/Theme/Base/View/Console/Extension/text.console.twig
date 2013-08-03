@@ -4,5 +4,5 @@
 {{ m.visibility_block(visibility) }}
 
 {{ m.array_key(key) }}
-{{ var.data }}
+{{ var.data|tags|raw }}
 {% endspaceless %}

@@ -17,7 +17,10 @@ class DOMDocumentTest extends \PHPUnit_Framework_TestCase
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
 
-        $this->inspector = new Inspector\Object\DOMDocument($factoryTypeMock);
+        $extendedTypeFactoryMock = m::mock('Ladybug\Type\Extended\ExtendedTypeFactory');
+        $extendedTypeFactoryMock->shouldReceive('factory')->with('code', m::any())->andReturn(new Type\Extended\CodeType());
+
+        $this->inspector = new Inspector\Object\DOMDocument($factoryTypeMock, $extendedTypeFactoryMock);
     }
 
     public function testForValidValues()

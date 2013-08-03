@@ -56,5 +56,25 @@
             <tag name="ladybug.type.extended" />
         </service>
 
+        <service id="type_extended_collection" class="Ladybug\Type\Extended\CollectionType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
+        <service id="type_extended_text" class="Ladybug\Type\Extended\TextType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
+        <service id="type_extended_image" class="Ladybug\Type\Extended\ImageType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
+        <service id="type_extended_size" class="Ladybug\Type\Extended\SizeType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
+        <service id="type_extended_unixpermissions" class="Ladybug\Type\Extended\UnixPermissionsType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
     </services>
 </container>

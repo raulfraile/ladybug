@@ -17,7 +17,10 @@ class SplQueueTest extends \PHPUnit_Framework_TestCase
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
 
-        $this->inspector = new Inspector\Object\SplQueue($factoryTypeMock);
+        $extendedTypeFactoryMock = m::mock('Ladybug\Type\Extended\ExtendedTypeFactory');
+        $extendedTypeFactoryMock->shouldReceive('factory')->with('collection', m::any())->andReturn(new Type\Extended\CollectionType());
+
+        $this->inspector = new Inspector\Object\SplQueue($factoryTypeMock, $extendedTypeFactoryMock);
     }
 
     public function testForValidValues()

@@ -36,6 +36,8 @@ class ResourceType extends AbstractType
     /** @var MetadataResolver $metadataResolver */
     protected $metadataResolver;
 
+    protected $resourceId;
+
     public function __construct(FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
@@ -54,6 +56,7 @@ class ResourceType extends AbstractType
         }
 
         $this->resourceType = get_resource_type($var);
+        $this->resourceId = (int)$var;
 
         if ($this->resourceType == 'stream') {
             $stream_vars = stream_get_meta_data($var);
@@ -108,5 +111,16 @@ class ResourceType extends AbstractType
         }
 
     }
+
+    public function getResourceId()
+    {
+        return $this->resourceId;
+    }
+
+    public function isComposed()
+    {
+        return true;
+    }
+
 
 }

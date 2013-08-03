@@ -20,6 +20,8 @@ class ImageType extends BaseType
     protected $width;
     protected $height;
 
+    protected $tempPath;
+
     public function setHeight($height)
     {
         $this->height = $height;
@@ -53,4 +55,20 @@ class ImageType extends BaseType
 
         return $object;
     }
+
+    public function setImage($image)
+    {
+        $this->data = base64_encode($image);
+
+        // create temp file
+        $this->tempPath = sys_get_temp_dir() . '/' . uniqid('ladybug_');
+        file_put_contents($this->tempPath, $image);
+    }
+
+    public function getTempPath()
+    {
+        return $this->tempPath;
+    }
+
+
 }

@@ -14,6 +14,7 @@ namespace Ladybug\Inspector;
 
 use Ladybug\Type\FactoryType;
 use Ladybug\Type\Extended\ExtendedTypeFactory;
+use Ladybug\Type;
 
 abstract class AbstractInspector implements InspectorInterface
 {
@@ -41,6 +42,38 @@ abstract class AbstractInspector implements InspectorInterface
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * @param $text
+     * @param $key
+     * @return \Ladybug\Type\Extended\TextType
+     */
+    public function createTextType($text, $key)
+    {
+        /** @var $textType Type\Extended\TextType */
+        $textType = $this->extendedTypeFactory->factory('text', $this->level);
+
+        $textType->setKey($key);
+        $textType->setText($text);
+
+        return $textType;
+    }
+
+    /**
+     * @param $text
+     * @param $key
+     * @return \Ladybug\Type\Extended\ImageType
+     */
+    public function createImageType($image, $key)
+    {
+        /** @var $imageType Type\Extended\ImageType */
+        $imageType = $this->extendedTypeFactory->factory('image', $this->level);
+
+        $imageType->setKey($key);
+        $imageType->setImage($image);
+
+        return $imageType;
     }
 
 }

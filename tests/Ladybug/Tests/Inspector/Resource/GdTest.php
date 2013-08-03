@@ -23,7 +23,10 @@ class GdTest extends \PHPUnit_Framework_TestCase
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::any(), m::any())->andReturn(new Type\IntType());
 
-        $this->inspector = new Inspector\Resource\Gd($factoryTypeMock);
+        $extendedTypeFactoryMock = m::mock('Ladybug\Type\Extended\ExtendedTypeFactory');
+        $extendedTypeFactoryMock->shouldReceive('factory')->with('collection', m::any())->andReturn(new Type\Extended\CollectionType());
+
+        $this->inspector = new Inspector\Resource\Gd($factoryTypeMock, $extendedTypeFactoryMock);
     }
 
     public function testForValidValues()
