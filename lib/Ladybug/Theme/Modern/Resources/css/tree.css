@@ -97,3 +97,7 @@
     vertical-align: text-top;
     background: url(../images/twig.png) right center no-repeat;
 }
+
+.trans {
+    background: url(../images/trans.gif);
+}

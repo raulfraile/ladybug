@@ -1,8 +1,17 @@
-{% extends "_base.html.twig" %}
+{% import "_macros.html.twig" as m %}
 
-{% block value %}
-<div>
-    <img src="data:image/png;base64,{{ var.data }}" class="img-polaroid" />
-    <p> </p>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ var.id }}">
+            Image
+        </a>
+    </div>
+    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
+        <div class="accordion-inner trans" style="text-align: center">
+            <a href="data:image/png;base64,{{ var.data }}" target="_blank">
+                <img src="data:image/png;base64,{{ var.data }}" class="img-polaroid" />
+            </a>
+        </div>
+    </div>
+
 </div>
-{% endblock %}

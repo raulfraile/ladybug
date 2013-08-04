@@ -22,7 +22,7 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::any(), m::any())->andReturn(new Type\IntType());
-        
+
         $extendedTypeFactoryMock = m::mock('Ladybug\Type\Extended\ExtendedTypeFactory');
         $extendedTypeFactoryMock->shouldReceive('factory')->with('collection', m::any())->andReturnUsing(function() {return new Type\Extended\CollectionType();});
         $extendedTypeFactoryMock->shouldReceive('factory')->with('text', m::any())->andReturn(new Type\Extended\TextType());
