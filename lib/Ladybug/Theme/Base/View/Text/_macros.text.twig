@@ -43,12 +43,12 @@
 
     {% for methodParameter in method.parameters %}
         {% if methodParameter.type is not empty %}
-            {{ methodParameter.type }}
+            {{ methodParameter.type }}<space>
         {% endif %}
         ${{ methodParameter.name }}
 
         {% if methodParameter.defaultValue is not null %}
-            <space>=<space> {{ methodParameter.defaultValue.formattedValue }}
+            <space>=<space> {{ methodParameter.defaultValue.formattedValue|tags|raw }}
         {% endif %}{% if not loop.last %},<space>{% endif %}
     {% endfor %}
                     )
