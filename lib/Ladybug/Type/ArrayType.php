@@ -88,4 +88,17 @@ class ArrayType extends AbstractType
     {
         return true;
     }
+
+    public function getInlineValue()
+    {
+        $values = array();
+        foreach ($this->value as $value) {
+            /** @var Item $value */
+            $values[] = (string) $value->getValue()->getInlineValue();
+        }
+
+        return sprintf('array(%s)', implode(', ', $values));
+    }
+
+
 }

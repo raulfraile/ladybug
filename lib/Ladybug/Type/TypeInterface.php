@@ -15,4 +15,6 @@ interface TypeInterface
      * @return mixed
      */
     public function isComposed();
+
+    public function getInlineValue();
 }

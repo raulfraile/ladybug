@@ -35,7 +35,7 @@ final class Foo
      * @return int
      */
     protected function getBar() { return $this->bar; }
-    private function setBar($bar=array(1,2)) { $this->bar = $bar; }
+    private function setBar($bar=array(1,2), $bar2 = null) { $this->bar = $bar; }
     public function __toString() {return $this->bar; }
 }
 

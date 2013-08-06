@@ -33,6 +33,8 @@ class Method implements VisibilityInterface
     /** @var string $longDescription */
     protected $longDescription;
 
+    protected $level;
+
     /**
      * Set method name
      * @param string $name
@@ -142,5 +144,16 @@ class Method implements VisibilityInterface
     {
         return $this->shortDescription;
     }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
 
 }

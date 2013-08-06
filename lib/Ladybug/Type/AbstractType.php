@@ -207,4 +207,9 @@ abstract class AbstractType implements TypeInterface
     {
         return false;
     }
+
+    public function getInlineValue()
+    {
+        return $this->value;
+    }
 }

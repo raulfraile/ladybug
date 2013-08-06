@@ -104,5 +104,9 @@ abstract class BaseType implements ExtendedTypeInterface
         return $this->title;
     }
 
+    public function getInlineValue()
+    {
+        return null;
+    }
 
 }

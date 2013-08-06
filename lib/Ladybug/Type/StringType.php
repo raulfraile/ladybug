@@ -40,7 +40,7 @@ class StringType extends AbstractType
         $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());
     }
 
-    public function getFormattedValue()
+    public function getInlineValue()
     {
         return sprintf('"%s"', $this->value);
     }

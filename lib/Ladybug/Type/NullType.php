@@ -43,4 +43,9 @@ class NullType extends AbstractType
 
         parent::load($var);
     }
+
+    public function getInlineValue()
+    {
+        return 'null';
+    }
 }

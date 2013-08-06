@@ -58,8 +58,8 @@
     {% if var.classMethods is not empty %}
         {{ m.indent(level + 1) }}#<space>Methods<intro>
         {% for method in var.classMethods %}
-            {{ m.indent(level) }}
-            {{ m.render_object_method(method, level + 1) }}
+            {{ m.indent(method.level) }}
+            {{ m.render_object_method(method, level) }}
             <intro>
         {% endfor %}
     {% endif %}

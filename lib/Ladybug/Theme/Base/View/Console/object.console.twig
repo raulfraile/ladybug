@@ -51,7 +51,7 @@
     {% if var.classConstants is not empty %}
         {{ m.indent(var.level+1) }}<t_array_block>Constants</t_array_block><intro>
         {% for constant in var.classConstants %}
-            {{ m.indent(var.level+1) }}{{ render_type(constant.value, constant.name)|raw }}
+            {{ m.indent(constant.value.level) }}{{ render_type(constant.value, constant.name)|raw }}
             <intro>
         {% endfor %}
     {% endif %}
@@ -59,7 +59,7 @@
     {% if var.classMethods is not empty %}
         {{ m.indent(var.level+1) }}<t_array_block>Methods</t_array_block><intro>
         {% for method in var.classMethods %}
-            {{ m.indent(var.level+1) }}{{ m.render_object_method(method) }}
+            {{ m.indent(method.level) }}{{ m.render_object_method(method) }}
             <intro>
         {% endfor %}
     {% endif %}

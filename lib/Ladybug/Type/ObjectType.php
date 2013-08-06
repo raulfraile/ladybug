@@ -331,7 +331,7 @@ class ObjectType extends AbstractType
         $constants = $reflectedObject->getConstants();
         if (!empty($constants)) {
             foreach ($constants as $constantName => $constantValue) {
-                $valueType = $this->factory->factory($constantValue, $this->level);
+                $valueType = $this->factory->factory($constantValue, $this->level + 1);
                 $this->classConstants[] = new Object\Constant($constantName, $valueType);
             }
         }
@@ -363,6 +363,7 @@ class ObjectType extends AbstractType
 
                 $method = new Object\Method();
                 $method->setName($reflectedMethod->getName());
+                $method->setLevel($this->level + 1);
 
                 // static
                 if ($reflectedMethod->isStatic()) {

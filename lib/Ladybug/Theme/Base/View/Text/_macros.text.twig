@@ -48,7 +48,7 @@
         ${{ methodParameter.name }}
 
         {% if methodParameter.defaultValue is not null %}
-            <space>=<space> {{ methodParameter.defaultValue.formattedValue|tags|raw }}
+            <space>=<space> {{ methodParameter.defaultValue.inlineValue|tags|raw }}
         {% endif %}{% if not loop.last %},<space>{% endif %}
     {% endfor %}
                     )

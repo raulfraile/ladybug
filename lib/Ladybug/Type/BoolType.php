@@ -47,4 +47,9 @@ class BoolType extends AbstractType
         parent::load($var);
     }
 
+    public function getInlineValue()
+    {
+        return $this->value ? 'true' : 'false';
+    }
+
 }
