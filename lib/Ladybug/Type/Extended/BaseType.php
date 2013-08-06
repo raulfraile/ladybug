@@ -27,6 +27,8 @@ abstract class BaseType implements ExtendedTypeInterface
 
     protected $level;
 
+    protected $title;
+
     /**
      * Constructor
      */
@@ -91,5 +93,16 @@ abstract class BaseType implements ExtendedTypeInterface
     {
         $this->id = uniqid('ext_' . static::TYPE_ID . '_');
     }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
 
 }

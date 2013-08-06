@@ -48,7 +48,7 @@ class ArrayType extends AbstractType
         $this->length = count($var);
         if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {
-                $arrayItem = new Item($k, $this->factory->factory($v, $this->level));
+                $arrayItem = new Item($k, $this->factory->factory($v, $this->level + 1));
 
                 $this->add($arrayItem);
             }

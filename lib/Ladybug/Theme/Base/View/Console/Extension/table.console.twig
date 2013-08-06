@@ -2,17 +2,19 @@
 
 {% import "_macros_table.console.twig" as mt %}
 
-{% block type %}{{ m.indent(var.level) }}{{ var.title }}{% endblock type %}
+{% block type %}
+    <t_array_block>{{ var.title|tags|raw }}</t_array_block>
+{% endblock type %}
 
 {% block value %}
-<intro>
-    {{ mt.render_row_separator(var) }}
+
+    {{ mt.render_row_separator(var, false) }}
     <intro>
         {{ mt.render_header(var) }}
 
         <intro>
 
-            {{ mt.render_row_separator(var) }}
+            {{ mt.render_row_separator(var, true) }}
             <intro>
 
                 {% for row in var.rows %}
@@ -20,7 +22,7 @@
                 <intro>
                     {% endfor %}
 
-                    {{ mt.render_row_separator(var) }}
+                    {{ mt.render_row_separator(var, true) }}
 
                     {% endblock %}
 

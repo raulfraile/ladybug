@@ -436,6 +436,8 @@ class ObjectType extends AbstractType
 
         if ($this->inspectorFactory->has($service)) {
             $inspector = $this->inspectorFactory->factory($service);
+            $inspector->setLevel($this->level + 1);
+
             $this->objectCustomData = $inspector->getData($var);
         }
 
@@ -459,7 +461,7 @@ class ObjectType extends AbstractType
 
             $objectProperty = new Object\Property();
             $objectProperty->setName($propertyName);
-            $objectProperty->setValue($this->factory->factory($item, $this->level));
+            $objectProperty->setValue($this->factory->factory($item, $this->level + 1));
             $objectProperty->setVisibility($propertyVisibility);
 
             $this->objectProperties[] = $objectProperty;

@@ -43,8 +43,7 @@ class MysqlResult extends AbstractInspector
 
         $table->setHeaders($headers);
         $table->setRows($rows);
-        $table->setTitle('MySQL result');
 
-        return $table;
+        return $this->createContainer('MySQL result', $table);
     }
 }

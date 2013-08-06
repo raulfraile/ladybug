@@ -19,8 +19,6 @@ class CollectionType extends BaseType implements \Countable
 
     protected $processedData;
 
-    protected $title;
-
     protected $items;
 
     public function __construct()
@@ -44,16 +42,6 @@ class CollectionType extends BaseType implements \Countable
     public function getTemplateName()
     {
         return 'collection';
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     public function loadFromArray(array $data, $useKeys = true)

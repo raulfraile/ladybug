@@ -76,4 +76,15 @@ abstract class AbstractInspector implements InspectorInterface
         return $imageType;
     }
 
+    public function createContainer($title, Type\Extended\ExtendedTypeInterface $data)
+    {
+        /** @var $containerType Type\Extended\ContainerType */
+        $containerType = $this->extendedTypeFactory->factory('container', $this->level);
+
+        $containerType->setTitle($title);
+        $containerType->setData($data);
+
+        return $containerType;
+    }
+
 }

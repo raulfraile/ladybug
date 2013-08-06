@@ -1,8 +1,8 @@
 
 
-{% macro render_row_separator(var) %}
+{% macro render_row_separator(var, indent) %}
 {% import "_macros.console.twig" as m %}
-{{ m.indent(var.level) }}
+{% if indent %}{{ m.indent(var.level) }}{% endif %}
 +
 {% for i in 1..var.columnsNumber %}
 {{ '-'|repeat(var.maxWidthByColumn(i-1) + 2) }}+

@@ -39,7 +39,7 @@ class DOMDocument extends AbstractInspector
         $code->setLanguage('xml');
         $code->setData($xml);
         $code->setKey('Code');
-        $code->setLevel($this->level + 1);
+        $code->setTitle('XML');
 
         return $code;
     }

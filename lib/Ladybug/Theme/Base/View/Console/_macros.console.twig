@@ -1,6 +1,5 @@
 {% macro indent(level) %}
-
-{{ '<tab>'|repeat(level-1)|tags|raw }}
+    {{ '<tab>'|repeat(level-1)|tags|raw }}
 {% endmacro %}
 
 {% macro array_block(title, data, level, show_keys) %}
@@ -57,12 +56,12 @@
 
     {% for methodParameter in method.parameters %}
         {% if methodParameter.type is not empty %}
-            {{ methodParameter.type }}
+            {{ methodParameter.type }}<space>
         {% endif %}
         ${{ methodParameter.name }}
 
         {% if methodParameter.defaultValue is not null %}
-            = {{ methodParameter.defaultValue.formattedValue }}
+            <space>=<space>{{ methodParameter.defaultValue.formattedValue }}
         {% endif %}
         {% if not loop.last %},<space>{% endif %}
     {% endfor %}
@@ -73,11 +72,11 @@
 {% macro visibility_block(visibility) %}
     {% if visibility is not null %}
         {% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
-            <v_private>{-}</v_private><space>
+            <v_private>-</v_private><space>
         {% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
-                <v_protected>{% raw %}{#}{% endraw %}</v_protected><space>
+                <v_protected>#</v_protected><space>
         {% else %}
-                <v_public>{+}</v_public><space>
+                <v_public>+</v_public><space>
         {% endif %}
     {% endif %}
 

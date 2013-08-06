@@ -76,5 +76,9 @@
             <tag name="ladybug.type.extended" />
         </service>
 
+        <service id="type_extended_container" class="Ladybug\Type\Extended\ContainerType">
+            <tag name="ladybug.type.extended" />
+        </service>
+
     </services>
 </container>

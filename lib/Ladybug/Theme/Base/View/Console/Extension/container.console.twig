@@ -1,0 +1,12 @@
+{% extends "_base.console.twig" %}
+
+{% block type %}
+    {% if var.title is not empty %}
+        <t_array_block>{{ var.title|tags|raw }}</t_array_block>
+    {% endif %}
+{% endblock %}
+
+{% block value %}
+    {% if var.title is not empty %}<intro>{% endif %}
+    {{ m.indent(var.data.level) }}{{ render_type(var.data, var.key)|raw }}
+{% endblock %}
