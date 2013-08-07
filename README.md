@@ -101,7 +101,7 @@ your dependencies in a `composer.json` file:
 ``` json
 {
     "require": {
-        "raulfraile/ladybug": "master-dev"
+        "raulfraile/ladybug": "v0.7"
     }
 }
 ```
