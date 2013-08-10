@@ -32,7 +32,7 @@ class SplQueue extends AbstractInspector
         /** @var $collection Type\Extended\CollectionType */
         $collection = $this->extendedTypeFactory->factory('collection', $this->level);
 
-        $collection->setTitle(sprintf('Queue (%d)', count($arrayData)));
+        $collection->setTitle('Queue');
 
         foreach ($arrayData as $item) {
             $collection->add($this->typeFactory->factory($item, $this->level + 1));

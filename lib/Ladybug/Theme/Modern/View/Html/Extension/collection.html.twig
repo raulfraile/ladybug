@@ -1,3 +1,15 @@
+{% extends "_base.html.twig" %}
+
+{% block type %}{{ var.title }} ({{ var.length }}){% endblock %}
+
+{% block extra_data %}
+    {% for item in var.items %}
+        {{ render_type(item, item.key)|raw }}
+    {% endfor %}
+{% endblock %}
+
+
+{#
 {% import "_macros.html.twig" as m %}
 
 <div class="accordion-group">
@@ -15,3 +27,4 @@
     </div>
 
 </div>
+#}

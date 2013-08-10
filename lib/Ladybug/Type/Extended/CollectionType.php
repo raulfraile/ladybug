@@ -21,11 +21,14 @@ class CollectionType extends BaseType implements \Countable
 
     protected $items;
 
+    protected $length;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->items = array();
+        $this->length = 0;
     }
 
 
@@ -48,18 +51,11 @@ class CollectionType extends BaseType implements \Countable
     {
         $this->items = array();
 
-        $i = 0;
         foreach ($data as $key => $item) {
             $this->items[] = $item;
-/*
-            if ($item instanceof CollectionType) {
-                $this->items[$i]->setLevel($this->level + 1);
-            }
-
-            $i++;*/
         }
 
-        //$this->setLevel($this->level);
+        $this->length = count($this->items);
     }
 
     public function load($var, $key = null)
@@ -69,11 +65,14 @@ class CollectionType extends BaseType implements \Countable
         foreach ($var as $key => $item) {
             $this->items[] = $item;
         }
+
+        $this->length = count($this->items);
     }
 
     public function add($value)
     {
         $this->items[] = $value;
+        $this->length++;
     }
 
     public static function create(array $var, $key = null)
@@ -106,6 +105,16 @@ class CollectionType extends BaseType implements \Countable
     public function getItems()
     {
         return $this->items;
+    }
+
+    public function isComposed()
+    {
+        return true;
+    }
+
+    public function getLength()
+    {
+        return $this->length;
     }
 
 

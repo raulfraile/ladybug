@@ -13,21 +13,7 @@
     </div>
 
     {% if var.objectCustomData is not empty %}
-
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" {#data-parent="#subb"#} href="#object_data_{{ var.id }}">
-                Data
-            </a>
-        </div>
-        <div id="object_data_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
-            <div class="accordion-inner">
-                {{ render_type(var.objectCustomData)|raw }}
-            </div>
-        </div>
-
-    </div>
-
+        {{ render_type(var.objectCustomData)|raw }}
     {% endif %}
 
     {% if var.objectProperties is not empty %}
@@ -42,7 +28,7 @@
             <div class="accordion-inner">
 
                 {% for data in var.objectProperties %}
-                {{ render_type(data.value, data.name, data.visibility)|raw }}
+                    {{ render_type(data.value, data.name, data.visibility)|raw }}
                 {% endfor %}
 
             </div>
@@ -68,19 +54,19 @@
                 {% if var.abstract %}<span class="label label-warning pull-right">abstract</span>{% endif %}
                 {% if var.final %}<span class="label label-warning pull-right">final</span>{% endif %}
                 {% if var.classFile is not empty %}
-                <div class="final clearfix">Filename: {{ var.classFile }}</div>
+                    <div class="final clearfix">Filename: {{ var.classFile }}</div>
                 {% endif %}
                 {% if var.classInterfaces is not empty %}
-                <div class="final">Interfaces: {{ var.classInterfaces }}</div>
+                    <div class="final">Interfaces: {{ var.classInterfaces }}</div>
                 {% endif %}
                 {% if var.classTraits is not empty %}
-                <div class="final">Traits: {{ var.classTraits }}</div>
+                    <div class="final">Traits: {{ var.classTraits }}</div>
                 {% endif %}
                 {% if var.classNamespace is not empty %}
-                <div class="final">Namespace: {{ var.classNamespace }}</div>
+                    <div class="final">Namespace: {{ var.classNamespace }}</div>
                 {% endif %}
                 {% if var.classParent is not empty %}
-                <div class="final">Parent: {{ var.classParent }}</div>
+                    <div class="final">Parent: {{ var.classParent }}</div>
                 {% endif %}
             </div>
         </div>
@@ -99,7 +85,7 @@
         <div id="object_constants_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
             <div class="accordion-inner">
                 {% for key,constant in var.classConstants %}
-                {{ render_type(constant.value, constant.name)|raw }}
+                    {{ render_type(constant.value, constant.name)|raw }}
                 {% endfor %}
             </div>
         </div>
@@ -117,7 +103,7 @@
         <div id="object_methods_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
             <div class="accordion-inner">
                 {% for method in var.classMethods %}
-                {{ m.render_object_method(method) }}
+                    {{ m.render_object_method(method) }}
                 {% endfor %}
             </div>
         </div>
@@ -126,6 +112,6 @@
     {% endif %}
 
     {% else %}
-    <span class="muted"><i class="icon-warning-sign"></i> Object max nesting level reached</span>
+        <span class="muted"><i class="icon-warning-sign"></i> Object max nesting level reached</span>
     {% endif %}
 {% endblock %}
