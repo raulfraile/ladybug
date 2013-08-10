@@ -7,6 +7,7 @@ use Ladybug\Type;
 class FloatTypeTest extends \PHPUnit_Framework_TestCase
 {
 
+    /** @var Type\FloatType $type */
     protected $type;
 
     public function setUp()
@@ -20,6 +21,7 @@ class FloatTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->type->load($var);
         $this->assertEquals($var, $this->type->getValue());
+        $this->assertEquals(1, $this->type->getLevel());
     }
 
     public function testLoaderForOtherType()

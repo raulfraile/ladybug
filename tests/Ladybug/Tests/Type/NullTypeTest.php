@@ -22,6 +22,7 @@ class NullTypeTest extends \PHPUnit_Framework_TestCase
         $this->type->load($var);
         $this->assertNull($this->type->getValue());
         $this->assertEquals('null', $this->type->getFormattedValue());
+        $this->assertEquals(1, $this->type->getLevel());
     }
 
     public function testLoaderForOtherType()

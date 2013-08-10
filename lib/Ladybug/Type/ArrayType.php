@@ -50,9 +50,11 @@ class ArrayType extends AbstractType
 
         if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {
-                $arrayItem = new Item($k, $this->factory->factory($v, $this->level + 1));
 
-                $arrayItem->setLevel($this->level + 1);
+                $value = $this->factory->factory($v, $this->level + 1);
+
+                $arrayItem = new Item($k, $value);
+
                 $this->add($arrayItem);
             }
         } else {
@@ -101,6 +103,16 @@ class ArrayType extends AbstractType
         }
 
         return sprintf('array(%s)', implode(', ', $values));
+    }
+
+    public function setLevel($level)
+    {
+        parent::setLevel($level);
+
+        foreach ($this->value as $value) {
+            /** @var Item $value */
+            $value->getValue()->setLevel($level + 1);
+        }
     }
 
 

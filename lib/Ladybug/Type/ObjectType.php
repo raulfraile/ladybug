@@ -461,9 +461,11 @@ class ObjectType extends AbstractType
                 $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PUBLIC;
             }
 
+            $value = $this->factory->factory($item, $this->level + 1);
+
             $objectProperty = new Object\Property();
             $objectProperty->setName($propertyName);
-            $objectProperty->setValue($this->factory->factory($item, $this->level + 1));
+            $objectProperty->setValue($value);
             $objectProperty->setVisibility($propertyVisibility);
 
             $this->objectProperties[] = $objectProperty;

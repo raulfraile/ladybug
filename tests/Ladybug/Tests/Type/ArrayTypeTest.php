@@ -16,7 +16,12 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
         $maxlevel = 8;
 
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
-        $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
+        $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturnUsing(function($var, $level) {
+            $intType = new Type\IntType();
+            $intType->load($var, $level);
+
+            return $intType;
+        });
 
         $this->type = new Type\ArrayType($maxlevel, $factoryTypeMock);
     }
@@ -30,15 +35,21 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
     {
         $var = array(1, 2, 3);
 
-        $this->type->load($var);
+        $this->type->load($var, 1);
         $this->assertEquals(3, $this->type->getLength());
 
         $items = $this->type->getValue();
         $this->assertCount(3, $items);
-        $this->assertEquals(0, $items[0]->getKey());
         $this->assertEquals(1, $this->type->getLevel());
-        $this->assertEquals(2, $items[0]->getLevel());
-        $this->assertInstanceOf('Ladybug\Type\IntType', $items[0]->getValue());
+
+        $i = 0;
+        foreach ($this->type->getValue() as $item) {
+            $this->assertEquals($i, $item->getKey());
+            $this->assertEquals(2, $item->getLevel());
+            $this->assertInstanceOf('Ladybug\Type\IntType', $item->getValue());
+
+            $i++;
+        }
     }
 
     public function testLoaderForOtherType()

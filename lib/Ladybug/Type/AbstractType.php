@@ -176,8 +176,8 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
 
     public function load($var, $level = 1)
     {
-        $this->value = $var;
         $this->level = $level;
+        $this->value = $var;
     }
 
     /**

@@ -118,8 +118,7 @@ class Dumper
         $factoryType = $this->application->container->get('type_factory');
 
         foreach ($variables as $var) {
-            $node = $factoryType->factory($var);
-            $node->setLevel(self::LEVEL_INIT);
+            $node = $factoryType->factory($var, self::LEVEL_INIT);
 
             $this->nodes[] = $node;
         }

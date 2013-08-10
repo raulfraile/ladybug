@@ -38,6 +38,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
         $this->type->load($var);
 
         $this->assertEquals('file', $this->type->getResourceType());
+        $this->assertEquals(1, $this->type->getLevel());
     }
 
     public function testLoaderForOtherType()

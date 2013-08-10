@@ -64,4 +64,9 @@ class Constant
     {
         return $this->value;
     }
+
+    public function getLevel()
+    {
+        return $this->value->getLevel();
+    }
 }

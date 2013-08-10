@@ -16,7 +16,12 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
     {
         $maxlevel = 8;
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
-        $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
+        $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturnUsing(function($var, $level) {
+            $intType = new Type\IntType();
+            $intType->load($var, $level);
+
+            return $intType;
+        });
 
         $factoryInspectorMock = m::mock('Ladybug\Inspector\InspectorFactory');
         $factoryInspectorMock->shouldReceive('has')->andReturn(false);
@@ -38,6 +43,8 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->type->load($var);
 
+        $this->assertEquals(1, $this->type->getLevel());
+
         // class info
         $this->assertEquals('Ladybug\Tests\Type\Bar', $this->type->getClassName());
         $this->assertEquals(__FILE__, $this->type->getClassFile());
@@ -55,22 +62,26 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('privateProperty', $privateProperty->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PRIVATE, $privateProperty->getVisibility());
         $this->assertInstanceOf('Ladybug\Type\IntType', $privateProperty->getValue());
+        $this->assertEquals(2, $privateProperty->getLevel());
 
         $this->assertInstanceOf('Ladybug\Type\ObjectType\Property', $protectedProperty);
         $this->assertEquals('protectedProperty', $protectedProperty->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PROTECTED, $protectedProperty->getVisibility());
         $this->assertInstanceOf('Ladybug\Type\IntType', $protectedProperty->getValue());
+        $this->assertEquals(2, $protectedProperty->getLevel());
 
         $this->assertInstanceOf('Ladybug\Type\ObjectType\Property', $publicProperty);
         $this->assertEquals('publicProperty', $publicProperty->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PUBLIC, $publicProperty->getVisibility());
         $this->assertInstanceOf('Ladybug\Type\IntType', $publicProperty->getValue());
+        $this->assertEquals(2, $publicProperty->getLevel());
 
         // constants
         $this->assertEquals(1, count($this->type->getClassConstants()));
         $constant = $this->type->getConstantByName('CONSTANT');
         $this->assertEquals('CONSTANT', $constant->getName());
         $this->assertInstanceOf('Ladybug\Type\IntType', $constant->getValue());
+        $this->assertEquals(2, $constant->getLevel());
 
         // methods
         $this->assertEquals(6, count($this->type->getClassMethods()));

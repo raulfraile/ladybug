@@ -37,7 +37,7 @@ class FactoryType
      * @return TypeInterface
      * @throws \Ladybug\Exception\InvalidTypeException
      */
-    public function factory($var)
+    public function factory($var, $level = 1)
     {
         $result = null;
 
@@ -68,7 +68,7 @@ class FactoryType
         }
 
         /** @var TypeInterface $result */
-        $result->load($var);
+        $result->load($var, $level);
 
         return $result;
     }

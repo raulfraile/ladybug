@@ -25,6 +25,7 @@ class StringTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($var, $this->type->getValue());
         $this->assertEquals($encoding, $this->type->getEncoding());
         $this->assertEquals($length, $this->type->getLength());
+        $this->assertEquals(1, $this->type->getLevel());
     }
 
     public function testLoaderForOtherType()

@@ -12,13 +12,15 @@
 
 namespace Ladybug\Type\ObjectType;
 
+use Ladybug\Type\TypeInterface;
+
 class Property
 {
 
     /** @var string $name */
     protected $name;
 
-    /** @var mixed $value */
+    /** @var TypeInterface $value */
     protected $value;
 
     /** @var string $name */
@@ -76,6 +78,11 @@ class Property
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function getLevel()
+    {
+        return $this->value->getLevel();
     }
 
 }
