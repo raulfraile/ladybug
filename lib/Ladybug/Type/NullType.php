@@ -35,13 +35,13 @@ class NullType extends AbstractType
         return 'null';
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         if (!is_null($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var);
+        parent::load($var, $level);
     }
 
     public function getInlineValue()

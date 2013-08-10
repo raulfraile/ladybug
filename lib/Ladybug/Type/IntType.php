@@ -26,13 +26,13 @@ class IntType extends AbstractType
         $this->type = self::TYPE_ID;
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         if (!is_int($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var);
+        parent::load($var, $level);
     }
 
 }

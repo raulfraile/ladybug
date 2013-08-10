@@ -15,7 +15,7 @@ namespace Ladybug\Type;
 /**
  * AbstractType is the base type all specific types extends from
  */
-abstract class AbstractType implements TypeInterface
+abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
 {
 
     /** @var string $id */
@@ -174,9 +174,10 @@ abstract class AbstractType implements TypeInterface
         return $this->type;
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         $this->value = $var;
+        $this->level = $level;
     }
 
     /**

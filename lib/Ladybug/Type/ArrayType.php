@@ -39,17 +39,20 @@ class ArrayType extends AbstractType
         $this->value = array();
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         if (!is_array($var)) {
             throw new InvalidVariableTypeException();
         }
 
         $this->length = count($var);
+        $this->level = $level;
+
         if ($this->level < $this->maxLevel) {
             foreach ($var as $k=>$v) {
                 $arrayItem = new Item($k, $this->factory->factory($v, $this->level + 1));
 
+                $arrayItem->setLevel($this->level + 1);
                 $this->add($arrayItem);
             }
         } else {

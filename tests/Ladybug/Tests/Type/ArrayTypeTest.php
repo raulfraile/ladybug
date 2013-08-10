@@ -36,6 +36,8 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
         $items = $this->type->getValue();
         $this->assertCount(3, $items);
         $this->assertEquals(0, $items[0]->getKey());
+        $this->assertEquals(1, $this->type->getLevel());
+        $this->assertEquals(2, $items[0]->getLevel());
         $this->assertInstanceOf('Ladybug\Type\IntType', $items[0]->getValue());
     }
 

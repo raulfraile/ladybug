@@ -76,12 +76,13 @@ class ObjectType extends AbstractType
         $this->inspectorFactory = $inspectorFactory;
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         if (!is_object($var)) {
             throw new InvalidVariableTypeException();
         }
 
+        $this->level = $level;
         $this->className = get_class($var);
 
         $this->toString = (method_exists($var, '__toString')) ? $var->__toString() : null;

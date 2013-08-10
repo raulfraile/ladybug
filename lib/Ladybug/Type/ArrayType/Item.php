@@ -64,5 +64,15 @@ class Item
         return $this->value;
     }
 
+    public function setLevel($level)
+    {
+        $this->value->setLevel($level);
+    }
+
+    public function getLevel()
+    {
+        return $this->value->getLevel();
+    }
+
 
 }

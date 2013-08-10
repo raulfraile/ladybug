@@ -13,8 +13,9 @@
 namespace Ladybug\Type\Extended;
 
 use Ladybug\Type\TypeInterface;
+use Ladybug\Type\RenderizableTypeInterface;
 
-abstract class BaseType implements ExtendedTypeInterface
+abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterface
 {
 
     const TYPE_ID = 'base';

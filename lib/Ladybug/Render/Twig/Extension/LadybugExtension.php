@@ -4,7 +4,7 @@ namespace Ladybug\Render\Twig\Extension;
 
 use Twig_Extension;
 use Twig_Environment;
-use Ladybug\Type\TypeInterface;
+use Ladybug\Type\RenderizableTypeInterface;
 use Sabberworm\CSS\Parser as CssParser;
 
 class LadybugExtension extends Twig_Extension
@@ -73,7 +73,7 @@ class LadybugExtension extends Twig_Extension
         return file_get_contents($filename);
     }
 
-    public function renderTypeFunction(Twig_Environment $environment, TypeInterface $var, $key = null, $visibility = null)
+    public function renderTypeFunction(Twig_Environment $environment, RenderizableTypeInterface $var, $key = null, $visibility = null)
     {
         $parameters = array(
             'var' => $var,

@@ -49,12 +49,13 @@ class ResourceType extends AbstractType
         $this->inspectorFactory = $inspectorFactory;
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         if (!is_resource($var)) {
             throw new InvalidVariableTypeException();
         }
 
+        $this->level = $level;
         $this->resourceType = get_resource_type($var);
         $this->resourceId = (int)$var;
 

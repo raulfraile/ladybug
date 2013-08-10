@@ -37,11 +37,11 @@ class FactoryType
      * @return TypeInterface
      * @throws \Ladybug\Exception\InvalidTypeException
      */
-    public function factory($var, $level = 0)
+    public function factory($var)
     {
         $result = null;
 
-        if ($var instanceof \Ladybug\Type\Extended\CollectionType) {
+        /*if ($var instanceof \Ladybug\Type\Extended\CollectionType) {
             $data = array();
             foreach ($var->getData() as $key => $item) {
                 $data[$key] = FactoryType::factory($item, $level);
@@ -49,39 +49,26 @@ class FactoryType
             $var->setProcessedData($data);
 
             return $var;
-        } elseif ($var === null) {
+        } else*/if ($var === null) {
             $result = clone($this->types['type_null']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_bool($var)) {
             $result = clone($this->types['type_bool']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_string($var)) {
             $result = clone($this->types['type_string']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_int($var)) {
             $result = clone($this->types['type_int']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_float($var)) {
             $result = clone($this->types['type_float']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_array($var)) {
             $result = clone($this->types['type_array']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_object($var)) {
             $result = clone($this->types['type_object']);
-            $result->setLevel($level);
-            $result->load($var);
         } elseif (is_resource($var)) {
             $result = clone($this->types['type_resource']);
-            $result->setLevel($level);
-            $result->load($var);
         }
+
+        /** @var TypeInterface $result */
+        $result->load($var);
 
         return $result;
     }

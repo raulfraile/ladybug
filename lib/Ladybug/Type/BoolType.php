@@ -38,13 +38,13 @@ class BoolType extends AbstractType
         return $this->value ? 'true' : 'false';
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         if (!is_bool($var)) {
             throw new InvalidVariableTypeException();
         }
 
-        parent::load($var);
+        parent::load($var, $level);
     }
 
     public function getInlineValue()

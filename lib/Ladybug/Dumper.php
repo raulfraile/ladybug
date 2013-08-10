@@ -22,6 +22,8 @@ use Ladybug\Format\FormatResolver;
 class Dumper
 {
 
+    const LEVEL_INIT = 1;
+
     /** @var array $nodes */
     private $nodes;
 
@@ -116,7 +118,10 @@ class Dumper
         $factoryType = $this->application->container->get('type_factory');
 
         foreach ($variables as $var) {
-            $this->nodes[] = $factoryType->factory($var, 1);
+            $node = $factoryType->factory($var);
+            $node->setLevel(self::LEVEL_INIT);
+
+            $this->nodes[] = $node;
         }
     }
 
