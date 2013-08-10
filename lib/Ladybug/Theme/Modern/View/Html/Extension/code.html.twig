@@ -1,19 +1,16 @@
 {% extends "_base.html.twig" %}
 
 {% block value %}
+    {{ m.array_key(var.key) }}
 
-{{ m.array_key(var.key) }}
+    <textarea id="code" style="font-weight: normal">{{ var.data|raw }}</textarea>
 
-<textarea id="code" style="font-weight: normal">{{ var.data|raw }}</textarea>
-
-<script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: {name: "xml", alignCDATA: true},
-        lineNumbers: true,
-        height: '40'
-    });
-    editor.setSize(null, 160);
-</script>
-
-
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: {name: "xml", alignCDATA: true},
+            lineNumbers: true,
+            height: '40'
+        });
+        editor.setSize(null, 160);
+    </script>
 {% endblock %}

@@ -1,8 +1,9 @@
 {% import "_macros.html.twig" as m %}
 
 <div class="accordion-group">
+
     <div class="accordion-heading">
-        <a class="accordion-toggle">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ var.id }}">
             <span class="array_key">
                 {% if visibility is not null %}
                     <span class="label {{ m.visibility_color(visibility) }}">
@@ -11,11 +12,20 @@
                 {% endif %}
 
                 {{ m.array_key(key) }}
-
             </span>
 
             <span class="">{% block type %}{{ var.type }}{% endblock %}</span>
-            <span class="type_{{ var.type }}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+            {% if not var.composed %}
+                <span class="type_{{ var.type }}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
+            {% endif %}
         </a>
     </div>
+
+    {% if var.composed %}
+        <div id="c{{ var.id }}" class="accordion-body collapse {% if (expanded or var.level == 1) and not var.terminal %}in{% endif %}">
+            <div class="accordion-inner">
+                {% block extra_data %}{% endblock %}
+            </div>
+        </div>
+    {% endif %}
 </div>

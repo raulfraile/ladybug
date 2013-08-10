@@ -1,31 +1,9 @@
-{% import "_macros.html.twig" as m %}
+{% extends "_base.html.twig" %}
 
-<div class="accordion-group">
-    <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ var.id }}">
-            <span class="array_key">
-                {% if visibility is not null %}
-                    <span class="label {{ _self.visibility_color(visibility) }}">
-                        <i class="icon-eye-open icon-white"></i>
-                    </span>
-                {% endif %}
+{% block type %}{{ parent() }}({{ var.resourceType }}){% endblock %}
 
-                {{ m.array_key(key) }}
-
-            </span>
-
-            <span class="">{% block type %}Resource ({{ var.resourceType }}){% endblock %}</span>
-
-        </a>
-    </div>
-    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
-        <div class="accordion-inner">
-
-            {% if var.resourceCustomData is not empty %}
-                {{ render_type(var.resourceCustomData)|raw}}
-            {% endif %}
-
-        </div>
-    </div>
-
-</div>
+{% block extra_data %}
+    {% if var.resourceCustomData is not empty %}
+        {{ render_type(var.resourceCustomData)|raw}}
+    {% endif %}
+{% endblock %}

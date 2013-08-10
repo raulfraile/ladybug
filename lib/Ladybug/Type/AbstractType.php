@@ -36,6 +36,7 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
     /** @var int $length */
     protected $length;
 
+
     /**
      * Constructor
      */
