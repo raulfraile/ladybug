@@ -45,6 +45,12 @@ class ModernTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInte
             '@BaseTheme/lib/jquery/jquery.min.js',
             '@BaseTheme/lib/bootstrap/js/bootstrap.min.js',
             '@BaseTheme/lib/codemirror/lib/codemirror.js',
+            '@BaseTheme/lib/codemirror/mode/clike/clike.js',
+            '@BaseTheme/lib/codemirror/mode/css/css.js',
+            '@BaseTheme/lib/codemirror/mode/htmlmixed/htmlmixed.js',
+            '@BaseTheme/lib/codemirror/mode/htmlembedded/htmlembedded.js',
+            '@BaseTheme/lib/codemirror/mode/javascript/javascript.js',
+            '@BaseTheme/lib/codemirror/mode/php/php.js',
             '@BaseTheme/lib/codemirror/mode/xml/xml.js'
         );
     }

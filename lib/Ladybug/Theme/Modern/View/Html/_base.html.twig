@@ -21,8 +21,8 @@
         </a>
     </div>
 
-    {% if var.composed %}
-        <div id="c{{ var.id }}" class="accordion-body collapse {% if (expanded or var.level == 1) and not var.terminal %}in{% endif %}">
+    {% if var.composed or composed %}
+        <div id="c{{ var.id }}" class="accordion-body collapse {% if (expanded == true or var.level == 1 or type_expanded) and not var.terminal %}in{% endif %}">
             <div class="accordion-inner">
                 {% block extra_data %}{% endblock %}
             </div>

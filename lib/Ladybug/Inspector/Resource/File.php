@@ -37,14 +37,22 @@ class File extends AbstractInspector
 
         $realPath = realpath($streamVars['uri']);
 
-        $result['file'] = $realPath;
+        $result = array();
+
+        $result['file'] = $this->createTextType($realPath, 'Real path');
+
+        $extension = pathinfo($realPath, PATHINFO_EXTENSION);
+
+        /** @var $fileContent Type\Extended\CodeType */
+        $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
+        $fileContent->setData(file_get_contents($realPath));
+        $fileContent->setKey('Content');
+        $fileContent->setLanguage($extension);
+        $result['content'] = $fileContent;
 
         /** @var $collection Type\Extended\CollectionType */
         $collection = $this->extendedTypeFactory->factory('collection', $this->level);
         $collection->setTitle('File');
-
-        $result = array();
-        $result['mode'] = $this->typeFactory->factory($fstat['mode'], $this->level);
 
         /** @var $mode Type\Extended\UnixPermissionsType */
         $mode = $this->extendedTypeFactory->factory('unixpermissions', $this->level);
@@ -57,7 +65,6 @@ class File extends AbstractInspector
         $size->setKey('Size');
         $size->load($fstat['size']);
         $result['size'] = $size;
-
 
         $collection->loadFromArray($result, true);
         $collection->setLevel($this->level);

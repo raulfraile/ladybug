@@ -110,4 +110,9 @@ abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterf
         return null;
     }
 
+    public function getType()
+    {
+        return static::TYPE_ID;
+    }
+
 }

@@ -7,24 +7,3 @@
         {{ render_type(item, item.key)|raw }}
     {% endfor %}
 {% endblock %}
-
-
-{#
-{% import "_macros.html.twig" as m %}
-
-<div class="accordion-group">
-    <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#subb" href="#c{{ var.id }}">
-            {{ var.title }}
-        </a>
-    </div>
-    <div id="c{{ var.id }}" class="accordion-body collapse {% if expanded or var.level == 1 %}in{% endif %}">
-        <div class="accordion-inner">
-            {% for item in var.items %}
-                {{ render_type(item, item.key)|raw }}
-            {% endfor %}
-        </div>
-    </div>
-
-</div>
-#}

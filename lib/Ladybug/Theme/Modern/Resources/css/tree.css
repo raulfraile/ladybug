@@ -100,4 +100,6 @@
 
 .trans {
     background: url(../images/trans.gif);
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

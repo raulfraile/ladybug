@@ -1,5 +1,7 @@
 {% extends "_base.html.twig" %}
 
+{% block type %}{% endblock %}
+
 {% block value %}
 <input type="hidden" id="{{ var.id }}_value_bytes" value="{{ var.data }}" />
 <span id="{{ var.id }}_size">{{ var.sizeUnit|number_format(2) }}</span>
@@ -14,7 +16,7 @@
 
     var sizes = {
     {% for unit, size in var.sizes %}
-    {{ unit }}: {{ size }},
+        {{ unit }}: {{ size }},
     {% endfor %}
     };
 

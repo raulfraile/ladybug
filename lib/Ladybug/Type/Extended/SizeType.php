@@ -38,7 +38,6 @@ class SizeType extends BaseType
     public function getUnit()
     {
         return $this->unit;
-
     }
 
     public function getUnits()

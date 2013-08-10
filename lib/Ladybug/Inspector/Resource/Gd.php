@@ -25,63 +25,19 @@ class Gd extends AbstractInspector
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 
-        $result = array();
-
-        $gd_info = gd_info();
         $width = imagesx($var);
         $height = imagesy($var);
-        $colors_palette = imagecolorstotal($var);
-        $isTrueColor = imageistruecolor($var) ? true : false;
 
+        // get image content
         ob_start();
         imagepng($var);
-        $image = ob_get_clean();
+        $imageContent = ob_get_clean();
 
-        $gd_support = array();
-        if ($gd_info['FreeType Support']) $gd_support[] = 'FreeType(' . $gd_info['FreeType Linkage'] . ')';
-        if ($gd_info['T1Lib Support']) $gd_support[] = 'T1Lib';
-        if ($gd_info['GIF Read Support'] || $gd_info['GIF Create Support']) {
-            if ($gd_info['GIF Read Support'] && $gd_info['GIF Create Support']) $gd_support[] = 'GIF';
-            elseif ($gd_info['GIF Read Support']) $gd_support[] = 'GIF(read)';
-            elseif ($gd_info['GIF Create Support']) $gd_support[] = 'GIF(create)';
-        }
-        if ($gd_info['JPEG Support']) $gd_support[] = 'JPEG';
-        if ($gd_info['PNG Support']) $gd_support[] = 'PNG';
-        if ($gd_info['WBMP Support']) $gd_support[] = 'WBMP';
-        if ($gd_info['XPM Support']) $gd_support[] = 'XPM';
-        if ($gd_info['XBM Support']) $gd_support[] = 'XBM';
-        if ($gd_info['JIS-mapped Japanese Font Support']) $gd_support[] = 'JIS-mapped Japanese Font';
+        $image = $this->createImageType($imageContent, 'Image');
+        $image->setLevel($this->level);
+        $image->setWidth($width);
+        $image->setHeight($height);
 
-        /** @var $gdCollection Type\Extended\CollectionType */
-        $gdCollection = $this->extendedTypeFactory->factory('collection', $this->level);
-        $gdCollection->setTitle('GD');
-        $gdCollection->loadFromArray(array(
-            $this->createTextType($gd_info['GD Version'], 'Version'),
-            $this->createTextType(implode(', ', $gd_support), 'Support')
-        ));
-        $gdCollection->setLevel($this->level + 1);
-
-        /** @var $imageCollection Type\Extended\CollectionType */
-        $imageCollection = $this->extendedTypeFactory->factory('collection', $this->level);
-        $imageCollection->setTitle('Image');
-        $imageCollection->loadFromArray(array(
-            $this->createTextType(sprintf('%sx%s (px)', $width, $height), 'Dimensions'),
-            $this->createTextType($colors_palette, 'Colors palette'),
-            $this->createTextType($isTrueColor, 'True color'),
-            $this->createImageType($image, 'Image')
-        ));
-        $imageCollection->setLevel($this->level + 1);
-
-        /** @var $collection Type\Extended\CollectionType */
-        $collection = $this->extendedTypeFactory->factory('collection', $this->level);
-        $collection->setTitle('Data');
-        $collection->loadFromArray(array(
-            'GD' => $gdCollection,
-            'Image' => $imageCollection
-        ));
-
-        $collection->setLevel($this->level);
-
-        return $collection;
+        return $image;
     }
 }

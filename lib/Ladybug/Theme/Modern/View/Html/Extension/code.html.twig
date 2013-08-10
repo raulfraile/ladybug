@@ -1,13 +1,13 @@
 {% extends "_base.html.twig" %}
 
-{% block value %}
-    {{ m.array_key(var.key) }}
+{% block type %}{% endblock %}
 
-    <textarea id="code" style="font-weight: normal">{{ var.data|raw }}</textarea>
+{% block value %}
+    <textarea id="code" style="font-weight: normal">{{ var.data }}</textarea>
 
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            mode: {name: "xml", alignCDATA: true},
+            mode: {name: "{{ var.language }}", alignCDATA: true},
             lineNumbers: true,
             height: '40'
         });
