@@ -3,6 +3,9 @@
 {% set composed = true %}
 {% set type_expanded = true %}
 
+{% block value%}<i class="icon-picture"></i> {{ var.title }}{% endblock %}
+{% block type %}{% endblock %}
+
 {% block extra_data %}
 <div class="trans" style="text-align: center">
     <a href="data:image/png;base64,{{ var.data }}" target="_blank">

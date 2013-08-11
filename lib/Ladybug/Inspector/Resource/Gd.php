@@ -37,6 +37,7 @@ class Gd extends AbstractInspector
         $image->setLevel($this->level);
         $image->setWidth($width);
         $image->setHeight($height);
+        $image->setTitle('Image');
 
         return $image;
     }

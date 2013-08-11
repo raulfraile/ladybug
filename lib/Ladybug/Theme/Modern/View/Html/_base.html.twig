@@ -15,9 +15,9 @@
             </span>
 
             <span class="">{% block type %}{{ var.type }}{% endblock %}</span>
-            {% if not var.composed %}
+
                 <span class="type_{{ var.type }}">{% block value %}{{ var.formattedValue }}{% endblock %}</span>
-            {% endif %}
+
         </a>
     </div>
 

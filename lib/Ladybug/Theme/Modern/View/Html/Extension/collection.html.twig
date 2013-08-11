@@ -1,6 +1,10 @@
 {% extends "_base.html.twig" %}
 
-{% block type %}{{ var.title }} ({{ var.length }}){% endblock %}
+{% set composed = true %}
+{% set type_expanded = true %}
+
+{% block value%}<i class="icon-list"></i> {{ var.title }} ({{ var.length }}){% endblock %}
+{% block type %}{% endblock %}
 
 {% block extra_data %}
     {% for item in var.items %}

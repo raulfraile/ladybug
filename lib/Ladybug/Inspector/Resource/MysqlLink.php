@@ -30,9 +30,9 @@ class MysqlLink extends AbstractInspector
             Type\Extended\TextType::create(mysql_get_server_info($var), 'Server version', $this->level + 1)
         ));
 
-        //$collection->setTitle('MySQL connection2');
-        //$collection->setLevel($this->level);
+        $collection->setTitle('MySQL connection');
+        $collection->setLevel($this->level);
 
-        return $this->createContainer('MySQL connection', $collection);
+        return $collection;
     }
 }

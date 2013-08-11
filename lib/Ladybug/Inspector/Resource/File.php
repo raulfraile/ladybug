@@ -42,15 +42,6 @@ class File extends AbstractInspector
         $mimetype = $this->getMimetype($realPath);
         $result['mimetype'] = $this->createTextType($mimetype, 'MIME');
 
-        if ($this->isText($mimetype)) {
-            /** @var $fileContent Type\Extended\CodeType */
-            $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
-            $fileContent->setData(file_get_contents($realPath));
-            $fileContent->setKey('Content');
-            $fileContent->setLanguage($mimetype);
-            $result['content'] = $fileContent;
-        }
-
         /** @var $collection Type\Extended\CollectionType */
         $collection = $this->extendedTypeFactory->factory('collection', $this->level);
         $collection->setTitle('File');
@@ -73,8 +64,19 @@ class File extends AbstractInspector
         $result['uid'] = $this->createTextType($fstat['uid'], 'uid');
         $result['gid'] = $this->createTextType($fstat['gid'], 'gid');
 
+        if ($this->isText($mimetype)) {
+            /** @var $fileContent Type\Extended\CodeType */
+            $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
+            $fileContent->setData(file_get_contents($realPath));
+            //$fileContent->setKey('Content');
+            $fileContent->setLanguage($mimetype);
+            $fileContent->setTitle('Contents');
+            $result['content'] = $fileContent;
+        }
+
         $collection->loadFromArray($result, true);
         $collection->setLevel($this->level);
+        $collection->setTitle('File');
 
         return $collection;
     }

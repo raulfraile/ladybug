@@ -1,8 +1,13 @@
 {% extends "_base.html.twig" %}
 
+
+{% set composed = true %}
+{% set type_expanded = true %}
+
+{% block value%}<i class="icon-file"></i> {{ var.title }}{% endblock %}
 {% block type %}{% endblock %}
 
-{% block value %}
+{% block extra_data %}
     <textarea id="code" style="font-weight: normal">{{ var.data }}</textarea>
 
     <script>
