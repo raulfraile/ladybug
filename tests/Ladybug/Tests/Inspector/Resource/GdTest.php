@@ -37,7 +37,7 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->inspector->getData($var);
 
-        $this->assertInstanceOf('Ladybug\Type\Extended\CollectionType', $result);
+        $this->assertInstanceOf('Ladybug\Type\Extended\ExtendedTypeInterface', $result);
     }
 
     public function testForInvalidValues()
