@@ -9,7 +9,7 @@
 {% block extra_data %}
 <div class="trans" style="text-align: center">
     <a href="data:image/png;base64,{{ var.data }}" target="_blank">
-        <img src="data:image/png;base64,{{ var.data }}" class="img-polaroid" />
+        <img src="data:image/png;base64,{{ var.data }}" class="img-polaroid" width="{{ var.width }}" height="{{ var.height }}" />
     </a>
     <div>
         <span class="label" style="margin-top: 10px">{{ var.width}}x{{ var.height }}</span>
