@@ -19,7 +19,21 @@ class UnixPermissionsType extends BaseType
 
     public function getFormattedValue()
     {
-        return $this->data;
+        $result = '';
+
+        $result .= ($this->data & 256 ? 'r' : '-');
+        $result .= ($this->data & 128 ? 'w' : '-');
+        $result .= ($this->data & 64 ? 'x' : '-');
+
+        $result .= ($this->data & 32 ? 'r' : '-');
+        $result .= ($this->data & 16 ? 'w' : '-');
+        $result .= ($this->data & 8 ? 'x' : '-');
+
+        $result .= ($this->data & 4 ? 'r' : '-');
+        $result .= ($this->data & 2 ? 'w' : '-');
+        $result .= ($this->data & 1 ? 'x' : '-');
+
+        return $result;
     }
 
     public function getTemplateName()
@@ -29,7 +43,7 @@ class UnixPermissionsType extends BaseType
 
     public function load($var)
     {
-        $this->data = decoct($var);
+        $this->data = $var;
     }
 
 }

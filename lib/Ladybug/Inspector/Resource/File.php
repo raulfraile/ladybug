@@ -17,6 +17,7 @@ use Ladybug\Type;
 
 class File extends AbstractInspector
 {
+
     /**
      * @param  string                                $var
      * @return \Ladybug\Type\Extended\CollectionType
@@ -29,9 +30,6 @@ class File extends AbstractInspector
         }
 
         /** @var resource $var */
-
-        $result = array();
-
         $streamVars = stream_get_meta_data($var);
         $fstat = fstat($var);
 
@@ -41,14 +39,17 @@ class File extends AbstractInspector
 
         $result['file'] = $this->createTextType($realPath, 'Real path');
 
-        $extension = pathinfo($realPath, PATHINFO_EXTENSION);
+        $mimetype = $this->getMimetype($realPath);
+        $result['mimetype'] = $this->createTextType($mimetype, 'MIME');
 
-        /** @var $fileContent Type\Extended\CodeType */
-        $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
-        $fileContent->setData(file_get_contents($realPath));
-        $fileContent->setKey('Content');
-        $fileContent->setLanguage($extension);
-        $result['content'] = $fileContent;
+        if ($this->isText($mimetype)) {
+            /** @var $fileContent Type\Extended\CodeType */
+            $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
+            $fileContent->setData(file_get_contents($realPath));
+            $fileContent->setKey('Content');
+            $fileContent->setLanguage($mimetype);
+            $result['content'] = $fileContent;
+        }
 
         /** @var $collection Type\Extended\CollectionType */
         $collection = $this->extendedTypeFactory->factory('collection', $this->level);
@@ -66,10 +67,38 @@ class File extends AbstractInspector
         $size->load($fstat['size']);
         $result['size'] = $size;
 
+        $result['atime'] = $this->createTextType($this->createDateTimeFromTimestamp($fstat['atime'])->format('c'), 'atime');
+        $result['mtime'] = $this->createTextType($this->createDateTimeFromTimestamp($fstat['mtime'])->format('c'), 'mtime');
+        $result['ctime'] = $this->createTextType($this->createDateTimeFromTimestamp($fstat['ctime'])->format('c'), 'ctime');
+        $result['uid'] = $this->createTextType($fstat['uid'], 'uid');
+        $result['gid'] = $this->createTextType($fstat['gid'], 'gid');
+
         $collection->loadFromArray($result, true);
         $collection->setLevel($this->level);
 
         return $collection;
+    }
+
+    protected function createDateTimeFromTimestamp($timestamp)
+    {
+        return new \DateTime('@' . $timestamp);
+    }
+
+    protected function getMimetype($filename)
+    {
+        $finfo = finfo_open(FILEINFO_MIME);
+        $mimetype = finfo_file($finfo, $filename);
+
+        if (false !== strpos($mimetype, ';')) {
+            $mimetype = substr($mimetype, 0, strpos($mimetype, ';'));
+        }
+
+        return $mimetype;
+    }
+
+    protected function isText($mimetype)
+    {
+        return 'text' === substr($mimetype, 0, 4);
     }
 
 }

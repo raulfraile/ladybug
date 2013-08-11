@@ -17,10 +17,26 @@ class CodeType extends BaseType
 
     const TYPE_ID = 'code';
 
+    const MIMETYPE_CSHARP = 'text/x-csharp';
+    const MIMETYPE_CSS = 'text/css';
+    const MIMETYPE_JAVA = 'text/x-java';
+    const MIMETYPE_JAVASCRIPT = 'text/javascript';
+    const MIMETYPE_JSON = 'application/json';
+    const MIMETYPE_PHP = 'application/x-httpd-php-open';
+    const MIMETYPE_SCALA = 'text/x-scala';
+
+    protected $mimetypeMap = array(
+        //'text/x-php' => self::MIMETYPE_PHP
+    );
+
     protected $language;
 
     public function setLanguage($language)
     {
+        if (array_key_exists($language, $this->mimetypeMap)) {
+            $language = $this->mimetypeMap[$language];
+        }
+
         $this->language = $language;
     }
 
