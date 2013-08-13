@@ -51,8 +51,10 @@ class ConsoleRender extends AbstractRender implements RenderInterface
     {
         $this->load();
 
-        $result = $this->twig->render('layout.console.twig', array(
-            'nodes' => $nodes
+        $result = $this->twig->render('layout.console.twig', array_merge(
+            array(
+                'nodes' => $nodes
+            ), $extraData
         ));
 
         $result = preg_replace('/\s/', '', $result);
