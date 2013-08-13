@@ -4,9 +4,13 @@
 
 {% block value %}
     <intro>
-    {% for item in var.value %}
-        {{ m.indent(var.level + 1) }}
-        {{ render_type(item.value, item.key) }}
-        {% if not loop.last %}<intro>{% endif %}
-    {% endfor %}
+    {% if not var.terminal %}
+        {% for item in var.value %}
+            {{ m.indent(var.level + 1) }}
+            {{ render_type(item.value, item.key) }}
+            {% if not loop.last %}<intro>{% endif %}
+        {% endfor %}
+    {% else %}
+        {{ m.indent(var.level) }}(!)<space>Array<space>max<space>nesting<space>level<space>reached<intro>
+    {% endif %}
 {% endblock %}
