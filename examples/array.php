@@ -9,7 +9,7 @@ $var = array(
         'languages' => array(
             'Spanish',
             'English'
-        ),array(array(array(array(array(array(array(array(array(1,2,3)))))))))
+        )
     ),
     array(
         'name' => 'John',
