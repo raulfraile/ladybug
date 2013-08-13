@@ -1,7 +1,7 @@
 {
     "name": "raulfraile/ladybug",
     "description": "Simple and Extensible PHP Dumper",
-    "version": "1.0.0-alpha1",
+    "version": "1.0.0-alpha3",
     "keywords": ["ladybug", "dumper", "dump", "var_dump", "print_r"],
     "homepage": "https://github.com/raulfraile/ladybug",
     "type": "library",
