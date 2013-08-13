@@ -27,7 +27,7 @@ class ModernTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInte
 
     public function getParent()
     {
-        return 'base';
+        return 'Base';
     }
 
     public function getHtmlCssDependencies()

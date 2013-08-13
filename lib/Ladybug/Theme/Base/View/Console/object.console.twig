@@ -6,7 +6,6 @@
     <intro>
     {% if not var.terminal %}
         {% if var.objectCustomData is not empty %}
-            {#{{ m.indent(var.objectCustomData.level) }}<t_array_block>{{ var.objectCustomData.title|tags|raw }}</t_array_block><intro>#}
             {{ m.indent(var.objectCustomData.level) }}{{ render_type(var.objectCustomData)|raw }}
         {% endif %}
 
