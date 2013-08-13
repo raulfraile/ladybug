@@ -2,6 +2,8 @@
 
 {% block type %}{{ parent() }}({{ var.length }}){% endblock %}
 
+{% block value %}{% endblock %}
+
 {% block extra_data %}
     {% if not var.terminal %}
         {% for item in var.value %}
