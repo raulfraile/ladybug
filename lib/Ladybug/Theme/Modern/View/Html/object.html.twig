@@ -4,13 +4,16 @@
 
 {% block type %}{{ parent() }} ({{ var.className }}){% endblock %}
 
+{% if var.icon is not empty %}
+    {% block type_icon %}metadata-{{ var.icon }}{% endblock %}
+{% endif %}
+
 {% block value %}
     {% if not var.terminal %}
 
-    <div style="height:30px; text-align:right{% if var.helpLink is empty %};display:none{% endif %}">
+    <div style="height:20px; text-align:right{% if var.helpLink is empty %};display:none{% endif %}">
         <a href="{{ var.helpLink }}" target="_blank" style="text-decoration: none">
-            <i class="metadata-{{ var.icon }}"></i>
-            <span class="muted" style="font-size:9px">{{ var.version }}</span>
+            <i class="icon-info-sign"></i>
         </a>
     </div>
 

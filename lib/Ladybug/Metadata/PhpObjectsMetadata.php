@@ -143,7 +143,7 @@ class PhpObjectsMetadata extends AbstractMetadata
     {
         if ($this->hasMetadata($class)) {
             return array(
-                'help_link' => $this->generateHelpLinkUrl(array(
+                'help_link' => $this->generateHelpLinkUrl(self::URL, array(
                     '%file%' => $this->classes[$class]
                 )),
                 'icon' => self::ICON,

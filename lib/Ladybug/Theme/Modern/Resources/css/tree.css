@@ -10,6 +10,7 @@
 
 .ladybug .accordion-heading {
     background-color: #ddd;
+    padding-right: 3px;
 }
 
 .ladybug .accordion-heading a {
@@ -45,57 +46,51 @@
 
 .metadata-php
 {
-    display: inline-block;
-    width: 34px;
-    height: 18px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background: url(../images/php.png) right center no-repeat;
+    background-image: url(../images/php.png);
+    background-position: right -2px;
+    background-repeat: no-repeat;
 }
 
 .metadata-symfony2
 {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background: url(../images/symfony.png) right center no-repeat;
+    background-image: url(../images/symfony2.png);
+    background-position: right -14px;
+    background-repeat: no-repeat;
 }
 
 .metadata-aura
 {
-    display: inline-block;
-    width: 39px;
-    height: 18px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background: url(../images/aura.png) right center no-repeat;
+    background-image: url(../images/aura.png);
+    background-position: right -14px;
+    background-repeat: no-repeat;
 }
 
 .metadata-silex
 {
-    display: inline-block;
-    width: 16px;
-    height: 18px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background: url(../images/silex.png) right center no-repeat;
+    background-image: url(../images/silex.png);
+    background-position: right -14px;
+    background-repeat: no-repeat;
+}
+
+.metadata-doctrine
+{
+    background-image: url(../images/doctrine.png);
+    background-position: right -14px;
+    background-repeat: no-repeat;
+}
+
+.metadata-zend
+{
+    background-image: url(../images/zend.png);
+    background-position: right center;
+    background-repeat: no-repeat;
 }
 
 .metadata-twig
 {
-    display: inline-block;
-    width: 12px;
-    height: 18px;
-    margin-top: 1px;
-    line-height: 14px;
-    vertical-align: text-top;
-    background: url(../images/twig.png) right center no-repeat;
+    background-image: url(../images/twig.png);
+    background-position: right -64px;
+    background-repeat: no-repeat;
 }
 
 .trans {

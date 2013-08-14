@@ -63,4 +63,4 @@ $dom->loadXml($sXml);
 
 $reflected = new ReflectionClass('Foo');
 
-ladybug_dump($foo, $dom, $reflected, $date);
+ladybug_dump(new Symfony\Component\Filesystem\Filesystem(), $foo, $dom, $reflected, $date);

@@ -25,9 +25,9 @@ abstract class AbstractMetadata implements MetadataInterface
 
     abstract public function getMetadata($class);
 
-    public function generateHelpLinkUrl(array $parameters = array())
+    public function generateHelpLinkUrl($url, array $parameters = array())
     {
-        return str_replace(array_keys($parameters), array_values($parameters), static::URL);
+        return str_replace(array_keys($parameters), array_values($parameters), $url);
     }
 
     protected function isNamespace($class, $namespace)

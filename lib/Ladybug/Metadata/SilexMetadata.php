@@ -32,7 +32,7 @@ class SilexMetadata extends AbstractMetadata
     {
         if ($this->hasMetadata($class)) {
             return array(
-                'help_link' => $this->generateHelpLinkUrl(array(
+                'help_link' => $this->generateHelpLinkUrl(self::URL, array(
                     '%class%' => urlencode($class)
                 )),
                 'icon' => self::ICON

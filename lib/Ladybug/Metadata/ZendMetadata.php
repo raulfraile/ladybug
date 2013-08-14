@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Processor / AuraMetadata
+ * Processor / Standard Object
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -12,20 +12,20 @@
 
 namespace Ladybug\Metadata;
 
-class AuraMetadata extends AbstractMetadata
+class ZendMetadata extends AbstractMetadata
 {
 
-    const ICON = 'aura';
-    const URL = 'http://auraphp.github.io/Aura.%component%/version/%version%/api/classes/%class%.html';
+    const ICON = 'zend';
+    const URL = 'http://framework.zend.com/apidoc/%version%/namespaces/%class%.html';
 
     public function __construct()
     {
-        $this->version = '1.1.0';
+        $this->version = '2.2';
     }
 
     public function hasMetadata($class)
     {
-        return $this->isNamespace($class, 'Aura');
+        return $this->isNamespace($class, 'Zend');
     }
 
     public function getMetadata($class)
@@ -34,21 +34,13 @@ class AuraMetadata extends AbstractMetadata
             return array(
                 'help_link' => $this->generateHelpLinkUrl(self::URL, array(
                     '%version%' => $this->version,
-                    '%component%' => $this->getComponent($class),
-                    '%class%' => str_replace('\\', '.', $class)
+                    '%class%' => urlencode($class)
                 )),
-                'icon' => self::ICON,
-                'version' => $this->version
+                'icon' => self::ICON
             );
         }
 
         return array();
     }
 
-    protected function getComponent($class)
-    {
-        $namespace = explode('\\', $class);
-
-        return $namespace[1];
-    }
 }
