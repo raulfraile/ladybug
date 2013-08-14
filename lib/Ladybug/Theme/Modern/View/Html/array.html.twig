@@ -1,10 +1,10 @@
 {% extends "_base.html.twig" %}
 
-{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
+{% set composed = true %}
 
-{% block value %}{% endblock %}
+{% block type %}{{ parent() }} ({{ var.length }}){% endblock %}
 
-{% block extra_data %}
+{% block value %}
     {% if not var.terminal %}
         {% for item in var.value %}
             {{ render_type(item.value, item.key) }}

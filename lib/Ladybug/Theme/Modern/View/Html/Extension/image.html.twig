@@ -3,16 +3,15 @@
 {% set composed = true %}
 {% set type_expanded = true %}
 
-{% block value%}<i class="icon-picture"></i> {{ var.title }}{% endblock %}
-{% block type %}{% endblock %}
+{% block type %}<i class="icon-picture"></i> {{ var.title }}{% endblock %}
 
-{% block extra_data %}
+{% block value %}
 <div class="trans" style="text-align: center">
     <a href="data:image/png;base64,{{ var.data }}" target="_blank">
         <img src="data:image/png;base64,{{ var.data }}" class="img-polaroid" width="{{ var.width }}" height="{{ var.height }}" />
     </a>
     <div>
-        <span class="label" style="margin-top: 10px">{{ var.width}}x{{ var.height }}</span>
+        <span class="label" style="margin-top: 10px">{{ var.width}} x {{ var.height }}</span>
     </div>
 </div>
 {% endblock %}

@@ -2,11 +2,11 @@
 
 {% block type %}{% endblock %}
 
-{% block value %}
+{% block inline_value %}
 <input type="hidden" id="{{ var.id }}_value_bytes" value="{{ var.data }}" />
 <span id="{{ var.id }}_size">{{ var.sizeUnit|number_format(2) }}</span>
 
-<select style="margin-top: 4px; height: 21px; width: 70px;" onchange="updateSize(this)">
+<select style="margin-bottom: 0px; height: 21px; width: 70px;" onchange="updateSize(this)">
     {% for item in var.units %}
     <option value="{{ item }}"{% if item == var.unit %} selected="selected"{% endif %}>{{ item }}</option>
     {% endfor %}

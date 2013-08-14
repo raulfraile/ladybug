@@ -1,8 +1,10 @@
 {% extends "_base.html.twig" %}
 
-{% block type %}{{ parent() }}({{ var.className }}){% endblock %}
+{% set composed = true %}
 
-{% block extra_data %}
+{% block type %}{{ parent() }} ({{ var.className }}){% endblock %}
+
+{% block value %}
     {% if not var.terminal %}
 
     <div style="height:30px; text-align:right{% if var.helpLink is empty %};display:none{% endif %}">

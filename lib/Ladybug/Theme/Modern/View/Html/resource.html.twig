@@ -1,8 +1,10 @@
 {% extends "_base.html.twig" %}
 
-{% block type %}{{ parent() }}({{ var.resourceType }}){% endblock %}
+{% set composed = true %}
 
-{% block extra_data %}
+{% block type %}{{ parent() }} ({{ var.resourceType }}){% endblock %}
+
+{% block value %}
     {% if var.resourceCustomData is not empty %}
         {{ render_type(var.resourceCustomData)|raw}}
     {% endif %}

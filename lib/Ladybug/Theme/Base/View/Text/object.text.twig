@@ -8,7 +8,6 @@
         {# Custom data #}
 
         {% if var.objectCustomData is not empty %}
-            {{ m.indent(level + 1) }}#<space>Data<intro>
             {{ render_type(var.objectCustomData)|raw }}<intro>
         {% endif %}
 

@@ -1,5 +1,5 @@
 {% extends "_base.html.twig" %}
 
-{% block type %}{{ parent() }}({{ var.length }}){% endblock %}
+{% block type %}{{ parent() }} ({{ var.length }}){% endblock %}
 
-{% block value %}"{{ var.formattedValue }}"{% endblock %}
+{% block inline_value %}{{ var.inlineValue }}{% endblock %}

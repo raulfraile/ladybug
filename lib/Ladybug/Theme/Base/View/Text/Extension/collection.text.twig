@@ -3,9 +3,8 @@
 {% block type %}{{ m.indent(level) }}{{ var.title|tags|raw }}{% endblock type %}
 
 {% block value %}
-<intro>
-{% for item in var.items %}
-    {{ m.indent(item.level) }} {{ render_type(item, item.key)|raw }}<intro>
-{% endfor %}
-
+    <intro>
+    {% for item in var.items %}
+        {{ m.indent(item.level) }} {{ render_type(item, item.key)|raw }}<intro>
+    {% endfor %}
 {% endblock %}
