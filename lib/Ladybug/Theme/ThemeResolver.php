@@ -63,7 +63,7 @@ class ThemeResolver
                 throw new \Exception('theme not found');
             }
 
-            $theme = $this->themes['theme_'.$parent];
+            $theme = $this->themes['theme_'.strtolower($parent)];
 
         }
 
