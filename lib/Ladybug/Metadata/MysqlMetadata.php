@@ -31,7 +31,7 @@ class MysqlMetadata extends AbstractMetadata
 
     public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return MetadataInterface::TYPE_RESOURCE === $type;
+        return 'mysql' === substr($id, 0, 5) && MetadataInterface::TYPE_RESOURCE === $type;
     }
 
     public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
