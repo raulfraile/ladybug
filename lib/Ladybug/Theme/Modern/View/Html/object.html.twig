@@ -26,7 +26,15 @@
     <div class="accordion-group">
         <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" href="#object_data_{{ var.id }}">
-                Properties
+
+                <span>Properties</span>
+
+                <span class="pull-right">
+                    <span class="label label-success">{{ var.publicPropertiesNumber }}</span>
+                    <span class="label label-warning">{{ var.protectedPropertiesNumber }}</span>
+                    <span class="label label-important">{{ var.privatePropertiesNumber }}</span>
+                </span>
+
             </a>
         </div>
         <div id="object_data_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
@@ -84,7 +92,10 @@
     <div class="accordion-group">
         <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ var.id }}" href="#object_constants_{{ var.id }}">
-                Class constants
+                <span>Class constants</span>
+                <span class="pull-right">
+                    <span class="label label-inverse">{{ var.classConstants|length }}</span>
+                </span>
             </a>
         </div>
         <div id="object_constants_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">
@@ -102,7 +113,12 @@
     <div class="accordion-group">
         <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#c{{ var.id }}" href="#object_methods_{{ var.id }}">
-                Methods
+                <span>Methods</span>
+                <span class="pull-right">
+                    <span class="label label-success">{{ var.publicMethodsNumber }}</span>
+                    <span class="label label-warning">{{ var.protectedMethodsNumber }}</span>
+                    <span class="label label-important">{{ var.privateMethodsNumber }}</span>
+                </span>
             </a>
         </div>
         <div id="object_methods_{{ var.id }}" class="accordion-body collapse {% if expanded %}in{% endif %}">

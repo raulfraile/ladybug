@@ -63,6 +63,14 @@ class ObjectType extends AbstractType
 
     protected $inspectorFactory;
 
+    protected $privatePropertiesNumber = 0;
+    protected $protectedPropertiesNumber = 0;
+    protected $publicPropertiesNumber = 0;
+
+    protected $privateMethodsNumber = 0;
+    protected $protectedMethodsNumber = 0;
+    protected $publicMethodsNumber = 0;
+
     public function __construct($maxLevel, FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
@@ -374,10 +382,13 @@ class ObjectType extends AbstractType
                 // visibility
                 if ($reflectedMethod->isPublic()) {
                     $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PUBLIC);
+                    $this->publicMethodsNumber++;
                 } elseif ($reflectedMethod->isProtected()) {
                     $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PROTECTED);
+                    $this->protectedMethodsNumber++;
                 } elseif ($reflectedMethod->isPrivate()) {
                     $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PRIVATE);
+                    $this->privateMethodsNumber++;
                 }
 
                 // phpdoc comment
@@ -453,12 +464,15 @@ class ObjectType extends AbstractType
             if (0 === strpos($key, "\0*\0")) {
                 $propertyName = substr($key, 3);
                 $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PROTECTED;
+                $this->protectedPropertiesNumber++;
             } elseif (0 === strpos($key, "\0" . $this->className . "\0")) {
                 $propertyName = substr($key, 2 + strlen($this->className));
                 $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PRIVATE;
+                $this->privatePropertiesNumber++;
             } else {
                 $propertyName = $key;
                 $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PUBLIC;
+                $this->publicPropertiesNumber++;
             }
 
             $value = $this->factory->factory($item, $this->level + 1);
@@ -566,6 +580,66 @@ class ObjectType extends AbstractType
     public function getClassTraits()
     {
         return $this->classTraits;
+    }
+
+    public function setPrivatePropertiesNumber($privatePropertiesNumber)
+    {
+        $this->privatePropertiesNumber = $privatePropertiesNumber;
+    }
+
+    public function getPrivatePropertiesNumber()
+    {
+        return $this->privatePropertiesNumber;
+    }
+
+    public function setProtectedPropertiesNumber($protectedPropertiesNumber)
+    {
+        $this->protectedPropertiesNumber = $protectedPropertiesNumber;
+    }
+
+    public function getProtectedPropertiesNumber()
+    {
+        return $this->protectedPropertiesNumber;
+    }
+
+    public function setPublicPropertiesNumber($publicPropertiesNumber)
+    {
+        $this->publicPropertiesNumber = $publicPropertiesNumber;
+    }
+
+    public function getPublicPropertiesNumber()
+    {
+        return $this->publicPropertiesNumber;
+    }
+
+    public function setPrivateMethodsNumber($privateMethodsNumber)
+    {
+        $this->privateMethodsNumber = $privateMethodsNumber;
+    }
+
+    public function getPrivateMethodsNumber()
+    {
+        return $this->privateMethodsNumber;
+    }
+
+    public function setProtectedMethodsNumber($protectedMethodsNumber)
+    {
+        $this->protectedMethodsNumber = $protectedMethodsNumber;
+    }
+
+    public function getProtectedMethodsNumber()
+    {
+        return $this->protectedMethodsNumber;
+    }
+
+    public function setPublicMethodsNumber($publicMethodsNumber)
+    {
+        $this->publicMethodsNumber = $publicMethodsNumber;
+    }
+
+    public function getPublicMethodsNumber()
+    {
+        return $this->publicMethodsNumber;
     }
 
 
