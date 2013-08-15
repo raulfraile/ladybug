@@ -1,56 +1,28 @@
 <iframe id="ladybug_iframe_{{ id }}" frameborder="0" width="500" height="100" style="margin: 5px;overflow:hidden"></iframe>
 
 <script>
-    var current_height = 0;
-    var current_width = 0;
-
-    function resizeIframe(top, left) {
-        document.getElementById("ladybug_iframe_{{ id }}").height = top + "px";
-        document.getElementById("ladybug_iframe_{{ id }}").width = left + "px";
+    function resizeIframe(height, width) {
+        document.getElementById("ladybug_iframe_{{ id }}").height = height + "px";
+        document.getElementById("ladybug_iframe_{{ id }}").width = width + "px";
     }
 
     var ladybug_iframe_{{ id }} = document.getElementById("ladybug_iframe_{{ id }}").contentWindow.document;
     ladybug_iframe_{{ id }}.open();
     ladybug_iframe_{{ id }}.write(
             "<style>" + document.getElementById("ladybug_css_{{ id }}").innerHTML + "</style>" +
-                    "<script>" + document.getElementById("ladybug_js_{{ id }}").innerHTML + ";\<\/script>" +
+            "<script>" + document.getElementById("ladybug_js_{{ id }}").innerHTML + ";\<\/script>" +
             document.getElementById("ladybug_content_{{ id }}").innerHTML.replace(/\<ladybug_script\>/g, "<script>").replace(/\<\/ladybug_script\>/g, "\<\/script>") +
-
-                    "<script>" + document.getElementById("ladybug_js_bottom_{{ id }}").innerHTML + ";\<\/script>"
-
+            "<script>" + document.getElementById("ladybug_js_bottom_{{ id }}").innerHTML + ";\<\/script>"
     );
     ladybug_iframe_{{ id }}.close();
 
     resizeIframeInit();
 
-    //document.getElementById('ladybug_iframe_{{ id }}').contentDocument.getElementById('position_x').onchange = function() {console.log('changed');};
-
-    //alert(document.getElementById('ladybug_iframe_{{ id }}').contentDocument.getElementById('position_x').value);
-    //var int = window.setInterval(function(){resize_iframe(false)}, 1000);
-
-    //window.setTimeout(function(){resize_iframe(false)}, 100);
-
     function resizeIframeInit() {
-
         var height = ladybug_iframe_{{ id }}.body.scrollHeight;
         var width = ladybug_iframe_{{ id }}.body.scrollWidth;
 
         document.getElementById("ladybug_iframe_{{ id }}").height = height + "px";
         document.getElementById("ladybug_iframe_{{ id }}").width = width + "px";
-
-        /*if (initial == undefined) initial = false;
-
-        var height = ladybug_iframe_{{ id }}.body.scrollHeight;
-        var width = ladybug_iframe_{{ id }}.body.scrollWidth;
-
-        if (initial || height > current_height) {
-            document.getElementById("ladybug_iframe_{{ id }}").height = height + "px";
-            current_height = height;
-        }
-
-        if (initial || width > current_width) {
-            document.getElementById("ladybug_iframe_{{ id }}").width = width + "px";
-            current_width = width;
-        }*/
     }
 </script>

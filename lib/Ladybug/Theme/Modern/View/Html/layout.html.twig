@@ -12,18 +12,17 @@
 </script>
 
 <script type="text/template" id="ladybug_js_bottom_{{ id }}">
-
     function callResizer() {
-    var lastElementOffset = $('#last_element').position();
-    window.parent.resizeIframe(lastElementOffset.top, lastElementOffset.left);
+        var lastElementOffset = $('#last_element').position();
+        window.parent.resizeIframe(lastElementOffset.top, lastElementOffset.left);
     }
 
     $('.accordion-body').on('shown', function () {
-    callResizer();
+        callResizer();
     });
 
     $('.accordion-body').on('hidden', function () {
-    callResizer();
+        callResizer();
     });
 </script>
 
@@ -41,6 +40,7 @@
         </div>
 
     </div>
+    
     <span id="last_element" class="pull-right" style="clear:both"></span>
 </script>
 
