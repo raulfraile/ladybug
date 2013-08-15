@@ -21,7 +21,7 @@
         "symfony/dependency-injection": ">=2.0.4",
         "symfony/config": ">=2.0.4",
         "twig/twig": ">=v1.7.0",
-        "phpdocumentor/reflection-docblock": "2.0.0a3",
+        "phpdocumentor/reflection-docblock": "2.0.0",
         "jms/serializer": ">=0.11.0"
     },
     "require-dev": {
