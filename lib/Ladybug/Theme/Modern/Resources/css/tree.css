@@ -107,6 +107,13 @@
     background-repeat: no-repeat;
 }
 
+.metadata-mysql
+{
+    background-image: url(../images/mysql.png);
+    background-position: right -12px;
+    background-repeat: no-repeat;
+}
+
 .trans {
     background: url(../images/trans.gif);
     padding-top: 10px;

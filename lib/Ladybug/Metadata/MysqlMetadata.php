@@ -2,7 +2,7 @@
 /*
  * Ladybug: Simple and Extensible PHP Dumper
  *
- * Processor / Standard Object
+ * Processor / AuraMetadata
  *
  * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
  *
@@ -14,31 +14,32 @@ namespace Ladybug\Metadata;
 
 use Ladybug\Metadata\MetadataInterface;
 
-class ZendMetadata extends AbstractMetadata
+class MysqlMetadata extends AbstractMetadata
 {
 
-    const ICON = 'zend';
-    const URL = 'http://framework.zend.com/apidoc/%version%/namespaces/%class%.html';
+    const ICON = 'mysql';
+    //const URL = 'http://auraphp.github.io/Aura.%component%/version/%version%/api/classes/%class%.html';
+
+    protected $resources = array(
+
+    );
 
     public function __construct()
     {
-        $this->version = '2.2';
+        $this->version = '1.1.0';
     }
 
     public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return MetadataInterface::TYPE_CLASS === $type && $this->isNamespace($id, 'Zend');
+        return MetadataInterface::TYPE_RESOURCE === $type;
     }
 
     public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
         if ($this->hasMetadata($id, $type)) {
             return array(
-                'help_link' => $this->generateHelpLinkUrl(self::URL, array(
-                    '%version%' => $this->version,
-                    '%class%' => urlencode($id)
-                )),
-                'icon' => self::ICON
+                'icon' => self::ICON,
+                'version' => $this->version
             );
         }
 

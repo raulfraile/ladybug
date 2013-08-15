@@ -13,6 +13,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Metadata\MetadataInterface;
+
 class MetadataResolver
 {
 
@@ -39,21 +41,21 @@ class MetadataResolver
         return null;
     }
 
-    public function getMetadata($className)
+    public function getMetadata($className, $type = MetadataInterface::TYPE_CLASS)
     {
         foreach ($this->metadatas as $metadata) {
-            if ($metadata->hasMetadata($className)) {
-                return $metadata->getMetadata($className);
+            if ($metadata->hasMetadata($className, $type)) {
+                return $metadata->getMetadata($className, $type);
             }
         }
 
         return array();
     }
 
-    public function has($className)
+    public function has($className, $type = MetadataInterface::TYPE_CLASS)
     {
         foreach ($this->metadatas as $metadata) {
-            if ($metadata->hasMetadata($className)) {
+            if ($metadata->hasMetadata($className, $type)) {
                 return true;
             }
         }

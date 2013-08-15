@@ -12,6 +12,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Metadata\MetadataInterface;
+
 class SymfonyMetadata extends AbstractMetadata
 {
 
@@ -28,18 +30,18 @@ class SymfonyMetadata extends AbstractMetadata
         }
     }
 
-    public function hasMetadata($class)
+    public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return $this->isNamespace($class, 'Symfony');
+        return MetadataInterface::TYPE_CLASS === $type && $this->isNamespace($id, 'Symfony');
     }
 
-    public function getMetadata($class)
+    public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        if ($this->hasMetadata($class)) {
+        if ($this->hasMetadata($id, $type)) {
             return array(
                 'help_link' => $this->generateHelpLinkUrl(self::URL, array(
                     '%version%' => $this->version,
-                    '%class%' => urlencode($class)
+                    '%class%' => urlencode($id)
                 )),
                 'icon' => self::ICON,
                 'version' => $this->version

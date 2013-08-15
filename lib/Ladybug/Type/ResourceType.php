@@ -14,6 +14,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Inspector\InspectorFactory;
 use Ladybug\Metadata\MetadataResolver;
+use Ladybug\Metadata\MetadataInterface;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ResourceType extends AbstractType
@@ -37,6 +38,15 @@ class ResourceType extends AbstractType
     protected $metadataResolver;
 
     protected $resourceId;
+
+    /** @var string $icon */
+    protected $icon;
+
+    /** @var string $helpLink */
+    protected $helpLink;
+
+    /** @var string $version */
+    protected $version;
 
     public function __construct(FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
@@ -67,6 +77,23 @@ class ResourceType extends AbstractType
                 $this->resourceType = 'file';
             }
 
+        }
+
+        // metadata
+        if ($this->metadataResolver->has($this->resourceType, MetadataInterface::TYPE_RESOURCE)) {
+            $metadata = $this->metadataResolver->getMetadata($this->resourceType, MetadataInterface::TYPE_RESOURCE);
+
+            if (array_key_exists('help_link', $metadata)) {
+                $this->helpLink = $metadata['help_link'];
+            }
+
+            if (array_key_exists('icon', $metadata)) {
+                $this->icon = $metadata['icon'];
+            }
+
+            if (array_key_exists('version', $metadata)) {
+                $this->version = $metadata['version'];
+            }
         }
 
         // Resource data
@@ -121,6 +148,54 @@ class ResourceType extends AbstractType
     public function isComposed()
     {
         return true;
+    }
+
+    /**
+     * @param string $helpLink
+     */
+    public function setHelpLink($helpLink)
+    {
+        $this->helpLink = $helpLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelpLink()
+    {
+        return $this->helpLink;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 
 

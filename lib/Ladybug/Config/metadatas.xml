@@ -33,5 +33,9 @@
         <service id="metadata_zend" class="Ladybug\Metadata\ZendMetadata">
             <tag name="ladybug.metadata" />
         </service>
+
+        <service id="metadata_mysql" class="Ladybug\Metadata\MysqlMetadata">
+            <tag name="ladybug.metadata" />
+        </service>
     </services>
 </container>

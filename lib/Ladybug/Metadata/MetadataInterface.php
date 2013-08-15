@@ -14,14 +14,18 @@ namespace Ladybug\Metadata;
 
 interface MetadataInterface
 {
+
+    const TYPE_CLASS = 0;
+    const TYPE_RESOURCE = 1;
+
     /**
      * Process the HTML code and make the proper changes
      *
      * @param  string $str html code
      * @return string modified html code
      */
-    public function getMetadata($class);
+    public function getMetadata($id, $type = self::TYPE_CLASS);
 
-    public function hasMetadata($class);
+    public function hasMetadata($id, $type = self::TYPE_CLASS);
 
 }

@@ -12,6 +12,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Metadata\MetadataInterface;
+
 class PhpObjectsMetadata extends AbstractMetadata
 {
 
@@ -134,17 +136,17 @@ class PhpObjectsMetadata extends AbstractMetadata
         $this->version = phpversion();
     }
 
-    public function hasMetadata($class)
+    public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return array_key_exists($class, $this->classes);
+        return MetadataInterface::TYPE_CLASS === $type && array_key_exists($id, $this->classes);
     }
 
-    public function getMetadata($class)
+    public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        if ($this->hasMetadata($class)) {
+        if ($this->hasMetadata($id, $type)) {
             return array(
                 'help_link' => $this->generateHelpLinkUrl(self::URL, array(
-                    '%file%' => $this->classes[$class]
+                    '%file%' => $this->classes[$id]
                 )),
                 'icon' => self::ICON,
                 'version' => $this->version

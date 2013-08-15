@@ -12,6 +12,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Metadata\MetadataInterface;
+
 class SilexMetadata extends AbstractMetadata
 {
 
@@ -23,17 +25,17 @@ class SilexMetadata extends AbstractMetadata
         $this->version = null;
     }
 
-    public function hasMetadata($class)
+    public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return $this->isNamespace($class, 'Silex');
+        return MetadataInterface::TYPE_CLASS === $type && $this->isNamespace($id, 'Silex');
     }
 
-    public function getMetadata($class)
+    public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        if ($this->hasMetadata($class)) {
+        if ($this->hasMetadata($id, $type)) {
             return array(
                 'help_link' => $this->generateHelpLinkUrl(self::URL, array(
-                    '%class%' => urlencode($class)
+                    '%class%' => urlencode($id)
                 )),
                 'icon' => self::ICON
             );

@@ -12,6 +12,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Metadata\MetadataInterface;
+
 class AuraMetadata extends AbstractMetadata
 {
 
@@ -23,19 +25,19 @@ class AuraMetadata extends AbstractMetadata
         $this->version = '1.1.0';
     }
 
-    public function hasMetadata($class)
+    public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return $this->isNamespace($class, 'Aura');
+        return MetadataInterface::TYPE_CLASS === $type && $this->isNamespace($id, 'Aura');
     }
 
-    public function getMetadata($class)
+    public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        if ($this->hasMetadata($class)) {
+        if ($this->hasMetadata($id, $type)) {
             return array(
                 'help_link' => $this->generateHelpLinkUrl(self::URL, array(
                     '%version%' => $this->version,
-                    '%component%' => $this->getComponent($class),
-                    '%class%' => str_replace('\\', '.', $class)
+                    '%component%' => $this->getComponent($id),
+                    '%class%' => str_replace('\\', '.', $id)
                 )),
                 'icon' => self::ICON,
                 'version' => $this->version

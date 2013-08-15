@@ -12,6 +12,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Metadata\MetadataInterface;
+
 class DoctrineMetadata extends AbstractMetadata
 {
 
@@ -27,35 +29,35 @@ class DoctrineMetadata extends AbstractMetadata
         $this->version = '2.3';
     }
 
-    public function hasMetadata($class)
+    public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        return $this->isNamespace($class, 'Doctrine');
+        return MetadataInterface::TYPE_CLASS === $type && $this->isNamespace($id, 'Doctrine');
     }
 
-    public function getMetadata($class)
+    public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS)
     {
-        if ($this->hasMetadata($class)) {
+        if ($this->hasMetadata($id, $type)) {
 
             $helpLink = '#';
-            if ($this->isNamespace($class, 'Doctrine\\ORM')) {
+            if ($this->isNamespace($id, 'Doctrine\\ORM')) {
                 $helpLink = $this->generateHelpLinkUrl(self::URL_ORM, array(
                     '%version%' => $this->version,
-                    '%class%' => str_replace('\\', '.', $class)
+                    '%class%' => str_replace('\\', '.', $id)
                 ));
-            } elseif ($this->isNamespace($class, 'Doctrine\\DBAL')) {
+            } elseif ($this->isNamespace($id, 'Doctrine\\DBAL')) {
                 $helpLink = $this->generateHelpLinkUrl(self::URL_DBAL, array(
                     '%version%' => $this->version,
-                    '%class%' => str_replace('\\', '.', $class)
+                    '%class%' => str_replace('\\', '.', $id)
                 ));
-            } elseif ($this->isNamespace($class, 'Doctrine\\ODM')) {
+            } elseif ($this->isNamespace($id, 'Doctrine\\ODM')) {
                 $helpLink = $this->generateHelpLinkUrl(self::URL_ODM, array(
                     '%version%' => $this->version,
-                    '%class%' => str_replace('\\', '.', $class)
+                    '%class%' => str_replace('\\', '.', $id)
                 ));
-            } elseif ($this->isNamespace($class, 'Doctrine\\Common')) {
+            } elseif ($this->isNamespace($id, 'Doctrine\\Common')) {
                 $helpLink = $this->generateHelpLinkUrl(self::URL_ORM, array(
                     '%version%' => $this->version,
-                    '%class%' => str_replace('\\', '.', $class)
+                    '%class%' => str_replace('\\', '.', $id)
                 ));
             }
 
