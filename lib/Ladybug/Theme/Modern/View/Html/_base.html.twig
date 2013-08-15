@@ -22,7 +22,7 @@
     </div>
 
     {% if composed %}
-        <div id="c{{ var.id }}" class="accordion-body collapse {% if (expanded == true or type_expanded) and not var.terminal %}in{% endif %}">
+        <div id="c{{ var.id }}" class="accordion-body no-transition collapse {% if (expanded == true or type_expanded) and not var.terminal %}in{% endif %}">
             <div class="accordion-inner">
                 {% block value %}{% endblock %}
             </div>

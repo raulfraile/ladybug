@@ -8,11 +8,28 @@
     {% for file in js %}
         {{ include_file(file)|raw }}
     {% endfor %}
+
+</script>
+
+<script type="text/template" id="ladybug_js_bottom_{{ id }}">
+
+    function callResizer() {
+    var lastElementOffset = $('#last_element').position();
+    window.parent.resizeIframe(lastElementOffset.top, lastElementOffset.left);
+    }
+
+    $('.accordion-body').on('shown', function () {
+    callResizer();
+    });
+
+    $('.accordion-body').on('hidden', function () {
+    callResizer();
+    });
 </script>
 
 <script type="text/template" id="ladybug_content_{{ id }}">
 
-    <div class="ladybug" style="width:700px; margin:10px">
+    <div class="ladybug" style="min-width:650px; margin:10px">
         {% for node in nodes %}
             <span class="dump-block">
                 {{ render_type(node)|raw }}
@@ -24,7 +41,7 @@
         </div>
 
     </div>
-
+    <span id="last_element" class="pull-right" style="clear:both"></span>
 </script>
 
 {% include "iframe.html.twig" %}

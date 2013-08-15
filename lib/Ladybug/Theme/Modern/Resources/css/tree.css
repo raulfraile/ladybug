@@ -26,6 +26,20 @@
     font-weight: normal;
 }
 
+
+
+
+.collapse {
+    /*-webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;*/
+    transition: height 0.02s;
+    -webkit-transition: height 0.02s;
+    -moz-transition: height 0.02s;
+    -o-transition: height 0.02s;
+}​
+
 /* types */
 .type_int {
     color: #800;
