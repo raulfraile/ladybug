@@ -87,4 +87,21 @@ abstract class AbstractInspector implements InspectorInterface
         return $containerType;
     }
 
+    /**
+     * Returns the object data into an array/string
+     *
+     * @param  string $var html code
+     * @return string modified html code
+     */
+    public function getData($var, $type = self::TYPE_CLASS)
+    {
+        return null;
+    }
+
+    public function accept($var, $type = self::TYPE_CLASS)
+    {
+        return false;
+    }
+
+
 }

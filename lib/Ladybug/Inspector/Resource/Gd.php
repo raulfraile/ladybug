@@ -12,16 +12,21 @@
 
 namespace Ladybug\Inspector\Resource;
 
-use Ladybug\Dumper;
 use Ladybug\Inspector\AbstractInspector;
+use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type;
 
 class Gd extends AbstractInspector
 {
 
-    public function getData($var)
+    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
     {
-        if (!is_resource($var) || get_resource_type($var) != 'gd') {
+        return InspectorInterface::TYPE_RESOURCE == $type && is_resource($var) && 'gd' === get_resource_type($var);
+    }
+
+    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
+    {
+        if (!$this->accept($var, $type)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 

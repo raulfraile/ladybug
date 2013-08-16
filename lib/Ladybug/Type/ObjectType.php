@@ -13,7 +13,7 @@
 namespace Ladybug\Type;
 
 use Ladybug\Type\ObjectType as Object;
-
+use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ObjectType extends AbstractType
@@ -61,7 +61,7 @@ class ObjectType extends AbstractType
     /** @var ObjectMetadataResolver $metadataResolver */
     protected $metadataResolver;
 
-    protected $inspectorFactory;
+    protected $inspectorManager;
 
     protected $privatePropertiesNumber = 0;
     protected $protectedPropertiesNumber = 0;
@@ -71,17 +71,17 @@ class ObjectType extends AbstractType
     protected $protectedMethodsNumber = 0;
     protected $publicMethodsNumber = 0;
 
-    public function __construct($maxLevel, FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
+    public function __construct($maxLevel, FactoryType $manager, \Ladybug\Inspector\InspectorManager $inspectorManager, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
         $this->level = 0;
         $this->maxLevel = $maxLevel;
-        $this->factory = $factory;
+        $this->factory = $manager;
         $this->metadataResolver = $metadataResolver;
 
-        $this->inspectorFactory = $inspectorFactory;
+        $this->inspectorManager = $inspectorManager;
     }
 
     public function load($var, $level = 1)
@@ -447,11 +447,11 @@ class ObjectType extends AbstractType
         // is there a class to show the object data?
         $service = 'inspector_object_'.str_replace('\\', '_', strtolower($this->className));
 
-        if ($this->inspectorFactory->has($service)) {
-            $inspector = $this->inspectorFactory->factory($service);
+        $inspector = $this->inspectorManager->get($var, InspectorInterface::TYPE_CLASS);
+        if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
 
-            $this->objectCustomData = $inspector->getData($var);
+            $this->objectCustomData = $inspector->getData($var, InspectorInterface::TYPE_CLASS);
         }
 
         // properties

@@ -18,6 +18,7 @@ use Ladybug\Theme\ThemeResolver;
 use Ladybug\Render\RenderResolver;
 use Ladybug\Application;
 use Ladybug\Format\FormatResolver;
+use Ladybug\Plugin\PluginInterface;
 
 class Dumper
 {
@@ -30,6 +31,7 @@ class Dumper
     /** @var Application $application */
     protected $application;
 
+    /** @var bool $applicationInitialized */
     protected $applicationInitialized;
 
     protected $theme;
@@ -41,6 +43,9 @@ class Dumper
 
     protected $options;
 
+    /** @var array $plugins */
+    protected $plugins;
+
     /**
      * Constructor
      */
@@ -50,9 +55,9 @@ class Dumper
         $this->format = null;
         $this->options = array();
         $this->applicationInitialized = false;
+        $this->plugins = array();
 
         $this->initializeNodes();
-
     }
 
     /**
@@ -73,7 +78,7 @@ class Dumper
         }
 
         $this->application = new Application();
-        $this->application->build($this->options);
+        $this->application->build($this->options, $this->plugins);
     }
 
     /**
@@ -230,6 +235,11 @@ class Dumper
         foreach ($options as $name => $value) {
             $this->setOption($name, $value);
         }
+    }
+
+    public function registerPlugin(PluginInterface $plugin)
+    {
+        $this->plugins[] = $plugin;
     }
 
 }

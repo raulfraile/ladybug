@@ -11,12 +11,12 @@ class InspectorCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
 
-        if (!$container->hasDefinition('inspector_factory')) {
+        if (!$container->hasDefinition('inspector_manager')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'inspector_factory'
+            'inspector_manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(

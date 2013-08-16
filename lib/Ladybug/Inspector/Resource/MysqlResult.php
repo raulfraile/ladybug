@@ -12,15 +12,23 @@
 
 namespace Ladybug\Inspector\Resource;
 
-use Ladybug\Dumper;
 use Ladybug\Inspector\AbstractInspector;
+use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type;
 
 class MysqlResult extends AbstractInspector
 {
-
-    public function getData($var)
+    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
     {
+        return InspectorInterface::TYPE_RESOURCE == $type && is_resource($var) && 'mysql result' === get_resource_type($var);
+    }
+
+    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
+    {
+        if (!$this->accept($var, $type)) {
+            throw new \Ladybug\Exception\InvalidInspectorClassException();
+        }
+
         $headers = array();
         $rows = array();
         $first = true;

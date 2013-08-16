@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Extension;
+namespace Ladybug\Plugin;
 
 interface PluginInterface
 {

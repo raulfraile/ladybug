@@ -14,14 +14,20 @@ namespace Ladybug\Inspector\Object;
 
 use Ladybug\Dumper;
 use Ladybug\Inspector\AbstractInspector;
+use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type;
 
 class SplStack extends AbstractInspector
 {
-    public function getData($var)
+    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
+    {
+        return InspectorInterface::TYPE_CLASS == $type && $var instanceof \SplStack;
+    }
+
+    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
     {
 
-        if (!$var instanceof \SplStack) {
+        if (!$this->accept($var, $type)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 

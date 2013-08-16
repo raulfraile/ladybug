@@ -13,18 +13,20 @@
 namespace Ladybug\Inspector\Object;
 
 use Ladybug\Inspector\AbstractInspector;
+use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type;
 
 class DOMDocument extends AbstractInspector
 {
 
-    /**
-     * @param  string                          $var
-     * @return \Ladybug\Type\Extended\CodeType
-     */
-    public function getData($var)
+    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
     {
-        if (!$var instanceof \DOMDocument) {
+        return InspectorInterface::TYPE_CLASS == $type && $var instanceof \DOMDocument;
+    }
+
+    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
+    {
+        if (!$this->accept($var, $type)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 

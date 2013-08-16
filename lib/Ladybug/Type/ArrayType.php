@@ -27,14 +27,14 @@ class ArrayType extends AbstractType
 
     protected $terminal;
 
-    public function __construct($maxLevel, FactoryType $factory)
+    public function __construct($maxLevel, FactoryType $manager)
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
         $this->level = 0;
         $this->maxLevel = $maxLevel;
-        $this->factory = $factory;
+        $this->factory = $manager;
         $this->terminal = false;
         $this->value = array();
     }

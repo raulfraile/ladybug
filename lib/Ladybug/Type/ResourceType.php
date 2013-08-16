@@ -16,6 +16,8 @@ use Ladybug\Inspector\InspectorFactory;
 use Ladybug\Metadata\MetadataResolver;
 use Ladybug\Metadata\MetadataInterface;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
+use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Inspector\InspectorManager;
 
 class ResourceType extends AbstractType
 {
@@ -31,8 +33,8 @@ class ResourceType extends AbstractType
     /** @var FactoryType $factory */
     protected $factory;
 
-    /** @var InspectorFactory $inspectorFactory */
-    protected $inspectorFactory;
+    /** @var InspectorManager $inspectorManager */
+    protected $inspectorManager;
 
     /** @var MetadataResolver $metadataResolver */
     protected $metadataResolver;
@@ -48,7 +50,7 @@ class ResourceType extends AbstractType
     /** @var string $version */
     protected $version;
 
-    public function __construct(FactoryType $factory, \Ladybug\Inspector\InspectorFactory $inspectorFactory, \Ladybug\Metadata\MetadataResolver $metadataResolver)
+    public function __construct(FactoryType $factory, InspectorManager $inspectorManager, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
 
@@ -56,7 +58,7 @@ class ResourceType extends AbstractType
         $this->factory = $factory;
 
         $this->metadataResolver = $metadataResolver;
-        $this->inspectorFactory = $inspectorFactory;
+        $this->inspectorManager = $inspectorManager;
     }
 
     public function load($var, $level = 1)
@@ -132,10 +134,10 @@ class ResourceType extends AbstractType
         // is there a class to show the object data?
         $service = 'inspector_resource_'.str_replace(array('\\', ' '), '_', strtolower($this->resourceType));
 
-        if ($this->inspectorFactory->has($service)) {
-            $inspector = $this->inspectorFactory->factory($service);
+        $inspector = $this->inspectorManager->get($var, InspectorInterface::TYPE_RESOURCE);
+        if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
-            $this->resourceCustomData = $inspector->getData($var);
+            $this->resourceCustomData = $inspector->getData($var, InspectorInterface::TYPE_RESOURCE);
         }
 
     }

@@ -12,11 +12,13 @@
 
 namespace Ladybug\Inspector\Object;
 
+use Ladybug\Inspector\InspectorInterface;
+
 class SplMinHeap extends SplHeap
 {
-    public function getData($var)
+    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
     {
-        return parent::getData($var);
+        return parent::getData($var, $type);
     }
 
 }

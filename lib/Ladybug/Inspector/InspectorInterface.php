@@ -14,11 +14,16 @@ namespace Ladybug\Inspector;
 
 interface InspectorInterface
 {
+    const TYPE_CLASS = 0;
+    const TYPE_RESOURCE = 1;
+
     /**
      * Returns the object data into an array/string
      *
      * @param  string $var html code
      * @return string modified html code
      */
-    public function getData($var);
+    public function getData($var, $type = self::TYPE_CLASS);
+
+    public function accept($var, $type = self::TYPE_CLASS);
 }

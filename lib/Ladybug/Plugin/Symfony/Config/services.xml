@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="inspector_object_symfony_component_httpfoundation_parameterbag" class="Ladybug\Plugin\Symfony\Inspector\Object\Symfony\Component\HttpFoundation\ParameterBag">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+            <argument type="service" id="type_extended_factory"></argument>
+        </service>
+
+        <service id="inspector_object_symfony_component_filesystem_filesystem" class="Ladybug\Plugin\Symfony\Inspector\Object\Symfony\Component\Filesystem\Filesystem">
+            <tag name="ladybug.inspector" />
+            <argument type="service" id="type_factory"></argument>
+            <argument type="service" id="type_extended_factory"></argument>
+        </service>
+
+    </services>
+</container>

@@ -10,9 +10,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Plugin;
+namespace Ladybug\Plugin\Symfony;
 
-abstract class AbstractPlugin implements PluginInterface
+use Ladybug\Plugin\PluginInterface;
+
+class SymfonyPlugin implements PluginInterface
 {
     public function getConfigFile()
     {

@@ -13,19 +13,20 @@
 namespace Ladybug\Inspector\Object;
 
 use Ladybug\Inspector\AbstractInspector;
+use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type;
 
 abstract class SplHeap extends AbstractInspector
 {
 
-    /**
-     * @param  string                                            $var
-     * @return \Ladybug\Type\Extended\CollectionType
-     * @throws \Ladybug\Exception\InvalidInspectorClassException
-     */
-    public function getData($var)
+    public function accept($var, $type = self::TYPE_CLASS)
     {
-        if (!$var instanceof \SplHeap) {
+        return InspectorInterface::TYPE_CLASS == $type && $var instanceof \SplHeap;
+    }
+
+    public function getData($var, $type = self::TYPE_CLASS)
+    {
+        if (!$this->accept($var, $type)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 

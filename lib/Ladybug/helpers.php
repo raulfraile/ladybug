@@ -2,6 +2,9 @@
 
 // helpers
 
+/**
+ * return Ladybug\Dumper
+ */
 function getLadybug()
 {
     global $ladybug;
@@ -36,6 +39,12 @@ function ladybug_set_options(array $options)
     foreach ($options as $name => $value) {
         ladybug_set_option($name, $value);
     }
+}
+
+function ladybug_register_plugin($plugin)
+{
+    $ladybug = getLadybug();
+    $ladybug->registerPlugin($plugin);
 }
 
 function ladybug_dump(/*$var1 [, $var2...$varN]*/)
