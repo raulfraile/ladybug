@@ -10,23 +10,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\Extended;
+namespace Ladybug\Extension;
 
-class ContainerType extends BaseType
+abstract class AbstractPlugin implements PluginInterface
 {
-    const TYPE_ID = 'container';
-
-    public function load($var)
+    public function getConfigFile()
     {
-
+        return __DIR__ . '/Config/services.xml';
     }
-
-    public function setData($data)
-    {
-        $data->setLevel($this->level + 1);
-
-        parent::setData($data);
-    }
-
 
 }

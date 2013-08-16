@@ -12,13 +12,7 @@
 
 namespace Ladybug\Extension;
 
-interface ExtensionInterface
+interface PluginInterface
 {
-    /**
-     * Returns the object data into an array/string
-     *
-     * @param  string $var html code
-     * @return string modified html code
-     */
-    public function getData($var);
+    public function getConfigFile();
 }
