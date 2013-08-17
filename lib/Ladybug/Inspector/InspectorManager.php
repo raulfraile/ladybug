@@ -13,7 +13,6 @@
 
 namespace Ladybug\Inspector;
 
-use Ladybug\Exception\InvalidTypeException;
 use Ladybug\Inspector\InspectorInterface;
 
 class InspectorManager

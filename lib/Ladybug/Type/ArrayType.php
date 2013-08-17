@@ -115,5 +115,4 @@ class ArrayType extends AbstractType
         }
     }
 
-
 }

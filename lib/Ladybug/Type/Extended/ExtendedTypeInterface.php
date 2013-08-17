@@ -4,7 +4,7 @@ namespace Ladybug\Type\Extended;
 
 use Ladybug\Type\TypeInterface;
 
-interface ExtendedTypeInterface// extends TypeInterface
+interface ExtendedTypeInterface extends TypeInterface
 {
     public function getTitle();
 

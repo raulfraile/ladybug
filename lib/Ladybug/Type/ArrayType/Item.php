@@ -74,5 +74,4 @@ class Item
         return $this->value->getLevel();
     }
 
-
 }

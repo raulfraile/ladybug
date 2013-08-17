@@ -48,7 +48,6 @@ class ExtendedTypeFactory
         $result = clone($this->types['type_extended_' . $type]);
         $result->setLevel($level);
 
-
         return $result;
     }
 }

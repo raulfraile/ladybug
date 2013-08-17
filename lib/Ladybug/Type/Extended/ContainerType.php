@@ -28,5 +28,4 @@ class ContainerType extends BaseType
         parent::setData($data);
     }
 
-
 }

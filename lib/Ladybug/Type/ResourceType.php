@@ -12,7 +12,6 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Inspector\InspectorFactory;
 use Ladybug\Metadata\MetadataResolver;
 use Ladybug\Metadata\MetadataInterface;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
@@ -69,7 +68,7 @@ class ResourceType extends AbstractType
 
         $this->level = $level;
         $this->resourceType = get_resource_type($var);
-        $this->resourceId = (int)$var;
+        $this->resourceId = (int) $var;
 
         if ($this->resourceType == 'stream') {
             $stream_vars = stream_get_meta_data($var);
@@ -199,6 +198,5 @@ class ResourceType extends AbstractType
     {
         return $this->version;
     }
-
 
 }

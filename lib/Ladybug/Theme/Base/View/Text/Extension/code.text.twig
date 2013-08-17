@@ -11,5 +11,3 @@
 {{ m.indent(level) }}
 {{ var.data|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(level) })|raw }}
 {% endblock %}
-
-

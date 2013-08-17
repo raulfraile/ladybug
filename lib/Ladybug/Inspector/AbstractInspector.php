@@ -103,5 +103,4 @@ abstract class AbstractInspector implements InspectorInterface
         return false;
     }
 
-
 }

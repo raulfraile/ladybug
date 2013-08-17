@@ -5,7 +5,6 @@ namespace Ladybug\Render\Twig\Extension;
 use Twig_Extension;
 use Twig_Environment;
 use Ladybug\Type\RenderizableTypeInterface;
-use Sabberworm\CSS\Parser as CssParser;
 
 class LadybugExtension extends Twig_Extension
 {
@@ -40,7 +39,6 @@ class LadybugExtension extends Twig_Extension
                 'getSpacesByLevel',
                 array()
             ),
-
 
         );
     }
@@ -118,7 +116,6 @@ class LadybugExtension extends Twig_Extension
         $folder = pathinfo($filename, \PATHINFO_DIRNAME);
 
         $content = file_get_contents($filename);
-
 
         //$content = $oCss->__toString();
 

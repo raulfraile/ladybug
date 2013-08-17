@@ -642,5 +642,4 @@ class ObjectType extends AbstractType
         return $this->publicMethodsNumber;
     }
 
-
 }

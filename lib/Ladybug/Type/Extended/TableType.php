@@ -146,5 +146,4 @@ class TableType extends BaseType
         return $this->title;
     }
 
-
 }

@@ -70,5 +70,4 @@ class ImageType extends BaseType
         return $this->tempPath;
     }
 
-
 }

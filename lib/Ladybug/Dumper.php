@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * Ladybug: PHP 5.3+ Extensible Dumper
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  *

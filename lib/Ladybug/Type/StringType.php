@@ -45,5 +45,4 @@ class StringType extends AbstractType
         return sprintf('"%s"', $this->value);
     }
 
-
 }

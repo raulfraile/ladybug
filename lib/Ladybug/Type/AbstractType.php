@@ -36,7 +36,6 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
     /** @var int $length */
     protected $length;
 
-
     /**
      * Constructor
      */
@@ -200,7 +199,7 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
         return $this->encoding;
     }
 
-    function __clone()
+    public function __clone()
     {
         $this->id = uniqid();
     }

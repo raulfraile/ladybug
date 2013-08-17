@@ -155,5 +155,4 @@ class Method implements VisibilityInterface
         return $this->level;
     }
 
-
 }

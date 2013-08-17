@@ -12,7 +12,6 @@
 
 namespace Ladybug\Type\Extended;
 
-use Ladybug\Type\TypeInterface;
 use Ladybug\Type\RenderizableTypeInterface;
 
 abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterface
@@ -90,7 +89,7 @@ abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterf
         return false;
     }
 
-    function __clone()
+    public function __clone()
     {
         $this->id = uniqid('ext_' . static::TYPE_ID . '_');
     }

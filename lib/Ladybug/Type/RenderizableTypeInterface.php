@@ -6,7 +6,6 @@ interface RenderizableTypeInterface
 {
     public function getTemplateName();
 
-
     /**
      * @abstract
      * @return mixed
@@ -16,6 +15,5 @@ interface RenderizableTypeInterface
     public function getInlineValue();
 
     public function getLevel();
-
 
 }

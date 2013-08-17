@@ -31,7 +31,6 @@ class CollectionType extends BaseType implements \Countable
         $this->length = 0;
     }
 
-
     public function setProcessedData($processedData)
     {
         $this->processedData = $processedData;
@@ -116,6 +115,5 @@ class CollectionType extends BaseType implements \Countable
     {
         return $this->length;
     }
-
 
 }
