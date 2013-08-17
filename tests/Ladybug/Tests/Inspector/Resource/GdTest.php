@@ -4,6 +4,7 @@ namespace Ladybug\Tests\Inspector\Resource;
 
 use Ladybug\Inspector;
 use Ladybug\Type;
+use Ladybug\Inspector\InspectorInterface;
 use \Mockery as m;
 
 class GdTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +36,7 @@ class GdTest extends \PHPUnit_Framework_TestCase
     {
         $var = imagecreatefrompng(__DIR__ . '/../../../../files/ladybug.png');
 
-        $result = $this->inspector->getData($var);
+        $result = $this->inspector->getData($var, InspectorInterface::TYPE_RESOURCE);
 
         $this->assertInstanceOf('Ladybug\Type\Extended\ExtendedTypeInterface', $result);
     }
@@ -46,7 +47,7 @@ class GdTest extends \PHPUnit_Framework_TestCase
 
         $var = new \stdClass();
 
-        $this->inspector->getData($var);
+        $this->inspector->getData($var, InspectorInterface::TYPE_RESOURCE);
     }
 
 }

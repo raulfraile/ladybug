@@ -23,13 +23,13 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
             return $intType;
         });
 
-        $factoryInspectorMock = m::mock('Ladybug\Inspector\InspectorFactory');
-        $factoryInspectorMock->shouldReceive('has')->andReturn(false);
+        $managerInspectorMock = m::mock('Ladybug\Inspector\InspectorManager');
+        $managerInspectorMock->shouldReceive('get')->andReturn(null);
 
         $metadataResolverMock = m::mock('Ladybug\Metadata\MetadataResolver');
         $metadataResolverMock->shouldReceive('has')->andReturn(false);
 
-        $this->type = new Type\ObjectType($maxlevel, $factoryTypeMock, $factoryInspectorMock, $metadataResolverMock);
+        $this->type = new Type\ObjectType($maxlevel, $factoryTypeMock, $managerInspectorMock, $metadataResolverMock);
     }
 
     public function tearDown()

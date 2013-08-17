@@ -53,7 +53,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->dumper->setFormat(Format\TextFormat::FORMAT_NAME);
         $dump = $this->dumper->dump($var);
 
-        $this->assertEquals(sprintf("int %d\n\n%s:%s", $var, __FILE__, __LINE__ - 2), $dump);
+        $this->assertEquals(sprintf("int %d\n\n%s:%s\n\n", $var, __FILE__, __LINE__ - 2), $dump);
     }
 
     public function testDumpJsonFormat()

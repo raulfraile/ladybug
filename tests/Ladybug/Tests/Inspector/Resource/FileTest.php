@@ -4,6 +4,7 @@ namespace Ladybug\Tests\Inspector\Resource;
 
 use Ladybug\Inspector;
 use Ladybug\Type;
+use Ladybug\Inspector\InspectorInterface;
 use \Mockery as m;
 
 class FileTest extends \PHPUnit_Framework_TestCase
@@ -31,7 +32,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         $var = fopen(__DIR__ . '/../../../../files/test.txt', 'rb');
 
-        $result = $this->inspector->getData($var);
+        $result = $this->inspector->getData($var, InspectorInterface::TYPE_RESOURCE);
 
         $this->assertInstanceOf('Ladybug\Type\Extended\CollectionType', $result);
     }
@@ -42,7 +43,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $var = new \stdClass();
 
-        $this->inspector->getData($var);
+        $this->inspector->getData($var, InspectorInterface::TYPE_RESOURCE);
     }
 
 }

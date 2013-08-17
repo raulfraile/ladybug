@@ -17,13 +17,13 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
 
-        $factoryInspectorMock = m::mock('Ladybug\Inspector\InspectorFactory');
-        $factoryInspectorMock->shouldReceive('has')->andReturn(false);
+        $managerInspectorMock = m::mock('Ladybug\Inspector\InspectorManager');
+        $managerInspectorMock->shouldReceive('get')->andReturn(null);
 
         $metadataResolverMock = m::mock('Ladybug\Metadata\MetadataResolver');
         $metadataResolverMock->shouldReceive('has')->andReturn(false);
 
-        $this->type = new Type\ResourceType($factoryTypeMock, $factoryInspectorMock, $metadataResolverMock);
+        $this->type = new Type\ResourceType($factoryTypeMock, $managerInspectorMock, $metadataResolverMock);
     }
 
     public function tearDown()
