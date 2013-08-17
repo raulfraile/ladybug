@@ -22,25 +22,24 @@ use Ladybug\Plugin\PluginInterface;
 
 class Dumper
 {
-
     const LEVEL_INIT = 1;
 
     /** @var array $nodes */
-    private $nodes;
+    protected $nodes;
 
     /** @var Application $application */
     protected $application;
 
-    /** @var bool $applicationInitialized */
-    protected $applicationInitialized;
+    /** @var bool $isApplicationInitialized */
+    protected $isApplicationInitialized;
 
-    protected $theme;
-
-    protected $format;
-
+    /** @var string $callFile */
     protected $callFile = null;
+
+    /** @var int $callLine */
     protected $callLine = null;
 
+    /** @var array $options */
     protected $options;
 
     /** @var array $plugins */
@@ -51,10 +50,8 @@ class Dumper
      */
     public function __construct()
     {
-        $this->theme = null;
-        $this->format = null;
         $this->options = array();
-        $this->applicationInitialized = false;
+        $this->isApplicationInitialized = false;
         $this->plugins = array();
 
         $this->initializeNodes();
@@ -73,7 +70,7 @@ class Dumper
      */
     protected function initializeApplication()
     {
-        if ($this->applicationInitialized) {
+        if ($this->isApplicationInitialized) {
             return;
         }
 
@@ -168,11 +165,10 @@ class Dumper
         $environmentResolver = $this->application->container->get('environment_resolver');
         $environment = $environmentResolver->resolve();
 
-        $format = $environment->getDefaultFormat();
-        if (!is_null($this->format)) {
-            $format = $this->format;
-        } elseif ($this->application->container->hasParameter('format')) {
+        if ($this->application->container->hasParameter('format')) {
             $format = $this->application->container->getParameter('format');
+        } else {
+            $format = $environment->getDefaultFormat();
         }
 
         /** @var $formatResolver FormatResolver */
@@ -182,9 +178,7 @@ class Dumper
         /** @var $themeResolver ThemeResolver */
         $themeResolver = $this->application->container->get('theme_resolver');
 
-        if (!is_null($this->theme)) {
-            $theme = $themeResolver->getTheme($this->theme, $format);
-        } elseif ($this->application->container->hasParameter('theme')) {
+        if ($this->application->container->hasParameter('theme')) {
             $theme = $themeResolver->getTheme($this->application->container->getParameter('theme'), $format);
         } else {
             $theme = $themeResolver->resolve($format);

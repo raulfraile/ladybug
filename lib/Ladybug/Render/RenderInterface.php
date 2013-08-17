@@ -16,4 +16,6 @@ interface RenderInterface
     public function setTheme(\Ladybug\Theme\ThemeInterface $theme);
 
     public function setFormat($format);
+
+    public function setGlobals(array $globals);
 }
