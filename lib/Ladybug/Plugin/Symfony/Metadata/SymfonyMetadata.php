@@ -10,9 +10,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Metadata;
+namespace Ladybug\Plugin\Symfony\Metadata;
 
 use Ladybug\Metadata\MetadataInterface;
+use Ladybug\Metadata\AbstractMetadata;
 
 class SymfonyMetadata extends AbstractMetadata
 {

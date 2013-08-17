@@ -18,10 +18,6 @@
             <tag name="ladybug.metadata" />
         </service>
 
-        <service id="metadata_symfony" class="Ladybug\Metadata\SymfonyMetadata">
-            <tag name="ladybug.metadata" />
-        </service>
-
         <service id="metadata_twig" class="Ladybug\Metadata\TwigMetadata">
             <tag name="ladybug.metadata" />
         </service>

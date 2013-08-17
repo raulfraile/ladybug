@@ -27,6 +27,7 @@ class MetadataResolver
 
     public function add(MetadataInterface $metadata)
     {
+        var_dump(get_class($metadata));
         $this->metadatas[] = $metadata;
     }
 

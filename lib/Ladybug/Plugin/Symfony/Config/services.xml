@@ -18,5 +18,9 @@
             <argument type="service" id="type_extended_factory"></argument>
         </service>
 
+        <service id="metadata_symfony" class="Ladybug\Plugin\Symfony\Metadata\SymfonyMetadata">
+            <tag name="ladybug.metadata" />
+        </service>
+
     </services>
 </container>
