@@ -16,7 +16,7 @@ class ContainerType extends BaseType
 {
     const TYPE_ID = 'container';
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
 
     }

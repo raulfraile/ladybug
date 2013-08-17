@@ -41,7 +41,7 @@ class UnixPermissionsType extends BaseType
         return 'unix_permissions';
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         $this->data = $var;
     }

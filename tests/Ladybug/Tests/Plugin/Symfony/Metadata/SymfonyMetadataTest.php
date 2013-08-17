@@ -1,8 +1,8 @@
 <?php
 
-namespace Ladybug\Tests\Metadata;
+namespace Ladybug\Tests\Plugin\Symfony\Metadata;
 
-use Ladybug\Metadata;
+use Ladybug\Plugin\Symfony\Metadata;
 
 class SymfonyMetadataTest extends \PHPUnit_Framework_TestCase
 {

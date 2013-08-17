@@ -71,7 +71,7 @@ class SizeType extends BaseType
         return 'size';
     }
 
-    public function load($var)
+    public function load($var, $level = 1)
     {
         $this->sizes[self::UNIT_BYTE] = 1;
         $this->sizes[self::UNIT_KB] = $this->sizes[self::UNIT_BYTE] * 1024;
