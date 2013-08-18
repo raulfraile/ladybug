@@ -19,11 +19,16 @@ use Ladybug\Format;
 
 class ModernTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterface
 {
-
+    /**
+     * Gets the theme name
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'Modern';
     }
+
 
     public function getParent()
     {

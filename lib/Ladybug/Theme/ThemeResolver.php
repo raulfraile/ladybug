@@ -40,6 +40,7 @@ class ThemeResolver
      * Adds a theme.
      *
      * @param ThemeInterface $theme A ThemeInterface instance
+     * @param $key
      */
     public function addTheme(ThemeInterface $theme, $key)
     {
@@ -47,15 +48,15 @@ class ThemeResolver
     }
 
     /**
-     * Returns a theme able to render in the given format
+     * Returns a theme able to render in the given format.
      * @param string $format Format
      *
-     * @return ThemeInterface|false A ThemeInterface instance
+     * @return ThemeInterface|bool A ThemeInterface instance
      */
     public function resolve($format)
     {
         foreach ($this->themes as $theme) {
-            if (in_array($format, $theme->getFormats())) {
+            if ($this->supportsFormat($theme, $format)) {
                 return $theme;
             }
         }
@@ -69,7 +70,7 @@ class ThemeResolver
         $theme = $this->themes['theme_' . $key];
 
         while (!is_null($theme)) {
-            if ($theme->supportsFormat($format)) {
+            if ($this->supportsFormat($theme, $format)) {
                 return $theme;
             }
 
@@ -82,5 +83,10 @@ class ThemeResolver
 
         }
 
+    }
+
+    protected function supportsFormat(ThemeInterface $theme, $format)
+    {
+        return in_array($format, $theme->getFormats());
     }
 }

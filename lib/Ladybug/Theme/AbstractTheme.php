@@ -16,9 +16,4 @@ use Ladybug\Format\FormatInterface;
 abstract class AbstractTheme implements ThemeInterface
 {
 
-    public function supportsFormat(FormatInterface $format)
-    {
-        return in_array($format->getName(), static::getFormats());
-    }
-
 }

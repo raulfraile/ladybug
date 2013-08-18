@@ -41,6 +41,4 @@ interface ThemeInterface
      * @return array
      */
     public function getFormats();
-
-    public function supportsFormat(FormatInterface $format);
 }
