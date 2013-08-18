@@ -1,7 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ladybug\Render;
 
+/**
+ * RenderInterface is the interface implemented by all render classes
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 interface RenderInterface
 {
 

@@ -1,10 +1,9 @@
 <?php
+
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * ProcessorInterface
- *
- * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,6 +11,11 @@
 
 namespace Ladybug\Metadata;
 
+/**
+ * MetadataInterface is the interface implemented by all metadata classes
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 interface MetadataInterface
 {
 
@@ -19,13 +23,22 @@ interface MetadataInterface
     const TYPE_RESOURCE = 1;
 
     /**
-     * Process the HTML code and make the proper changes
+     * Gets metadata for an object/resource identifier
+     * @param string $id   Identifier
+     * @param int    $type Type
      *
-     * @param  string $str html code
-     * @return string modified html code
+     * @return array
      */
     public function getMetadata($id, $type = self::TYPE_CLASS);
 
+
+    /**
+     * Returns true if the class accepts the object/resource identifier
+     * @param string $id   Identifier
+     * @param int    $type Type
+     *
+     * @return boolean
+     */
     public function hasMetadata($id, $type = self::TYPE_CLASS);
 
 }

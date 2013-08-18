@@ -1,33 +1,29 @@
 <?php
 
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ladybug\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class EnvironmentCompilerPass implements CompilerPassInterface
+/**
+ * EnvironmentCompilerPass modifies the container registering environments
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class EnvironmentCompilerPass extends AbstractCompilerPass
 {
     public function process(ContainerBuilder $container)
     {
-
-        if (!$container->hasDefinition('environment_resolver')) {
-            return;
-        }
-
-        $definition = $container->getDefinition(
-            'environment_resolver'
-        );
-
-        $taggedServices = $container->findTaggedServiceIds(
-            'ladybug.environment'
-        );
-
-        foreach ($taggedServices as $id => $attributes) {
-            $definition->addMethodCall(
-                'register',
-                array(new Reference($id))
-            );
-        }
+        $this->processTaggedServices($container, 'environment_resolver', self::TAG_ENVIRONMENT, 'register');
     }
 }

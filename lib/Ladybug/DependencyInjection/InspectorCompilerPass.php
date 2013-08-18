@@ -1,34 +1,29 @@
 <?php
 
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ladybug\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class InspectorCompilerPass implements CompilerPassInterface
+/**
+ * InspectorCompilerPass modifies the container registering inspectors
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class InspectorCompilerPass extends AbstractCompilerPass
 {
     public function process(ContainerBuilder $container)
     {
-
-        if (!$container->hasDefinition('inspector_manager')) {
-            return;
-        }
-
-        $definition = $container->getDefinition(
-            'inspector_manager'
-        );
-
-        $taggedServices = $container->findTaggedServiceIds(
-            'ladybug.inspector'
-        );
-
-        foreach ($taggedServices as $id => $attributes) {
-
-            $definition->addMethodCall(
-                'add',
-                array(new Reference($id), $id)
-            );
-        }
+        $this->processTaggedServices($container, 'inspector_manager', self::TAG_INSPECTOR, 'add');
     }
 }

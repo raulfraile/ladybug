@@ -1,10 +1,9 @@
 <?php
+
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * Type/AbstractType: Base type
- *
- * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,22 +15,41 @@ use Ladybug\Theme\AbstractTheme;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Theme\CliThemeInterface;
-
 use Ladybug\Format;
 
-class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterface, CliThemeInterface
+/**
+ * Base theme class
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInterface
 {
 
+    /**
+     * Gets the theme name
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'Base';
     }
 
+    /**
+     * Gets the theme parent
+     *
+     * @return string
+     */
     public function getParent()
     {
         return null;
     }
 
+    /**
+     * Gets CLI colors
+     *
+     * @return array
+     */
     public function getCliColors()
     {
         return array(
@@ -43,18 +61,28 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
             't_object' => 'cyan',
             't_resource' => 'cyan',
             't_array_block' => array('white', 'magenta'),
-            'v_public' => 'green',// array('white', 'green'),
-            'v_protected' => 'yellow',// array('white', 'yellow'),
-            'v_private' => 'red',// array('white', 'red'),
+            'v_public' => 'green',
+            'v_protected' => 'yellow',
+            'v_private' => 'red',
             'f_tab' => 'white'
         );
     }
 
+    /**
+     * Gets CLI dependencies
+     *
+     * @return array
+     */
     public function getCliTags()
     {
-        // TODO: Implement getCliTags() method.
+        return array();
     }
 
+    /**
+     * Gets CSS dependencies
+     *
+     * @return array
+     */
     public function getHtmlCssDependencies()
     {
         return array(
@@ -62,11 +90,21 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
         );
     }
 
+    /**
+     * Gets JS dependencies
+     *
+     * @return array
+     */
     public function getHtmlJsDependencies()
     {
         return array();
     }
 
+    /**
+     * Gets supported formats
+     *
+     * @return array
+     */
     public function getFormats()
     {
         return array(
@@ -78,11 +116,6 @@ class BaseTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterf
             Format\YamlFormat::FORMAT_NAME,
             Format\PhpFormat::FORMAT_NAME
         );
-    }
-
-    public function buildResources()
-    {
-
     }
 
 }

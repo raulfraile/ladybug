@@ -70,7 +70,7 @@ class ThemeResolver
         $theme = $this->themes['theme_' . $key];
 
         while (!is_null($theme)) {
-            if ($this->supportsFormat($theme, $format)) {
+            if ($this->supportsFormat($theme, $format->getName())) {
                 return $theme;
             }
 

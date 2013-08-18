@@ -1,50 +1,30 @@
 <?php
 
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ladybug\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class TypeCompilerPass implements CompilerPassInterface
+/**
+ * TypeCompilerPass modifies the container registering types
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class TypeCompilerPass extends AbstractCompilerPass
 {
     public function process(ContainerBuilder $container)
     {
-
-        if (!$container->hasDefinition('type_factory')) {
-            return;
-        }
-
-        $definition = $container->getDefinition(
-            'type_factory'
-        );
-
-        $taggedServices = $container->findTaggedServiceIds(
-            'ladybug.type'
-        );
-
-        foreach ($taggedServices as $id => $attributes) {
-            $definition->addMethodCall(
-                'add',
-                array(new Reference($id), $id)
-            );
-        }
-
-        // extended types
-
-        $definition = $container->getDefinition(
-            'type_extended_factory'
-        );
-
-        $taggedServices = $container->findTaggedServiceIds(
-            'ladybug.type.extended'
-        );
-
-        foreach ($taggedServices as $id => $attributes) {
-            $definition->addMethodCall(
-                'add',
-                array(new Reference($id), $id)
-            );
-        }
+        $this->processTaggedServices($container, 'type_factory', self::TAG_TYPE, 'add');
+        $this->processTaggedServices($container, 'type_extended_factory', self::TAG_TYPE_EXTENDED, 'add');
     }
 }

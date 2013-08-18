@@ -1,33 +1,29 @@
 <?php
 
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ladybug\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class ThemeCompilerPass implements CompilerPassInterface
+/**
+ * ThemeCompilerPass modifies the container registering themes
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class ThemeCompilerPass extends AbstractCompilerPass
 {
     public function process(ContainerBuilder $container)
     {
-
-        if (!$container->hasDefinition('theme_resolver')) {
-            return;
-        }
-
-        $definition = $container->getDefinition(
-            'theme_resolver'
-        );
-
-        $taggedServices = $container->findTaggedServiceIds(
-            'ladybug.theme'
-        );
-
-        foreach ($taggedServices as $id => $attributes) {
-            $definition->addMethodCall(
-                'addTheme',
-                array(new Reference($id), $id)
-            );
-        }
+        $this->processTaggedServices($container, 'theme_resolver', self::TAG_THEME, 'addTheme');
     }
 }

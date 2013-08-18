@@ -1,10 +1,9 @@
 <?php
+
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * Type/AbstractType: Base type
- *
- * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,19 +16,39 @@ use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Format;
 
-class ClassicTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInterface
+/**
+ * Classic theme class
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class ClassicTheme extends AbstractTheme implements HtmlThemeInterface
 {
 
+    /**
+     * Gets the theme name
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'Classic';
     }
 
+    /**
+     * Gets the theme parent
+     *
+     * @return string
+     */
     public function getParent()
     {
         return 'Base';
     }
 
+    /**
+     * Gets CSS dependencies
+     *
+     * @return array
+     */
     public function getHtmlCssDependencies()
     {
         return array(
@@ -37,11 +56,21 @@ class ClassicTheme extends AbstractTheme implements ThemeInterface, HtmlThemeInt
         );
     }
 
+    /**
+     * Gets JS dependencies
+     *
+     * @return array
+     */
     public function getHtmlJsDependencies()
     {
         return array();
     }
 
+    /**
+     * Gets supported formats
+     *
+     * @return array
+     */
     public function getFormats()
     {
         return array(
