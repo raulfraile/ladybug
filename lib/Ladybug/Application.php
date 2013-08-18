@@ -1,31 +1,51 @@
 <?php
-    /*
-    * Ladybug: Simple and Extensible PHP Dumper
-    *
-    * Application container
-    *
-    * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
-    *
-    * For the full copyright and license information, please view the LICENSE
-    * file that was distributed with this source code.
-    */
+
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Ladybug;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
-
 use Ladybug\DependencyInjection;
-use Ladybug\Extension\PluginInterface;
+use Ladybug\Plugin\PluginInterface;
 
+/**
+ * Application container
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Application
 {
 
     /** @var ContainerBuilder $container */
     public $container;
 
+    /**
+     * Build container
+     * @param array $parameters
+     * @param array $plugins
+     */
     public function build($parameters = array(), $plugins = array())
+    {
+        $this->initializeContainer();
+        $this->loadServices();
+        $this->loadPlugins($plugins);
+        $this->setParameters($parameters);
+        $this->container->compile();
+    }
+
+    /**
+     * Initialize container
+     */
+    protected function initializeContainer()
     {
         $this->container = new ContainerBuilder();
 
@@ -36,11 +56,24 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\RenderCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
+    }
 
+    /**
+     * Load services
+     */
+    protected function loadServices()
+    {
         $loader = new Loader\XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
         $loader->load('container.xml');
+    }
 
-        // load plugins
+    /**
+     * Load plugins
+     * @param array $plugins
+     * @throws \Exception
+     */
+    protected function loadPlugins(array $plugins = array())
+    {
         foreach ($plugins as $plugin) {
             /** @var PluginInterface $plugin */
             $file = $plugin->getConfigFile();
@@ -67,13 +100,17 @@ class Application
 
             $loader->load($filename . '.' . $extension);
         }
+    }
 
-        // override parameters
+    /**
+     * Set parameters
+     * @param array $parameters
+     */
+    protected function setParameters(array $parameters = array())
+    {
         foreach ($parameters as $parameterKey => $parameterValue) {
             $this->container->setParameter($parameterKey, $parameterValue);
         }
-
-        $this->container->compile();
     }
 
 }

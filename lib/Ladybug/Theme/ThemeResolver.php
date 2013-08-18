@@ -1,51 +1,66 @@
 <?php
 
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Ladybug\Theme;
 
 use Ladybug\Format\FormatInterface;
 
+/**
+ * ThemeResolver selects a theme for a given format.
+ *
+ * Each theme determines whether it can load a format.
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class ThemeResolver
 {
 
-    /** @var array $themes */
+    /** @var ThemeInterface[] An array of ThemeInterface objects */
     protected $themes;
 
-    protected $defaultTheme;
-
-    public function __construct()
+    /**
+     * Constructor.
+     *
+     * @param ThemeInterface[] $themes An array of themes
+     */
+    public function __construct(array $themes = array())
     {
-        $this->themes = array();
-
+        $this->themes = $themes;
     }
 
     /**
-     * Registers a new environment
+     * Adds a theme.
      *
-     * When resolving, this environment is preferred over previously registered ones.
-     *
-     * @param ThemeInterface $theme
+     * @param ThemeInterface $theme A ThemeInterface instance
      */
-    public function register(ThemeInterface $theme, $key)
+    public function addTheme(ThemeInterface $theme, $key)
     {
         $this->themes[$key] = $theme;
     }
 
     /**
-     * Resolve theme
+     * Returns a theme able to render in the given format
+     * @param string $format Format
      *
-     * @return ThemeInterface
+     * @return ThemeInterface|false A ThemeInterface instance
      */
     public function resolve($format)
     {
         foreach ($this->themes as $theme) {
-            /** @var $theme ThemeInterface */
-
             if (in_array($format, $theme->getFormats())) {
                 return $theme;
             }
         }
 
-        throw new \Exception('');
+        return false;
     }
 
     public function getTheme($key, FormatInterface $format)

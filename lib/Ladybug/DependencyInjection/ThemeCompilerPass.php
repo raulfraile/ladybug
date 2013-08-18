@@ -25,7 +25,7 @@ class ThemeCompilerPass implements CompilerPassInterface
 
         foreach ($taggedServices as $id => $attributes) {
             $definition->addMethodCall(
-                'register',
+                'addTheme',
                 array(new Reference($id), $id)
             );
         }

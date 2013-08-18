@@ -1,9 +1,9 @@
 <?php
 
 /*
- * Ladybug: PHP 5.3+ Extensible Dumper
+ * This file is part of the Ladybug package.
  *
- * @author Raul Fraile <raulfraile@gmail.com>
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,6 +20,11 @@ use Ladybug\Application;
 use Ladybug\Format\FormatResolver;
 use Ladybug\Plugin\PluginInterface;
 
+/**
+ * Main Ladybug class
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 class Dumper
 {
     const LEVEL_INIT = 1;
@@ -50,8 +55,9 @@ class Dumper
      */
     public function __construct()
     {
-        $this->options = array();
         $this->isApplicationInitialized = false;
+
+        $this->options = array();
         $this->plugins = array();
 
         $this->initializeNodes();
@@ -114,7 +120,7 @@ class Dumper
 
     /**
      * Read variables and fill nodes with TypeInterface objects
-     * @param array $variables variables to dump
+     * @param array $variables Variables to dump
      */
     protected function readVariables($variables)
     {
@@ -194,43 +200,83 @@ class Dumper
         return $render;
     }
 
+    /**
+     * Set theme
+     * @param string $theme
+     */
     public function setTheme($theme)
     {
         $this->setOption('theme', $theme);
     }
 
+    /**
+     * Get theme
+     *
+     * @return string
+     */
     public function getTheme()
     {
         return $this->getOption('theme', 'base');
     }
 
+    /**
+     * Set format
+     * @param string $format
+     */
     public function setFormat($format)
     {
         $this->setOption('format', $format);
     }
 
+    /**
+     * Get format
+     *
+     * @return string
+     */
     public function getFormat()
     {
         return $this->getOption('format');
     }
 
+    /**
+     * Set option
+     * @param string $name  Option name
+     * @param mixed  $value Option value
+     */
     public function setOption($name, $value)
     {
         $this->options[$name] = $value;
     }
 
+    /**
+     * Get option
+     * @param string $name    Option name
+     * @param mixed  $default Default value
+     *
+     * @return mixed
+     */
     public function getOption($name, $default = null)
     {
         return array_key_exists($name, $this->options) ? $this->options[$name] : $default;
     }
 
+    /**
+     * Set options
+     * @param array $options
+     */
     public function setOptions(array $options)
     {
+        $this->options = array();
+
         foreach ($options as $name => $value) {
             $this->setOption($name, $value);
         }
     }
 
+    /**
+     * Register a new plugin
+     * @param Plugin\PluginInterface $plugin
+     */
     public function registerPlugin(PluginInterface $plugin)
     {
         $this->plugins[] = $plugin;
