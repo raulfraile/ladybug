@@ -13,8 +13,6 @@
 
 namespace Ladybug\Inspector;
 
-use Ladybug\Exception\InvalidTypeException;
-
 class InspectorFactory
 {
 
