@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-Ladybug\Loader::loadHelpers();
 
 $var = 15;
 

@@ -13,43 +13,41 @@
 
 namespace Ladybug\Type;
 
-use Ladybug\Exception\InvalidTypeException;
-
 class FactoryType
 {
 
     /** @var array $types */
     protected $types;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->types = array();
     }
 
+    /**
+     * Add a type
+     * @param TypeInterface $type
+     * @param string        $key
+     */
     public function add(TypeInterface $type, $key = null)
     {
         $this->types[!is_null($key) ? $key : get_class($type)] = $type;
     }
 
     /**
-     * @param $var
-     * @param  int                                     $level
+     * @param mixed $var
+     * @param int   $level
+     *
      * @return TypeInterface
-     * @throws \Ladybug\Exception\InvalidTypeException
      */
     public function factory($var, $level = 1)
     {
         $result = null;
 
-        /*if ($var instanceof \Ladybug\Type\Extended\CollectionType) {
-            $data = array();
-            foreach ($var->getData() as $key => $item) {
-                $data[$key] = FactoryType::factory($item, $level);
-            }
-            $var->setProcessedData($data);
-
-            return $var;
-        } else*/if ($var === null) {
+        if (null === $var) {
             $result = clone($this->types['type_null']);
         } elseif (is_bool($var)) {
             $result = clone($this->types['type_bool']);

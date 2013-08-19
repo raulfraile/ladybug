@@ -11,8 +11,6 @@
 
 namespace Ladybug\Render;
 
-use Ladybug\Theme\ThemeInterface;
-
 class JsonRender extends AbstractRender implements RenderInterface
 {
 

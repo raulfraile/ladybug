@@ -11,8 +11,6 @@
 
 namespace Ladybug\Render;
 
-use Ladybug\Theme\ThemeInterface;
-
 class XmlRender extends AbstractRender implements RenderInterface
 {
 

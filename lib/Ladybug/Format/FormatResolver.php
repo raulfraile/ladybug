@@ -19,7 +19,10 @@ class FormatResolver
     /** @var array $formats */
     protected $formats;
 
-    public function __construct($defaultFormat = null)
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
         $this->formats = array();
     }
@@ -29,7 +32,8 @@ class FormatResolver
      *
      * When resolving, this environment is preferred over previously registered ones.
      *
-     * @param ThemeInterface $theme
+     * @param FormatInterface $format
+     * @param string          $key
      */
     public function register(FormatInterface $format, $key)
     {
@@ -38,8 +42,9 @@ class FormatResolver
 
     /**
      * Resolve theme
+     * @param $key
      *
-     * @return ThemeInterface
+     * @return FormatInterface
      */
     public function getFormat($key)
     {

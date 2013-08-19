@@ -14,7 +14,6 @@ namespace Ladybug\Inspector\Resource;
 
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Inspector\InspectorInterface;
-use Ladybug\Type;
 
 class Gd extends AbstractInspector
 {

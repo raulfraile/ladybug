@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-Ladybug\Loader::loadHelpers();
 
 $connection = mysql_connect('localhost', 'root', '123456');
 mysql_select_db('books', $connection);
