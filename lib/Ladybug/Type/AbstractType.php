@@ -1,10 +1,9 @@
 <?php
+
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * Type/AbstractType: Base type
- *
- * @author Raúl Fraile Beneyto <raulfraile@gmail.com> || @raulfraile
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -37,7 +36,7 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
     protected $length;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -56,7 +55,7 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
 
     /**
      * Set id
-     * @param $id
+     * @param string $id
      */
     public function setId($id)
     {
