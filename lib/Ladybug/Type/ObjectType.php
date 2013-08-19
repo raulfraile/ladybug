@@ -444,9 +444,6 @@ class ObjectType extends AbstractType
 
     protected function loadData($var, \ReflectionClass $reflectedObject)
     {
-        // is there a class to show the object data?
-        $service = 'inspector_object_'.str_replace('\\', '_', strtolower($this->className));
-
         $inspector = $this->inspectorManager->get($var, InspectorInterface::TYPE_CLASS);
         if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);

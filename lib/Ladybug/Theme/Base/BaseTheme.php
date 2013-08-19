@@ -12,7 +12,6 @@
 namespace Ladybug\Theme\Base;
 
 use Ladybug\Theme\AbstractTheme;
-use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Theme\CliThemeInterface;
 use Ladybug\Format;

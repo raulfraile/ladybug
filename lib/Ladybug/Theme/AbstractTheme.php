@@ -11,8 +11,6 @@
 
 namespace Ladybug\Theme;
 
-use Ladybug\Format\FormatInterface;
-
 abstract class AbstractTheme implements ThemeInterface
 {
 

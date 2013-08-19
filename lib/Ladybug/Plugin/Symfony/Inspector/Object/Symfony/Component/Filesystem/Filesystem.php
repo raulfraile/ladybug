@@ -12,7 +12,6 @@
 
 namespace Ladybug\Plugin\Symfony\Inspector\Object\Symfony\Component\Filesystem;
 
-use Ladybug\Dumper;
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Type;

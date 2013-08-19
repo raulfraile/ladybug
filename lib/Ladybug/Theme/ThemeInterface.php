@@ -11,8 +11,6 @@
 
 namespace Ladybug\Theme;
 
-use Ladybug\Format\FormatInterface;
-
 /**
  * ThemeInterface is the interface implemented by all theme classes.
  *

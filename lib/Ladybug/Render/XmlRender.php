@@ -25,9 +25,6 @@ class XmlRender extends AbstractRender implements RenderInterface
     {
         $this->load();
 
-        /** @var ThemeInterface $theme */
-        $theme = $this->theme;
-
         $serializer = \JMS\Serializer\SerializerBuilder::create()
             ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
             ->build();

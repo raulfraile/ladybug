@@ -129,10 +129,6 @@ class ResourceType extends AbstractType
 
     protected function loadData($var)
     {
-
-        // is there a class to show the object data?
-        $service = 'inspector_resource_'.str_replace(array('\\', ' '), '_', strtolower($this->resourceType));
-
         $inspector = $this->inspectorManager->get($var, InspectorInterface::TYPE_RESOURCE);
         if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
