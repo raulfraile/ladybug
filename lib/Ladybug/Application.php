@@ -16,6 +16,8 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
 use Ladybug\DependencyInjection;
 use Ladybug\Plugin\PluginInterface;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Application container
@@ -57,12 +59,19 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
 
+        $finder = new Finder();
+        $finder->in(__DIR__.'/../../data/themes/Ladybug/Theme')->files()->depth(1)->name('*Theme.php');
 
+        foreach ($finder as $file) {
+            /** @var SplFileInfo $file */
+            $themeName = preg_replace('/Theme\.php$/', '', $file->getFilename());
+            $themeClass = sprintf('Ladybug\\Theme\\%s\\%sTheme', $themeName, $themeName);
+            $themePath = dirname($file->getRealPath());
 
-        $this->container->register('theme_modern', 'Ladybug\\Theme\\Modern\\ModernTheme')
-            ->addArgument(__DIR__ . '/../../vendor/raulfraile/ladybug/data/themes/Ladybug/Theme/Modern')
-            ->addTag('ladybug.theme');
-
+            $this->container->register('theme_'.$themeName, $themeClass)
+                ->addArgument($themePath)
+                ->addTag('ladybug.theme');
+        }
 
     }
 

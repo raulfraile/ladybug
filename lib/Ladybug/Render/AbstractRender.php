@@ -85,7 +85,7 @@ abstract class AbstractRender implements RenderInterface
 
         // parent
         $parent = strtolower($this->theme->getParent());
-        
+
         if (!empty($parent)) {
 
             $parentTheme = $this->themeResolver->getTheme($parent, $this->format);

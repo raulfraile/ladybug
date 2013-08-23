@@ -35,7 +35,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Ladybug\\Theme": "vendor/raulfraile/ladybug/data/themes",
+            "Ladybug\\Theme": ["vendor/raulfraile/ladybug/data/themes", "data/themes"],
             "Ladybug": "lib/"
 
         },
