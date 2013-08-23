@@ -51,7 +51,7 @@ class ClassicTheme extends AbstractTheme implements HtmlThemeInterface
     public function getHtmlCssDependencies()
     {
         return array(
-            '@ClassicTheme/css/styles.css'
+            'css/styles.css'
         );
     }
 

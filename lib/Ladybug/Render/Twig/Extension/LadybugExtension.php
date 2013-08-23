@@ -111,7 +111,7 @@ class LadybugExtension extends Twig_Extension
 
     public function minifyCssFunction($filename)
     {
-        $filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../../../Theme/\\1/Resources/', $filename);
+        //$filename = preg_replace('/^@([A-Za-z]+)Theme\//', __DIR__ . '/../../../Theme/\\1/Resources/', $filename);
 
         $folder = pathinfo($filename, \PATHINFO_DIRNAME);
 

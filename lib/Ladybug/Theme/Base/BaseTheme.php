@@ -85,7 +85,7 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
     public function getHtmlCssDependencies()
     {
         return array(
-            '@BaseTheme/css/styles.css'
+            'css/styles.css'
         );
     }
 

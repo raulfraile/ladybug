@@ -39,4 +39,7 @@ interface ThemeInterface
      * @return array
      */
     public function getFormats();
+
+    public function getResourcesPath();
+    public function getTemplatesPath();
 }

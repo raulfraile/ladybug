@@ -56,6 +56,14 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\RenderCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
+
+
+
+        $this->container->register('theme_modern', 'Ladybug\\Theme\\Modern\\ModernTheme')
+            ->addArgument(__DIR__ . '/../../vendor/raulfraile/ladybug/data/themes/Ladybug/Theme/Modern')
+            ->addTag('ladybug.theme');
+
+
     }
 
     /**
@@ -65,6 +73,7 @@ class Application
     {
         $loader = new Loader\XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
         $loader->load('container.xml');
+
     }
 
     /**

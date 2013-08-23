@@ -7,26 +7,32 @@
     <services>
 
         <service id="render_html" class="Ladybug\Render\HtmlRender">
+            <argument type="service" id="theme_resolver" />
             <tag name="ladybug.render" />
         </service>
 
         <service id="render_console" class="Ladybug\Render\ConsoleRender">
+            <argument type="service" id="theme_resolver" />
             <tag name="ladybug.render" />
         </service>
 
         <service id="render_php" class="Ladybug\Render\PhpRender">
+            <argument type="service" id="theme_resolver" />
             <tag name="ladybug.render" />
         </service>
 
         <service id="render_text" class="Ladybug\Render\TextRender">
+            <argument type="service" id="theme_resolver" />
             <tag name="ladybug.render" />
         </service>
 
         <service id="render_json" class="Ladybug\Render\JsonRender">
+            <argument type="service" id="theme_resolver" />
             <tag name="ladybug.render" />
         </service>
 
         <service id="render_xml" class="Ladybug\Render\XmlRender">
+            <argument type="service" id="theme_resolver" />
             <tag name="ladybug.render" />
         </service>
 

@@ -13,19 +13,23 @@ namespace Ladybug\Render;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Ladybug\Theme\ThemeResolver;
 
 class ConsoleRender extends AbstractRender implements RenderInterface
 {
 
     protected $console;
 
-    public function __construct(\Symfony\Component\Console\Output\ConsoleOutputInterface $console = null)
+    public function __construct(ThemeResolver $themeResolver, ConsoleOutputInterface $console = null)
     {
         if (!is_null($console)) {
             $this->console = $console;
         } else {
             $this->console = new ConsoleOutput();
         }
+
+        parent::__construct($themeResolver);
     }
 
     protected function load()

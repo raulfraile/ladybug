@@ -22,7 +22,8 @@
         "symfony/config": ">=2.0.4",
         "twig/twig": ">=v1.7.0",
         "phpdocumentor/reflection-docblock": "2.0.0",
-        "jms/serializer": ">=0.11.0"
+        "jms/serializer": ">=0.11.0",
+        "raulfraile/ladybug-theme-modern": "dev-master"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "0.1.*@dev",
@@ -33,7 +34,12 @@
         "symfony/yaml": "Required to serialize data to YAML format"
     },
     "autoload": {
-        "psr-0": { "Ladybug": "lib/" },
+        "psr-0": {
+            "Ladybug\\Theme": "vendor/raulfraile/ladybug/data/themes",
+            "Ladybug": "lib/"
+
+        },
         "files": ["lib/Ladybug/helpers.php"]
-    }
+    },
+    "minimum-stability": "dev"
 }

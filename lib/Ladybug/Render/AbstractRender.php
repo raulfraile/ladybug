@@ -16,6 +16,7 @@ use Twig_Environment;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\LadybugExtension;
+use Ladybug\Theme\ThemeResolver;
 
 abstract class AbstractRender implements RenderInterface
 {
@@ -30,6 +31,13 @@ abstract class AbstractRender implements RenderInterface
     protected $format;
 
     protected $isLoaded = false;
+
+    protected $themeResolver;
+
+    public function __construct(ThemeResolver $themeResolver)
+    {
+        $this->themeResolver = $themeResolver;
+    }
 
     protected function load()
     {
@@ -63,23 +71,26 @@ abstract class AbstractRender implements RenderInterface
     {
         $paths = array();
 
-        $templatesDir = __DIR__ . '/../Theme/' . $this->theme->getName() . '/View/'.ucfirst($this->format->getName()).'/';
-
+        $templatesDir = $this->theme->getTemplatesPath() . ucfirst($this->format->getName()) . '/';
         if (file_exists($templatesDir)) {
             $paths[] = $templatesDir;
         }
 
         // extension templates
-        $extensionsDir = __DIR__ . '/../Theme/' . $this->theme->getName() . '/View/'.ucfirst($this->format->getName()).'/Extension';
+        $extensionsDir = $templatesDir . 'Extension/';
 
         if (file_exists($extensionsDir)) {
             $paths[] = $extensionsDir;
         }
 
         // parent
-        $parent = $this->theme->getParent();
+        $parent = strtolower($this->theme->getParent());
         if (!is_null($parent)) {
-            $templatesDir = __DIR__ . '/../Theme/' . $parent . '/View/'.ucfirst($this->format->getName()).'/';
+
+            $parentTheme = $this->themeResolver->getTheme($parent, $this->format);
+
+            $templatesDir = $parentTheme->getTemplatesPath() . ucfirst($this->format->getName()) . '/';
+
             if (file_exists($templatesDir)) {
                 $paths[] = $templatesDir;
             }
@@ -123,6 +134,15 @@ abstract class AbstractRender implements RenderInterface
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    protected function prefixResourcesPath(array $files)
+    {
+        $resourcesPath = $this->theme->getResourcesPath();
+
+        return array_map(function ($path) use ($resourcesPath) {
+            return $resourcesPath.$path;
+        }, $files);
     }
 
 }
