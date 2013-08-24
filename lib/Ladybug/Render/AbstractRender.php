@@ -17,6 +17,7 @@ use Ladybug\Theme\ThemeInterface;
 use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\LadybugExtension;
 use Ladybug\Theme\ThemeResolver;
+use JMS\Serializer\Serializer;
 
 abstract class AbstractRender implements RenderInterface
 {
@@ -34,9 +35,12 @@ abstract class AbstractRender implements RenderInterface
 
     protected $themeResolver;
 
+    protected $serializer;
+
     public function __construct(ThemeResolver $themeResolver)
     {
         $this->themeResolver = $themeResolver;
+        $this->serializer = null;
     }
 
     protected function load()
@@ -144,6 +148,22 @@ abstract class AbstractRender implements RenderInterface
         return array_map(function ($path) use ($resourcesPath) {
             return $resourcesPath.$path;
         }, $files);
+    }
+
+    /**
+     * Gets serializer
+     *
+     * @return Serializer
+     */
+    protected function getSerializer()
+    {
+        if (is_null($this->serializer)) {
+            $this->serializer = \JMS\Serializer\SerializerBuilder::create()
+                ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
+                ->build();
+        }
+
+        return $this->serializer;
     }
 
 }

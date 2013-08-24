@@ -23,11 +23,6 @@ class XmlRender extends AbstractRender implements RenderInterface
     {
         $this->load();
 
-        $serializer = \JMS\Serializer\SerializerBuilder::create()
-            ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
-            ->build();
-
-        return $serializer->serialize($nodes, 'xml');
-
+        return $this->getSerializer()->serialize($nodes, $this->getFormat());
     }
 }
