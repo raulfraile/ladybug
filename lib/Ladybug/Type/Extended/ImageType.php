@@ -72,11 +72,16 @@ class ImageType extends AbstractType
      */
     public function setImage($image)
     {
-        $this->data = base64_encode($image);
+        $this->image = base64_encode($image);
 
         // create temp file
         $this->tempPath = sys_get_temp_dir() . '/' . uniqid('ladybug_');
         file_put_contents($this->tempPath, $image);
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**
