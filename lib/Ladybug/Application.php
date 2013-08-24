@@ -59,19 +59,29 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
 
-        $finder = new Finder();
-        $finder->in(__DIR__.'/../../data/themes/Ladybug/Theme')->files()->depth(1)->name('*Theme.php');
+        $themesDirs = array(
+            __DIR__.'/../../data/themes/Ladybug/Theme',
+            __DIR__.'/../../../ladybug-themes/Ladybug/Theme'
+        );
 
-        foreach ($finder as $file) {
-            /** @var SplFileInfo $file */
-            $themeName = preg_replace('/Theme\.php$/', '', $file->getFilename());
-            $themeClass = sprintf('Ladybug\\Theme\\%s\\%sTheme', $themeName, $themeName);
-            $themePath = dirname($file->getRealPath());
+        foreach ($themesDirs as $dir) {
+            if (is_dir($dir)) {
+                $finder = new Finder();
+                $finder->in($dir)->files()->depth(1)->name('*Theme.php');
 
-            $this->container->register('theme_'.$themeName, $themeClass)
-                ->addArgument($themePath)
-                ->addTag('ladybug.theme');
+                foreach ($finder as $file) {
+                    /** @var SplFileInfo $file */
+                    $themeName = preg_replace('/Theme\.php$/', '', $file->getFilename());
+                    $themeClass = sprintf('Ladybug\\Theme\\%s\\%sTheme', $themeName, $themeName);
+                    $themePath = dirname($file->getRealPath());
+
+                    $this->container->register('theme_'.$themeName, $themeClass)
+                        ->addArgument($themePath)
+                        ->addTag('ladybug.theme');
+                }
+            }
         }
+
 
     }
 
