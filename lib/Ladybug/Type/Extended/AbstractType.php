@@ -13,7 +13,7 @@ namespace Ladybug\Type\Extended;
 
 use Ladybug\Type\RenderizableTypeInterface;
 
-abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterface
+abstract class AbstractType implements ExtendedTypeInterface, RenderizableTypeInterface
 {
 
     const TYPE_ID = 'base';
@@ -21,8 +21,6 @@ abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterf
     protected $id;
 
     protected $key;
-
-    protected $data;
 
     protected $level;
 
@@ -34,16 +32,6 @@ abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterf
     public function __construct()
     {
         $this->id = uniqid('ext_' . static::TYPE_ID . '_');
-    }
-
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
-    public function getData()
-    {
-        return $this->data;
     }
 
     public function getId()
@@ -68,6 +56,11 @@ abstract class BaseType implements ExtendedTypeInterface, RenderizableTypeInterf
         return $this->key;
     }
 
+    /**
+     * Gets template name
+     *
+     * @return string
+     */
     public function getTemplateName()
     {
         return static::TYPE_ID;

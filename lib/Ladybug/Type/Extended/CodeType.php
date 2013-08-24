@@ -11,7 +11,7 @@
 
 namespace Ladybug\Type\Extended;
 
-class CodeType extends BaseType
+class CodeType extends AbstractType
 {
 
     const TYPE_ID = 'code';
@@ -24,34 +24,48 @@ class CodeType extends BaseType
     const MIMETYPE_PHP = 'application/x-httpd-php-open';
     const MIMETYPE_SCALA = 'text/x-scala';
 
-    protected $mimetypeMap = array(
-        //'text/x-php' => self::MIMETYPE_PHP
-    );
+    /** @var string $content */
+    protected $content;
 
+    /** @var string $language */
     protected $language;
 
+    /**
+     * Sets code content
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Gets code content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Sets code language
+     * @param string $language
+     */
     public function setLanguage($language)
     {
-        if (array_key_exists($language, $this->mimetypeMap)) {
-            $language = $this->mimetypeMap[$language];
-        }
-
         $this->language = $language;
     }
 
+    /**
+     * Gets code language
+     *
+     * @return string
+     */
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    public function getTemplateName()
-    {
-        return 'code';
-    }
-
-    public function load($var, $level = 1)
-    {
-
     }
 
 }

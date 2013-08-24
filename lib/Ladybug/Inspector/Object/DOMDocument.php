@@ -39,7 +39,7 @@ class DOMDocument extends AbstractInspector
         $code = $this->extendedTypeFactory->factory('code', $this->level);
 
         $code->setLanguage('xml');
-        $code->setData($xml);
+        $code->setContent($xml);
         $code->setKey('Code');
         $code->setTitle('XML');
 

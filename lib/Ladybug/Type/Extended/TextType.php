@@ -11,16 +11,15 @@
 
 namespace Ladybug\Type\Extended;
 
-class TextType extends BaseType
+class TextType extends AbstractType
 {
 
     const TYPE_ID = 'text';
 
-    public function getTemplateName()
-    {
-        return static::TYPE_ID;
-    }
+    protected $text;
 
+    
+/*
     public function load($var, $key = null)
     {
         $this->data = $var;
@@ -34,11 +33,16 @@ class TextType extends BaseType
         $object->setLevel($level);
 
         return $object;
-    }
+    }*/
 
     public function setText($text)
     {
-        $this->data = $text;
+        $this->text = $text;
+    }
+
+    public function getText()
+    {
+        return $this->text;
     }
 
 }

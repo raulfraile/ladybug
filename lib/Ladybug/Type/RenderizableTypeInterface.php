@@ -13,6 +13,11 @@ namespace Ladybug\Type;
 
 interface RenderizableTypeInterface
 {
+
+    /**
+     * Gets template name
+     * @return string
+     */
     public function getTemplateName();
 
     /**

@@ -11,20 +11,17 @@
 
 namespace Ladybug\Type\Extended;
 
-class ContainerType extends BaseType
+class ContainerType extends AbstractType
 {
     const TYPE_ID = 'container';
 
-    public function load($var, $level = 1)
-    {
-
-    }
+    protected $data;
 
     public function setData($data)
     {
         $data->setLevel($this->level + 1);
 
-        parent::setData($data);
+        $this->data = $data;
     }
 
 }

@@ -29,11 +29,12 @@ class MysqlLink extends AbstractInspector
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 
-        $collection = Type\Extended\CollectionType::create(array(
-            Type\Extended\TextType::create(mysql_get_host_info($var), 'Host info', $this->level + 1),
-            Type\Extended\TextType::create(mysql_get_proto_info($var), 'Protocol version', $this->level + 1),
-            Type\Extended\TextType::create(mysql_get_server_info($var), 'Server version', $this->level + 1)
-        ));
+        /** @var $collection Type\Extended\CollectionType */
+        $collection = $this->extendedTypeFactory->factory('collection', $this->level);
+
+        $collection->add($this->createTextType(mysql_get_host_info($var), 'Host info'));
+        $collection->add($this->createTextType(mysql_get_proto_info($var), 'Protocol version'));
+        $collection->add($this->createTextType(mysql_get_server_info($var), 'Server version'));
 
         $collection->setTitle('MySQL connection');
         $collection->setLevel($this->level);

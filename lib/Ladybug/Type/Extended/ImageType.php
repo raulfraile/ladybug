@@ -11,50 +11,65 @@
 
 namespace Ladybug\Type\Extended;
 
-class ImageType extends BaseType
+class ImageType extends AbstractType
 {
 
     const TYPE_ID = 'image';
 
+    /** @var int $width */
     protected $width;
+
+    /** @var int height */
     protected $height;
 
+    /** @var string $tempPath */
     protected $tempPath;
 
+    /** @var string $image */
+    protected $image;
+
+    /**
+     * Sets image height.
+     * @param $height
+     */
     public function setHeight($height)
     {
         $this->height = $height;
     }
 
+    /**
+     * Gets image height.
+     *
+     * @return int
+     */
     public function getHeight()
     {
         return $this->height;
     }
 
+    /**
+     * Sets image width.
+     * @param int $width
+     */
     public function setWidth($width)
     {
         $this->width = $width;
     }
 
+    /**
+     * Gets image width
+     *
+     * @return int
+     */
     public function getWidth()
     {
         return $this->width;
     }
 
-    public function load($var, $key = null)
-    {
-        $this->data = base64_encode($var);
-        $this->key = $key;
-    }
-
-    public static function create($var, $key = null)
-    {
-        $object = new static();
-        $object->load($var, $key);
-
-        return $object;
-    }
-
+    /**
+     * Sets image content
+     * @param $image
+     */
     public function setImage($image)
     {
         $this->data = base64_encode($image);
@@ -64,6 +79,11 @@ class ImageType extends BaseType
         file_put_contents($this->tempPath, $image);
     }
 
+    /**
+     * Gets image temporary path.
+     *
+     * @return string
+     */
     public function getTempPath()
     {
         return $this->tempPath;

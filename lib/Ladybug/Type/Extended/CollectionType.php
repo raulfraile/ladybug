@@ -11,40 +11,32 @@
 
 namespace Ladybug\Type\Extended;
 
-class CollectionType extends BaseType implements \Countable
+class CollectionType extends AbstractType implements \Countable
 {
 
     const TYPE_ID = 'collection';
 
-    protected $processedData;
-
+    /**
+     *
+     * @var array
+     */
     protected $items;
 
-    protected $length;
-
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         parent::__construct();
 
         $this->items = array();
-        $this->length = 0;
     }
 
-    public function setProcessedData($processedData)
-    {
-        $this->processedData = $processedData;
-    }
-
-    public function getProcessedData()
-    {
-        return $this->processedData;
-    }
-
-    public function getTemplateName()
-    {
-        return 'collection';
-    }
-
+    /**
+     * Loads collection values from the given array
+     * @param array $data
+     * @param bool $useKeys
+     */
     public function loadFromArray(array $data, $useKeys = true)
     {
         $this->items = array();
@@ -52,40 +44,30 @@ class CollectionType extends BaseType implements \Countable
         foreach ($data as $key => $item) {
             $this->items[] = $item;
         }
-
-        $this->length = count($this->items);
     }
 
-    public function load($var, $key = null)
-    {
-        $this->items = array();
-
-        foreach ($var as $key => $item) {
-            $this->items[] = $item;
-        }
-
-        $this->length = count($this->items);
-    }
-
+    /**
+     * Adds a new value to the collection.
+     * @param mixed $value
+     */
     public function add($value)
     {
         $this->items[] = $value;
-        $this->length++;
     }
 
-    public static function create(array $var, $key = null)
-    {
-        $object = new static();
-        $object->load($var, $key);
-
-        return $object;
-    }
-
+    /**
+     * Counts elements of the collection
+     * @return int
+     */
     public function count()
     {
         return count($this->items);
     }
 
+    /**
+     * Sets level
+     * @param int $level
+     */
     public function setLevel($level)
     {
         parent::setLevel($level);
@@ -108,11 +90,6 @@ class CollectionType extends BaseType implements \Countable
     public function isComposed()
     {
         return true;
-    }
-
-    public function getLength()
-    {
-        return $this->length;
     }
 
 }

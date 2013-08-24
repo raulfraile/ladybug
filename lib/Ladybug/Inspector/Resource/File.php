@@ -51,7 +51,7 @@ class File extends AbstractInspector
         /** @var $mode Type\Extended\UnixPermissionsType */
         $mode = $this->extendedTypeFactory->factory('unixpermissions', $this->level);
         $mode->setKey('Permissions');
-        $mode->load($fstat['mode']);
+        $mode->setData($fstat['mode']);
         $result['mode'] = $mode;
 
         /** @var $size Type\Extended\SizeType */
@@ -69,7 +69,7 @@ class File extends AbstractInspector
         if ($this->isText($mimetype)) {
             /** @var $fileContent Type\Extended\CodeType */
             $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
-            $fileContent->setData(file_get_contents($realPath));
+            $fileContent->setContent(file_get_contents($realPath));
             //$fileContent->setKey('Content');
             $fileContent->setLanguage($mimetype);
             $fileContent->setTitle('Contents');

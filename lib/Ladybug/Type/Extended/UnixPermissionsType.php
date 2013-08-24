@@ -11,10 +11,12 @@
 
 namespace Ladybug\Type\Extended;
 
-class UnixPermissionsType extends BaseType
+class UnixPermissionsType extends AbstractType
 {
 
     const TYPE_ID = 'unix_permissions';
+
+    protected $data;
 
     public function getFormattedValue()
     {
@@ -35,14 +37,14 @@ class UnixPermissionsType extends BaseType
         return $result;
     }
 
-    public function getTemplateName()
+    public function setData($data)
     {
-        return 'unix_permissions';
+        $this->data = $data;
     }
 
-    public function load($var, $level = 1)
+    public function getData()
     {
-        $this->data = $var;
+        return $this->data;
     }
 
 }

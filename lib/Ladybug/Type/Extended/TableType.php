@@ -11,7 +11,7 @@
 
 namespace Ladybug\Type\Extended;
 
-class TableType extends BaseType
+class TableType extends AbstractType
 {
 
     const TYPE_ID = 'table';
@@ -30,36 +30,32 @@ class TableType extends BaseType
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->headers = array();
         $this->rows = array();
         $this->columnMaxWidth = array();
         $this->title = '';
     }
 
+    /**
+     * Sets table headers.
+     * @param $header
+     */
     public function setHeaders($header)
     {
         $this->headers = array_values($header);
         $this->updateColumnMaxWidth();
     }
 
+    /**
+     * Gets headers.
+     *
+     * @return array
+     */
     public function getHeaders()
     {
         return $this->headers;
-    }
-
-    public function load($var, $key = null)
-    {
-        $this->data = $var;
-        $this->key = $key;
-
-    }
-
-    public static function create($var, $key = null)
-    {
-        $object = new static();
-        $object->load($var, $key);
-
-        return $object;
     }
 
     public function getColumnsNumber()

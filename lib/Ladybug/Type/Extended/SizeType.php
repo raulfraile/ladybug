@@ -11,7 +11,7 @@
 
 namespace Ladybug\Type\Extended;
 
-class SizeType extends BaseType
+class SizeType extends AbstractType
 {
 
     const TYPE_ID = 'size';
@@ -31,6 +31,8 @@ class SizeType extends BaseType
     );
 
     protected $sizes = array();
+
+    protected $data;
 
     protected $unit = self::UNIT_BYTE;
 
