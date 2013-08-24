@@ -2,50 +2,10 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-trait TraitFoo
-{
-    public function a() {}
-}
-
-// user class
-final class Foo
-{
-    const TEST = 1;
-
-    public $bar = 1;
-    protected $extra;
-
-    use TraitFoo;
-
-    /**
-     * Constructor
-     *
-     * @return null
-     */
-    public function __construct() {
-        $this->extra = new \stdClass();
-        $this->extra->a1 = 1;
-    }
-
-    /**
-     * Get bar
-     *
-     * Get the bar value
-     *
-     * @return int
-     */
-    protected function getBar() { return $this->bar; }
-    private function setBar($bar=array(1,2), $bar2 = null) { $this->bar = $bar; }
-    public function __toString() {return $this->bar; }
-}
-
-
-$foo = new Foo();
-
 // DateTime object
-
 $date = new DateTime();
 
+// DOMDocument object
 $sXml = <<<XML
 <books>
     <book id="1">
@@ -61,7 +21,8 @@ XML;
 $dom = new DOMDocument();
 $dom->loadXml($sXml);
 
-$reflected = new ReflectionClass('Foo');
+// ReflectionClass object
+$reflected = new ReflectionClass('\Ladybug\Dumper');
 
 $ladybug = new \Ladybug\Dumper();
-echo $ladybug->dump($foo, $dom, $reflected, $date);
+echo $ladybug->dump($dom, $reflected, $date);
