@@ -92,8 +92,6 @@ class Dumper
      */
     public function dump(/*$var1 [, $var2...$varN]*/)
     {
-        ini_set('xdebug.max_nesting_level', 150);
-
         $this->initializeApplication();
 
         if ($this->application->container->getParameter('silenced', false)) {
