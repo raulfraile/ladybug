@@ -11,13 +11,15 @@
 
 namespace Ladybug\Type\Extended;
 
+use Ladybug\Type\RenderizableTypeInterface;
+
 class ContainerType extends AbstractType
 {
     const TYPE_ID = 'container';
 
     protected $data;
 
-    public function setData($data)
+    public function setData(RenderizableTypeInterface $data)
     {
         $data->setLevel($this->level + 1);
 
