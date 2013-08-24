@@ -51,7 +51,7 @@ class CodeType extends BaseType
 
     public function load($var, $level = 1)
     {
-        // TODO: Implement load() method.
+
     }
 
 }
