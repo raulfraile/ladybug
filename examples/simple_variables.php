@@ -9,6 +9,4 @@ $var4 = 'hello world!';
 $var5 = false;
 
 $ladybug = new \Ladybug\Dumper();
-$ladybug->dump($var1, $var2, $var3, $var4, $var5);
-//ladybug_register_plugin(new Ladybug\Plugin\Symfony\SymfonyPlugin());
-//ladybug_dump($var1, $var2, $var3, $var4, $var5);
+echo $ladybug->dump($var1, $var2, $var3, $var4, $var5);

@@ -74,7 +74,7 @@ class ThemeResolver
                 return $theme;
             }
 
-            $parent = $theme->getThemeResolver();
+            $parent = $theme->getParent();
             if (is_null($parent)) {
                 throw new \Exception('theme not found');
             }

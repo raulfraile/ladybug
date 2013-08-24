@@ -20,4 +20,5 @@ $var = array(
     )
 );
 
-ladybug_dump($var);
+$ladybug = new \Ladybug\Dumper();
+echo $ladybug->dump($var);

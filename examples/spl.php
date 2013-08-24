@@ -27,4 +27,5 @@ foreach ($numbers as $item) {
     $queue->push($item);
 }
 
-ladybug_dump($maxHeap, $minHeap, $stack, $queue);
+$ladybug = new \Ladybug\Dumper();
+echo $ladybug->dump($maxHeap, $minHeap, $stack, $queue);

@@ -63,6 +63,5 @@ $dom->loadXml($sXml);
 
 $reflected = new ReflectionClass('Foo');
 
-//ladybug_set_theme('base');
-ladybug_register_plugin(new Ladybug\Plugin\Symfony\SymfonyPlugin());
-ladybug_dump(new Symfony\Component\Filesystem\Filesystem(), $foo, $dom, $reflected, $date);
+$ladybug = new \Ladybug\Dumper();
+echo $ladybug->dump($foo, $dom, $reflected, $date);
