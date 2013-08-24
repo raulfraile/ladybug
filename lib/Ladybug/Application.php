@@ -39,6 +39,7 @@ class Application
     {
         $this->initializeContainer();
         $this->loadServices();
+        $this->loadThemes();
         $this->loadPlugins($plugins);
         $this->setParameters($parameters);
         $this->container->compile();
@@ -58,7 +59,22 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\RenderCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
+    }
 
+    /**
+     * Load services
+     */
+    protected function loadServices()
+    {
+        $loader = new Loader\XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
+        $loader->load('container.xml');
+    }
+
+    /**
+     * Loads themes
+     */
+    protected function loadThemes()
+    {
         $themesDirs = array(
             __DIR__.'/../../data/themes/Ladybug/Theme',
             __DIR__.'/../../../ladybug-themes/Ladybug/Theme'
@@ -71,28 +87,25 @@ class Application
 
                 foreach ($finder as $file) {
                     /** @var SplFileInfo $file */
-                    $themeName = preg_replace('/Theme\.php$/', '', $file->getFilename());
-                    $themeClass = sprintf('Ladybug\\Theme\\%s\\%sTheme', $themeName, $themeName);
-                    $themePath = dirname($file->getRealPath());
-
-                    $this->container->register('theme_'.$themeName, $themeClass)
-                        ->addArgument($themePath)
-                        ->addTag('ladybug.theme');
+                    $this->registerTheme($file);
                 }
             }
         }
-
-
     }
 
     /**
-     * Load services
+     * Registers a new theme from a directory
+     * @param \Symfony\Component\Finder\SplFileInfo $themeClassPath
      */
-    protected function loadServices()
+    protected function registerTheme(SplFileInfo $themeClassPath)
     {
-        $loader = new Loader\XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
-        $loader->load('container.xml');
+        $themeName = preg_replace('/Theme\.php$/', '', $themeClassPath->getFilename());
+        $themeClass = sprintf('Ladybug\\Theme\\%s\\%sTheme', $themeName, $themeName);
+        $themePath = dirname($themeClassPath->getRealPath());
 
+        $this->container->register('theme_'.$themeName, $themeClass)
+            ->addArgument($themePath)
+            ->addTag('ladybug.theme');
     }
 
     /**
