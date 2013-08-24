@@ -4,6 +4,8 @@ namespace Ladybug\Tests\Inspector\Object;
 
 use Ladybug\Inspector;
 use Ladybug\Type;
+use Ladybug\Inspector\InspectorDataWrapper;
+use Ladybug\Inspector\InspectorInterface;
 use \Mockery as m;
 
 class SplQueueTest extends \PHPUnit_Framework_TestCase
@@ -30,7 +32,12 @@ class SplQueueTest extends \PHPUnit_Framework_TestCase
         $var->push(2);
         $var->push(3);
 
-        $result = $this->inspector->getData($var);
+        $data = new InspectorDataWrapper();
+        $data->setData($var);
+        $data->setId(get_class($var));
+        $data->setType(InspectorInterface::TYPE_CLASS);
+
+        $result = $this->inspector->getData($data);
 
         $this->assertInstanceOf('Ladybug\Type\Extended\CollectionType', $result);
         $this->assertCount(3, $result);
@@ -42,7 +49,12 @@ class SplQueueTest extends \PHPUnit_Framework_TestCase
 
         $var = new \stdClass();
 
-        $this->inspector->getData($var);
+        $data = new InspectorDataWrapper();
+        $data->setData($var);
+        $data->setId(get_class($var));
+        $data->setType(InspectorInterface::TYPE_CLASS);
+
+        $this->inspector->getData($data);
     }
 
 }

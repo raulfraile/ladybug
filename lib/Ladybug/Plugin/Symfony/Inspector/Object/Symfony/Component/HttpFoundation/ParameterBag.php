@@ -14,18 +14,20 @@ namespace Ladybug\Plugin\Symfony\Inspector\Object\Symfony\Component\HttpFoundati
 
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Inspector\InspectorDataWrapper;
 use Ladybug\Type;
 
 class ParameterBag extends AbstractInspector
 {
-    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
+    public function accept(InspectorDataWrapper $data)
     {
-        return InspectorInterface::TYPE_CLASS == $type && $var instanceof \Symfony\Component\HttpFoundation\ParameterBag;
+        return InspectorInterface::TYPE_CLASS == $data->getType() && 'Symfony\Component\HttpFoundation\ParameterBag' === $data->getId();
     }
 
-    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
+    public function getData(InspectorDataWrapper $data)
     {
         /** @var $var Symfony\Component\HttpFoundation\ParameterBag */
+        $var = $data->getData();
 
         /** @var $collection Type\Extended\CollectionType */
         $collection = $this->extendedTypeFactory->factory('collection', $this->level);

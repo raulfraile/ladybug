@@ -30,12 +30,12 @@ class InspectorManager
         $this->inspectors[] = $inspector;
     }
 
-    public function get($var, $type = InspectorInterface::TYPE_CLASS)
+    public function get(InspectorDataWrapper $data)
     {
         foreach ($this->inspectors as $inspector) {
             /** @var InspectorInterface $inspector */
 
-            if ($inspector->accept($var, $type)) {
+            if ($inspector->accept($data)) {
                 return $inspector;
             }
         }

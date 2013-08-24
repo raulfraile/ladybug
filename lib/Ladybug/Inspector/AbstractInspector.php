@@ -93,12 +93,12 @@ abstract class AbstractInspector implements InspectorInterface
      * @param  string $var html code
      * @return string modified html code
      */
-    public function getData($var, $type = self::TYPE_CLASS)
+    public function getData(InspectorDataWrapper $data)
     {
         return null;
     }
 
-    public function accept($var, $type = self::TYPE_CLASS)
+    public function accept(InspectorDataWrapper $data)
     {
         return false;
     }

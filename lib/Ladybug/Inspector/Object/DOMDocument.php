@@ -14,23 +14,25 @@ namespace Ladybug\Inspector\Object;
 
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Inspector\InspectorDataWrapper;
 use Ladybug\Type;
 
 class DOMDocument extends AbstractInspector
 {
 
-    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
+    public function accept(InspectorDataWrapper $data)
     {
-        return InspectorInterface::TYPE_CLASS == $type && $var instanceof \DOMDocument;
+        return InspectorInterface::TYPE_CLASS == $data->getType() && 'DOMDocument' === $data->getId();
     }
 
-    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
+    public function getData(InspectorDataWrapper $data)
     {
-        if (!$this->accept($var, $type)) {
+        if (!$this->accept($data)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 
         /** @var \DOMDocument $var */
+        $var = $data->getData();
 
         $var->formatOutput = true;
         $xml = $var->saveXML();

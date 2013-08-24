@@ -16,6 +16,7 @@ use Ladybug\Metadata\MetadataInterface;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Inspector\InspectorManager;
+use Ladybug\Inspector\InspectorDataWrapper;
 
 class ResourceType extends AbstractType
 {
@@ -128,10 +129,15 @@ class ResourceType extends AbstractType
 
     protected function loadData($var)
     {
-        $inspector = $this->inspectorManager->get($var, InspectorInterface::TYPE_RESOURCE);
+        $data = new InspectorDataWrapper();
+        $data->setData($var);
+        $data->setId($this->getResourceType());
+        $data->setType(InspectorInterface::TYPE_RESOURCE);
+
+        $inspector = $this->inspectorManager->get($data);
         if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
-            $this->resourceCustomData = $inspector->getData($var, InspectorInterface::TYPE_RESOURCE);
+            $this->resourceCustomData = $inspector->getData($data);
         }
 
     }

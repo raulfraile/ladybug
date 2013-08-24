@@ -4,6 +4,8 @@ namespace Ladybug\Tests\Inspector\Object;
 
 use Ladybug\Inspector;
 use Ladybug\Type;
+use Ladybug\Inspector\InspectorDataWrapper;
+use Ladybug\Inspector\InspectorInterface;
 use \Mockery as m;
 
 class DOMDocumentTest extends \PHPUnit_Framework_TestCase
@@ -27,7 +29,12 @@ class DOMDocumentTest extends \PHPUnit_Framework_TestCase
     {
         $var = new \DOMDocument();
 
-        $result = $this->inspector->getData($var);
+        $data = new InspectorDataWrapper();
+        $data->setData($var);
+        $data->setId(get_class($var));
+        $data->setType(InspectorInterface::TYPE_CLASS);
+
+        $result = $this->inspector->getData($data);
 
         $this->assertInstanceOf('Ladybug\Type\Extended\CodeType', $result);
         $this->assertEquals('xml', $result->getLanguage());
@@ -39,7 +46,12 @@ class DOMDocumentTest extends \PHPUnit_Framework_TestCase
 
         $var = new \stdClass();
 
-        $this->inspector->getData($var);
+        $data = new InspectorDataWrapper();
+        $data->setData($var);
+        $data->setId(get_class($var));
+        $data->setType(InspectorInterface::TYPE_CLASS);
+
+        $this->inspector->getData($data);
     }
 
 }

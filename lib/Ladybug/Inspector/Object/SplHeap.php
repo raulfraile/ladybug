@@ -14,25 +14,26 @@ namespace Ladybug\Inspector\Object;
 
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Inspector\InspectorDataWrapper;
 use Ladybug\Type;
 
 abstract class SplHeap extends AbstractInspector
 {
 
-    public function accept($var, $type = self::TYPE_CLASS)
+    public function accept(InspectorDataWrapper $data)
     {
-        return InspectorInterface::TYPE_CLASS == $type && $var instanceof \SplHeap;
+        return InspectorInterface::TYPE_CLASS == $data->getType() && 'SplHeap' === $data->getId();
     }
 
-    public function getData($var, $type = self::TYPE_CLASS)
+    public function getData(InspectorDataWrapper $data)
     {
-        if (!$this->accept($var, $type)) {
+        if (!$this->accept($data)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 
         /** @var $var \SplHeap */
 
-        $arrayData = iterator_to_array($var);
+        $arrayData = iterator_to_array($data->getData());
 
         /** @var $collection Type\Extended\CollectionType */
         $collection = $this->extendedTypeFactory->factory('collection', $this->level);

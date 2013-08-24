@@ -13,6 +13,7 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\ObjectType as Object;
 use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Inspector\InspectorDataWrapper;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 class ObjectType extends AbstractType
@@ -443,11 +444,16 @@ class ObjectType extends AbstractType
 
     protected function loadData($var, \ReflectionClass $reflectedObject)
     {
-        $inspector = $this->inspectorManager->get($var, InspectorInterface::TYPE_CLASS);
+        $data = new InspectorDataWrapper();
+        $data->setData($var);
+        $data->setId($this->className);
+        $data->setType(InspectorInterface::TYPE_CLASS);
+
+        $inspector = $this->inspectorManager->get($data);
         if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
 
-            $this->objectCustomData = $inspector->getData($var, InspectorInterface::TYPE_CLASS);
+            $this->objectCustomData = $inspector->getData($data);
         }
 
         // properties

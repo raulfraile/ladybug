@@ -14,24 +14,28 @@ namespace Ladybug\Inspector\Resource;
 
 use Ladybug\Inspector\AbstractInspector;
 use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Inspector\InspectorDataWrapper;
 use Ladybug\Type;
 
 class File extends AbstractInspector
 {
 
-    public function accept($var, $type = InspectorInterface::TYPE_CLASS)
+    public function accept(InspectorDataWrapper $data)
     {
-        return InspectorInterface::TYPE_RESOURCE == $type && is_resource($var) && 'stream' === get_resource_type($var);
+        return InspectorInterface::TYPE_RESOURCE == $data->getType() &&
+            'file' === $data->getId();
     }
 
-    public function getData($var, $type = InspectorInterface::TYPE_CLASS)
+    public function getData(InspectorDataWrapper $data)
     {
 
-        if (!$this->accept($var, $type)) {
+        if (!$this->accept($data)) {
             throw new \Ladybug\Exception\InvalidInspectorClassException();
         }
 
         /** @var resource $var */
+        $var = $data->getData();
+
         $streamVars = stream_get_meta_data($var);
         $fstat = fstat($var);
 

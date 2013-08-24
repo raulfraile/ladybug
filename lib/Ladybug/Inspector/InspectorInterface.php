@@ -23,7 +23,7 @@ interface InspectorInterface
      * @param  string $var html code
      * @return string modified html code
      */
-    public function getData($var, $type = self::TYPE_CLASS);
+    public function getData(InspectorDataWrapper $data);
 
-    public function accept($var, $type = self::TYPE_CLASS);
+    public function accept(InspectorDataWrapper $data);
 }
