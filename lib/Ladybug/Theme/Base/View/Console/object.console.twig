@@ -1,69 +1,81 @@
 {% extends "_base.console.twig" %}
 
+{% set composed = true %}
+{% set display_tags = true %}
+
 {% block type %}<t_object>object({{ var.className }})</t_object>{% endblock %}
 
 {% block value %}
-    <intro>
     {% if not var.terminal %}
+        <intro>
         {% if var.objectCustomData is not empty %}
-            {{ m.indent(var.objectCustomData.level) }}{{ render_type(var.objectCustomData)|raw }}
+            {{ m.indent(var.objectCustomData.level) }}
+            {{ render_type(var.objectCustomData)|raw }}
         {% endif %}
 
         {% if var.objectProperties is not empty %}
-            {{ m.indent(level+1) }}<t_array_block>Properties</t_array_block><intro>
+            {{ m.indent(level+1) }}
+            <t_array_block>Properties</t_array_block><intro>
             {% for data in var.objectProperties %}
                 {{ m.indent(data.value.level) }}
                 {{ render_type(data.value, data.name, data.visibility)|raw }}
-                {% if not data.value.composed %}<intro>{% endif %}
+                {% if not loop.last %}<intro>{% endif %}
             {% endfor %}
         {% endif %}
 
         {% if var.hasClassInfo() %}
-            {{ m.indent(level+1) }}<t_array_block>Class<space>info</t_array_block><intro>
+            <intro>
+            {{ m.indent(level+1) }}
+            <t_array_block>Class<space>info</t_array_block><intro>
+
             {% set class_info_data = {} %}
 
             {# Filename #}
             {% if var.classFile is not empty %}
-                {{ m.indent(level+1) }}Filename:<space>{{ var.classFile }}<intro>
+                {% set class_info_data = class_info_data|merge(['Filename:<space>' ~ var.classFile]) %}
+                {#{ m.indent(level+1) }}Filename:<space>{{ var.classFile }}<intro>#}
             {% endif %}
 
             {# Interfaces #}
             {% if var.classInterfaces is not empty %}
-                {{ m.indent(level+1) }}Interfaces:<space>{{ var.classInterfaces|tags|raw }}<intro>
+                {% set class_info_data = class_info_data|merge(['Interfaces:<space>' ~ var.classInterfaces|tags|raw]) %}
+                {#{ m.indent(level+1) }}Interfaces:<space>{{ var.classInterfaces|tags|raw }}<intro>#}
             {% endif %}
 
             {# Interfaces #}
             {% if var.classTraits is not empty %}
-                {{ m.indent(level+1) }}Traits:<space>{{ var.classTraits }}<intro>
+                {% set class_info_data = class_info_data|merge(['Traits:<space>' ~ var.classTraits|tags|raw]) %}
             {% endif %}
 
             {# Namespace #}
             {% if var.classNamespace is not empty %}
-                {{ m.indent(level+1) }}Namespace:<space>{{ var.classNamespace }}<intro>
+                {% set class_info_data = class_info_data|merge(['Namespace:<space>' ~ var.classNamespace]) %}
             {% endif %}
 
             {# Parent #}
             {% if var.classParent is not empty %}
-                {{ m.indent(level+1) }}Parent:<space>{{ var.classParent }}<intro>
+                {% set class_info_data = class_info_data|merge(['Parent:<space>' ~ var.classParent]) %}
             {% endif %}
+
+            {{ m.indent(var.level + 1) }}{{ class_info_data|join('<intro>' ~ m.indent(var.level + 1))|raw }}
         {% endif %}
 
         {% if var.classConstants is not empty %}
+            <intro>
             {{ m.indent(var.level+1) }}<t_array_block>Constants</t_array_block><intro>
             {% for constant in var.classConstants %}
                 {{ m.indent(constant.value.level) }}{{ render_type(constant.value, constant.name)|raw }}
-                <intro>
+                {% if not loop.last %}<intro>{% endif %}
             {% endfor %}
         {% endif %}
 
         {% if var.classMethods is not empty %}
+            <intro>
             {{ m.indent(var.level+1) }}<t_array_block>Methods</t_array_block><intro>
             {% for method in var.classMethods %}
                 {{ m.indent(method.level) }}{{ m.render_object_method(method) }}
-                <intro>
+                {% if not loop.last %}<intro>{% endif %}
             {% endfor %}
         {% endif %}
-    {% else %}
-        {{ m.indent(var.level) }}(!)<space>Object<space>max<space>nesting<space>level<space>reached<intro>
     {% endif %}
 {% endblock %}

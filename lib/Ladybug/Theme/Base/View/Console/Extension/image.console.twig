@@ -1,7 +1,14 @@
 {% extends "_base.console.twig" %}
 
-{% block type %}{% endblock %}
+{% set composed = true %}
+
+{% block type %}
+    {% if var.title is not empty %}
+        <t_array_block>{{ var.title|tags|raw }}</t_array_block><intro>
+    {% endif %}
+{% endblock %}
 
 {% block value %}
-    file://{{ var.tempPath }}
+    {{ m.indent(var.level + 1) }}Path:<space>file://{{ var.tempPath }}<intro>
+    {{ m.indent(var.level + 1) }}Dimensions:<space>{{ var.width }}x{{ var.height }}
 {% endblock %}

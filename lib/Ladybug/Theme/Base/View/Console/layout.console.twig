@@ -1,5 +1,6 @@
 {% for node in nodes %}
     {{ render_type(node)|raw }}<intro>
+    {% if not loop.last %}<intro>{% endif %}
 {% endfor %}
 
-<intro>{{ callFile }}:{{ callLine }}<intro>
+<intro><f_called>{{ callFile }}:{{ callLine }}</f_called><intro>

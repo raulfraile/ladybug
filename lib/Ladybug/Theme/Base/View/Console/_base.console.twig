@@ -7,7 +7,13 @@
 {% block type %}{{ var.type }}<space>{% endblock %}
 
 {% if var.type != 'null' %}
-    {% if not var.composed %}<t_{{ var.type }}>{% endif %}
-    {% block value %}{{ var.formattedValue()|raw }}{% endblock %}
-    {% if not var.composed %}</t_{{ var.type }}>{% endif %}
+    {% if not composed %}
+        {% if display_tags %}<t_{{ var.type }}>{% endif %}
+        {% block inline_value %}{{ var.formattedValue()|raw }}{% endblock %}
+        {% if display_tags %}</t_{{ var.type }}>{% endif %}
+    {% endif %}
+{% endif %}
+
+{% if composed %}
+    {% block value %}{% endblock %}
 {% endif %}

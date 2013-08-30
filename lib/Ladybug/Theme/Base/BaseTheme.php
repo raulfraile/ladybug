@@ -52,7 +52,7 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
     public function getCliColors()
     {
         return array(
-            't_string' => 'green',
+            't_string' => 'yellow',
             't_bool' => 'blue',
             't_float' => 'red',
             't_int' => 'red',
@@ -63,7 +63,8 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
             'v_public' => 'green',
             'v_protected' => 'yellow',
             'v_private' => 'red',
-            'f_tab' => 'white'
+            'f_tab' => 'white',
+            'f_called' => array('white', 'blue')
         );
     }
 

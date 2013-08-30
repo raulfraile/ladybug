@@ -1,11 +1,13 @@
 {% extends "_base.console.twig" %}
 
+{% set composed = true %}
+
 {% block type %}
     <t_array_block>{{ var.title|tags|raw }}</t_array_block><intro>
 {% endblock %}
 
 {% block value %}
     {{ m.indent(var.level + 1) }}
-    {{ var.data|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(var.level + 1)})|raw }}
-    <intro>
+    {{ var.content|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(var.level + 1)})|raw }}
+
 {% endblock %}

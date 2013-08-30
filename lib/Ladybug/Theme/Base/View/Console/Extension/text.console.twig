@@ -1,8 +1,10 @@
-{% import "_macros.console.twig" as m %}
+{% extends "_base.console.twig" %}
 
-{% spaceless %}
-{{ m.visibility_block(visibility) }}
+{% set composed = false %}
+{% block type %}{% endblock %}
 
-{{ m.array_key(key) }}
-{{ var.data|tags|raw }}
-{% endspaceless %}
+    {% block inline_value %}
+
+    {{ var.text|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(var.level + 1)})|raw }}
+
+        {% endblock %}
