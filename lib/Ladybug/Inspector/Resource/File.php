@@ -70,16 +70,6 @@ class File extends AbstractInspector
         $result['uid'] = $this->createTextType($fstat['uid'], 'uid');
         $result['gid'] = $this->createTextType($fstat['gid'], 'gid');
 
-        if ($this->isText($mimetype)) {
-            /** @var $fileContent Type\Extended\CodeType */
-            $fileContent = $this->extendedTypeFactory->factory('code', $this->level);
-            $fileContent->setContent(file_get_contents($realPath));
-            //$fileContent->setKey('Content');
-            $fileContent->setLanguage($mimetype);
-            $fileContent->setTitle('Contents');
-            $result['content'] = $fileContent;
-        }
-
         $collection->loadFromArray($result, true);
         $collection->setLevel($this->level);
         $collection->setTitle('File');
