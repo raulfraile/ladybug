@@ -21,5 +21,4 @@ $var = array(
 );
 
 $ladybug = new \Ladybug\Dumper();
-$ladybug->setFormat('xml');
 echo $ladybug->dump($var);

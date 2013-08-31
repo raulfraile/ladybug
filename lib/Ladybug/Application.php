@@ -35,12 +35,12 @@ class Application
      * @param array $parameters
      * @param array $plugins
      */
-    public function build($parameters = array(), $plugins = array())
+    public function build($parameters = array())
     {
         $this->initializeContainer();
         $this->loadServices();
         $this->loadThemes();
-        $this->loadPlugins($plugins);
+        $this->loadPlugins();
         $this->setParameters($parameters);
         $this->container->compile();
     }
@@ -109,37 +109,61 @@ class Application
     }
 
     /**
+     * Registers a new plugin from a directory
+     * @param \Symfony\Component\Finder\SplFileInfo $pluginClassPath
+     */
+    protected function registerPlugin(SplFileInfo $pluginClassPath)
+    {
+        $pluginName = preg_replace('/Plugin\.php$/', '', $pluginClassPath->getFilename());
+        $pluginClass = sprintf('Ladybug\\Plugin\\%s\\%sPlugin', $pluginName, $pluginName);
+
+        $file = $pluginClass::getConfigFile();
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        $dir = pathinfo($file, PATHINFO_DIRNAME);
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+
+        switch ($extension) {
+            case 'xml':
+                $loader = new Loader\XmlFileLoader($this->container, new FileLocator($dir));
+                break;
+            case 'yml':
+                $loader = new Loader\YamlFileLoader($this->container, new FileLocator($dir));
+                break;
+            case 'php':
+                $loader = new Loader\PhpFileLoader($this->container, new FileLocator($dir));
+                break;
+            case 'ini':
+                $loader = new Loader\IniFileLoader($this->container, new FileLocator($dir));
+                break;
+            default:
+                throw new \Exception('Invalid config file');
+        }
+
+        $loader->load($filename . '.' . $extension);
+    }
+
+    /**
      * Load plugins
      * @param array $plugins
      * @throws \Exception
      */
-    protected function loadPlugins(array $plugins = array())
+    protected function loadPlugins()
     {
-        foreach ($plugins as $plugin) {
-            /** @var PluginInterface $plugin */
-            $file = $plugin->getConfigFile();
-            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-            $dir = pathinfo($file, PATHINFO_DIRNAME);
-            $filename = pathinfo($file, PATHINFO_FILENAME);
+        $pluginsDirs = array(
+            __DIR__.'/../../data/plugins/Ladybug/Plugin',
+            __DIR__.'/../../../ladybug-plugins/Ladybug/Plugin'
+        );
 
-            switch ($extension) {
-                case 'xml':
-                    $loader = new Loader\XmlFileLoader($this->container, new FileLocator($dir));
-                    break;
-                case 'yml':
-                    $loader = new Loader\YamlFileLoader($this->container, new FileLocator($dir));
-                    break;
-                case 'php':
-                    $loader = new Loader\PhpFileLoader($this->container, new FileLocator($dir));
-                    break;
-                case 'ini':
-                    $loader = new Loader\IniFileLoader($this->container, new FileLocator($dir));
-                    break;
-                default:
-                    throw new \Exception('Invalid config file');
+        foreach ($pluginsDirs as $dir) {
+            if (is_dir($dir)) {
+                $finder = new Finder();
+                $finder->in($dir)->files()->depth(1)->name('*Plugin.php');
+
+                foreach ($finder as $file) {
+                    /** @var SplFileInfo $file */
+                    $this->registerPlugin($file);
+                }
             }
-
-            $loader->load($filename . '.' . $extension);
         }
     }
 

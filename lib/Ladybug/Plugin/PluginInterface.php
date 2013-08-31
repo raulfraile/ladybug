@@ -14,5 +14,5 @@ namespace Ladybug\Plugin;
 
 interface PluginInterface
 {
-    public function getConfigFile();
+    public static function getConfigFile();
 }
