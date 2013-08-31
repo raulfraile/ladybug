@@ -23,7 +23,6 @@
         "symfony/dependency-injection": ">=2.0.4",
         "symfony/config": ">=2.0.4",
         "twig/twig": ">=1.7.0",
-        "phpdocumentor/reflection-docblock": "2.0.0",
         "jms/serializer": ">=0.11.0"
     },
     "require-dev": {
@@ -32,6 +31,7 @@
         "symfony/dom-crawler": ">=2.0.4"
     },
     "suggest": {
+        "phpdocumentor/reflection-docblock": "Required to display object methods description",
         "symfony/yaml": "Required to serialize data to YAML format"
     },
     "autoload": {

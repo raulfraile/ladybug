@@ -392,10 +392,12 @@ class ObjectType extends AbstractType
                 }
 
                 // phpdoc comment
-                $phpdoc = new \phpDocumentor\Reflection\DocBlock($reflectedMethod->getDocComment());
+                if (class_exists('\phpDocumentor\Reflection\DocBlock')) {
+                    $phpdoc = new \phpDocumentor\Reflection\DocBlock($reflectedMethod->getDocComment());
 
-                $method->setShortDescription($phpdoc->getShortDescription());
-                $method->setLongDescription($phpdoc->getLongDescription());
+                    $method->setShortDescription($phpdoc->getShortDescription());
+                    $method->setLongDescription($phpdoc->getLongDescription());
+                }
 
                 // parameters
                 $methodParameters = $reflectedMethod->getParameters();
