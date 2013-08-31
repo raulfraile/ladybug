@@ -18,6 +18,7 @@ use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\LadybugExtension;
 use Ladybug\Theme\ThemeResolver;
 use JMS\Serializer\Serializer;
+use Ladybug\Exception\SerializerNotFoundException;
 
 abstract class AbstractRender implements RenderInterface
 {
@@ -158,6 +159,10 @@ abstract class AbstractRender implements RenderInterface
     protected function getSerializer()
     {
         if (is_null($this->serializer)) {
+            if (!class_exists('\JMS\Serializer\SerializerBuilder')) {
+                throw new SerializerNotFoundException();
+            }
+
             $this->serializer = \JMS\Serializer\SerializerBuilder::create()
                 ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
                 ->build();
