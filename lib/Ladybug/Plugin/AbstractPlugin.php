@@ -14,7 +14,7 @@ namespace Ladybug\Plugin;
 
 abstract class AbstractPlugin implements PluginInterface
 {
-    public function getConfigFile()
+    public static function getConfigFile()
     {
         return __DIR__ . '/Config/services.xml';
     }

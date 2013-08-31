@@ -50,6 +50,8 @@ class Dumper
     /** @var array $plugins */
     protected $plugins;
 
+
+
     /**
      * Constructor
      */

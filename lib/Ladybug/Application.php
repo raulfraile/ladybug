@@ -14,6 +14,8 @@ namespace Ladybug;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\Config\ConfigCache;
 use Ladybug\DependencyInjection;
 use Ladybug\Plugin\PluginInterface;
 use Symfony\Component\Finder\Finder;
@@ -33,16 +35,33 @@ class Application
     /**
      * Build container
      * @param array $parameters
-     * @param array $plugins
      */
     public function build($parameters = array())
     {
-        $this->initializeContainer();
-        $this->loadServices();
-        $this->loadThemes();
-        $this->loadPlugins();
-        $this->setParameters($parameters);
-        $this->container->compile();
+
+        $isDebug = true;
+
+        $file = __DIR__ .'/cache/container.php';
+        $containerConfigCache = new ConfigCache($file, $isDebug);
+
+        if (!$containerConfigCache->isFresh()) {
+            $this->initializeContainer();
+            $this->loadServices();
+            $this->loadThemes();
+            $this->loadPlugins();
+            $this->setParameters($parameters);
+
+            $this->container->compile();
+
+            $dumper = new PhpDumper($this->container);
+            $containerConfigCache->write(
+                $dumper->dump(array('class' => 'LadybugCachedContainer')),
+                $this->container->getResources()
+            );
+        }
+
+        require_once $file;
+        $this->container = new \LadybugCachedContainer();
     }
 
     /**
