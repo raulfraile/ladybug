@@ -40,7 +40,7 @@
         "psr-0": {
             "Ladybug\\Theme": ["../ladybug-themes", "data/themes"],
             "Ladybug\\Plugin": ["../ladybug-plugins", "data/plugins"],
-            "Ladybug": "lib/"
+            "Ladybug": "src/"
         }
     },
     "minimum-stability": "dev"
