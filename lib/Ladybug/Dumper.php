@@ -171,9 +171,8 @@ class Dumper
         $environmentResolver = $this->application->container->get('environment_resolver');
         $environment = $environmentResolver->resolve();
 
-        if ($this->application->container->hasParameter('format')) {
-            $format = $this->application->container->getParameter('format');
-        } else {
+        $format = $this->getOption('format');
+        if (is_null($format)) {
             $format = $environment->getDefaultFormat();
         }
 
@@ -259,6 +258,7 @@ class Dumper
     {
         return array_key_exists($name, $this->options) ? $this->options[$name] : $default;
     }
+
 
     /**
      * Set options

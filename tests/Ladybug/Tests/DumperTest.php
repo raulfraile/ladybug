@@ -58,6 +58,12 @@ class DumperTest extends \PHPUnit_Framework_TestCase
 
     public function testDumpJsonFormat()
     {
+        if (!class_exists('\JMS\Serializer\SerializerBuilder')) {
+            $this->markTestSkipped(
+                'Serializer is not available.'
+            );
+        }
+
         $var = 1;
 
         $this->dumper->setFormat(Format\JsonFormat::FORMAT_NAME);
@@ -73,6 +79,12 @@ class DumperTest extends \PHPUnit_Framework_TestCase
 
     public function testDumpXmlFormat()
     {
+        if (!class_exists('\JMS\Serializer\SerializerBuilder')) {
+            $this->markTestSkipped(
+                'Serializer is not available.'
+            );
+        }
+
         $var = 1;
 
         $this->dumper->setFormat(Format\XmlFormat::FORMAT_NAME);

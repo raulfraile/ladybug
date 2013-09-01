@@ -27,7 +27,9 @@
     "require-dev": {
         "fabpot/php-cs-fixer": "0.1.*@dev",
         "mockery/mockery": "0.8.0",
-        "symfony/dom-crawler": ">=2.0.4"
+        "symfony/dom-crawler": ">=2.0.4",
+        "phpdocumentor/reflection-docblock": "2.0.0",
+        "jms/serializer": ">=0.11.0"
     },
     "suggest": {
         "phpdocumentor/reflection-docblock": "Required to display object methods description",

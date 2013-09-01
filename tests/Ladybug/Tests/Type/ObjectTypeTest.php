@@ -139,7 +139,9 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($parameter5->getType());
 
         // method info
-        $this->assertEquals('Private method', $privateMethod->getShortDescription());
+        if (class_exists('\phpDocumentor\Reflection\DocBlock')) {
+            $this->assertEquals('Private method', $privateMethod->getShortDescription());
+        }
     }
 
     public function testLoaderForOtherType()
