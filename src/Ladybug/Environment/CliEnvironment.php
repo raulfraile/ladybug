@@ -19,7 +19,7 @@ class CliEnvironment extends AbstractEnvironment
         return 'Cli';
     }
 
-    public function isActive()
+    public function supports()
     {
         return 'cli' === $this->sapiName;
     }

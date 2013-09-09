@@ -14,14 +14,14 @@ class AjaxEnvironmentTest extends \PHPUnit_Framework_TestCase
     public function testValidDetection()
     {
         $this->environment = new Environment\AjaxEnvironment('XMLHttpRequest');
-        $this->assertTrue($this->environment->isActive());
+        $this->assertTrue($this->environment->supports());
         $this->assertEquals('Ajax', $this->environment->getName());
     }
 
     public function testNotValidDetection()
     {
         $this->environment = new Environment\AjaxEnvironment('');
-        $this->assertFalse($this->environment->isActive());
+        $this->assertFalse($this->environment->supports());
     }
 
     public function testDefaultFormatIsText()

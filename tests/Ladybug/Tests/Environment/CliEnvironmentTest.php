@@ -14,14 +14,14 @@ class CliEnvironmentTest extends \PHPUnit_Framework_TestCase
     public function testValidDetection()
     {
         $this->environment = new Environment\CliEnvironment('cli');
-        $this->assertTrue($this->environment->isActive());
+        $this->assertTrue($this->environment->supports());
         $this->assertEquals('Cli', $this->environment->getName());
     }
 
     public function testNotValidDetection()
     {
         $this->environment = new Environment\CliEnvironment('apache2handler');
-        $this->assertFalse($this->environment->isActive());
+        $this->assertFalse($this->environment->supports());
     }
 
     public function testDefaultFormatIsConsole()

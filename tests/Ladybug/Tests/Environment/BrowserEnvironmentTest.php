@@ -18,7 +18,7 @@ class BrowserEnvironmentTest extends \PHPUnit_Framework_TestCase
 
     public function testValidDetection()
     {
-        $this->assertTrue($this->environment->isActive());
+        $this->assertTrue($this->environment->supports());
         $this->assertEquals('Browser', $this->environment->getName());
     }
 

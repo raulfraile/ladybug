@@ -9,16 +9,6 @@ class EnvironmentResolver
     protected $environments = array();
 
     /**
-     * @param EnvironmentInterface[] $environments
-     */
-    public function __construct()
-    {
-        /*foreach ($environments as $item) {
-            $this->register($item);
-        }*/
-    }
-
-    /**
      * Registers a new environment
      *
      * When resolving, this environment is preferred over previously registered ones.
@@ -33,17 +23,18 @@ class EnvironmentResolver
     /**
      * Resolve environment
      *
-     * @return EnvironmentInterface
+     * @return EnvironmentInterface|boolean
      */
     public function resolve()
     {
         foreach ($this->environments as $item) {
             /** @var EnvironmentInterface $item */
 
-            if ($item->isActive()) {
+            if ($item->supports()) {
                 return $item;
             }
         }
 
+        return false;
     }
 }
