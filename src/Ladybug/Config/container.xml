@@ -7,11 +7,9 @@
     <imports>
         <import resource="types.xml"></import>
         <import resource="themes.xml"></import>
-        <import resource="inspectors.xml"></import>
         <import resource="renders.xml"></import>
         <import resource="formats.xml"></import>
         <import resource="environments.xml"></import>
-        <import resource="metadatas.xml"></import>
     </imports>
 
     <parameters>

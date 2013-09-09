@@ -1,10 +1,9 @@
 <?php
+
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * ProcessorInterface
- *
- * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,5 +13,11 @@ namespace Ladybug\Plugin;
 
 interface PluginInterface
 {
+    /**
+     * Gets the configuration file path
+     * @static
+     *
+     * @return string Configuration file path
+     */
     public static function getConfigFile();
 }

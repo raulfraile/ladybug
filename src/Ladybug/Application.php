@@ -40,7 +40,7 @@ class Application
 
         $isDebug = true;
 
-        $file = sys_get_temp_dir() .'/ladybug_cache/container.php';
+        $file = sys_get_temp_dir() .'/ladybug_cache/container3.php';
         $containerConfigCache = new ConfigCache($file, $isDebug);
 
         if (!$containerConfigCache->isFresh()) {

@@ -24,6 +24,5 @@ class JsonRender extends AbstractRender implements RenderInterface
         $this->load();
 
         return $this->getSerializer()->serialize($nodes, $this->getFormat());
-
     }
 }
