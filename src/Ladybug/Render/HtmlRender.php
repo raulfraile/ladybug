@@ -12,23 +12,24 @@
 namespace Ladybug\Render;
 
 use Ladybug\Theme\HtmlThemeInterface;
+use Ladybug\Format\HtmlFormat;
 
-class HtmlRender extends AbstractRender implements RenderInterface
+class HtmlRender extends AbstractTemplatingRender
 {
 
     public function getFormat()
     {
-        return self::FORMAT_HTML;
+        return HtmlFormat::FORMAT_NAME;
     }
 
     public function render(array $nodes, array $extraData = array())
     {
-        $this->load();
+        $this->loadTemplatingEngine();
 
         /** @var HtmlThemeInterface $theme */
         $theme = $this->theme;
 
-        return $this->twig->render('layout.html.twig', array_merge(array(
+        return $this->templatingEngine->render('layout.html.twig', array_merge(array(
             'nodes' => $nodes,
             'css' => $this->prefixResourcesPath($theme->getHtmlCssDependencies()),
             'js' => $this->prefixResourcesPath($theme->getHtmlJsDependencies())

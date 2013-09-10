@@ -11,6 +11,9 @@
 
 namespace Ladybug\Plugin;
 
+/**
+ * Plugin classes can extend from this class to get some common methods
+ */
 abstract class AbstractPlugin implements PluginInterface
 {
 

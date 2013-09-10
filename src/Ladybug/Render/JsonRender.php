@@ -11,18 +11,14 @@
 
 namespace Ladybug\Render;
 
-class JsonRender extends AbstractRender implements RenderInterface
+use Ladybug\Format\JsonFormat;
+
+class JsonRender extends AbstractSerializingRender
 {
 
     public function getFormat()
     {
-        return \Ladybug\Format\JsonFormat::FORMAT_NAME;
+        return JsonFormat::FORMAT_NAME;
     }
 
-    public function render(array $nodes, array $extraData = array())
-    {
-        $this->load();
-
-        return $this->getSerializer()->serialize($nodes, $this->getFormat());
-    }
 }

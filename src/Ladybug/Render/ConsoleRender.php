@@ -15,8 +15,9 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Ladybug\Theme\ThemeResolver;
+use Ladybug\Format\ConsoleFormat;
 
-class ConsoleRender extends AbstractRender implements RenderInterface
+class ConsoleRender extends AbstractTemplatingRender
 {
 
     protected $console;
@@ -32,10 +33,10 @@ class ConsoleRender extends AbstractRender implements RenderInterface
         parent::__construct($themeResolver);
     }
 
-    protected function load()
+    protected function loadTemplatingEngine()
     {
         if (!$this->isLoaded) {
-            parent::load();
+            parent::loadTemplatingEngine();
 
             // load styles
             foreach ($this->theme->getCliColors() as $key => $item) {
@@ -52,9 +53,9 @@ class ConsoleRender extends AbstractRender implements RenderInterface
 
     public function render(array $nodes, array $extraData = array())
     {
-        $this->load();
+        $this->loadTemplatingEngine();
 
-        $result = $this->twig->render('layout.console.twig', array_merge(
+        $result = $this->templatingEngine->render('layout.console.twig', array_merge(
             array(
                 'nodes' => $nodes
             ), $extraData
@@ -72,7 +73,7 @@ class ConsoleRender extends AbstractRender implements RenderInterface
 
     public function getFormat()
     {
-        return self::FORMAT_CONSOLE;
+        return ConsoleFormat::FORMAT_NAME;
     }
 
 }

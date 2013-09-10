@@ -11,18 +11,14 @@
 
 namespace Ladybug\Render;
 
-class XmlRender extends AbstractRender implements RenderInterface
+use Ladybug\Format\XmlFormat;
+
+class XmlRender extends AbstractSerializingRender
 {
 
     public function getFormat()
     {
-        return \Ladybug\Format\XmlFormat::FORMAT_NAME;
+        return XmlFormat::FORMAT_NAME;
     }
 
-    public function render(array $nodes, array $extraData = array())
-    {
-        $this->load();
-
-        return $this->getSerializer()->serialize($nodes, $this->getFormat());
-    }
 }

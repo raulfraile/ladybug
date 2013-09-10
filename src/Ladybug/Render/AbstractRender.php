@@ -26,105 +26,20 @@ abstract class AbstractRender implements RenderInterface
     /** @var ThemeInterface $theme */
     protected $theme;
 
-    /** @var Twig_Environment $twig */
-    protected $twig;
-
-    /** @var FormatInterface $format */
-    protected $format;
-
-    protected $isLoaded = false;
-
+    /** @var \Ladybug\Theme\ThemeResolver $themeResolver */
     protected $themeResolver;
 
-    protected $serializer;
 
+    /**
+     * Constructor
+     * @param \Ladybug\Theme\ThemeResolver $themeResolver
+     */
     public function __construct(ThemeResolver $themeResolver)
     {
         $this->themeResolver = $themeResolver;
-        $this->serializer = null;
     }
 
-    protected function load()
-    {
-        if (!$this->isLoaded) {
-            $loader = new Twig_Loader_Filesystem($this->getPaths());
 
-            $this->twig = new Twig_Environment($loader);
-
-            $extension = new LadybugExtension();
-            $extension->setFormat($this->format->getName());
-
-            $this->twig->addExtension($extension);
-
-            $this->isLoaded = true;
-        }
-    }
-
-    public function setGlobals(array $globals)
-    {
-        if (!$this->isLoaded) {
-            $this->load();
-        }
-
-        foreach ($globals as $key => $value) {
-            $this->twig->addGlobal($key, $value);
-        }
-
-    }
-
-    protected function getPaths()
-    {
-        $paths = array();
-
-        $templatesDir = $this->theme->getTemplatesPath() . ucfirst($this->format->getName()) . '/';
-        if (file_exists($templatesDir)) {
-            $paths[] = $templatesDir;
-        }
-
-        // extension templates
-        $extensionsDir = $templatesDir . 'Extension/';
-
-        if (file_exists($extensionsDir)) {
-            $paths[] = $extensionsDir;
-        }
-
-        // parent
-        $parent = strtolower($this->theme->getParent());
-
-        if (!empty($parent)) {
-
-            $parentTheme = $this->themeResolver->getTheme($parent, $this->format);
-
-            $templatesDir = $parentTheme->getTemplatesPath() . ucfirst($this->format->getName()) . '/';
-
-            if (file_exists($templatesDir)) {
-                $paths[] = $templatesDir;
-            }
-
-            $templatesDir .= 'Extension/';
-            if (file_exists($templatesDir)) {
-                $paths[] = $templatesDir;
-            }
-        }
-
-        return $paths;
-    }
-
-    /**
-     * @param \Ladybug\Format\FormatInterface $format
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-    }
-
-    /**
-     * @return \Ladybug\Format\FormatInterface
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
 
     /**
      * @param \Ladybug\Theme\ThemeInterface $theme
@@ -142,33 +57,12 @@ abstract class AbstractRender implements RenderInterface
         return $this->theme;
     }
 
-    protected function prefixResourcesPath(array $files)
-    {
-        $resourcesPath = $this->theme->getResourcesPath();
 
-        return array_map(function ($path) use ($resourcesPath) {
-            return $resourcesPath.$path;
-        }, $files);
+    public function setGlobals(array $globals)
+    {
+
     }
 
-    /**
-     * Gets serializer
-     *
-     * @return Serializer
-     */
-    protected function getSerializer()
-    {
-        if (is_null($this->serializer)) {
-            if (!class_exists('\JMS\Serializer\SerializerBuilder')) {
-                throw new SerializerNotFoundException();
-            }
 
-            $this->serializer = \JMS\Serializer\SerializerBuilder::create()
-                ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
-                ->build();
-        }
-
-        return $this->serializer;
-    }
 
 }

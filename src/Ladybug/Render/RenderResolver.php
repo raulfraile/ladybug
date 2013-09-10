@@ -12,31 +12,42 @@
 namespace Ladybug\Render;
 
 use Ladybug\Format\FormatInterface;
+use Ladybug\Render\RenderInterface;
 
-class RenderResolver
+class RenderResolver implements RenderResolverInterface
 {
 
+    /** @var RenderInterface[] $renders */
     protected $renders;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->renders = array();
     }
 
+    /**
+     * Adds a new RenderInterface to the resolver
+     * @param RenderInterface $render
+     * @param string          $key
+     */
     public function add(RenderInterface $render, $key)
     {
         $this->renders[$key] = $render;
     }
 
     /**
-     * @param $format
-     * @return RenderInterface
+     * Gets the appropiate render object for the given format
+     * @param FormatInterface $format
+     *
      * @throws \Exception
+     * @return RenderInterface
      */
     public function resolve(FormatInterface $format)
     {
         foreach ($this->renders as $render) {
-            /** @var RenderInterface $render */
 
             if ($render->getFormat() === $format->getName()) {
                 return $render;

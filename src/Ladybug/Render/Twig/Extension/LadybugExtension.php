@@ -9,13 +9,24 @@ use Ladybug\Type\RenderizableTypeInterface;
 class LadybugExtension extends Twig_Extension
 {
 
+    /** @var string $format */
     protected $format;
 
+    /**
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
+     */
     public function getName()
     {
         return 'ladybug';
     }
 
+    /**
+     * Returns a list of functions to add to the existing list.
+     *
+     * @return array An array of functions
+     */
     public function getFunctions()
     {
         return array(
@@ -38,11 +49,15 @@ class LadybugExtension extends Twig_Extension
                 $this,
                 'getSpacesByLevel',
                 array()
-            ),
-
+            )
         );
     }
 
+    /**
+     * Returns a list of filters to add to the existing list.
+     *
+     * @return array An array of filters
+     */
     public function getFilters()
     {
         return array(

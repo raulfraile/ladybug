@@ -11,6 +11,9 @@
 
 namespace Ladybug\Plugin;
 
+/**
+ * PluginInterface is the interface implemented by all plugin classes
+ */
 interface PluginInterface
 {
     /**

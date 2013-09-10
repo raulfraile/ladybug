@@ -11,19 +11,21 @@
 
 namespace Ladybug\Render;
 
-class TextRender extends AbstractRender implements RenderInterface
+use Ladybug\Format\TextFormat;
+
+class TextRender extends AbstractTemplatingRender
 {
 
     public function getFormat()
     {
-        return self::FORMAT_TEXT;
+        return TextFormat::FORMAT_NAME;
     }
 
     public function render(array $nodes, array $extraData = array())
     {
-        $this->load();
+        $this->loadTemplatingEngine();
 
-        $result = $this->twig->render('layout.text.twig', array_merge(
+        $result = $this->templatingEngine->render('layout.text.twig', array_merge(
             array(
                 'nodes' => $nodes
             ), $extraData

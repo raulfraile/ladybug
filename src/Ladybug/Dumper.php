@@ -184,7 +184,7 @@ class Dumper
         $themeResolver = $this->application->container->get('theme_resolver');
 
         if ($this->application->container->hasParameter('theme')) {
-            $theme = $themeResolver->getTheme($this->application->container->getParameter('theme'), $format);
+            $theme = $themeResolver->getTheme($this->application->container->getParameter('theme'), $format->getName());
         } else {
             $theme = $themeResolver->resolve($format);
         }
@@ -194,7 +194,7 @@ class Dumper
 
         $render = $renderResolver->resolve($format);
         $render->setTheme($theme);
-        $render->setFormat($format);
+        //$render->setFormat($format);
 
         return $render;
     }

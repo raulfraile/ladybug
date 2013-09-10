@@ -13,7 +13,7 @@ namespace Ladybug\Render;
 
 use Ladybug\Format;
 
-class PhpRender extends AbstractRender implements RenderInterface
+class PhpRender extends AbstractRender
 {
 
     public function render(array $nodes, array $extraData = array())

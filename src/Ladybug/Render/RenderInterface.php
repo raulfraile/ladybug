@@ -11,6 +11,9 @@
 
 namespace Ladybug\Render;
 
+use Ladybug\Theme\ThemeInterface;
+use Ladybug\Format\FormatInterface;
+
 /**
  * RenderInterface is the interface implemented by all render classes
  *
@@ -19,17 +22,31 @@ namespace Ladybug\Render;
 interface RenderInterface
 {
 
-    const FORMAT_HTML = 'html';
-    const FORMAT_CONSOLE = 'console';
-    const FORMAT_TEXT = 'text';
-
+    /**
+     * Gets the render response format
+     *
+     * @return string Response format name
+     */
     public function getFormat();
 
+    /**
+     * Renders an array of nodes
+     * @param array $nodes     Nodes to render
+     * @param array $extraData Extra data
+     *
+     * @return mixed
+     */
     public function render(array $nodes, array $extraData = array());
 
-    public function setTheme(\Ladybug\Theme\ThemeInterface $theme);
+    /**
+     * Sets the theme that will be used to render
+     * @param \Ladybug\Theme\ThemeInterface $theme
+     */
+    public function setTheme(ThemeInterface $theme);
 
-    public function setFormat($format);
-
+    /**
+     * Sets global variables
+     * @param array $globals
+     */
     public function setGlobals(array $globals);
 }

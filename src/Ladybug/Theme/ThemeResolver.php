@@ -64,13 +64,13 @@ class ThemeResolver
         return false;
     }
 
-    public function getTheme($key, FormatInterface $format)
+    public function getTheme($key, $format)
     {
         /** @var $theme ThemeInterface */
         $theme = $this->themes['theme_' . $key];
 
         while (!is_null($theme)) {
-            if ($this->supportsFormat($theme, $format->getName())) {
+            if ($this->supportsFormat($theme, $format)) {
                 return $theme;
             }
 
