@@ -1,11 +1,9 @@
 <?php
 
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * Type/FactoryType: Types factory
- *
- * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,47 +13,63 @@ namespace Ladybug\Metadata;
 
 use Ladybug\Metadata\MetadataInterface;
 
-class MetadataResolver
+/**
+ * MetadataInterface is the interface implemented by all metadata classes
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class MetadataResolver implements MetadataResolverInterface
 {
 
+    /** @var MetadataInterface[] */
     protected $metadatas;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->metadatas = array();
     }
 
+    /**
+     * Adds a new metadata object
+     * @param MetadataInterface $metadata
+     */
     public function add(MetadataInterface $metadata)
     {
         $this->metadatas[] = $metadata;
     }
 
-    public function resolve($className)
+    /**
+     * Gets metadata for the class/resource id
+     * @param string $id
+     * @param int    $type
+     *
+     * @return array
+     */
+    public function get($id, $type = MetadataInterface::TYPE_CLASS)
     {
         foreach ($this->metadatas as $metadata) {
-            if ($metadata->hasMetadata($className)) {
-                return $metadata;
-            }
-        }
-
-        return null;
-    }
-
-    public function getMetadata($className, $type = MetadataInterface::TYPE_CLASS)
-    {
-        foreach ($this->metadatas as $metadata) {
-            if ($metadata->hasMetadata($className, $type)) {
-                return $metadata->getMetadata($className, $type);
+            if ($metadata->supports($id, $type)) {
+                return $metadata->get($id, $type);
             }
         }
 
         return array();
     }
 
-    public function has($className, $type = MetadataInterface::TYPE_CLASS)
+    /**
+     * Checks if there is a metadata object to handle the given class/resource id
+     * @param string $id
+     * @param int    $type
+     *
+     * @return bool
+     */
+    public function has($id, $type = MetadataInterface::TYPE_CLASS)
     {
         foreach ($this->metadatas as $metadata) {
-            if ($metadata->hasMetadata($className, $type)) {
+            if ($metadata->supports($id, $type)) {
                 return true;
             }
         }

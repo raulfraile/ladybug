@@ -1,10 +1,9 @@
 <?php
+
 /*
- * Ladybug: Simple and Extensible PHP Dumper
+ * This file is part of the Ladybug package.
  *
- * Processor / Standard Object
- *
- * (c) Raúl Fraile Beneyto <raulfraile@gmail.com>
+ * (c) Raul Fraile <raulfraile@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,6 +11,10 @@
 
 namespace Ladybug\Metadata;
 
+/**
+ * Metadata classes can extend from this class to get some common methods to
+ * generate URLs and check namespaces/prefixes.
+ */
 abstract class AbstractMetadata implements MetadataInterface
 {
 
@@ -21,9 +24,9 @@ abstract class AbstractMetadata implements MetadataInterface
     /** @var string $version */
     protected $version = null;
 
-    abstract public function hasMetadata($id, $type = MetadataInterface::TYPE_CLASS);
+    abstract public function supports($id, $type = MetadataInterface::TYPE_CLASS);
 
-    abstract public function getMetadata($id, $type = MetadataInterface::TYPE_CLASS);
+    abstract public function get($id, $type = MetadataInterface::TYPE_CLASS);
 
     public function generateHelpLinkUrl($url, array $parameters = array())
     {

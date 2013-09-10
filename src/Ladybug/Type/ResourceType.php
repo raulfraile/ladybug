@@ -82,7 +82,7 @@ class ResourceType extends AbstractType
 
         // metadata
         if ($this->metadataResolver->has($this->resourceType, MetadataInterface::TYPE_RESOURCE)) {
-            $metadata = $this->metadataResolver->getMetadata($this->resourceType, MetadataInterface::TYPE_RESOURCE);
+            $metadata = $this->metadataResolver->get($this->resourceType, MetadataInterface::TYPE_RESOURCE);
 
             if (array_key_exists('help_link', $metadata)) {
                 $this->helpLink = $metadata['help_link'];

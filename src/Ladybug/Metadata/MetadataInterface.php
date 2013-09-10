@@ -29,7 +29,7 @@ interface MetadataInterface
      *
      * @return array
      */
-    public function getMetadata($id, $type = self::TYPE_CLASS);
+    public function get($id, $type = self::TYPE_CLASS);
 
 
     /**
@@ -39,6 +39,6 @@ interface MetadataInterface
      *
      * @return boolean
      */
-    public function hasMetadata($id, $type = self::TYPE_CLASS);
+    public function supports($id, $type = self::TYPE_CLASS);
 
 }

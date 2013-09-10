@@ -117,7 +117,7 @@ class ObjectType extends AbstractType
 
             // metadata
             if ($this->metadataResolver->has($this->className)) {
-                $metadata = $this->metadataResolver->getMetadata($this->className);
+                $metadata = $this->metadataResolver->get($this->className);
 
                 if (array_key_exists('help_link', $metadata)) {
                     $this->helpLink = $metadata['help_link'];
