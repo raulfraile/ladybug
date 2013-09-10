@@ -37,10 +37,17 @@ class Application
      */
     public function build($parameters = array())
     {
+        // sort array by key to generate the container name
+        ksort($parameters);
+
+        // generate hash
+        $parametersHash = md5(serialize($parameters));
+
+        $containerClass = 'Container' . $parametersHash;
 
         $isDebug = true;
 
-        $file = sys_get_temp_dir() .'/ladybug_cache/container3.php';
+        $file = sprintf('%s/ladybug_cache/container/%s.php', sys_get_temp_dir(), $parametersHash);
         $containerConfigCache = new ConfigCache($file, $isDebug);
 
         if (!$containerConfigCache->isFresh()) {
@@ -54,13 +61,16 @@ class Application
 
             $dumper = new PhpDumper($this->container);
             $containerConfigCache->write(
-                $dumper->dump(array('class' => 'LadybugCachedContainer')),
+                $dumper->dump(array('class' => $containerClass)),
                 $this->container->getResources()
             );
+        } else {
+            require_once $file;
+
+            $this->container = new $containerClass();
         }
 
-        require_once $file;
-        $this->container = new \LadybugCachedContainer();
+
     }
 
     /**

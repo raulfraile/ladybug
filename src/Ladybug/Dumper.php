@@ -51,7 +51,6 @@ class Dumper
     protected $plugins;
 
 
-
     /**
      * Constructor
      */
@@ -83,7 +82,8 @@ class Dumper
         }
 
         $this->application = new Application();
-        $this->application->build($this->options, $this->plugins);
+        $this->application->build($this->options);
+
     }
 
     /**

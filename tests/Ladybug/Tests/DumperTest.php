@@ -17,6 +17,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->dumper = new Dumper();
         $this->dumper->setFormat(Format\PhpFormat::FORMAT_NAME);
         $this->dumper->setTheme('base');
+        $this->dumper->setOption('cache_container', false);
     }
 
     public function testDumpSimpleVariable()
