@@ -22,7 +22,7 @@ class InspectorManager
 
     public function __construct()
     {
-
+        $this->inspectors = array();
     }
 
     public function add(InspectorInterface $inspector)
