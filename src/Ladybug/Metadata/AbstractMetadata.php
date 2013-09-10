@@ -24,10 +24,6 @@ abstract class AbstractMetadata implements MetadataInterface
     /** @var string $version */
     protected $version = null;
 
-    abstract public function supports($id, $type = MetadataInterface::TYPE_CLASS);
-
-    abstract public function get($id, $type = MetadataInterface::TYPE_CLASS);
-
     public function generateHelpLinkUrl($url, array $parameters = array())
     {
         return str_replace(array_keys($parameters), array_values($parameters), $url);
