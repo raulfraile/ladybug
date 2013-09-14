@@ -45,11 +45,11 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
     }
 
     /**
-     * Gets CLI colors
+     * Gets CLI styles
      *
      * @return array
      */
-    public function getCliColors()
+    public function getCliStyles()
     {
         return array(
             't_string' => 'yellow',
@@ -75,7 +75,9 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
      */
     public function getCliTags()
     {
-        return array();
+        return array(
+            'tab' => '<f_tab> · </f_tab>'
+        );
     }
 
     /**

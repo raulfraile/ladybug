@@ -21,15 +21,18 @@ use Ladybug\Render\Twig\Extension\ConsoleExtension;
 class ConsoleRender extends AbstractTemplatingRender
 {
 
+    /** @var ConsoleOutputInterface $console */
     protected $console;
+
+    protected $tags = array(
+        'intro' => PHP_EOL,
+        'tab' => '  ',
+        'space' => ' '
+    );
 
     public function __construct(ThemeResolver $themeResolver, ConsoleOutputInterface $console = null)
     {
-        if (!is_null($console)) {
-            $this->console = $console;
-        } else {
-            $this->console = new ConsoleOutput();
-        }
+        $this->console = is_null($console) ? new ConsoleOutput() : $console;
 
         parent::__construct($themeResolver);
     }
@@ -40,7 +43,7 @@ class ConsoleRender extends AbstractTemplatingRender
             parent::loadTemplatingEngine();
 
             // load styles
-            foreach ($this->theme->getCliColors() as $key => $item) {
+            foreach ($this->theme->getCliStyles() as $key => $item) {
                 if (is_array($item)) {
                     $style = new OutputFormatterStyle($item[0], $item[1]);
                 } else {
@@ -63,9 +66,13 @@ class ConsoleRender extends AbstractTemplatingRender
         ));
 
         $result = preg_replace('/\s/', '', $result);
-        $result = str_replace('<intro>', PHP_EOL, $result);
-        $result = str_replace('<tab>', '<f_tab> · </f_tab>', $result);
-        $result = str_replace('<space>', ' ', $result);
+
+        $tags = array_merge($this->tags, $this->theme->getCliTags());
+        foreach ($tags as $tag => $replacement) {
+            $result = str_replace(sprintf('<%s>', $tag), $replacement, $result);
+        }
+
+        // @todo: clean
         $result = str_replace('<t_>', '', $result);
         $result = str_replace('</t_>', '', $result);
 

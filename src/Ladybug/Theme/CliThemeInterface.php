@@ -19,11 +19,11 @@ namespace Ladybug\Theme;
 interface CliThemeInterface extends ThemeInterface
 {
     /**
-     * Gets CLI colors
+     * Gets CLI styles
      *
      * @return array
      */
-    public function getCliColors();
+    public function getCliStyles();
 
     /**
      * Gets CLI tags
