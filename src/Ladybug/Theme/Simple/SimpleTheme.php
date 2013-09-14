@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Theme\Base;
+namespace Ladybug\Theme\Simple;
 
 use Ladybug\Theme\AbstractTheme;
 use Ladybug\Theme\HtmlThemeInterface;
@@ -17,11 +17,11 @@ use Ladybug\Theme\CliThemeInterface;
 use Ladybug\Format;
 
 /**
- * Base theme class
+ * Simple theme class
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInterface
+class SimpleTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInterface
 {
 
     /**
@@ -31,7 +31,7 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
      */
     public function getName()
     {
-        return 'Base';
+        return 'Simple';
     }
 
     /**
@@ -51,7 +51,21 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
      */
     public function getCliStyles()
     {
-        return array();
+        return array(
+            't_string' => 'yellow',
+            't_bool' => 'blue',
+            't_float' => 'red',
+            't_int' => 'red',
+            't_array' => 'cyan',
+            't_object' => 'cyan',
+            't_resource' => 'cyan',
+            't_array_block' => array('white', 'magenta'),
+            'v_public' => 'green',
+            'v_protected' => 'yellow',
+            'v_private' => 'red',
+            'f_tab' => 'white',
+            'f_called' => array('white', 'blue')
+        );
     }
 
     /**
@@ -61,7 +75,9 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
      */
     public function getCliTags()
     {
-        return array();
+        return array(
+            'tab' => '<f_tab> · </f_tab>'
+        );
     }
 
     /**
@@ -71,7 +87,9 @@ class BaseTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeInt
      */
     public function getHtmlCssDependencies()
     {
-        return array();
+        return array(
+            'css/styles.css'
+        );
     }
 
     /**

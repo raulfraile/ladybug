@@ -47,7 +47,7 @@ class Application
 
         $isDebug = true;
 
-        $file = sprintf('%s/ladybug_cache/container/%s.php', sys_get_temp_dir(), $parametersHash);
+        $file = sprintf('%s/ladybug_cache/%s.php', sys_get_temp_dir(), $parametersHash);
         $containerConfigCache = new ConfigCache($file, $isDebug);
 
         if (!$containerConfigCache->isFresh()) {

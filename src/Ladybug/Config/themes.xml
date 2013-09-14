@@ -10,6 +10,10 @@
             <tag name="ladybug.theme" />
         </service>
 
+        <service id="theme_simple" class="Ladybug\Theme\Simple\SimpleTheme">
+            <tag name="ladybug.theme" />
+        </service>
+
         <service id="theme_classic" class="Ladybug\Theme\Classic\ClassicTheme">
             <tag name="ladybug.theme" />
         </service>

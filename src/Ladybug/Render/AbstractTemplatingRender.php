@@ -77,16 +77,48 @@ abstract class AbstractTemplatingRender extends AbstractRender
 
             $parentTheme = $this->themeResolver->getTheme($parent, static::getFormat());
 
-            $templatesDir = $parentTheme->getTemplatesPath() . ucfirst(static::getFormat()) . '/';
+            if ($parentTheme !== false) {
+                $templatesDir = $parentTheme->getTemplatesPath() . ucfirst(static::getFormat()) . '/';
 
-            if (file_exists($templatesDir)) {
-                $paths[] = $templatesDir;
-            }
+                if (file_exists($templatesDir)) {
+                    $paths[] = $templatesDir;
+                }
 
-            $templatesDir .= 'Extension/';
-            if (file_exists($templatesDir)) {
-                $paths[] = $templatesDir;
+                $templatesDir .= 'Extension/';
+                if (file_exists($templatesDir)) {
+                    $paths[] = $templatesDir;
+                }
             }
+        }
+
+        if (empty($paths)) {
+            // no theme found, load simple theme
+
+            $simpleTheme = $this->themeResolver->getTheme('simple', static::getFormat());
+
+            $paths = $this->getPathsByTheme($simpleTheme);
+
+            $this->theme = $simpleTheme;
+        }
+
+
+        return $paths;
+    }
+
+    protected function getPathsByTheme(ThemeInterface $theme)
+    {
+        $paths = array();
+
+        $templatesDir = $theme->getTemplatesPath() . ucfirst(static::getFormat()) . '/';
+        if (file_exists($templatesDir)) {
+            $paths[] = $templatesDir;
+        }
+
+        // extension templates
+        $extensionsDir = $templatesDir . 'Extension/';
+
+        if (file_exists($extensionsDir)) {
+            $paths[] = $extensionsDir;
         }
 
         return $paths;

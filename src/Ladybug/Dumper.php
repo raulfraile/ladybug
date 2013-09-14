@@ -166,7 +166,6 @@ class Dumper
     protected function getRender()
     {
         // environment
-
         /** @var $environmentResolver EnvironmentResolver */
         $environmentResolver = $this->application->container->get('environment_resolver');
         $environment = $environmentResolver->resolve();

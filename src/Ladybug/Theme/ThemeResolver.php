@@ -70,13 +70,14 @@ class ThemeResolver
         $theme = $this->themes['theme_' . $key];
 
         while (!is_null($theme)) {
+
             if ($this->supportsFormat($theme, $format)) {
                 return $theme;
             }
 
             $parent = $theme->getParent();
             if (is_null($parent)) {
-                throw new \Exception('theme not found');
+                return false;
             }
 
             $theme = $this->themes['theme_'.strtolower($parent)];
