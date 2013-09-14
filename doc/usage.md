@@ -42,7 +42,7 @@ terminates the current script
 
 `ldd($var1[, $var2[, ...]])`: Shortcut for ladybug_dump_die
 
-### Configure
+### Configuration
 
 `ladybug_set_theme($themeName)`: Set theme (e.g. "classic")
 

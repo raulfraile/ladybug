@@ -1,6 +1,6 @@
 # Installation
 
-The recommended way to install Ladybug is through [Composer](http://packagist.org/about-composer). Just create a composer.json file for your project:
+The recommended way to install Ladybug is through [Composer](http://packagist.org/about-composer). Just create a `composer.json file for your project:
 
 ``` json
 {
@@ -19,7 +19,7 @@ curl -O http://getcomposer.org/composer.phar
 php composer.phar install
 ```
 
-After running the `install` command, you must see a new vendor directory that must contain the Ladybug code, as well as all
+After running the `install` command, a new directory called 'vendor' will contain the Ladybug code, as well as all
 the required dependencies.
 
 Once added the autoloader you will have access to the library:

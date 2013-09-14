@@ -79,7 +79,7 @@ array(2)
 
 ### Other formats
 
-Variable dumps can be exported to some other formats, like XML or JSON:
+Variable dumps can be exported to some other formats, like XML or JSON (jms/serializer` required):
 
 ``` php
 <?php
@@ -92,7 +92,8 @@ $json = $dumper->dump($var);
 
 ## Extended objects/resources
 
-Ladybug allows extending some objects or resources to display richer information. They are called `inspectors`.
+Ladybug allows extending any object or resource to display richer information.
+They are called `inspectors`.
 For example, there are built-in inspectors for MySQL resultsets or GD images:
 
 ``` php

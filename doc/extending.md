@@ -1,34 +1,34 @@
 # Extending
 
-Ladybug is built in a modular way using the `DependencyInjection` Symfony2 component. Overriding
-or adding new behaviour is as easy as adding new services.
+Ladybug is built in a modular way and allows adding plugins with extra behaviour really easily.
 
 ## Basics
 
-There are 6 components
+The library is composed of six main components:
 
-* Themes: Used to render
-* Inspector:
-* Metadata
-* Type
-* Render
+* Themes: Themes render one or more variables in a specific format.
+* Inspectors: An inspector is responsible of adding any extra information to an object/resource. For example, the
+there is an inspector to display the \SplMaxHeap elements as a collection.
+* Metadatas: Metadatas return meta-information such as the documentation link for a given object/resource. For example,
+ there are inspectors to detect Symfony objects, so the themes can render a Symfony icon next to the class name.
+* Type: Variable types. There are 'native' types like `float` or `string`, as well as extended types such as `collection`, `image` or `code.
+* Renderers: Renderers handle the render process for a given format and theme.
 
-To include any of these, you must create a new `extension` and include them inside.
+To include any of these, you must create a new `plugin` and include them inside.
 
-## Extension
+## Plugin
 
-An extension encapsulates one or more components and it must have a class implementing the `ExtensionInterface` interface.
-So, if you want to create a new theme, you will have to create the extension first and then the theme:
+A plugin encapsulates one or more components and must have a class implementing the `PluginInterface` interface.
+So, if you want to create a new metadata class to detect Symfony classes, you will have to create the plugin
+ first and then the metadata:
 
-/CoolExtension
-    CoolExtension.php (implements ExtensionInterface)
+/CoolPlugin
+    CoolPlugin.php (implements PluginInterface)
     Config/
         services.xml
-    Theme/
-        CoolTheme/
-           ...
+    Metadata/
+        SymfonyMetadata.php
     ...
-
 
 
 ### Themes
