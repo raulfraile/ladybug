@@ -52,3 +52,5 @@ terminates the current script
 ***
 
 Next section: [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
+
+Previous section: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).

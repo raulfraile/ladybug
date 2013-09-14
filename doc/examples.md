@@ -1,6 +1,7 @@
 # Examples
 
-It is possible to dump any variable, including arrays, objects and resources:
+Ladybug allows dumpling any variable, including arrays, objects and resources. Just provide
+a variable and Ladybug will take care of the rest:
 
 ## Simple variables
 
@@ -49,9 +50,19 @@ ladybug_dump($var)
 
 <img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/object_modern.png" />
 
+## Resources
+
+``` php
+<?php
+$fh = fopen('test.txt', 'r');
+ladybug_dump($fh)
+```
+
+<img style="border:1px solid #ccc; padding:1px" src="https://github.com/raulfraile/ladybug/raw/master/doc/images/resource_modern.png" />
+
 ## Other formats
 
-Ladybug detects the environment being used (Browser, CLI or Ajax) and chooses the right format:
+Ladybug is able to detect being used (e.g. browser, CLI or an ajax request) and chooses the right format:
 
 * Browser -> Html
 * CLI -> Console
@@ -77,9 +88,10 @@ array(2)
         [age]: int 27
 ```
 
-### Other formats
+### Serializable
 
-Variable dumps can be exported to some other formats, like XML or JSON (jms/serializer` required):
+Variable dumps can be exported to some other formats, like XML, JSON or YAML, but for this,
+Ladybug needs other packages to do the job: jms/serializer` (for XML and JSON) and `symfony/yaml` (for YAML):
 
 ``` php
 <?php
@@ -93,8 +105,8 @@ $json = $dumper->dump($var);
 ## Extended objects/resources
 
 Ladybug allows extending any object or resource to display richer information.
-They are called `inspectors`.
-For example, there are built-in inspectors for MySQL resultsets or GD images:
+For example, the `ladybug-plugin-extra` package provides built-in inspectors for
+MySQL resultsets or GD images:
 
 ``` php
 <?php
@@ -131,6 +143,4 @@ There are lots of examples in the [/examples directory](https://github.com/raulf
 
 ***
 
-Next section: [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
-
-Previous section: [Installation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
+Next section: [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
