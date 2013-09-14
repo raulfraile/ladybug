@@ -13,6 +13,7 @@ namespace Ladybug\Render\Twig\Extension;
 
 use Twig_Extension;
 use Twig_Environment;
+use Twig_Error_Loader;
 use Ladybug\Type\RenderizableTypeInterface;
 
 class BaseExtension extends Twig_Extension
@@ -77,7 +78,12 @@ class BaseExtension extends Twig_Extension
             'visibility' => $visibility
         );
 
-        $code = $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
+        try {
+            $code = $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
+        }
+        catch (Twig_Error_Loader $e) {
+            return null;
+        }
 
         $code = str_replace(array('<script>', '</script>'), array('<ladybug_script>', '</ladybug_script>'), $code);
 
