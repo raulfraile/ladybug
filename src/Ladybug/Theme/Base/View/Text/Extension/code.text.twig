@@ -5,7 +5,7 @@
 #}
 {% extends "_base.text.twig" %}
 
-{% block type %}{{ m.indent(level) }}{{ var.title|tags|raw }}{% endblock type %}
+{% block type %}{{ m.indent(level) }}{{ var.title|tags }}{% endblock type %}
 
 {% block value %}
 {{ m.indent(level) }}

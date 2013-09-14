@@ -2,4 +2,4 @@
 
 {% block type %}{{ parent() }}({{ var.length }}){% endblock %}
 
-{% block value %}"{{ var.formattedValue|tags|raw }}"{% endblock %}
+{% block value %}"{{ var.formattedValue|tags }}"{% endblock %}

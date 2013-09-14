@@ -16,6 +16,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Ladybug\Theme\ThemeResolver;
 use Ladybug\Format\ConsoleFormat;
+use Ladybug\Render\Twig\Extension\ConsoleExtension;
 
 class ConsoleRender extends AbstractTemplatingRender
 {
@@ -75,5 +76,11 @@ class ConsoleRender extends AbstractTemplatingRender
     {
         return ConsoleFormat::FORMAT_NAME;
     }
+
+    public function getExtension()
+    {
+        return new ConsoleExtension();
+    }
+
 
 }

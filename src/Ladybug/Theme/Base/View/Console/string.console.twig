@@ -4,4 +4,4 @@
 
 {% block type %}{{ parent() }}({{ var.length }})<space>{% endblock %}
 
-{% block inline_value %}"{{ var.formattedValue()|replace({' ': '<space>'})|raw }}"{% endblock %}
+{% block inline_value %}"{{ var.formattedValue()|tags }}"{% endblock %}

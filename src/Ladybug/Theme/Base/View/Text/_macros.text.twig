@@ -1,5 +1,5 @@
 {% macro indent(level) %}
-    {{ '<tab>'|repeat(level-1)|tags|raw }}
+    {{ '<tab>'|repeat(level-1)|tags }}
 {% endmacro %}
 
 {% macro array_block(title, data, level, show_keys) %}
@@ -48,7 +48,7 @@
         ${{ methodParameter.name }}
 
         {% if methodParameter.defaultValue is not null %}
-            <space>=<space> {{ methodParameter.defaultValue.inlineValue|tags|raw }}
+            <space>=<space> {{ methodParameter.defaultValue.inlineValue|tags }}
         {% endif %}{% if not loop.last %},<space>{% endif %}
     {% endfor %}
                     )

@@ -14,7 +14,7 @@
     {{ m.indent(var.level) }}
     |
     {% for item in var.headers %}
-        <space>{{ item|pad(var.maxWidthByColumn(loop.index0))|tags|raw }}<space>|
+        <space>{{ item|pad(var.maxWidthByColumn(loop.index0))|tags }}<space>|
     {% endfor %}
 {% endmacro %}
 
@@ -23,6 +23,6 @@
     {{ m.indent(var.level) }}
     |<space>
     {% for field in row %}
-        {{ field|pad(var.maxWidthByColumn(loop.index0))|tags|raw }}<space>|<space>
+        {{ field|pad(var.maxWidthByColumn(loop.index0))|tags }}<space>|<space>
     {% endfor %}
 {% endmacro %}

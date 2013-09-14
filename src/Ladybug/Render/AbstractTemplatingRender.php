@@ -15,7 +15,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Format\FormatInterface;
-use Ladybug\Render\Twig\Extension\LadybugExtension;
+use Ladybug\Render\Twig\Extension\BaseExtension;
 use Ladybug\Theme\ThemeResolver;
 
 abstract class AbstractTemplatingRender extends AbstractRender
@@ -33,7 +33,7 @@ abstract class AbstractTemplatingRender extends AbstractRender
 
             $this->templatingEngine = new Twig_Environment($loader);
 
-            $extension = new LadybugExtension();
+            $extension = $this->getExtension();
             $extension->setFormat(static::getFormat());
 
             $this->templatingEngine->addExtension($extension);
@@ -99,6 +99,11 @@ abstract class AbstractTemplatingRender extends AbstractRender
         return array_map(function ($path) use ($resourcesPath) {
             return $resourcesPath.$path;
         }, $files);
+    }
+
+    public function getExtension()
+    {
+        return new BaseExtension();
     }
 
 }

@@ -15,7 +15,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Format\FormatInterface;
-use Ladybug\Render\Twig\Extension\LadybugExtension;
+use Ladybug\Render\Twig\Extension\BaseExtension;
 use Ladybug\Theme\ThemeResolver;
 use JMS\Serializer\Serializer;
 use Ladybug\Exception\SerializerNotFoundException;

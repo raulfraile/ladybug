@@ -38,13 +38,12 @@
 
             {# Interfaces #}
             {% if var.classInterfaces is not empty %}
-                {% set class_info_data = class_info_data|merge(['Interfaces:<space>' ~ var.classInterfaces|tags|raw]) %}
-                {#{ m.indent(level+1) }}Interfaces:<space>{{ var.classInterfaces|tags|raw }}<intro>#}
+                {% set class_info_data = class_info_data|merge(['Interfaces:<space>' ~ var.classInterfaces|tags]) %}
             {% endif %}
 
             {# Interfaces #}
             {% if var.classTraits is not empty %}
-                {% set class_info_data = class_info_data|merge(['Traits:<space>' ~ var.classTraits|tags|raw]) %}
+                {% set class_info_data = class_info_data|merge(['Traits:<space>' ~ var.classTraits]) %}
             {% endif %}
 
             {# Namespace #}

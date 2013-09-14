@@ -1,11 +1,11 @@
 {% extends "_base.text.twig" %}
 
-{% block type %}{{ var.type }}({{ var.resourceType|tags|raw }}){% endblock type %}
+{% block type %}{{ var.type }}({{ var.resourceType|tags }}){% endblock type %}
 {% block value %}
 
     {% if var.resourceCustomData is not empty %}
         <intro>
-        {{ render_type(var.resourceCustomData)|raw }}
+        {{ render_type(var.resourceCustomData) }}
     {% endif %}
 
 {% endblock %}

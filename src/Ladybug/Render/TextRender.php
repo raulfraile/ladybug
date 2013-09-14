@@ -12,6 +12,7 @@
 namespace Ladybug\Render;
 
 use Ladybug\Format\TextFormat;
+use Ladybug\Render\Twig\Extension\TextExtension;
 
 class TextRender extends AbstractTemplatingRender
 {
@@ -38,4 +39,11 @@ class TextRender extends AbstractTemplatingRender
 
         return $result;
     }
+
+    public function getExtension()
+    {
+        return new TextExtension();
+    }
+
+
 }
