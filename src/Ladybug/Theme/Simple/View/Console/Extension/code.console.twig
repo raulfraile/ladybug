@@ -3,11 +3,10 @@
 {% set composed = true %}
 
 {% block type %}
-    <t_array_block>{{ var.title|tags|raw }}</t_array_block><intro>
+    <t_array_block>{{ var.title|tags }}</t_array_block><intro>
 {% endblock %}
 
 {% block value %}
-    {{ m.indent(var.level + 1) }}
-    {{ var.content|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(var.level + 1)})|raw }}
-
+    {{ m.indent(var.level) }}
+    {{ var.content|tags|replace({'<intro>': '<intro>' ~ m.indent(var.level)})|raw }}
 {% endblock %}

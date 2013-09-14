@@ -59,7 +59,7 @@ class BaseExtension extends Twig_Extension
             'repeat' => new \Twig_Filter_Method(
                 $this,
                 'getRepeat',
-                array()
+                array('is_safe' => array('html'))
             ),
             'pad' => new \Twig_Filter_Method(
                 $this,

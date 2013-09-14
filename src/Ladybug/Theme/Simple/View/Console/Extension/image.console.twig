@@ -4,7 +4,7 @@
 
 {% block type %}
     {% if var.title is not empty %}
-        <t_array_block>{{ var.title|tags|raw }}</t_array_block><intro>
+        <t_array_block>{{ var.title|tags }}</t_array_block><intro>
     {% endif %}
 {% endblock %}
 

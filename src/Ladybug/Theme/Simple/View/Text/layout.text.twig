@@ -1,5 +1,5 @@
 {% for node in nodes %}
-    {{ render_type(node)|raw }}<intro>
+    {{ render_type(node) }}<intro>
 {% endfor %}
 
-<intro>{{ callFile }}:{{ callLine }}<intro><intro>
+<intro>{{ callFile }}:{{ callLine }}<intro>

@@ -1,9 +1,12 @@
 {% import "_macros.console.twig" as m %}
 
+{# print visibility #}
 {{ m.visibility_block(visibility) }}
 
+{# array key #}
 {{ m.array_key(key) }}
 
+{# the block 'type' renders the variable type #}
 {% block type %}{{ var.type }}<space>{% endblock %}
 
 {% if var.type != 'null' %}
@@ -15,5 +18,6 @@
 {% endif %}
 
 {% if composed %}
+    {# block 'value' renders the variable data for composed types (e.g. object) #}
     {% block value %}{% endblock %}
 {% endif %}
