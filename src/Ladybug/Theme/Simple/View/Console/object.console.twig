@@ -33,7 +33,6 @@
             {# Filename #}
             {% if var.classFile is not empty %}
                 {% set class_info_data = class_info_data|merge(['Filename:<space>' ~ var.classFile]) %}
-                {#{ m.indent(level+1) }}Filename:<space>{{ var.classFile }}<intro>#}
             {% endif %}
 
             {# Interfaces #}
@@ -41,7 +40,7 @@
                 {% set class_info_data = class_info_data|merge(['Interfaces:<space>' ~ var.classInterfaces|tags]) %}
             {% endif %}
 
-            {# Interfaces #}
+            {# Traits #}
             {% if var.classTraits is not empty %}
                 {% set class_info_data = class_info_data|merge(['Traits:<space>' ~ var.classTraits]) %}
             {% endif %}

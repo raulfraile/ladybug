@@ -1,44 +1,44 @@
+{#
+ # Indent line to the given level
+ # @param int level
+ #}
 {% macro indent(level) %}
-    {{ '<tab>'|repeat(level-1)|tags }}
+    {{ '<tab>'|repeat(level-1) }}
 {% endmacro %}
 
-{% macro array_block(title, data, level, show_keys) %}
-    {{ _self.indent(level) }}{{ title }}<intro>
-
-    {% for key,var in data %}
-        {{ _self.indent(level) }}
-        {{ var.render(key, 'txt')|raw }}
-    {% endfor %}
-{% endmacro %}
-
-{% macro text_block(title, data, level, show_keys) %}
-    {{ _self.indent(level) }}{{ title }}<intro>
-
-    {% for key,var in data %}
-        {{ _self.indent(level) }}
-        {% if show_keys %}{{ key }}:<space>{% endif %}
-        {{ var|replace({' ': '<space>'})|raw }}<intro>
-    {% endfor %}
-{% endmacro %}
-
+{#
+ # Writes the key of an array
+ # @param mixed key
+ #}
 {% macro array_key(key) %}
     {% if key is not empty %}
-        [{{ key|replace({' ': '<space>'})|raw }}]:<space>
+        [{{ key|tags }}]:<space>
     {% endif %}
 {% endmacro %}
 
-
-{% macro property_visibility(var) %}
-    {% if var is not empty %}
-        {% if key.visibility is defined %}
-            {{ _self.visibility_name(key.visibility) }}
+{#
+ # Writes the method/property visibility
+ # @param VisibilityInterface visibility
+ #}
+{% macro visibility_text(visibility) %}
+    {% if visibility is not null %}
+        {% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+            -
+        {% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+            #
+        {% else %}
+            +
         {% endif %}
+        <space>
     {% endif %}
 {% endmacro %}
 
+{#
+ # Renders an object method
+ # @param Method method
+ #}
 {% macro render_object_method(method, level) %}
-    {{ _self.indent(level) }}
-    {{ _self.visibility_name(method.visibility) }}<space>
+    {{ _self.visibility_text(method.visibility) }}
     {{ method.name }}(
 
     {% for methodParameter in method.parameters %}
@@ -51,16 +51,5 @@
             <space>=<space> {{ methodParameter.defaultValue.inlineValue|tags }}
         {% endif %}{% if not loop.last %},<space>{% endif %}
     {% endfor %}
-                    )
-{% endmacro %}
-
-
-{% macro visibility_name(visibility) %}
-    {% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
-        private
-    {% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
-        protected
-    {% else %}
-        public
-    {% endif %}
+    )
 {% endmacro %}

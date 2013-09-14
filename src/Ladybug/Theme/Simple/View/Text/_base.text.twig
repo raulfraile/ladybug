@@ -1,8 +1,18 @@
 {% import "_macros.text.twig" as m %}
 
 {% spaceless %}
-    {{ m.property_visibility(var) }}
+    {{ m.visibility_text(visibility) }}
     {{ m.array_key(key) }}
-    {% block type %}{{ var.type }}{% endblock %}<space>
-    {% block value %}{{ var.formattedValue }}{% endblock %}
+    {% block type %}{{ var.type }}<space>{% endblock %}
+
+    {% if var.type != 'null' %}
+        {% if not composed %}
+            {% block inline_value %}{{ var.formattedValue()|raw }}{% endblock %}
+        {% endif %}
+    {% endif %}
+
+    {% if composed %}
+        {# block 'value' renders the variable data for composed types (e.g. object) #}
+        {% block value %}{% endblock %}
+    {% endif %}
 {% endspaceless%}

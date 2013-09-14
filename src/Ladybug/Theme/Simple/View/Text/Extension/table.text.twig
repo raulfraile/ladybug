@@ -2,7 +2,13 @@
 
 {% import "_macros_table.text.twig" as mt %}
 
-{% block type %}{{ m.indent(var.level) }}{{ var.title }}{% endblock type %}
+{% set composed = true %}
+
+{% block type %}
+    {% if var.title is not empty %}
+        >><space>{{ var.title|tags }}
+    {% endif %}
+{% endblock type %}
 
 {% block value %}
     <intro>

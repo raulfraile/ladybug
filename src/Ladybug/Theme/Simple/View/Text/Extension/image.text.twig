@@ -1,10 +1,10 @@
-{% extends "_base.console.twig" %}
+{% extends "_base.text.twig" %}
 
 {% set composed = true %}
 
 {% block type %}
     {% if var.title is not empty %}
-        <t_array_block>{{ var.title|tags }}</t_array_block><intro>
+        >><space>{{ var.title|tags }}<intro>
     {% endif %}
 {% endblock %}
 

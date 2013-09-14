@@ -5,5 +5,7 @@
 {% block type %}{% endblock %}
 
 {% block inline_value %}
-    {{ var.text|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(var.level + 1)})|raw }}
+    {{ var.sizeUnit|number_format(2) }}
+    <space>
+    {{ var.unit }}
 {% endblock %}

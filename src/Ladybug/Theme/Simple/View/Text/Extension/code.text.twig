@@ -1,13 +1,10 @@
-{#{% import "_macros.text.twig" as m %}
-
-
-
-#}
 {% extends "_base.text.twig" %}
 
-{% block type %}{{ m.indent(level) }}{{ var.title|tags }}{% endblock type %}
+{% set composed = true %}
+
+{% block type %}>><space>{{ var.title|tags }}<intro>{% endblock type %}
 
 {% block value %}
-{{ m.indent(level) }}
-{{ var.data|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(level) })|raw }}
+    {{ m.indent(var.level) }}
+    {{ var.content|tags|replace({'<intro>': '<intro>' ~ m.indent(var.level)})|raw }}
 {% endblock %}

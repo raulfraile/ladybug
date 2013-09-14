@@ -1,10 +1,9 @@
 {% extends "_base.console.twig" %}
 
 {% set composed = false %}
+
 {% block type %}{% endblock %}
 
-    {% block inline_value %}
-
+{% block inline_value %}
     {{ var.text|replace({' ': '<space>', '\n': '<intro>' ~ m.indent(var.level + 1)})|raw }}
-
-        {% endblock %}
+{% endblock %}

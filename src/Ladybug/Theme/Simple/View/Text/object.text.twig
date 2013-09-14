@@ -1,69 +1,88 @@
 {% extends "_base.text.twig" %}
 
+{% set composed = true %}
+
 {% block type %}{{ var.type }}({{ var.className }}){% endblock type %}
 {% block value %}
 
-    <intro>
     {% if not var.terminal %}
-        {# Custom data #}
+        <intro>
 
+        {# Custom data #}
         {% if var.objectCustomData is not empty %}
-            {{ render_type(var.objectCustomData)|raw }}<intro>
+            {{ m.indent(var.objectCustomData.level) }}
+            {{ render_type(var.objectCustomData) }}
         {% endif %}
 
         {# Properties #}
         {% if var.objectProperties is not empty %}
-            {{ m.indent(level + 1) }}#<space>Properties<intro>
+            {{ m.indent(level + 1) }}>><space>Properties<intro>
 
             {% for data in var.objectProperties %}
                 {{ m.indent(level+1) }}
                 {{ render_type(data.value, data.name, data.visibility)|raw }}
                 {#% if not loop.last %}<intro>{% endif %#}
-                {% if not data.value.composed %}<intro>{% endif %}
+                {% if not loop.last %}<intro>{% endif %}
             {% endfor %}
 
             {% endif %}
 
         {# Class info #}
         {% if var.classFile is not empty %}
-            {{ m.indent(level + 1) }}#<space>Class<space>info<intro>
+            <intro>
+            {{ m.indent(level + 1) }}>><space>Class<space>info<intro>
 
-            {% if var.classFile is not empty %}
-                {{ m.indent(level+1) }}Filename:<space>{{ var.classFile }}<intro>
-            {% endif %}
-            {% if var.classInterface is not empty %}
-                {{ m.indent(level+1) }}Interfaces:<space>{{ var.classInterface }}<intro>
-            {% endif %}
-            {% if var.classNamespace is not empty %}
-                {{ m.indent(level+1) }}Namespace:<space>{{ var.classNamespace }}<intro>
-            {% endif %}
-            {% if var.classParent is not empty %}
-                {{ m.indent(level+1) }}Parent:<space>{{ var.classParent }}<intro>
-            {% endif %}
+                {% set class_info_data = {} %}
 
+                {# Filename #}
+                {% if var.classFile is not empty %}
+                    {% set class_info_data = class_info_data|merge(['Filename:<space>' ~ var.classFile]) %}
+                {% endif %}
+
+                {# Interfaces #}
+                {% if var.classInterfaces is not empty %}
+                    {% set class_info_data = class_info_data|merge(['Interfaces:<space>' ~ var.classInterfaces|tags]) %}
+                {% endif %}
+
+                {# Traits #}
+                {% if var.classTraits is not empty %}
+                    {% set class_info_data = class_info_data|merge(['Traits:<space>' ~ var.classTraits]) %}
+                {% endif %}
+
+                {# Namespace #}
+                {% if var.classNamespace is not empty %}
+                    {% set class_info_data = class_info_data|merge(['Namespace:<space>' ~ var.classNamespace]) %}
+                {% endif %}
+
+                {# Parent #}
+                {% if var.classParent is not empty %}
+                    {% set class_info_data = class_info_data|merge(['Parent:<space>' ~ var.classParent]) %}
+                {% endif %}
+
+                {{ m.indent(var.level + 1) }}{{ class_info_data|join('<intro>' ~ m.indent(var.level + 1))|raw }}
         {% endif %}
 
         {# Class constants #}
         {% if var.classConstants is not empty %}
-            {{ m.indent(level + 1) }}#<space>Constants<intro>
+            <intro>
+            {{ m.indent(level + 1) }}>><space>Constants<intro>
             {% for key,constant in var.classConstants %}
                 {{ m.indent(constant.value.level) }}
                 {{ render_type(constant.value, constant.name)|raw }}
-                <intro>
+                {% if not loop.last %}<intro>{% endif %}
             {% endfor %}
         {% endif %}
 
         {# Class methods #}
         {% if var.classMethods is not empty %}
-            {{ m.indent(level + 1) }}#<space>Methods<intro>
+            <intro>
+            {{ m.indent(level + 1) }}>><space>Methods<intro>
             {% for method in var.classMethods %}
                 {{ m.indent(method.level) }}
                 {{ m.render_object_method(method, level) }}
-                <intro>
+                {% if not loop.last %}<intro>{% endif %}
             {% endfor %}
         {% endif %}
-    {% else %}
-        {{ m.indent(var.level) }}(!)<space>Object<space>max<space>nesting<space>level<space>reached<intro>
     {% endif %}
 
 {% endblock %}
