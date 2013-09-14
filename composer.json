@@ -1,7 +1,7 @@
 {
     "name": "raulfraile/ladybug",
     "description": "Simple and Extensible PHP Dumper",
-    "version": "1.0.0-alpha4",
+    "version": "1.0.0-beta1",
     "keywords": ["ladybug", "dumper", "dump", "var_dump", "print_r"],
     "homepage": "https://github.com/raulfraile/ladybug",
     "type": "library",
@@ -16,18 +16,18 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "raulfraile/ladybug-theme-modern": "dev-master",
-        "raulfraile/ladybug-helpers": "dev-master",
-        "raulfraile/ladybug-plugin-extra": "dev-master",
+        "raulfraile/ladybug-theme-modern": "1.0.0-beta1",
+        "raulfraile/ladybug-helpers": "1.0.0-beta1",
+        "raulfraile/ladybug-plugin-extra": "1.0.0-beta1",
         "symfony/console": ">=2.0.4",
         "symfony/finder": ">=2.0.4",
         "symfony/dependency-injection": ">=2.0.4",
         "symfony/config": ">=2.0.4",
         "twig/twig": ">=1.7.0",
-        "raulfraile/jivaro": "dev-master"
+        "raulfraile/jivaro": "1.0.0-beta1"
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "0.1.*@dev",
+        "fabpot/php-cs-fixer": "0.2.0",
         "mockery/mockery": "0.8.0",
         "symfony/dom-crawler": ">=2.0.4",
         "phpdocumentor/reflection-docblock": "2.0.0",
