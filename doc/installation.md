@@ -5,7 +5,7 @@ The recommended way to install Ladybug is through [Composer](http://packagist.or
 ``` json
 {
     "require": {
-        "raulfraile/ladybug": "1.0.0-alpha4"
+        "raulfraile/ladybug": "1.0.0-beta1"
     }
 }
 ```
