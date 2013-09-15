@@ -7,7 +7,7 @@ Ladybug: PHP 5.3+ Extensible Dumper
 [![Latest Unstable Version](https://poser.pugx.org/raulfraile/ladybug/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
 
 Ladybug provides an easy and extensible `var_dump` / `print_r` replacement for PHP 5.3+
-projects. Any PHP variable, object or resource can be dump in a beautiful representation:
+projects. Any PHP variable, object or resource can be dumped to beautiful representation:
 
 ``` php
 <?php
@@ -31,7 +31,7 @@ ladybug_dump($var)
 
 1. [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
 2. [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
-3. [Instalation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
+3. [Installation](https://github.com/raulfraile/ladybug/blob/master/doc/installation.md).
 4. [Extending](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
 5. [Reference](https://github.com/raulfraile/ladybug/blob/master/doc/reference.md).
 6. [Tests](https://github.com/raulfraile/ladybug/blob/master/doc/tests.md).
