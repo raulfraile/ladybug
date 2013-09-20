@@ -13,7 +13,7 @@
 namespace Ladybug\Inspector;
 
 use Ladybug\Type\FactoryType;
-use Ladybug\Type\Extended\ExtendedTypeFactory;
+use Ladybug\Type\ExtendedTypeFactory;
 use Ladybug\Type;
 
 abstract class AbstractInspector implements InspectorInterface

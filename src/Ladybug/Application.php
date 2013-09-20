@@ -40,14 +40,20 @@ class Application
         // sort array by key to generate the container name
         ksort($parameters);
 
+        // needed for new packages installed
+        $composerClass = array_filter(get_declared_classes(), function ($item) {
+            if (0 === strpos($item, 'ComposerAutoloaderInit')) return true;
+        });
+        $composerClass = array_pop($composerClass);
+
         // generate hash
-        $parametersHash = md5(serialize($parameters));
+        $parametersHash = md5(serialize($parameters) . $composerClass);
 
         $containerClass = 'Container' . $parametersHash;
 
         $isDebug = true;
 
-        $file = sprintf('%s/ladybug_cache/%s2.php', sys_get_temp_dir(), $parametersHash);
+        $file = sprintf('%s/ladybug_cache/%s.php', sys_get_temp_dir(), $parametersHash);
         $containerConfigCache = new ConfigCache($file, $isDebug);
 
         if (!$containerConfigCache->isFresh()) {
