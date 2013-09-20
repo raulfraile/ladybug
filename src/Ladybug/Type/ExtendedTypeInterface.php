@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\Extended;
+namespace Ladybug\Type;
 
 interface ExtendedTypeInterface
 {
