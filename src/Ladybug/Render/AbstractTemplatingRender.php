@@ -14,7 +14,6 @@ namespace Ladybug\Render;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Ladybug\Theme\ThemeInterface;
-use Ladybug\Format\FormatInterface;
 use Ladybug\Render\Twig\Extension\BaseExtension;
 use Ladybug\Theme\ThemeResolver;
 
@@ -100,7 +99,6 @@ abstract class AbstractTemplatingRender extends AbstractRender
 
             $this->theme = $simpleTheme;
         }
-
 
         return $paths;
     }

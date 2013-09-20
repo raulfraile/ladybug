@@ -31,7 +31,6 @@ interface MetadataInterface
      */
     public function get($id, $type = self::TYPE_CLASS);
 
-
     /**
      * Returns true if the class accepts the object/resource identifier
      * @param string $id   Identifier

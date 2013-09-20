@@ -22,6 +22,11 @@ class Item
     /** @var TypeInterface $value */
     protected $value;
 
+    /**
+     * Constructor.
+     * @param string        $key
+     * @param TypeInterface $value
+     */
     public function __construct($key, TypeInterface $value)
     {
         $this->key = $key;
@@ -29,8 +34,8 @@ class Item
     }
 
     /**
-     * Set item key
-     * @param mixed $key
+     * Sets the item key
+     * @param string $key
      */
     public function setKey($key)
     {
@@ -38,7 +43,7 @@ class Item
     }
 
     /**
-     * Get item key
+     * Gets the item key
      *
      * @return string
      */
@@ -48,7 +53,8 @@ class Item
     }
 
     /**
-     * @param \Ladybug\Type\TypeInterface $value
+     * Sets the item value
+     * @param TypeInterface $value
      */
     public function setValue($value)
     {
@@ -56,7 +62,9 @@ class Item
     }
 
     /**
-     * @return \Ladybug\Type\TypeInterface
+     * Gets the item value.
+     *
+     * @return TypeInterface
      */
     public function getValue()
     {

@@ -13,12 +13,15 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
+/**
+ * StringType is an abstraction of a primitive variable of type 'string'
+ */
 class StringType extends AbstractType
 {
     const TYPE_ID = 'string';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -27,6 +30,9 @@ class StringType extends AbstractType
         $this->type = self::TYPE_ID;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function load($var, $level = 1)
     {
         if (!is_string($var)) {
@@ -39,6 +45,9 @@ class StringType extends AbstractType
         $this->length = mb_strlen($var, $this->_getEncodingForHtmlentities());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getInlineValue()
     {
         return sprintf('"%s"', $this->value);

@@ -45,5 +45,4 @@ class TextRender extends AbstractTemplatingRender
         return new TextExtension();
     }
 
-
 }

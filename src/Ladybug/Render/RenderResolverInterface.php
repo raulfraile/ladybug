@@ -11,7 +11,6 @@
 
 namespace Ladybug\Render;
 
-use Ladybug\Theme\ThemeInterface;
 use Ladybug\Format\FormatInterface;
 
 /**

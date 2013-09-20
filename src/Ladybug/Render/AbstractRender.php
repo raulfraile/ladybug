@@ -11,14 +11,8 @@
 
 namespace Ladybug\Render;
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
 use Ladybug\Theme\ThemeInterface;
-use Ladybug\Format\FormatInterface;
-use Ladybug\Render\Twig\Extension\BaseExtension;
 use Ladybug\Theme\ThemeResolver;
-use JMS\Serializer\Serializer;
-use Ladybug\Exception\SerializerNotFoundException;
 
 abstract class AbstractRender implements RenderInterface
 {
@@ -29,7 +23,6 @@ abstract class AbstractRender implements RenderInterface
     /** @var \Ladybug\Theme\ThemeResolver $themeResolver */
     protected $themeResolver;
 
-
     /**
      * Constructor
      * @param \Ladybug\Theme\ThemeResolver $themeResolver
@@ -38,8 +31,6 @@ abstract class AbstractRender implements RenderInterface
     {
         $this->themeResolver = $themeResolver;
     }
-
-
 
     /**
      * @param \Ladybug\Theme\ThemeInterface $theme
@@ -57,12 +48,9 @@ abstract class AbstractRender implements RenderInterface
         return $this->theme;
     }
 
-
     public function setGlobals(array $globals)
     {
 
     }
-
-
 
 }

@@ -13,10 +13,16 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
+/**
+ * NullType is an abstraction of a primitive variable of type 'null'
+ */
 class NullType extends AbstractType
 {
     const TYPE_ID = 'null';
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -24,6 +30,9 @@ class NullType extends AbstractType
         $this->type = self::TYPE_ID;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getValue()
     {
         return null;
@@ -34,6 +43,9 @@ class NullType extends AbstractType
         return 'null';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function load($var, $level = 1)
     {
         if (!is_null($var)) {

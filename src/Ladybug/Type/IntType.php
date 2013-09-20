@@ -13,11 +13,17 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
+/**
+ * IntType is an abstraction of a primitive variable of type 'int'
+ */
 class IntType extends AbstractType
 {
 
     const TYPE_ID = 'int';
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -25,6 +31,9 @@ class IntType extends AbstractType
         $this->type = self::TYPE_ID;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function load($var, $level = 1)
     {
         if (!is_int($var)) {

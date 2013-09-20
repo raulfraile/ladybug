@@ -93,16 +93,16 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('__construct', $constructMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PUBLIC, $constructMethod->getVisibility());
-        $this->assertFalse($constructMethod->getIsStatic());
+        $this->assertFalse($constructMethod->isStatic());
         $this->assertEquals('protectedMethod', $protectedMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PROTECTED, $protectedMethod->getVisibility());
-        $this->assertFalse($protectedMethod->getIsStatic());
+        $this->assertFalse($protectedMethod->isStatic());
         $this->assertEquals('privateMethod', $privateMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PRIVATE, $privateMethod->getVisibility());
-        $this->assertFalse($privateMethod->getIsStatic());
+        $this->assertFalse($privateMethod->isStatic());
         $this->assertEquals('staticMethod', $staticMethod->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PUBLIC, $staticMethod->getVisibility());
-        $this->assertTrue($staticMethod->getIsStatic());
+        $this->assertTrue($staticMethod->isStatic());
 
         // method parameters
         $this->assertCount(5, $privateMethod->getParameters());
@@ -114,27 +114,27 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
         $parameter5 = $privateMethod->getParameterByName('p5');
 
         $this->assertEquals('p1', $parameter1->getName());
-        $this->assertFalse($parameter1->getIsReference());
+        $this->assertFalse($parameter1->isReference());
         $this->assertNull($parameter1->getDefaultValue());
         $this->assertNull($parameter1->getType());
 
         $this->assertEquals('p2', $parameter2->getName());
-        $this->assertTrue($parameter2->getIsReference());
+        $this->assertTrue($parameter2->isReference());
         $this->assertNull($parameter2->getDefaultValue());
         $this->assertNull($parameter2->getType());
 
         $this->assertEquals('p3', $parameter3->getName());
-        $this->assertFalse($parameter3->getIsReference());
+        $this->assertFalse($parameter3->isReference());
         $this->assertNull($parameter3->getDefaultValue());
         $this->assertEquals('array', $parameter3->getType());
 
         $this->assertEquals('p4', $parameter4->getName());
-        $this->assertFalse($parameter4->getIsReference());
+        $this->assertFalse($parameter4->isReference());
         $this->assertNull($parameter4->getDefaultValue());
         $this->assertEquals('DateTime', $parameter4->getType());
 
         $this->assertEquals('p5', $parameter5->getName());
-        $this->assertFalse($parameter5->getIsReference());
+        $this->assertFalse($parameter5->isReference());
         $this->assertInstanceOf('Ladybug\Type\IntType', $parameter5->getDefaultValue());
         $this->assertNull($parameter5->getType());
 

@@ -10,7 +10,6 @@ class InspectorDataWrapper
 
     protected $data;
 
-
     public function setData($data)
     {
         $this->data = $data;

@@ -80,8 +80,7 @@ class BaseExtension extends Twig_Extension
 
         try {
             $code = $environment->render($var->getTemplateName().'.'.$this->format.'.twig', $parameters);
-        }
-        catch (Twig_Error_Loader $e) {
+        } catch (Twig_Error_Loader $e) {
             return null;
         }
 

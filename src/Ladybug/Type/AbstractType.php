@@ -17,6 +17,8 @@ namespace Ladybug\Type;
 abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
 {
 
+    const TYPE_ID = '';
+
     /** @var string $id */
     protected $id;
 
@@ -41,10 +43,11 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
     public function __construct()
     {
         $this->id = uniqid();
+        $this->level = 0;
     }
 
     /**
-     * Get id
+     * Gets type id
      *
      * @return string
      */
@@ -54,7 +57,7 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
     }
 
     /**
-     * Set id
+     * Sets type id
      * @param string $id
      */
     public function setId($id)
@@ -63,7 +66,7 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
     }
 
     /**
-     * Get type
+     * Gets type
      *
      * @return string Variable type
      */
@@ -92,9 +95,14 @@ abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
         return $this->value;
     }
 
+    /**
+     * Gets the formatted value
+     *
+     * @return string
+     */
     public function getFormattedValue()
     {
-        return $this->value;
+        return (string) $this->value;
     }
 
     /**

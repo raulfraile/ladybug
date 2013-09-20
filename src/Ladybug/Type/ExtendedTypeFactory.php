@@ -19,6 +19,9 @@ class ExtendedTypeFactory
     /** @var array $types */
     protected $types;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->types = array();
@@ -30,10 +33,12 @@ class ExtendedTypeFactory
     }
 
     /**
-     * @param $var
+     * Factory.
+     * @param  string                                  $type
      * @param  int                                     $level
-     * @return TypeInterface
      * @throws \Ladybug\Exception\InvalidTypeException
+     *
+     * @return TypeInterface
      */
     public function factory($type, $level = 0)
     {
@@ -43,6 +48,7 @@ class ExtendedTypeFactory
             throw new InvalidTypeException;
         }
 
+        /** @var $result ExtendedTypeInterface */
         $result = clone($this->types['type_extended_' . $type]);
         $result->setLevel($level);
 

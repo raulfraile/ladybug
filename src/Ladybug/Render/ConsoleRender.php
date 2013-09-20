@@ -89,5 +89,4 @@ class ConsoleRender extends AbstractTemplatingRender
         return new ConsoleExtension();
     }
 
-
 }

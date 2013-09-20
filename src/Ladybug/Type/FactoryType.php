@@ -26,7 +26,7 @@ class FactoryType
     }
 
     /**
-     * Add a type
+     * Adds a new type.
      * @param TypeInterface $type
      * @param string        $key
      */
@@ -36,6 +36,7 @@ class FactoryType
     }
 
     /**
+     * Factory method.
      * @param mixed $var
      * @param int   $level
      *

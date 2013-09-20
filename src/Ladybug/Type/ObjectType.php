@@ -376,7 +376,7 @@ class ObjectType extends AbstractType
 
                 // static
                 if ($reflectedMethod->isStatic()) {
-                    $method->setIsStatic(true);
+                    $method->setStatic();
                 }
 
                 // visibility
@@ -416,7 +416,7 @@ class ObjectType extends AbstractType
                     }
 
                     if ($methodParameterReflected->isPassedByReference()) {
-                        $methodParameter->setIsReference(true);
+                        $methodParameter->setReference();
                     }
 
                     if ($methodParameterReflected->isDefaultValueAvailable()) {

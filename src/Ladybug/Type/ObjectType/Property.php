@@ -13,16 +13,19 @@ namespace Ladybug\Type\ObjectType;
 
 use Ladybug\Type\TypeInterface;
 
-class Property
+/**
+ * Property is an abstraction of an object property
+ */
+class Property implements VisibilityInterface
 {
 
-    /** @var string $name */
+    /** @var string $name Property name */
     protected $name;
 
-    /** @var TypeInterface $value */
+    /** @var TypeInterface $value Property value */
     protected $value;
 
-    /** @var string $name */
+    /** @var string $name Property visibility */
     protected $visibility;
 
     /**
@@ -45,8 +48,7 @@ class Property
     }
 
     /**
-     * Set property visibility
-     * @param string $visibility
+     * @inheritdoc
      */
     public function setVisibility($visibility)
     {
@@ -54,9 +56,7 @@ class Property
     }
 
     /**
-     * Get property visibility
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getVisibility()
     {
@@ -64,23 +64,35 @@ class Property
     }
 
     /**
-     * @param mixed $value
+     * Sets the property value
+     * @param TypeInterface $value Property value
      */
-    public function setValue($value)
+    public function setValue(TypeInterface $value)
     {
         $this->value = $value;
     }
 
     /**
-     * @return mixed
+     * Gets the property value.
+     *
+     * @return TypeInterface Property value
      */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * Gets the level of the underlying object value
+     *
+     * @return int Level
+     */
     public function getLevel()
     {
+        if (is_null($this->value)) {
+            return 0;
+        }
+
         return $this->value->getLevel();
     }
 

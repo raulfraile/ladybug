@@ -12,7 +12,6 @@
 namespace Ladybug\Render;
 
 use Ladybug\Theme\ThemeInterface;
-use Ladybug\Format\FormatInterface;
 
 /**
  * RenderInterface is the interface implemented by all render classes

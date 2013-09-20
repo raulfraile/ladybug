@@ -11,10 +11,6 @@
 
 namespace Ladybug\Render\Twig\Extension;
 
-use Twig_Extension;
-use Twig_Environment;
-use Ladybug\Type\RenderizableTypeInterface;
-
 class ConsoleExtension extends BaseExtension
 {
 

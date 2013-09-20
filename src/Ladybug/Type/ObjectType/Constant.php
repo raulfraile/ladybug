@@ -13,19 +13,23 @@ namespace Ladybug\Type\ObjectType;
 
 use Ladybug\Type\TypeInterface;
 
+/**
+ * Constant is an abstraction of a class constant
+ */
 class Constant
 {
 
-    const VISIBILITY_PUBLIC = 'public';
-    const VISIBILITY_PROTECTED = 'protected';
-    const VISIBILITY_PRIVATE = 'private';
+    /** @var string $name Constant name */
+    protected $name = null;
 
-    /** @var string $name */
-    protected $name;
+    /** @var TypeInterface $value Constant value */
+    protected $value = null;
 
-    /** @var TypeInterface $value */
-    protected $value;
-
+    /**
+     * Constructor.
+     * @param string        $name  Constant name
+     * @param TypeInterface $value Constant value
+     */
     public function __construct($name, TypeInterface $value)
     {
         $this->name = $name;
@@ -33,7 +37,8 @@ class Constant
     }
 
     /**
-     * @param string $name
+     * Sets the constant name.
+     * @param string $name Constant name
      */
     public function setName($name)
     {
@@ -41,7 +46,9 @@ class Constant
     }
 
     /**
-     * @return string
+     * Gets the constant name.
+     *
+     * @return string Constant name
      */
     public function getName()
     {
@@ -49,7 +56,8 @@ class Constant
     }
 
     /**
-     * @param \Ladybug\Type\TypeInterface $value
+     * Sets the constant value.
+     * @param TypeInterface $value Constant value
      */
     public function setValue(TypeInterface $value)
     {
@@ -57,15 +65,26 @@ class Constant
     }
 
     /**
-     * @return \Ladybug\Type\TypeInterface
+     * Gets the constant value
+     *
+     * @return TypeInterface Constant value
      */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * Gets the level of the underlying object value
+     *
+     * @return int Level
+     */
     public function getLevel()
     {
+        if (is_null($this->value)) {
+            return 0;
+        }
+
         return $this->value->getLevel();
     }
 }

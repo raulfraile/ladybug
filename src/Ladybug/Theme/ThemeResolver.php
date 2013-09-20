@@ -11,8 +11,6 @@
 
 namespace Ladybug\Theme;
 
-use Ladybug\Format\FormatInterface;
-
 /**
  * ThemeResolver selects a theme for a given format.
  *

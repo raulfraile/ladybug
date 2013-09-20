@@ -11,23 +11,26 @@
 
 namespace Ladybug\Type\ObjectType;
 
+/**
+ * MethodParameter is an abstraction of a parameter belonging to a class method
+ */
 class MethodParameter
 {
 
-    /** @var string $name */
-    protected $name;
+    /** @var string $name Parameter name */
+    protected $name = null;
 
-    /** @var string $type */
-    protected $type;
+    /** @var string $type Parameter type */
+    protected $type = null;
 
-    /** @var bool $isReference */
-    protected $isReference = false;
+    /** @var bool $reference */
+    protected $reference = false;
 
     /** @var mixed $defaultValue */
     protected $defaultValue = null;
 
     /**
-     * Set default value
+     * Sets the parameter default value.
      * @param mixed $defaultValue
      */
     public function setDefaultValue($defaultValue)
@@ -36,8 +39,7 @@ class MethodParameter
     }
 
     /**
-     * Get default value
-     *
+     * Gets the parameter default value.
      * @return mixed
      */
     public function getDefaultValue()
@@ -46,23 +48,27 @@ class MethodParameter
     }
 
     /**
-     * @param boolean $isReference
+     * Sets or unsets the parameter as passed by reference
+     * @param boolean $reference True if the parameter is passed by reference
      */
-    public function setIsReference($isReference)
+    public function setReference($reference = true)
     {
-        $this->isReference = $isReference;
+        $this->reference = $reference;
     }
 
     /**
-     * @return boolean
+     * Checks if the parameter is passed by reference
+     *
+     * @return boolean True if the parameter is passed by reference
      */
-    public function getIsReference()
+    public function isReference()
     {
-        return $this->isReference;
+        return $this->reference;
     }
 
     /**
-     * @param string $name
+     * Sets the parameter name.
+     * @param string $name Parameter name
      */
     public function setName($name)
     {
@@ -70,7 +76,9 @@ class MethodParameter
     }
 
     /**
-     * @return string
+     * Gets the parameter name.
+     *
+     * @return string Parameter name
      */
     public function getName()
     {
@@ -78,7 +86,8 @@ class MethodParameter
     }
 
     /**
-     * @param string $type
+     * Sets the parameter type.
+     * @param string $type Parameter type
      */
     public function setType($type)
     {
@@ -86,7 +95,9 @@ class MethodParameter
     }
 
     /**
-     * @return string
+     * Gets the parameter type.
+     *
+     * @return string Parameter type
      */
     public function getType()
     {

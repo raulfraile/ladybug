@@ -14,30 +14,42 @@ namespace Ladybug\Type;
 use Ladybug\Type\ArrayType\Item;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
+/**
+ * ArrayType is an abstraction of a PHP native array
+ */
 class ArrayType extends AbstractType
 {
 
     const TYPE_ID = 'array';
 
+    /** @var int $maxLevel */
     protected $maxLevel;
 
     /** @var FactoryType $factory */
     protected $factory;
 
+    /** @var bool $terminal */
     protected $terminal;
 
-    public function __construct($maxLevel, FactoryType $manager)
+    /**
+     * Constructor.
+     * @param int         $maxLevel    Max nesting level for arrays
+     * @param FactoryType $factoryType Factory type
+     */
+    public function __construct($maxLevel, FactoryType $factoryType)
     {
         parent::__construct();
 
         $this->type = self::TYPE_ID;
-        $this->level = 0;
         $this->maxLevel = $maxLevel;
-        $this->factory = $manager;
+        $this->factory = $factoryType;
         $this->terminal = false;
         $this->value = array();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function load($var, $level = 1)
     {
         if (!is_array($var)) {
@@ -78,11 +90,18 @@ class ArrayType extends AbstractType
         return sprintf('array(%s)', implode(', ', $values));
     }
 
+    /**
+     * Sets if the array is terminal
+     * @param boolean $terminal
+     */
     public function setTerminal($terminal)
     {
-        $this->terminal = $terminal;
+        $this->terminal = (boolean) $terminal;
     }
 
+    /**
+     * @return bool
+     */
     public function getTerminal()
     {
         return $this->terminal;

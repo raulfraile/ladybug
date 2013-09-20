@@ -11,6 +11,9 @@
 
 namespace Ladybug\Type\ObjectType;
 
+/**
+ * Method is an abstraction of a class method
+ */
 class Method implements VisibilityInterface
 {
 
@@ -20,8 +23,8 @@ class Method implements VisibilityInterface
     /** @var string $name */
     protected $visibility;
 
-    /** @var bool $isStatic */
-    protected $isStatic = false;
+    /** @var bool $static */
+    protected $static = false;
 
     /** @var MethodParameter[] $parameters */
     protected $parameters;
@@ -32,11 +35,12 @@ class Method implements VisibilityInterface
     /** @var string $longDescription */
     protected $longDescription;
 
+    /** @var int $level */
     protected $level;
 
     /**
-     * Set method name
-     * @param string $name
+     * Sets the method name.
+     * @param string $name Method name
      */
     public function setName($name)
     {
@@ -44,9 +48,9 @@ class Method implements VisibilityInterface
     }
 
     /**
-     * Get method name
+     * Gets the method name.
      *
-     * @return string
+     * @return string Method name
      */
     public function getName()
     {
@@ -54,7 +58,7 @@ class Method implements VisibilityInterface
     }
 
     /**
-     * @param string $visibility
+     * @inheritdoc
      */
     public function setVisibility($visibility)
     {
@@ -62,7 +66,7 @@ class Method implements VisibilityInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getVisibility()
     {
@@ -70,35 +74,52 @@ class Method implements VisibilityInterface
     }
 
     /**
-     * @param boolean $isStatic
+     * Sets or unsets the method as static.
+     * @param boolean $static True if the method is static
      */
-    public function setIsStatic($isStatic)
+    public function setStatic($static = true)
     {
-        $this->isStatic = $isStatic;
+        $this->static = (boolean) $static;
     }
 
     /**
-     * @return boolean
+     * Checks if the method is static
+     *
+     * @return boolean True for static methods. False otherwise
      */
-    public function getIsStatic()
+    public function isStatic()
     {
-        return $this->isStatic;
+        return $this->static;
     }
 
-    public function setParameters($parameters)
+    /**
+     * Sets the method parameters.
+     * @param MethodParameter[] $parameters Method parameters
+     */
+    public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
     }
 
+    /**
+     * Gets the method parameters.
+     *
+     * @return MethodParameter[]
+     */
     public function getParameters()
     {
         return $this->parameters;
     }
 
+    /**
+     * Gets a paramater by name.
+     * @param string $name Parameter name
+     *
+     * @return MethodParameter|null
+     */
     public function getParameterByName($name)
     {
         foreach ($this->parameters as $parameter) {
-            /** @var MethodParameter $parameter */
             if ($parameter->getName() === $name) {
                 return $parameter;
             }
@@ -107,12 +128,17 @@ class Method implements VisibilityInterface
         return null;
     }
 
+    /**
+     * Adds a new method parameter.
+     * @param MethodParameter $methodParameter
+     */
     public function addMethodParameter(MethodParameter $methodParameter)
     {
         $this->parameters[] = $methodParameter;
     }
 
     /**
+     * Sets the method long description.
      * @param string $longDescription
      */
     public function setLongDescription($longDescription)
@@ -121,6 +147,8 @@ class Method implements VisibilityInterface
     }
 
     /**
+     * Gets the method long description.
+     *
      * @return string
      */
     public function getLongDescription()
@@ -129,6 +157,7 @@ class Method implements VisibilityInterface
     }
 
     /**
+     * Sets the method short description.
      * @param string $shortDescription
      */
     public function setShortDescription($shortDescription)
@@ -137,6 +166,8 @@ class Method implements VisibilityInterface
     }
 
     /**
+     * Gets the method short description
+     *
      * @return string
      */
     public function getShortDescription()

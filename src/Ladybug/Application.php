@@ -32,7 +32,7 @@ class Application
     public $container;
 
     /**
-     * Build container
+     * Builds the container.
      * @param array $parameters
      */
     public function build($parameters = array())
@@ -76,11 +76,10 @@ class Application
             $this->container = new $containerClass();
         }
 
-
     }
 
     /**
-     * Initialize container
+     * Initializes the container.
      */
     protected function initializeContainer()
     {
@@ -96,7 +95,7 @@ class Application
     }
 
     /**
-     * Load services
+     * Loads services from the config file.
      */
     protected function loadServices()
     {
@@ -105,7 +104,7 @@ class Application
     }
 
     /**
-     * Loads themes
+     * Loads third-party themes.
      */
     protected function loadThemes()
     {
@@ -128,7 +127,7 @@ class Application
     }
 
     /**
-     * Registers a new theme from a directory
+     * Registers a new theme from a directory.
      * @param \Symfony\Component\Finder\SplFileInfo $themeClassPath
      */
     protected function registerTheme(SplFileInfo $themeClassPath)
@@ -143,8 +142,9 @@ class Application
     }
 
     /**
-     * Registers a new plugin from a directory
-     * @param \Symfony\Component\Finder\SplFileInfo $pluginClassPath
+     * Registers a new plugin from a directory.
+     * @param  \Symfony\Component\Finder\SplFileInfo $pluginClassPath
+     * @throws \Exception
      */
     protected function registerPlugin(SplFileInfo $pluginClassPath)
     {
@@ -177,8 +177,7 @@ class Application
     }
 
     /**
-     * Load plugins
-     * @param array $plugins
+     * Loads third-party plugins.
      * @throws \Exception
      */
     protected function loadPlugins()
@@ -202,7 +201,7 @@ class Application
     }
 
     /**
-     * Set parameters
+     * Sets parameters.
      * @param array $parameters
      */
     protected function setParameters(array $parameters = array())
