@@ -46,6 +46,10 @@ class Dumper
     /** @var array $options */
     protected $options;
 
+    protected $helpers = array();
+
+    protected $shortcuts = array();
+
     /**
      * Constructor.
      */
@@ -77,6 +81,8 @@ class Dumper
 
         $this->application = new Application();
         $this->application->build($this->options);
+
+        $this->registerHelper(sprintf('%s:%s', get_class($this), 'dump'));
 
     }
 
@@ -135,21 +141,32 @@ class Dumper
      */
     public function loadCallLocationInfo()
     {
-        $idx = 5;
-        $bt = debug_backtrace();
+        $this->callFile = null;
+        $this->callLine = null;
 
-        // Check if Ladybug was called from the helpers shortcuts
-        $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
-        if (!in_array($caller, array('ld', 'ldd'))) {
-            $idx -= 2;
-            $caller = isset($bt[$idx]['function']) ? $bt[$idx]['function'] : '';
-            if (!in_array($caller, array('ladybug_dump', 'ladybug_dump_die'))) {
-                $idx = $idx - 2;
+        $backtrace = debug_backtrace();
+        $backtraceCount = count($backtrace);
+        $idx = $backtraceCount - 1;
+        $found = false;
+
+        while ($idx > 0 && !$found) {
+            $callable = isset($backtrace[$idx]['class']) ? $backtrace[$idx]['class'] . ':' . $backtrace[$idx]['function'] : $backtrace[$idx]['function'];
+
+            if (in_array($callable, $this->helpers)) {
+                $this->callFile = isset($backtrace[$idx]['file']) ? $backtrace[$idx]['file'] : null;
+                $this->callLine = isset($backtrace[$idx]['line']) ? $backtrace[$idx]['line'] : null;
+
+                return;
             }
+
+            $idx--;
         }
 
-        $this->callFile = isset($bt[$idx]['file']) ? $bt[$idx]['file'] : null;
-        $this->callLine = isset($bt[$idx]['line']) ? $bt[$idx]['line'] : null;
+    }
+
+    public function registerHelper($name)
+    {
+        $this->helpers[] = $name;
     }
 
     /**
@@ -262,6 +279,16 @@ class Dumper
         foreach ($options as $name => $value) {
             $this->setOption($name, $value);
         }
+    }
+
+    /**
+     * Gets options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
 }

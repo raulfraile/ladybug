@@ -92,6 +92,9 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\RenderCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
+
+        $this->container->setParameter('root_dir', __DIR__);
+        $this->container->setParameter('root_dir', __DIR__);
     }
 
     /**
