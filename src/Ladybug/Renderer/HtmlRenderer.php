@@ -50,7 +50,7 @@ class HtmlRenderer extends AbstractTemplatingRenderer
         }
 
         // cache
-        $cacheFile = sprintf('%s/ladybug_cache/theme/5%s.css', sys_get_temp_dir(), $theme->getName());
+        $cacheFile = sprintf('%s/ladybug_cache/theme/6%s.css', sys_get_temp_dir(), $theme->getName());
         $lastModificationCache = file_exists($cacheFile) ? filemtime($cacheFile) : 0;
 
         if ($lastModification > $lastModificationCache) {

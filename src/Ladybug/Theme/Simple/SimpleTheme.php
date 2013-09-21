@@ -41,7 +41,7 @@ class SimpleTheme extends AbstractTheme implements HtmlThemeInterface, CliThemeI
      */
     public function getParent()
     {
-        return null;
+        return 'Base';
     }
 
     /**
