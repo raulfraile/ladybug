@@ -23,4 +23,11 @@ interface PluginInterface
      * @return string Configuration file path
      */
     public static function getConfigFile();
+
+    /**
+     * Registers custom helpers
+     * @static
+     * @return array
+     */
+    public static function registerHelpers();
 }

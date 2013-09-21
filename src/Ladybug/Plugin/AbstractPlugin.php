@@ -18,14 +18,20 @@ abstract class AbstractPlugin implements PluginInterface
 {
 
     /**
-     * Gets the configuration file path
-     * @static
-     *
-     * @return string Configuration file path
+     * @inheritdoc
      */
     public static function getConfigFile()
     {
         return __DIR__ . '/Config/services.xml';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public static function registerHelpers()
+    {
+        return array();
+    }
+
 
 }

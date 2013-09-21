@@ -6,6 +6,7 @@ Ladybug is built in a modular way and allows adding plugins with extra behaviour
 
 The library is composed of six main components:
 
+* Helpers: Functions to dump variables more easily (e.g. ladybug_dump_die($var))
 * Themes: Themes render one or more variables in a specific format.
 * Inspectors: An inspector is responsible of adding any extra information to an object/resource. For example, the
 there is an inspector to display the \SplMaxHeap elements as a collection.

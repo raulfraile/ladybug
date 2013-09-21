@@ -94,7 +94,9 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
 
         $this->container->setParameter('root_dir', __DIR__);
-        $this->container->setParameter('root_dir', __DIR__);
+        $this->container->setParameter('helpers', array(
+            'Ladybug\Dumper:dump'
+        ));
     }
 
     /**
@@ -177,6 +179,12 @@ class Application
         }
 
         $loader->load($filename . '.' . $extension);
+
+        // helpers
+        $this->container->setParameter('helpers', array_merge(
+            $this->container->getParameter('helpers'),
+            $pluginClass::registerHelpers()
+        ));
     }
 
     /**

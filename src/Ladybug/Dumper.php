@@ -152,7 +152,7 @@ class Dumper
         while ($idx > 0 && !$found) {
             $callable = isset($backtrace[$idx]['class']) ? $backtrace[$idx]['class'] . ':' . $backtrace[$idx]['function'] : $backtrace[$idx]['function'];
 
-            if (in_array($callable, $this->helpers)) {
+            if (in_array($callable, $this->application->container->getParameter('helpers'))) {
                 $this->callFile = isset($backtrace[$idx]['file']) ? $backtrace[$idx]['file'] : null;
                 $this->callLine = isset($backtrace[$idx]['line']) ? $backtrace[$idx]['line'] : null;
 
