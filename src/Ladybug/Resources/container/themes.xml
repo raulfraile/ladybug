@@ -14,9 +14,5 @@
             <tag name="ladybug.theme" />
         </service>
 
-        <service id="theme_classic" class="Ladybug\Theme\Classic\ClassicTheme">
-            <tag name="ladybug.theme" />
-        </service>
-
     </services>
 </container>
