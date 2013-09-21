@@ -105,7 +105,7 @@ class Application
     protected function loadServices()
     {
         $loader = new Loader\XmlFileLoader($this->container, new FileLocator(__DIR__.'/Config'));
-        $loader->load('container.xml');
+        $loader->load(__DIR__ . '/Resources/container/container.xml');
     }
 
     /**

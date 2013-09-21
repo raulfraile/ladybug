@@ -34,7 +34,7 @@ abstract class AbstractSerializingRender extends AbstractRender
             }
 
             $this->serializer = \JMS\Serializer\SerializerBuilder::create()
-                ->addMetadataDir(__DIR__.'/../Config/Serializer/', 'Ladybug\\Type')
+                ->addMetadataDir(__DIR__.'/../Resources/serializer/', 'Ladybug\\Type')
                 ->build();
         }
 
