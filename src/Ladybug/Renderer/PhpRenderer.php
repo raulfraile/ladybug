@@ -9,11 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Format;
 
-class PhpRender extends AbstractRender
+/**
+ * PhpRenderer serializes a collection of nodes in PHP
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class PhpRenderer extends AbstractRenderer
 {
 
     public function render(array $nodes, array $extraData = array())

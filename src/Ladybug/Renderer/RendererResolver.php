@@ -9,45 +9,44 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Format\FormatInterface;
-use Ladybug\Render\RenderInterface;
 
-class RenderResolver implements RenderResolverInterface
+class RendererResolver implements RendererResolverInterface
 {
 
-    /** @var RenderInterface[] $renders */
-    protected $renders;
+    /** @var RendererInterface[] $renderers */
+    protected $renderers;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->renders = array();
+        $this->renderers = array();
     }
 
     /**
-     * Adds a new RenderInterface to the resolver
-     * @param RenderInterface $render
+     * Adds a new RendererInterface to the resolver
+     * @param RendererInterface $render
      * @param string          $key
      */
-    public function add(RenderInterface $render, $key)
+    public function add(RendererInterface $render, $key)
     {
-        $this->renders[$key] = $render;
+        $this->renderers[$key] = $render;
     }
 
     /**
-     * Gets the appropiate render object for the given format
+     * Gets the appropriate render object for the given format
      * @param FormatInterface $format
      *
      * @throws \Exception
-     * @return RenderInterface
+     * @return RendererInterface
      */
     public function resolve(FormatInterface $format)
     {
-        foreach ($this->renders as $render) {
+        foreach ($this->renderers as $render) {
 
             if ($render->getFormat() === $format->getName()) {
                 return $render;

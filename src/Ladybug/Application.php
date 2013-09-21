@@ -89,7 +89,7 @@ class Application
         $this->container->addCompilerPass(new DependencyInjection\TypeCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\ThemeCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\FormatCompilerPass());
-        $this->container->addCompilerPass(new DependencyInjection\RenderCompilerPass());
+        $this->container->addCompilerPass(new DependencyInjection\RendererCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\InspectorCompilerPass());
         $this->container->addCompilerPass(new DependencyInjection\MetadataCompilerPass());
 

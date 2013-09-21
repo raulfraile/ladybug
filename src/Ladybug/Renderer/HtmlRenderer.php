@@ -9,12 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Theme\HtmlThemeInterface;
 use Ladybug\Format\HtmlFormat;
 
-class HtmlRender extends AbstractTemplatingRender
+/**
+ * HtmlRenderer renders a collection of nodes in HTML
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class HtmlRenderer extends AbstractTemplatingRenderer
 {
 
     public function getFormat()

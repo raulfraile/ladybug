@@ -12,10 +12,10 @@
 namespace Ladybug;
 
 use Ladybug\Type\FactoryType;
-use Ladybug\Render\RenderInterface;
+use Ladybug\Renderer\RendererInterface;
 use Ladybug\Environment\EnvironmentResolver;
 use Ladybug\Theme\ThemeResolver;
-use Ladybug\Render\RenderResolver;
+use Ladybug\Renderer\RendererResolver;
 use Ladybug\Application;
 use Ladybug\Format\FormatResolver;
 
@@ -199,8 +199,8 @@ class Dumper
             $theme = $themeResolver->resolve($format);
         }
 
-        /** @var $renderResolver RenderResolver */
-        $renderResolver = $this->application->container->get('render_resolver');
+        /** @var $renderResolver RendererResolver */
+        $renderResolver = $this->application->container->get('renderer_resolver');
 
         $render = $renderResolver->resolve($format);
         $render->setTheme($theme);

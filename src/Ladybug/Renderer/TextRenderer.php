@@ -9,14 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Format\TextFormat;
-use Ladybug\Render\Twig\Extension\TextExtension;
+use Ladybug\Renderer\Twig\Extension\TextExtension;
 
-class TextRender extends AbstractTemplatingRender
+/**
+ * TextRenderer renders a collection of nodes in plain text
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class TextRenderer extends AbstractTemplatingRenderer
 {
 
+    /**
+     * @inheritdoc
+     */
     public function getFormat()
     {
         return TextFormat::FORMAT_NAME;
@@ -40,6 +48,9 @@ class TextRender extends AbstractTemplatingRender
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getExtension()
     {
         return new TextExtension();

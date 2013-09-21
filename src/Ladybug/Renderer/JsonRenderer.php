@@ -9,13 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Format\JsonFormat;
 
-class JsonRender extends AbstractSerializingRender
+/**
+ * JsonRenderer serializes a collection of nodes in JSON
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class JsonRenderer extends AbstractSerializingRenderer
 {
 
+    /**
+     * @inheritdoc
+     */
     public function getFormat()
     {
         return JsonFormat::FORMAT_NAME;

@@ -22,7 +22,7 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
     const TAG_FORMAT        = 'ladybug.format';
     const TAG_INSPECTOR     = 'ladybug.inspector';
     const TAG_METADATA      = 'ladybug.metadata';
-    const TAG_RENDER        = 'ladybug.render';
+    const TAG_RENDER        = 'ladybug.renderer';
     const TAG_THEME         = 'ladybug.theme';
     const TAG_TYPE          = 'ladybug.type';
     const TAG_TYPE_EXTENDED = 'ladybug.type.extended';

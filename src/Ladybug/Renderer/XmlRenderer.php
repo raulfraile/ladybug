@@ -9,13 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Format\XmlFormat;
 
-class XmlRender extends AbstractSerializingRender
+/**
+ * XmlRenderer serializes a collection of nodes in XML
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class XmlRenderer extends AbstractSerializingRenderer
 {
 
+    /**
+     * @inheritdoc
+     */
     public function getFormat()
     {
         return XmlFormat::FORMAT_NAME;

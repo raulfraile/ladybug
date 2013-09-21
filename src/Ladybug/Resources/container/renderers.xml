@@ -6,34 +6,34 @@
 
     <services>
 
-        <service id="render_html" class="Ladybug\Render\HtmlRender">
+        <service id="render_html" class="Ladybug\Renderer\HtmlRenderer">
             <argument type="service" id="theme_resolver" />
-            <tag name="ladybug.render" />
+            <tag name="ladybug.renderer" />
         </service>
 
-        <service id="render_console" class="Ladybug\Render\ConsoleRender">
+        <service id="render_console" class="Ladybug\Renderer\ConsoleRenderer">
             <argument type="service" id="theme_resolver" />
-            <tag name="ladybug.render" />
+            <tag name="ladybug.renderer" />
         </service>
 
-        <service id="render_php" class="Ladybug\Render\PhpRender">
+        <service id="render_php" class="Ladybug\Renderer\PhpRenderer">
             <argument type="service" id="theme_resolver" />
-            <tag name="ladybug.render" />
+            <tag name="ladybug.renderer" />
         </service>
 
-        <service id="render_text" class="Ladybug\Render\TextRender">
+        <service id="render_text" class="Ladybug\Renderer\TextRenderer">
             <argument type="service" id="theme_resolver" />
-            <tag name="ladybug.render" />
+            <tag name="ladybug.renderer" />
         </service>
 
-        <service id="render_json" class="Ladybug\Render\JsonRender">
+        <service id="render_json" class="Ladybug\Renderer\JsonRenderer">
             <argument type="service" id="theme_resolver" />
-            <tag name="ladybug.render" />
+            <tag name="ladybug.renderer" />
         </service>
 
-        <service id="render_xml" class="Ladybug\Render\XmlRender">
+        <service id="render_xml" class="Ladybug\Renderer\XmlRenderer">
             <argument type="service" id="theme_resolver" />
-            <tag name="ladybug.render" />
+            <tag name="ladybug.renderer" />
         </service>
 
     </services>

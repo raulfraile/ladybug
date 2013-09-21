@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render\Twig\Extension;
+namespace Ladybug\Renderer\Twig\Extension;
 
 class TextExtension extends ConsoleExtension
 {

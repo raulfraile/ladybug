@@ -9,12 +9,12 @@
 * file that was distributed with this source code.
 */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use JMS\Serializer\Serializer;
 use Ladybug\Exception\SerializerNotFoundException;
 
-abstract class AbstractSerializingRender extends AbstractRender
+abstract class AbstractSerializingRenderer extends AbstractRenderer
 {
 
     /** @var Serializer $serializer */

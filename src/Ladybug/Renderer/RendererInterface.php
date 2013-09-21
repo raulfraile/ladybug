@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Theme\ThemeInterface;
 
 /**
- * RenderInterface is the interface implemented by all render classes
+ * RendererInterface is the interface implemented by all render classes
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-interface RenderInterface
+interface RendererInterface
 {
 
     /**

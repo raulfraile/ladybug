@@ -14,14 +14,14 @@ namespace Ladybug\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * RenderCompilerPass modifies the container registering renders
+ * RendererCompilerPass modifies the container registering renders
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class RenderCompilerPass extends AbstractCompilerPass
+class RendererCompilerPass extends AbstractCompilerPass
 {
     public function process(ContainerBuilder $container)
     {
-        $this->processTaggedServices($container, 'render_resolver', self::TAG_RENDER, 'add');
+        $this->processTaggedServices($container, 'renderer_resolver', self::TAG_RENDER, 'add');
     }
 }

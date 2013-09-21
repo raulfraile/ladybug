@@ -1,23 +1,23 @@
 <?php
 
-    /*
-    * This file is part of the Ladybug package.
-    *
-    * (c) Raul Fraile <raulfraile@gmail.com>
-    *
-    * For the full copyright and license information, please view the LICENSE
-    * file that was distributed with this source code.
-    */
+/*
+ * This file is part of the Ladybug package.
+ *
+ * (c) Raul Fraile <raulfraile@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Ladybug\Theme\ThemeInterface;
-use Ladybug\Render\Twig\Extension\BaseExtension;
+use Ladybug\Renderer\Twig\Extension\BaseExtension;
 use Ladybug\Theme\ThemeResolver;
 
-abstract class AbstractTemplatingRender extends AbstractRender
+abstract class AbstractTemplatingRenderer extends AbstractRenderer
 {
 
     /** @var Twig_Environment $templatingEngine */

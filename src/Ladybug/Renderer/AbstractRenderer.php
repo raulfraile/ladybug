@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Ladybug\Theme\ThemeInterface;
 use Ladybug\Theme\ThemeResolver;
 
-abstract class AbstractRender implements RenderInterface
+abstract class AbstractRenderer implements RendererInterface
 {
 
     /** @var ThemeInterface $theme */

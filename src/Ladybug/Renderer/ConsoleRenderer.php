@@ -9,16 +9,21 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Render;
+namespace Ladybug\Renderer;
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Ladybug\Theme\ThemeResolver;
 use Ladybug\Format\ConsoleFormat;
-use Ladybug\Render\Twig\Extension\ConsoleExtension;
+use Ladybug\Renderer\Twig\Extension\ConsoleExtension;
 
-class ConsoleRender extends AbstractTemplatingRender
+/**
+ * ConsoleRenderer renders a collection of nodes in CLI
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
+class ConsoleRenderer extends AbstractTemplatingRenderer
 {
 
     /** @var ConsoleOutputInterface $console */
