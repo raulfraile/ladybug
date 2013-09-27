@@ -195,7 +195,8 @@ class Application
     {
         $pluginsDirs = array(
             __DIR__.'/../../data/plugins/Ladybug/Plugin',
-            __DIR__.'/../../../ladybug-plugins/Ladybug/Plugin'
+            __DIR__.'/../../../ladybug-plugins/Ladybug/Plugin',
+            __DIR__.'/../../../ladybug-themes/Ladybug/Plugin'
         );
 
         foreach ($pluginsDirs as $dir) {
