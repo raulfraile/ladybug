@@ -50,20 +50,24 @@ class HtmlRenderer extends AbstractTemplatingRenderer
         }
 
         // cache
-        $cacheFile = sprintf('%s/ladybug_cache/theme/6%s.css', sys_get_temp_dir(), $theme->getName());
+        $cacheFile = sprintf('%s/ladybug_cache/theme/%s.css', sys_get_temp_dir(), $theme->getName());
         $lastModificationCache = file_exists($cacheFile) ? filemtime($cacheFile) : 0;
 
         if ($lastModification > $lastModificationCache) {
-            $compressor = new \Jivaro\Compressor\Css();
+
+            $pce = new \CssEmbed\CssEmbed();
+
+            $css = '';
+
             foreach ($theme->getHtmlCssDependencies() as $item) {
                 $file = $theme->getResourcesPath().$item;
 
-                $compressor
-                    ->addFile($file)
-                    ->embed(dirname($file));
-            }
+                $minCss = file_get_contents($file);
 
-            $css = $compressor->getContents();
+                $pce->setRootDir(dirname($file));
+
+                $css .= $pce->embedString($minCss);
+            }
 
             if (!is_dir(dirname($cacheFile))) {
                 mkdir(dirname($cacheFile));
@@ -93,14 +97,12 @@ class HtmlRenderer extends AbstractTemplatingRenderer
         $lastModificationCache = file_exists($cacheFile) ? filemtime($cacheFile) : -1;
 
         if ($lastModification > $lastModificationCache) {
-            $compressor = new \Jivaro\Compressor\JavaScript();
+            $js = '';
             foreach ($theme->getHtmlJsDependencies() as $item) {
                 $file = $theme->getResourcesPath().$item;
 
-                $compressor->addFile($file);
+                $js .= file_get_contents($file);
             }
-
-            $js = $compressor->getContents();
 
             if (!is_dir(dirname($cacheFile))) {
                 mkdir(dirname($cacheFile));

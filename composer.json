@@ -23,7 +23,7 @@
         "symfony/dependency-injection": ">=2.0",
         "symfony/config": ">=2.0",
         "twig/twig": ">=1.7.0",
-        "raulfraile/jivaro": "1.0.0-beta1"
+        "ptachoire/cssembed": "v1.0.2"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "0.2.0",
