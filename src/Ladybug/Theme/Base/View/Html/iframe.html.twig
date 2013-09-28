@@ -1,7 +1,7 @@
 <iframe id="ladybug_iframe_{{ id }}" frameborder="0" width="500" height="100" style="margin: 5px;overflow:hidden"></iframe>
 
 <script>
-    function resizeIframe(height, width) {
+    function resizeIframe{{ id }}(height, width) {
         document.getElementById("ladybug_iframe_{{ id }}").height = height + "px";
         document.getElementById("ladybug_iframe_{{ id }}").width = width + "px";
     }
@@ -27,9 +27,9 @@
     ladybug_iframe_{{ id }}.write(ladybug_content);
     ladybug_iframe_{{ id }}.close();
 
-    resizeIframeInit();
+    resizeIframeInit{{ id }}();
 
-    function resizeIframeInit() {
+    function resizeIframeInit{{ id }}() {
         var height = ladybug_iframe_{{ id }}.body.scrollHeight;
         var width = ladybug_iframe_{{ id }}.body.scrollWidth;
 
