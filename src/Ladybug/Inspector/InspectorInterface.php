@@ -12,18 +12,29 @@
 
 namespace Ladybug\Inspector;
 
+use Ladybug\Model\VariableWrapper;
+
+/**
+ * InspectorInterface is the interface implemented by all inspector classes
+ *
+ * @author Raul Fraile <raulfraile@gmail.com>
+ */
 interface InspectorInterface
 {
-    const TYPE_CLASS = 0;
-    const TYPE_RESOURCE = 1;
 
     /**
-     * Returns the object data into an array/string
+     * Gets extra info for an object/resource
+     * @param VariableWrapper $data
      *
-     * @param  string $var html code
-     * @return string modified html code
+     * @return array
      */
-    public function getData(InspectorDataWrapper $data);
+    public function get(VariableWrapper $data);
 
-    public function accept(InspectorDataWrapper $data);
+    /**
+     * Checks whether the class accepts the object/resource
+     * @param VariableWrapper $data
+     *
+     * @return boolean
+     */
+    public function supports(VariableWrapper $data);
 }

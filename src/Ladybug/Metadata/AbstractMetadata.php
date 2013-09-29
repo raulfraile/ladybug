@@ -29,14 +29,28 @@ abstract class AbstractMetadata implements MetadataInterface
         return str_replace(array_keys($parameters), array_values($parameters), $url);
     }
 
-    protected function isNamespace($class, $namespace)
+    /**
+     * Checks whether the class has the given namespace.
+     * @param string $className Class name
+     * @param string $namespace Namespace
+     *
+     * @return bool Returns TRUE if the class has the namespace
+     */
+    protected function isNamespace($className, $namespace)
     {
-        return preg_match(sprintf('/^%s\\\/', $namespace), $class) === 1;
+        return preg_match(sprintf('/^%s\\\/', $namespace), $className) === 1;
     }
 
-    protected function isPrefix($class, $namespace)
+    /**
+     * Checks whether the class has the given prefix.
+     * @param string $className Class name
+     * @param string $prefix    Prefix
+     *
+     * @return bool Returns TRUE if the class is prefixed with the given prefix
+     */
+    protected function isPrefix($className, $prefix)
     {
-        return preg_match(sprintf('/^%s/', $namespace), $class) === 1;
+        return preg_match(sprintf('/^%s/', $prefix), $className) === 1;
     }
 
 }

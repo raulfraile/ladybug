@@ -11,6 +11,8 @@
 
 namespace Ladybug\Metadata;
 
+use Ladybug\Model\VariableWrapper;
+
 /**
  * MetadataInterface is the interface implemented by all metadata classes
  *
@@ -19,25 +21,20 @@ namespace Ladybug\Metadata;
 interface MetadataInterface
 {
 
-    const TYPE_CLASS = 0;
-    const TYPE_RESOURCE = 1;
-
     /**
-     * Gets metadata for an object/resource identifier
-     * @param string $id   Identifier
-     * @param int    $type Type
+     * Gets metadata for an object/resource
+     * @param VariableWrapper $data
      *
      * @return array
      */
-    public function get($id, $type = self::TYPE_CLASS);
+    public function get(VariableWrapper $data);
 
     /**
-     * Returns true if the class accepts the object/resource identifier
-     * @param string $id   Identifier
-     * @param int    $type Type
+     * Checks whether the class accepts the object/resource
+     * @param VariableWrapper $data
      *
      * @return boolean
      */
-    public function supports($id, $type = self::TYPE_CLASS);
+    public function supports(VariableWrapper $data);
 
 }
