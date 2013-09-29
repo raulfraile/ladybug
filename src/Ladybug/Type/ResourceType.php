@@ -16,7 +16,7 @@ use Ladybug\Metadata\MetadataInterface;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Inspector\InspectorManager;
-use Ladybug\Inspector\InspectorDataWrapper;
+use Ladybug\Model\VariableWrapper;
 
 class ResourceType extends AbstractType
 {
@@ -49,6 +49,9 @@ class ResourceType extends AbstractType
     /** @var string $version */
     protected $version;
 
+    /** @var VariableWrapper $variableWrapper */
+    protected $variableWrapper;
+
     public function __construct(FactoryType $factory, InspectorManager $inspectorManager, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
         parent::__construct();
@@ -80,9 +83,11 @@ class ResourceType extends AbstractType
 
         }
 
+        $this->variableWrapper = new VariableWrapper($this->getResourceType(), $var, VariableWrapper::TYPE_RESOURCE);
+
         // metadata
-        if ($this->metadataResolver->has($this->resourceType, MetadataInterface::TYPE_RESOURCE)) {
-            $metadata = $this->metadataResolver->get($this->resourceType, MetadataInterface::TYPE_RESOURCE);
+        if ($this->metadataResolver->has($this->variableWrapper)) {
+            $metadata = $this->metadataResolver->get($this->variableWrapper);
 
             if (array_key_exists('help_link', $metadata)) {
                 $this->helpLink = $metadata['help_link'];
@@ -129,15 +134,10 @@ class ResourceType extends AbstractType
 
     protected function loadData($var)
     {
-        $data = new InspectorDataWrapper();
-        $data->setData($var);
-        $data->setId($this->getResourceType());
-        $data->setType(InspectorInterface::TYPE_RESOURCE);
-
-        $inspector = $this->inspectorManager->get($data);
+        $inspector = $this->inspectorManager->get($this->variableWrapper);
         if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
-            $this->resourceCustomData = $inspector->getData($data);
+            $this->resourceCustomData = $inspector->get($this->variableWrapper);
         }
 
     }

@@ -12,6 +12,7 @@
 namespace Ladybug\Metadata;
 
 use Ladybug\Metadata\MetadataInterface;
+use Ladybug\Model\VariableWrapper;
 
 interface MetadataResolverInterface
 {
@@ -29,7 +30,7 @@ interface MetadataResolverInterface
      *
      * @return array
      */
-    public function get($id, $type = MetadataInterface::TYPE_CLASS);
+    public function get(VariableWrapper $data);
 
     /**
      * Checks if there is a metadata object to handle the given class/resource id
@@ -38,5 +39,5 @@ interface MetadataResolverInterface
      *
      * @return bool
      */
-    public function has($id, $type = MetadataInterface::TYPE_CLASS);
+    public function has(VariableWrapper $data);
 }

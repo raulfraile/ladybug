@@ -14,6 +14,7 @@
 namespace Ladybug\Inspector;
 
 use Ladybug\Inspector\InspectorInterface;
+use Ladybug\Model\VariableWrapper;
 
 class InspectorManager
 {
@@ -30,12 +31,12 @@ class InspectorManager
         $this->inspectors[] = $inspector;
     }
 
-    public function get(InspectorDataWrapper $data)
+    public function get(VariableWrapper $data)
     {
         foreach ($this->inspectors as $inspector) {
             /** @var InspectorInterface $inspector */
 
-            if ($inspector->accept($data)) {
+            if ($inspector->supports($data)) {
                 return $inspector;
             }
         }

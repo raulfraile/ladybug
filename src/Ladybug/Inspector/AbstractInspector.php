@@ -15,6 +15,7 @@ namespace Ladybug\Inspector;
 use Ladybug\Type\FactoryType;
 use Ladybug\Type\ExtendedTypeFactory;
 use Ladybug\Type;
+use Ladybug\Model\VariableWrapper;
 
 abstract class AbstractInspector implements InspectorInterface
 {
@@ -93,12 +94,12 @@ abstract class AbstractInspector implements InspectorInterface
      * @param  string $var html code
      * @return string modified html code
      */
-    public function getData(InspectorDataWrapper $data)
+    public function get(VariableWrapper $data)
     {
         return null;
     }
 
-    public function accept(InspectorDataWrapper $data)
+    public function supports(VariableWrapper $data)
     {
         return false;
     }

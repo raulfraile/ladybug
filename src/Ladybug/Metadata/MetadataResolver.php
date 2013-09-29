@@ -12,6 +12,7 @@
 namespace Ladybug\Metadata;
 
 use Ladybug\Metadata\MetadataInterface;
+use Ladybug\Model\VariableWrapper;
 
 /**
  * MetadataInterface is the interface implemented by all metadata classes
@@ -48,11 +49,11 @@ class MetadataResolver implements MetadataResolverInterface
      *
      * @return array
      */
-    public function get($id, $type = MetadataInterface::TYPE_CLASS)
+    public function get(VariableWrapper $data)
     {
         foreach ($this->metadatas as $metadata) {
-            if ($metadata->supports($id, $type)) {
-                return $metadata->get($id, $type);
+            if ($metadata->supports($data)) {
+                return $metadata->get($data);
             }
         }
 
@@ -66,10 +67,10 @@ class MetadataResolver implements MetadataResolverInterface
      *
      * @return bool
      */
-    public function has($id, $type = MetadataInterface::TYPE_CLASS)
+    public function has(VariableWrapper $data)
     {
         foreach ($this->metadatas as $metadata) {
-            if ($metadata->supports($id, $type)) {
+            if ($metadata->supports($data)) {
                 return true;
             }
         }

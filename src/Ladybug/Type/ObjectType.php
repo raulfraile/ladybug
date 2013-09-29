@@ -13,8 +13,9 @@ namespace Ladybug\Type;
 
 use Ladybug\Type\ObjectType as Object;
 use Ladybug\Inspector\InspectorInterface;
-use Ladybug\Inspector\InspectorDataWrapper;
+use Ladybug\Model\VariableWrapper;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
+use Ladybug\Metadata\MetadataResolver;
 
 class ObjectType extends AbstractType
 {
@@ -58,7 +59,7 @@ class ObjectType extends AbstractType
     /** @var FactoryType $factory */
     protected $factory;
 
-    /** @var ObjectMetadataResolver $metadataResolver */
+    /** @var MetadataResolver $metadataResolver */
     protected $metadataResolver;
 
     protected $inspectorManager;
@@ -70,6 +71,9 @@ class ObjectType extends AbstractType
     protected $privateMethodsNumber = 0;
     protected $protectedMethodsNumber = 0;
     protected $publicMethodsNumber = 0;
+
+    /** @var VariableWrapper $variableWrapper */
+    protected $variableWrapper;
 
     public function __construct($maxLevel, FactoryType $manager, \Ladybug\Inspector\InspectorManager $inspectorManager, \Ladybug\Metadata\MetadataResolver $metadataResolver)
     {
@@ -98,10 +102,14 @@ class ObjectType extends AbstractType
         if ($this->level < $this->maxLevel) {
             $this->terminal = false;
 
+
+
             $reflectedClass = new \ReflectionClass($this->className);
 
             // Class info
             $this->loadClassInfo($reflectedClass);
+
+            $this->variableWrapper = new VariableWrapper($this->className, $var, VariableWrapper::TYPE_CLASS);
 
             // Object data
             $this->loadData($var, $reflectedClass);
@@ -116,8 +124,8 @@ class ObjectType extends AbstractType
             $this->loadClassMethods($reflectedClass);
 
             // metadata
-            if ($this->metadataResolver->has($this->className)) {
-                $metadata = $this->metadataResolver->get($this->className);
+            if ($this->metadataResolver->has($this->variableWrapper)) {
+                $metadata = $this->metadataResolver->get($this->variableWrapper);
 
                 if (array_key_exists('help_link', $metadata)) {
                     $this->helpLink = $metadata['help_link'];
@@ -446,16 +454,11 @@ class ObjectType extends AbstractType
 
     protected function loadData($var, \ReflectionClass $reflectedObject)
     {
-        $data = new InspectorDataWrapper();
-        $data->setData($var);
-        $data->setId($this->className);
-        $data->setType(InspectorInterface::TYPE_CLASS);
-
-        $inspector = $this->inspectorManager->get($data);
+        $inspector = $this->inspectorManager->get($this->variableWrapper);
         if ($inspector instanceof InspectorInterface) {
             $inspector->setLevel($this->level + 1);
 
-            $this->objectCustomData = $inspector->getData($data);
+            $this->objectCustomData = $inspector->get($this->variableWrapper);
         }
 
         // properties
