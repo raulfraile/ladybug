@@ -97,6 +97,14 @@ class FactoryTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Ladybug\\Type\\ResourceType', $type);
     }
 
+    public function testFactoryForUnknownResourceValues()
+    {
+        $var = fopen(__DIR__ . '/../../../files/test.txt', 'rb');
+        fclose($var); // Turns resource into type "Unknown"
+        $type = $this->factory->factory($var);
+        $this->assertInstanceOf('Ladybug\\Type\\ResourceType', $type);
+    }
+
     /*public function testLoaderForOtherType()
     {
         $this->setExpectedException('Ladybug\Type\Exception\InvalidVariableTypeException');
