@@ -65,7 +65,7 @@ class ResourceType extends AbstractType
 
     public function load($var, $level = 1)
     {
-        if (!is_resource($var)) {
+        if (!$this->isResource($var)) {
             throw new InvalidVariableTypeException();
         }
 
@@ -198,6 +198,11 @@ class ResourceType extends AbstractType
     public function getVersion()
     {
         return $this->version;
+    }
+
+    protected function isResource($var)
+    {
+        return !is_null(@get_resource_type($var));
     }
 
 }

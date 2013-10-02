@@ -45,7 +45,7 @@ class FactoryType
     public function factory($var, $level = 1)
     {
         $result = null;
-
+$this->isResource(1);
         if (null === $var) {
             $result = clone($this->types['type_null']);
         } elseif (is_bool($var)) {
@@ -60,7 +60,7 @@ class FactoryType
             $result = clone($this->types['type_array']);
         } elseif (is_object($var)) {
             $result = clone($this->types['type_object']);
-        } elseif (is_resource($var)) {
+        } elseif ($this->isResource($var)) {
             $result = clone($this->types['type_resource']);
         }
 
@@ -68,5 +68,10 @@ class FactoryType
         $result->load($var, $level);
 
         return $result;
+    }
+
+    protected function isResource($var)
+    {
+        return !is_null(@get_resource_type($var));
     }
 }
