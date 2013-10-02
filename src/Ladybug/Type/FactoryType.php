@@ -45,7 +45,7 @@ class FactoryType
     public function factory($var, $level = 1)
     {
         $result = null;
-$this->isResource(1);
+
         if (null === $var) {
             $result = clone($this->types['type_null']);
         } elseif (is_bool($var)) {
