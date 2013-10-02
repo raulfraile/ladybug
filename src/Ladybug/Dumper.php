@@ -43,6 +43,8 @@ class Dumper
     /** @var int $callLine */
     protected $callLine = null;
 
+    protected $xdebugLink = null;
+
     /** @var array $options */
     protected $options;
 
@@ -114,7 +116,8 @@ class Dumper
 
         return $render->render($this->nodes, array(
             'callFile' => $this->callFile,
-            'callLine' => $this->callLine
+            'callLine' => $this->callLine,
+            'xdebugLink' => $this->xdebugLink
         ));
     }
 
@@ -162,6 +165,11 @@ class Dumper
             if (in_array($callable, $helpers)) {
                 $this->callFile = isset($backtrace[$idx]['file']) ? $backtrace[$idx]['file'] : null;
                 $this->callLine = isset($backtrace[$idx]['line']) ? $backtrace[$idx]['line'] : null;
+
+                $xdebugLink = ini_get('xdebug.file_link_format');
+                if (!empty($xdebugLink)) {
+                    $this->xdebugLink = str_replace(array('%f', '%l'), array($this->callFile, $this->callLine), $xdebugLink);
+                }
 
                 return;
             }
