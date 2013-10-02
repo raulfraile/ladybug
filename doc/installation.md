@@ -33,6 +33,17 @@ require 'vendor/autoload.php';
 [![Latest Stable Version](https://poser.pugx.org/raulfraile/ladybug/v/stable.png)](https://packagist.org/packages/raulfraile/ladybug)
 [![Latest Unstable Version](https://poser.pugx.org/raulfraile/ladybug/v/unstable.png)](https://packagist.org/packages/raulfraile/ladybug)
 
+## Troubleshooting
+
+### Maximum function nesting level error
+
+The Xdebug extension protects you again infinite recursion limiting the maximum function nesting level. By default,
+this value is 100, too low for current projects. If you get this error:
+
+`Fatal error: Maximum function nesting level of '100' reached, aborting!`
+
+Change the `xdebug.max_nesting_level` PHP setting to, at least, 200.
+
 ***
 
 Next section: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
