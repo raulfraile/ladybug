@@ -14,7 +14,7 @@ namespace Ladybug\Type;
 /**
  * AbstractType is the base type all specific types extends from
  */
-abstract class AbstractType implements TypeInterface, RenderizableTypeInterface
+abstract class AbstractType implements RenderizableTypeInterface, LoadableInterface
 {
 
     const TYPE_ID = '';

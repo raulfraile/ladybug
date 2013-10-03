@@ -11,22 +11,15 @@
 
 namespace Ladybug\Type;
 
-interface RenderizableTypeInterface extends TypeInterface
+interface LoadableInterface
 {
 
     /**
-     * Gets template name
-     * @return string
+     * Loads the variable into the type object.
+     * @param mixed $var   Variable
+     * @param int   $level Level
+     *
+     * @return bool
      */
-    public function getTemplateName();
-
-    /**
-     * @abstract
-     * @return mixed
-     */
-    public function isComposed();
-
-    public function getInlineValue();
-
-
+    public function load($var, $level = 1);
 }
