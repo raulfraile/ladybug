@@ -37,15 +37,6 @@ class Constant
     }
 
     /**
-     * Sets the constant name.
-     * @param string $name Constant name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * Gets the constant name.
      *
      * @return string Constant name
@@ -56,16 +47,7 @@ class Constant
     }
 
     /**
-     * Sets the constant value.
-     * @param TypeInterface $value Constant value
-     */
-    public function setValue(TypeInterface $value)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * Gets the constant value
+     * Gets the constant value.
      *
      * @return TypeInterface Constant value
      */
@@ -75,7 +57,7 @@ class Constant
     }
 
     /**
-     * Gets the level of the underlying object value
+     * Gets the level of the underlying object value.
      *
      * @return int Level
      */

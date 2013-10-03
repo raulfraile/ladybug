@@ -211,11 +211,6 @@ abstract class AbstractType implements RenderizableTypeInterface, LoadableInterf
         $this->id = uniqid();
     }
 
-    public function isComposed()
-    {
-        return false;
-    }
-
     public function getInlineValue()
     {
         return $this->value;

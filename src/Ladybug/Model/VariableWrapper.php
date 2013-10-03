@@ -42,15 +42,6 @@ class VariableWrapper
     }
 
     /**
-     * Sets the variable id.
-     * @param string $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Gets the variable id.
      *
      * @return string Variable id
@@ -61,15 +52,6 @@ class VariableWrapper
     }
 
     /**
-     * Sets the variable type
-     * @param int $type Variable type: TYPE_CLASS or TYPE_RESOURCE
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * Gets the variable type.
      *
      * @return int Variable type
@@ -77,15 +59,6 @@ class VariableWrapper
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Sets the variable itself.
-     * @param mixed $data
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
     }
 
     /**

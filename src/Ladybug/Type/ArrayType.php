@@ -91,25 +91,13 @@ class ArrayType extends AbstractType
     }
 
     /**
-     * Sets if the array is terminal
-     * @param boolean $terminal
-     */
-    public function setTerminal($terminal)
-    {
-        $this->terminal = (boolean) $terminal;
-    }
-
-    /**
+     * Checks whether the variable is terminal.
+     *
      * @return bool
      */
-    public function getTerminal()
+    public function isTerminal()
     {
         return $this->terminal;
-    }
-
-    public function isComposed()
-    {
-        return true;
     }
 
     public function getInlineValue()

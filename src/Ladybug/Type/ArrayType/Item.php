@@ -34,15 +34,6 @@ class Item
     }
 
     /**
-     * Sets the item key
-     * @param string $key
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-    }
-
-    /**
      * Gets the item key
      *
      * @return string
@@ -50,15 +41,6 @@ class Item
     public function getKey()
     {
         return $this->key;
-    }
-
-    /**
-     * Sets the item value
-     * @param TypeInterface $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
     }
 
     /**
@@ -71,11 +53,11 @@ class Item
         return $this->value;
     }
 
-    public function setLevel($level)
-    {
-        $this->value->setLevel($level);
-    }
-
+    /**
+     * Gets the item level.
+     *
+     * @return int
+     */
     public function getLevel()
     {
         return $this->value->getLevel();

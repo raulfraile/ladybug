@@ -20,12 +20,6 @@ interface RenderizableTypeInterface extends TypeInterface
      */
     public function getTemplateName();
 
-    /**
-     * @abstract
-     * @return mixed
-     */
-    public function isComposed();
-
     public function getInlineValue();
 
 

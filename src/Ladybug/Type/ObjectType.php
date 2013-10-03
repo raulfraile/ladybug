@@ -146,11 +146,6 @@ class ObjectType extends AbstractType
 
     }
 
-    public function setClassConstants($classConstants)
-    {
-        $this->classConstants = $classConstants;
-    }
-
     public function getClassConstants()
     {
         return $this->classConstants;
@@ -182,19 +177,9 @@ class ObjectType extends AbstractType
         return null;
     }
 
-    public function setClassFile($classFile)
-    {
-        $this->classFile = $classFile;
-    }
-
     public function getClassFile()
     {
         return $this->classFile;
-    }
-
-    public function setClassInterfaces($classInterfaces)
-    {
-        $this->classInterfaces = $classInterfaces;
     }
 
     public function getClassInterfaces()
@@ -202,19 +187,9 @@ class ObjectType extends AbstractType
         return $this->classInterfaces;
     }
 
-    public function setClassMethods($classMethods)
-    {
-        $this->classMethods = $classMethods;
-    }
-
     public function getClassMethods()
     {
         return $this->classMethods;
-    }
-
-    public function setClassName($className)
-    {
-        $this->className = $className;
     }
 
     public function getClassName()
@@ -222,19 +197,9 @@ class ObjectType extends AbstractType
         return $this->className;
     }
 
-    public function setClassNamespace($classNamespace)
-    {
-        $this->classNamespace = $classNamespace;
-    }
-
     public function getClassNamespace()
     {
         return $this->classNamespace;
-    }
-
-    public function setClassParent($classParent)
-    {
-        $this->classParent = $classParent;
     }
 
     public function getClassParent()
@@ -242,39 +207,19 @@ class ObjectType extends AbstractType
         return $this->classParent;
     }
 
-    public function setClassStaticProperties($classStaticProperties)
-    {
-        $this->classStaticProperties = $classStaticProperties;
-    }
-
     public function getClassStaticProperties()
     {
         return $this->classStaticProperties;
     }
 
-    public function setTerminal($isLeaf)
-    {
-        $this->terminal = $isLeaf;
-    }
-
-    public function getTerminal()
+    public function isTerminal()
     {
         return $this->terminal;
-    }
-
-    public function setObjectCustomData($objectCustomData)
-    {
-        $this->objectCustomData = $objectCustomData;
     }
 
     public function getObjectCustomData()
     {
         return $this->objectCustomData;
-    }
-
-    public function setObjectProperties($objectProperties)
-    {
-        $this->objectProperties = $objectProperties;
     }
 
     public function getObjectProperties()
@@ -293,11 +238,6 @@ class ObjectType extends AbstractType
         }
 
         return null;
-    }
-
-    public function setToString($toString)
-    {
-        $this->toString = $toString;
     }
 
     public function getToString()
@@ -495,27 +435,11 @@ class ObjectType extends AbstractType
     }
 
     /**
-     * @param string $helpLink
-     */
-    public function setHelpLink($helpLink)
-    {
-        $this->helpLink = $helpLink;
-    }
-
-    /**
      * @return string
      */
     public function getHelpLink()
     {
         return $this->helpLink;
-    }
-
-    /**
-     * @param string $icon
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
     }
 
     /**
@@ -527,32 +451,11 @@ class ObjectType extends AbstractType
     }
 
     /**
-     * @param string $version
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
      * @return string
      */
     public function getVersion()
     {
         return $this->version;
-    }
-
-    public function isComposed()
-    {
-        return true;
-    }
-
-    /**
-     * @param boolean $abstract
-     */
-    public function setAbstract($abstract)
-    {
-        $this->abstract = $abstract;
     }
 
     /**
@@ -564,14 +467,6 @@ class ObjectType extends AbstractType
     }
 
     /**
-     * @param boolean $final
-     */
-    public function setFinal($final)
-    {
-        $this->final = $final;
-    }
-
-    /**
      * @return boolean
      */
     public function isFinal()
@@ -579,19 +474,9 @@ class ObjectType extends AbstractType
         return $this->final;
     }
 
-    public function setClassTraits($classTraits)
-    {
-        $this->classTraits = $classTraits;
-    }
-
     public function getClassTraits()
     {
         return $this->classTraits;
-    }
-
-    public function setPrivatePropertiesNumber($privatePropertiesNumber)
-    {
-        $this->privatePropertiesNumber = $privatePropertiesNumber;
     }
 
     public function getPrivatePropertiesNumber()
@@ -599,19 +484,9 @@ class ObjectType extends AbstractType
         return $this->privatePropertiesNumber;
     }
 
-    public function setProtectedPropertiesNumber($protectedPropertiesNumber)
-    {
-        $this->protectedPropertiesNumber = $protectedPropertiesNumber;
-    }
-
     public function getProtectedPropertiesNumber()
     {
         return $this->protectedPropertiesNumber;
-    }
-
-    public function setPublicPropertiesNumber($publicPropertiesNumber)
-    {
-        $this->publicPropertiesNumber = $publicPropertiesNumber;
     }
 
     public function getPublicPropertiesNumber()
@@ -619,29 +494,14 @@ class ObjectType extends AbstractType
         return $this->publicPropertiesNumber;
     }
 
-    public function setPrivateMethodsNumber($privateMethodsNumber)
-    {
-        $this->privateMethodsNumber = $privateMethodsNumber;
-    }
-
     public function getPrivateMethodsNumber()
     {
         return $this->privateMethodsNumber;
     }
 
-    public function setProtectedMethodsNumber($protectedMethodsNumber)
-    {
-        $this->protectedMethodsNumber = $protectedMethodsNumber;
-    }
-
     public function getProtectedMethodsNumber()
     {
         return $this->protectedMethodsNumber;
-    }
-
-    public function setPublicMethodsNumber($publicMethodsNumber)
-    {
-        $this->publicMethodsNumber = $publicMethodsNumber;
     }
 
     public function getPublicMethodsNumber()

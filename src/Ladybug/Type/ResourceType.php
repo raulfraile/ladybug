@@ -107,19 +107,9 @@ class ResourceType extends AbstractType
 
     }
 
-    public function setResourceCustomData($resourceCustomData)
-    {
-        $this->resourceCustomData = $resourceCustomData;
-    }
-
     public function getResourceCustomData()
     {
         return $this->resourceCustomData;
-    }
-
-    public function setResourceType($resourceType)
-    {
-        $this->resourceType = $resourceType;
     }
 
     public function getResourceType()
@@ -147,19 +137,6 @@ class ResourceType extends AbstractType
         return $this->resourceId;
     }
 
-    public function isComposed()
-    {
-        return true;
-    }
-
-    /**
-     * @param string $helpLink
-     */
-    public function setHelpLink($helpLink)
-    {
-        $this->helpLink = $helpLink;
-    }
-
     /**
      * @return string
      */
@@ -169,27 +146,11 @@ class ResourceType extends AbstractType
     }
 
     /**
-     * @param string $icon
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-    }
-
-    /**
      * @return string
      */
     public function getIcon()
     {
         return $this->icon;
-    }
-
-    /**
-     * @param string $version
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
     }
 
     /**
