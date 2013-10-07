@@ -86,14 +86,12 @@ class ThemeResolver implements \Countable
             }
 
             $parent = $theme->getParent();
-            if (is_null($parent)) {
-                return false;
-            }
 
-            $theme = $this->themes['theme_'.strtolower($parent)];
+            $theme = is_null($parent) ? null : $this->themes['theme_'.strtolower($parent)];
 
         }
 
+        return false;
     }
 
     protected function supportsFormat(ThemeInterface $theme, $format)
@@ -112,7 +110,7 @@ class ThemeResolver implements \Countable
             return $this->themes[$this->default];
         }
 
-        return null;
+        return false;
     }
 
     /**
