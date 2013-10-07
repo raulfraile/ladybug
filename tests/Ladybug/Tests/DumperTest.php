@@ -41,6 +41,18 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('modern', $this->dumper->getTheme());
     }
 
+    public function testUnknownThemeFallbacksToDefault()
+    {
+        $var = 1;
+        $this->dumper->setTheme('unknown');
+        $this->dumper->setFormat(Format\HtmlFormat::FORMAT_NAME);
+
+        $html = $this->dumper->dump($var);
+
+        $crawler = new Crawler($html);
+        $this->assertEquals('Simple', $crawler->filterXPath('//input[@type="hidden"]')->attr('value'));
+    }
+
     public function testFormatCanBeSet()
     {
         $this->dumper->setFormat(Format\XmlFormat::FORMAT_NAME);

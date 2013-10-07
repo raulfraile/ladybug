@@ -45,16 +45,20 @@ class HtmlRenderer extends AbstractTemplatingRenderer
 
         // check last modification
         $lastModification = 0;
+
         foreach ($theme->getHtmlCssDependencies() as $item) {
-            $lastModification = max($lastModification, filemtime($theme->getResourcesPath().$item));
+            $filename = $theme->getResourcesPath().$item;
+
+            if (file_exists($filename)) {
+                $lastModification = max($lastModification, filemtime($filename));
+            }
         }
 
         // cache
         $cacheFile = sprintf('%s/ladybug_cache/theme/%s.css', sys_get_temp_dir(), $theme->getName());
-        $lastModificationCache = file_exists($cacheFile) ? filemtime($cacheFile) : 0;
+        $lastModificationCache = file_exists($cacheFile) ? filemtime($cacheFile) : -1;
 
         if ($lastModification > $lastModificationCache) {
-
             $pce = new \CssEmbed\CssEmbed();
 
             $css = '';

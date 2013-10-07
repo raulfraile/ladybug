@@ -1,5 +1,5 @@
 <iframe id="ladybug_iframe_{{ id }}" frameborder="0" width="500" height="100" style="margin: 5px;overflow:hidden"></iframe>
-
+<input type="hidden" id="ladybug_theme_{{ id }}" value="{{ theme }}" />
 <script>
     function resizeIframe{{ id }}(height, width) {
         document.getElementById("ladybug_iframe_{{ id }}").height = height + "px";

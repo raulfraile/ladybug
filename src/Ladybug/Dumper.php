@@ -111,7 +111,8 @@ class Dumper
         $render = $this->getRender();
         $render->setGlobals(array(
             'id' => uniqid(),
-            'expanded' => $this->application->container->getParameter('expanded')
+            'expanded' => $this->application->container->getParameter('expanded'),
+            'theme' => $render->getTheme()->getName()
         ));
 
         return $render->render($this->nodes, array(

@@ -35,7 +35,7 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
      * @param string           $tag
      * @param string           $method
      */
-    protected function processTaggedServices(ContainerBuilder $container, $manager, $tag, $method)
+    protected function processTaggedServices(ContainerBuilder $container, $manager, $tag, $method, $params = array())
     {
         if (!$container->hasDefinition($manager)) {
             return;
@@ -46,9 +46,19 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds($tag);
 
         foreach ($taggedServices as $id => $attributes) {
+            $methodParams = array();
+
+            if (!empty($attributes)) {
+                foreach ($params as $param) {
+                    if (isset($attributes[0][$param])) {
+                        $methodParams[] = $attributes[0][$param];
+                    }
+                }
+            }
+
             $definition->addMethodCall(
                 $method,
-                array(new Reference($id), $id)
+                array_merge(array(new Reference($id), $id), $methodParams)
             );
         }
     }

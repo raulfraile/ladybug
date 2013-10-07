@@ -22,6 +22,8 @@ class ThemeCompilerPass extends AbstractCompilerPass
 {
     public function process(ContainerBuilder $container)
     {
-        $this->processTaggedServices($container, 'theme_resolver', self::TAG_THEME, 'addTheme');
+        $this->processTaggedServices($container, 'theme_resolver', self::TAG_THEME, 'addTheme', array(
+            'theme_default'
+        ));
     }
 }

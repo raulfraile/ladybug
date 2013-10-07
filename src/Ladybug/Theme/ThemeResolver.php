@@ -18,11 +18,13 @@ namespace Ladybug\Theme;
  *
  * @author Raul Fraile <raulfraile@gmail.com>
  */
-class ThemeResolver
+class ThemeResolver implements \Countable
 {
 
     /** @var ThemeInterface[] An array of ThemeInterface objects */
     protected $themes;
+
+    protected $default = null;
 
     /**
      * Constructor.
@@ -40,9 +42,15 @@ class ThemeResolver
      * @param ThemeInterface $theme A ThemeInterface instance
      * @param $key
      */
-    public function addTheme(ThemeInterface $theme, $key)
+    public function addTheme(ThemeInterface $theme, $key, $default = false)
     {
         $this->themes[$key] = $theme;
+
+        if ($default) {
+            $this->default = $key;
+        }
+
+        return true;
     }
 
     /**
@@ -64,6 +72,10 @@ class ThemeResolver
 
     public function getTheme($key, $format)
     {
+        if (!array_key_exists('theme_' . $key, $this->themes)) {
+            return $this->getDefaultTheme();
+        }
+
         /** @var $theme ThemeInterface */
         $theme = $this->themes['theme_' . $key];
 
@@ -88,4 +100,30 @@ class ThemeResolver
     {
         return in_array($format, $theme->getFormats());
     }
+
+    /**
+     * Gets the default theme.
+     *
+     * @return ThemeInterface
+     */
+    protected function getDefaultTheme()
+    {
+        if (!is_null($this->default) && array_key_exists($this->default, $this->themes)) {
+            return $this->themes[$this->default];
+        }
+
+        return null;
+    }
+
+    /**
+     * Count number of themes.
+     *
+     * @return int Number of registered themes
+     */
+    public function count()
+    {
+        return count($this->themes);
+    }
+
+
 }

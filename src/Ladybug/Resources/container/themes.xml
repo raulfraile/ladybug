@@ -11,7 +11,7 @@
         </service>
 
         <service id="theme_simple" class="Ladybug\Theme\Simple\SimpleTheme">
-            <tag name="ladybug.theme" />
+            <tag name="ladybug.theme" theme_default="true" />
         </service>
 
     </services>
