@@ -28,6 +28,9 @@ class Property implements VisibilityInterface
     /** @var string $name Property visibility */
     protected $visibility;
 
+    /** @var string $owner Property owner for private properties: self or a parent class */
+    protected $owner;
+
     /**
      * Set property name
      * @param string $name
@@ -95,5 +98,25 @@ class Property implements VisibilityInterface
 
         return $this->value->getLevel();
     }
+
+    /**
+     * Sets property owner. Only for private properties.
+     * @param string $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * Gets property owner. Only for private properties.
+     *
+     * @return string Property owner
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
 
 }

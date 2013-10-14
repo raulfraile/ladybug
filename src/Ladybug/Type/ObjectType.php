@@ -408,15 +408,31 @@ class ObjectType extends AbstractType
         $this->objectProperties = array();
         foreach ($data as $key => $item) {
 
-            if (0 === strpos($key, "\0*\0")) {
-                $propertyName = substr($key, 3);
-                $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PROTECTED;
-                $this->protectedPropertiesNumber++;
-            } elseif (0 === strpos($key, "\0" . $this->className . "\0")) {
-                $propertyName = substr($key, 2 + strlen($this->className));
-                $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PRIVATE;
-                $this->privatePropertiesNumber++;
+            $propertyOwner = null;
+
+            if ("\0" === $key[0]) {
+                // private or protected
+                $matches = array();
+                preg_match('/\x00([^x00]+)\x00(.*)/', $key, $matches);
+
+                $owner = $matches[1];
+                $name = $matches[2];
+
+                if ("*" === $owner) {
+                    // protected
+                    $propertyName = $name;
+                    $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PROTECTED;
+                    $this->protectedPropertiesNumber++;
+                } else {
+                    // private
+                    $propertyName = $name;
+                    $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PRIVATE;
+                    $propertyOwner = $owner === $this->className ? null : $owner;
+                    $this->privatePropertiesNumber++;
+                }
+
             } else {
+                // public
                 $propertyName = $key;
                 $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PUBLIC;
                 $this->publicPropertiesNumber++;
@@ -428,6 +444,7 @@ class ObjectType extends AbstractType
             $objectProperty->setName($propertyName);
             $objectProperty->setValue($value);
             $objectProperty->setVisibility($propertyVisibility);
+            $objectProperty->setOwner($propertyOwner);
 
             $this->objectProperties[] = $objectProperty;
         }
