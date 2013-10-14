@@ -8,6 +8,7 @@
 
         <service id="render_html" class="Ladybug\Renderer\HtmlRenderer">
             <argument type="service" id="theme_resolver" />
+            <argument>%renderer.html%</argument>
             <tag name="ladybug.renderer" />
         </service>
 

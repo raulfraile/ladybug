@@ -23,13 +23,17 @@ abstract class AbstractRenderer implements RendererInterface
     /** @var \Ladybug\Theme\ThemeResolver $themeResolver */
     protected $themeResolver;
 
+    /** @var array $options */
+    protected $options;
+
     /**
      * Constructor
      * @param \Ladybug\Theme\ThemeResolver $themeResolver
      */
-    public function __construct(ThemeResolver $themeResolver)
+    public function __construct(ThemeResolver $themeResolver, $options = array())
     {
         $this->themeResolver = $themeResolver;
+        $this->options = $options;
     }
 
     /**

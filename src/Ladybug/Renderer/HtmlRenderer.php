@@ -31,6 +31,8 @@ class HtmlRenderer extends AbstractTemplatingRenderer
     {
         $this->loadTemplatingEngine();
 
+        $extraData = array_merge($extraData, array('options' => $this->options));
+
         return $this->templatingEngine->render('layout.html.twig', array_merge(array(
             'nodes' => $nodes,
             'css' => $this->getCssContents(),

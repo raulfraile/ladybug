@@ -19,6 +19,11 @@
         <parameter key="object_max_nesting_level">3</parameter>
         <parameter key="expanded">false</parameter>
         <parameter key="silenced">false</parameter>
+
+        <parameter key="renderer.html" type="collection">
+            <parameter key="width">500px</parameter>
+        </parameter>
+
     </parameters>
 
     <services>

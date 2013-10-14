@@ -1,4 +1,4 @@
-<iframe id="ladybug_iframe_{{ id }}" frameborder="0" width="500" height="100" style="margin: 5px;overflow:hidden"></iframe>
+<iframe id="ladybug_iframe_{{ id }}" frameborder="0" width="{{ options.width }}" height="100" style="margin: 5px;overflow:hidden" scrolling="no"></iframe>
 <input type="hidden" id="ladybug_theme_{{ id }}" value="{{ theme }}" />
 <script>
     function resizeIframe{{ id }}(height, width) {
