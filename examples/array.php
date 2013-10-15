@@ -19,6 +19,6 @@ $var = array(
         )
     )
 );
-ldd(new \Exception('mierda'));
+
 $ladybug = new \Ladybug\Dumper();
 echo $ladybug->dump($var);
