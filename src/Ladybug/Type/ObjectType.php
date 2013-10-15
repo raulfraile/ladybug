@@ -412,11 +412,8 @@ class ObjectType extends AbstractType
 
             if ("\0" === $key[0]) {
                 // private or protected
-                $matches = array();
-                preg_match('/\x00([^x00]+)\x00(.*)/', $key, $matches);
 
-                $owner = $matches[1];
-                $name = $matches[2];
+                list($owner, $name) = explode("\0", substr($key, 1), 2);
 
                 if ("*" === $owner) {
                     // protected
