@@ -31,6 +31,9 @@ class Property implements VisibilityInterface
     /** @var string $owner Property owner for private properties: self or a parent class */
     protected $owner;
 
+    /** @var boolean $static Whether the property is static or not */
+    protected $static = false;
+
     /**
      * Set property name
      * @param string $name
@@ -116,6 +119,22 @@ class Property implements VisibilityInterface
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * @param boolean $static
+     */
+    public function setStatic($static)
+    {
+        $this->static = $static;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getStatic()
+    {
+        return $this->static;
     }
 
 

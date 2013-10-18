@@ -53,39 +53,31 @@ class ObjectTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Ladybug\Tests\Type\Foo', $this->type->getClassParent());
 
         // properties
-        $this->assertEquals(4, count($this->type->getObjectProperties()));
-        $privateParentProperty = $this->type->getObjectProperty('privateParentProperty', VisibilityInterface::VISIBILITY_PRIVATE);
+        $this->assertEquals(3, count($this->type->getObjectProperties()));
         $privateProperty = $this->type->getObjectProperty('privateProperty', VisibilityInterface::VISIBILITY_PRIVATE);
         $protectedProperty = $this->type->getObjectProperty('protectedProperty', VisibilityInterface::VISIBILITY_PROTECTED);
         $publicProperty = $this->type->getObjectProperty('publicProperty', VisibilityInterface::VISIBILITY_PUBLIC);
-
-        $this->assertInstanceOf('Ladybug\Type\ObjectType\Property', $privateParentProperty);
-        $this->assertEquals('privateParentProperty', $privateParentProperty->getName());
-        $this->assertEquals(VisibilityInterface::VISIBILITY_PRIVATE, $privateParentProperty->getVisibility());
-        $this->assertInstanceOf('Ladybug\Type\IntType', $privateParentProperty->getValue());
-        $this->assertEquals(2, $privateParentProperty->getLevel());
-        $this->assertEquals('Ladybug\Tests\Type\Foo', $privateParentProperty->getOwner());
 
         $this->assertInstanceOf('Ladybug\Type\ObjectType\Property', $privateProperty);
         $this->assertEquals('privateProperty', $privateProperty->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PRIVATE, $privateProperty->getVisibility());
         $this->assertInstanceOf('Ladybug\Type\IntType', $privateProperty->getValue());
         $this->assertEquals(2, $privateProperty->getLevel());
-        $this->assertNull($privateProperty->getOwner());
+        $this->assertEquals('Ladybug\Tests\Type\Bar', $privateProperty->getOwner());
 
         $this->assertInstanceOf('Ladybug\Type\ObjectType\Property', $protectedProperty);
         $this->assertEquals('protectedProperty', $protectedProperty->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PROTECTED, $protectedProperty->getVisibility());
         $this->assertInstanceOf('Ladybug\Type\IntType', $protectedProperty->getValue());
         $this->assertEquals(2, $protectedProperty->getLevel());
-        $this->assertNull($protectedProperty->getOwner());
+        $this->assertEquals('Ladybug\Tests\Type\Bar', $protectedProperty->getOwner());
 
         $this->assertInstanceOf('Ladybug\Type\ObjectType\Property', $publicProperty);
         $this->assertEquals('publicProperty', $publicProperty->getName());
         $this->assertEquals(VisibilityInterface::VISIBILITY_PUBLIC, $publicProperty->getVisibility());
         $this->assertInstanceOf('Ladybug\Type\IntType', $publicProperty->getValue());
         $this->assertEquals(2, $publicProperty->getLevel());
-        $this->assertNull($publicProperty->getOwner());
+        $this->assertEquals('Ladybug\Tests\Type\Bar', $publicProperty->getOwner());
 
         // constants
         $this->assertEquals(1, count($this->type->getClassConstants()));

@@ -25,4 +25,8 @@ $dom->loadXml($sXml);
 $reflected = new ReflectionClass('\Ladybug\Dumper');
 
 $ladybug = new \Ladybug\Dumper();
-echo $ladybug->dump($dom, $reflected, $date);
+
+$s = new \stdClass();
+$s->a = 1;
+
+echo $ladybug->dump($ladybug, $s, new \Symfony\Component\Finder\Finder(), /*$dom, $reflected, */$date/*, function() { echo 1; }*/);

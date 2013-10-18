@@ -401,50 +401,45 @@ class ObjectType extends AbstractType
             $this->objectCustomData = $inspector->get($this->variableWrapper);
         }
 
-        // properties
-        $data = (array) $var;
-
-        // unmangle private and protected
         $this->objectProperties = array();
-        foreach ($data as $key => $item) {
 
-            $propertyOwner = null;
+        $properties = $reflectedObject->getProperties();
+        foreach ($properties as $key => $item) {
 
-            if ("\0" === $key[0]) {
-                // private or protected
+            $item->setAccessible(true);
 
-                list($owner, $name) = explode("\0", substr($key, 1), 2);
+            $value = $this->factory->factory($item->getValue($var), $this->level + 1);
 
-                if ("*" === $owner) {
-                    // protected
-                    $propertyName = $name;
-                    $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PROTECTED;
-                    $this->protectedPropertiesNumber++;
-                } else {
-                    // private
-                    $propertyName = $name;
-                    $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PRIVATE;
-                    $propertyOwner = $owner === $this->className ? null : $owner;
-                    $this->privatePropertiesNumber++;
-                }
+            $objectProperty = new Object\Property();
+            $objectProperty->setName($item->getName());
+            $objectProperty->setValue($value);
+            $objectProperty->setStatic($item->isStatic());
 
+            if ($item->isPrivate()) {
+                $objectProperty->setVisibility(Object\VisibilityInterface::VISIBILITY_PRIVATE);
+                $this->privatePropertiesNumber++;
+            } elseif ($item->isProtected()) {
+                $objectProperty->setVisibility(Object\VisibilityInterface::VISIBILITY_PROTECTED);
+                $this->protectedPropertiesNumber++;
             } else {
-                // public
-                $propertyName = $key;
-                $propertyVisibility = Object\VisibilityInterface::VISIBILITY_PUBLIC;
+                $objectProperty->setVisibility(Object\VisibilityInterface::VISIBILITY_PUBLIC);
                 $this->publicPropertiesNumber++;
             }
 
-            $value = $this->factory->factory($item, $this->level + 1);
-
-            $objectProperty = new Object\Property();
-            $objectProperty->setName($propertyName);
-            $objectProperty->setValue($value);
-            $objectProperty->setVisibility($propertyVisibility);
-            $objectProperty->setOwner($propertyOwner);
+            //$objectProperty->setVisibility($propertyVisibility);
+            $objectProperty->setOwner($item->getDeclaringClass()->getName());
 
             $this->objectProperties[] = $objectProperty;
         }
+
+        // order properties
+        usort($this->objectProperties, function(Object\Property $propertyA, Object\Property $propertyB) {
+
+            $orderValueA = ((int) !$propertyA->getStatic()) . $propertyA->getVisibility() . $propertyA->getName();
+            $orderValueB = ((int) !$propertyB->getStatic()) . $propertyB->getVisibility() . $propertyB->getName();
+
+            return strcasecmp($orderValueA, $orderValueB);
+        });
 
     }
 

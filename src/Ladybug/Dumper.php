@@ -27,7 +27,7 @@ use Ladybug\Format\FormatResolver;
 class Dumper
 {
     const LEVEL_INIT = 1;
-
+private static $aaa = 12;
     /** @var array $nodes */
     protected $nodes;
 
