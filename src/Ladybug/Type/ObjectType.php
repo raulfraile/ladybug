@@ -43,6 +43,9 @@ class ObjectType extends AbstractType
     /** @var boolean $final */
     protected $final;
 
+    /** @var boolean $cloneable */
+    protected $cloneable;
+
     protected $terminal;
 
     /** @var string $icon */
@@ -279,6 +282,10 @@ class ObjectType extends AbstractType
 
         $this->abstract = $reflectedObject->isAbstract();
         $this->final = $reflectedObject->isFinal();
+
+        if (version_compare(phpversion(), '5.4', '>=')) {
+            $this->cloneable = $reflectedObject->isCloneable();
+        }
     }
 
     protected function loadClassConstants(\ReflectionClass $reflectedObject)
@@ -481,6 +488,14 @@ class ObjectType extends AbstractType
     public function isFinal()
     {
         return $this->final;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCloneable()
+    {
+        return $this->cloneable;
     }
 
     public function getClassTraits()
