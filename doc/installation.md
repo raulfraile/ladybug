@@ -46,6 +46,6 @@ Change the `xdebug.max_nesting_level` PHP setting to, at least, 200.
 
 ***
 
-Next section: [Examples](https://github.com/raulfraile/ladybug/blob/master/doc/examples.md).
+Next section: [Extending Ladybug](https://github.com/raulfraile/ladybug/blob/master/doc/extending.md).
 
 Previous section: [Usage](https://github.com/raulfraile/ladybug/blob/master/doc/usage.md).
