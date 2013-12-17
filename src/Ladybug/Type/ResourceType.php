@@ -132,6 +132,10 @@ class ResourceType extends AbstractType
 
     }
 
+    /**
+     *
+     * @return mixed
+     */
     public function getResourceId()
     {
         return $this->resourceId;

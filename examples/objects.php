@@ -25,5 +25,5 @@ $dom->loadXml($sXml);
 $reflected = new ReflectionClass('\Ladybug\Dumper');
 
 $ladybug = new \Ladybug\Dumper();
-
+$ladybug->setTheme('modern');
 echo $ladybug->dump($dom, $reflected, $date);

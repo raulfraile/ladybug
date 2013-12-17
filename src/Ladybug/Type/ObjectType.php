@@ -24,17 +24,40 @@ class ObjectType extends AbstractType
 
     const CLASSINFO_BUILTIN = 'built-in';
 
+    /** @var string $className Name of the class */
     protected $className = null;
+
+    /** @var array $classConstants Class constants */
     protected $classConstants = array();
-    protected $objectProperties = array();
+
+    /** @var array $classStaticProperties Class static properties */
     protected $classStaticProperties = array();
+
+    /** @var array $classMethods Class methods */
     protected $classMethods = array();
-    protected $objectCustomData = null;
+
+    /** @var null|string $classFile Class filename */
     protected $classFile = null;
+
+    /** @var array $classInterfaces Class interfaces */
     protected $classInterfaces = array();
+
+    /** @var null|string $classNamespace Class namespace */
     protected $classNamespace = null;
+
+    /** @var null|string $classParent Class parent */
     protected $classParent = null;
+
+    /** @var array $classTraits Class traits */
     protected $classTraits = array();
+
+    /** @var array $objectProperties Object properties */
+    protected $objectProperties = array();
+
+    /** @var null $objectCustomData Object custom data */
+    protected $objectCustomData = null;
+
+
     protected $toString = null;
 
     /** @var boolean $abstract */
