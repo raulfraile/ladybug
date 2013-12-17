@@ -1,6 +1,6 @@
 <?php
 
-namespace Ladybug\Tests\Type;
+namespace Ladybug\Tests\Type\Vector;
 
 use Ladybug\Type;
 use \Mockery as m;
@@ -8,7 +8,7 @@ use \Mockery as m;
 class ArrayTypeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\ArrayType */
+    /** @var Type\Vector\Container */
     protected $type;
 
     public function setUp()
@@ -17,13 +17,13 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
 
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturnUsing(function($var, $level) {
-            $intType = new Type\IntType();
+            $intType = new Type\Int();
             $intType->load($var, $level);
 
             return $intType;
         });
 
-        $this->type = new Type\ArrayType($maxlevel, $factoryTypeMock);
+        $this->type = new Type\Vector\Container($maxlevel, $factoryTypeMock);
     }
 
     public function tearDown()
@@ -46,7 +46,7 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
         foreach ($this->type->getValue() as $item) {
             $this->assertEquals($i, $item->getKey());
             $this->assertEquals(2, $item->getLevel());
-            $this->assertInstanceOf('Ladybug\Type\IntType', $item->getValue());
+            $this->assertInstanceOf('Ladybug\Type\Int', $item->getValue());
 
             $i++;
         }

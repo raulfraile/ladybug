@@ -14,15 +14,15 @@ namespace Ladybug\Type;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 /**
- * StringType is an abstraction of a primitive variable of type 'string'
+ * String is an abstraction of a primitive variable of type 'string'
  */
-class StringType extends AbstractType
+class String extends AbstractType
 {
     const TYPE_ID = 'string';
 
     /** @var string $encoding */
     protected $encoding;
-    
+
 
     /**
      * Constructor.

@@ -14,9 +14,9 @@ namespace Ladybug\Type;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 /**
- * IntType is an abstraction of a primitive variable of type 'int'
+ * Int is an abstraction of a primitive variable of type 'int'
  */
-class IntType extends AbstractType
+class Int extends AbstractType
 {
 
     const TYPE_ID = 'int';

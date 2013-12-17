@@ -6,16 +6,16 @@ use Ladybug\Type;
 use Ladybug\Type\ObjectType\VisibilityInterface;
 use \Mockery as m;
 
-class ResourceTypeTest extends \PHPUnit_Framework_TestCase
+class ResourceTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\ResourceType $type */
+    /** @var Type\Resource $type */
     protected $type;
 
     public function setUp()
     {
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
-        $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\IntType());
+        $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturn(new Type\Int());
 
         $managerInspectorMock = m::mock('Ladybug\Inspector\InspectorManager');
         $managerInspectorMock->shouldReceive('get')->andReturn(null);
@@ -23,7 +23,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
         $metadataResolverMock = m::mock('Ladybug\Metadata\MetadataResolver');
         $metadataResolverMock->shouldReceive('has')->andReturn(false);
 
-        $this->type = new Type\ResourceType($factoryTypeMock, $managerInspectorMock, $metadataResolverMock);
+        $this->type = new Type\Resource($factoryTypeMock, $managerInspectorMock, $metadataResolverMock);
     }
 
     public function tearDown()

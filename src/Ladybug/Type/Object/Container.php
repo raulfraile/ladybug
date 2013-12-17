@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type;
+namespace Ladybug\Type\Object;
 
-use Ladybug\Type\ObjectType as Object;
 use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Model\VariableWrapper;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 use Ladybug\Metadata\MetadataResolver;
+use Ladybug\Type\AbstractType;
+use Ladybug\Type\FactoryType;
 
-class ObjectType extends AbstractType
+class Container extends AbstractType
 {
 
     const TYPE_ID = 'object';
@@ -180,7 +181,7 @@ class ObjectType extends AbstractType
     public function getConstantByName($name)
     {
         foreach ($this->classConstants as $constant) {
-            /** @var Object\Constant $constant */
+            /** @var Constant $constant */
 
             if ($constant->getName() === $name) {
                 return $constant;
@@ -193,7 +194,7 @@ class ObjectType extends AbstractType
     public function getMethodByName($name)
     {
         foreach ($this->classMethods as $method) {
-            /** @var Object\Method $method */
+            /** @var Method $method */
 
             if ($method->getName() === $name) {
                 return $method;
@@ -256,7 +257,7 @@ class ObjectType extends AbstractType
     public function getObjectProperty($name, $visibility)
     {
         foreach ($this->objectProperties as $property) {
-            /** @var Object\Property $property */
+            /** @var Property $property */
 
             if ($property->getName() === $name && $property->getVisibility() === $visibility) {
                 return $property;
@@ -319,7 +320,7 @@ class ObjectType extends AbstractType
         if (!empty($constants)) {
             foreach ($constants as $constantName => $constantValue) {
                 $valueType = $this->factory->factory($constantValue, $this->level + 1);
-                $this->classConstants[] = new Object\Constant($constantName, $valueType);
+                $this->classConstants[] = new Constant($constantName, $valueType);
             }
         }
     }
@@ -348,7 +349,7 @@ class ObjectType extends AbstractType
             foreach ($classMethods as $classMethod) {
                 $reflectedMethod = $reflectedObject->getMethod($classMethod->name);
 
-                $method = new Object\Method();
+                $method = new Method();
                 $method->setName($reflectedMethod->getName());
                 $method->setLevel($this->level + 1);
 
@@ -359,13 +360,13 @@ class ObjectType extends AbstractType
 
                 // visibility
                 if ($reflectedMethod->isPublic()) {
-                    $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PUBLIC);
+                    $method->setVisibility(VisibilityInterface::VISIBILITY_PUBLIC);
                     $this->publicMethodsNumber++;
                 } elseif ($reflectedMethod->isProtected()) {
-                    $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PROTECTED);
+                    $method->setVisibility(VisibilityInterface::VISIBILITY_PROTECTED);
                     $this->protectedMethodsNumber++;
                 } elseif ($reflectedMethod->isPrivate()) {
-                    $method->setVisibility(Object\VisibilityInterface::VISIBILITY_PRIVATE);
+                    $method->setVisibility(VisibilityInterface::VISIBILITY_PRIVATE);
                     $this->privateMethodsNumber++;
                 }
 
@@ -382,7 +383,7 @@ class ObjectType extends AbstractType
 
                 foreach ($methodParameters as $methodParameterReflected) {
 
-                    $methodParameter = new Object\MethodParameter();
+                    $methodParameter = new MethodParameter();
                     $methodParameter->setName($methodParameterReflected->getName());
 
                     $class = $methodParameterReflected->getClass();
@@ -412,7 +413,7 @@ class ObjectType extends AbstractType
         }
 
         // order methods
-        usort($this->classMethods, function(Object\Method $methodA, Object\Method $methodB) {
+        usort($this->classMethods, function(Method $methodA, Method $methodB) {
 
             $orderValueA = $methodA->getVisibility() . $methodA->getName();
             $orderValueB = $methodB->getVisibility() . $methodB->getName();
@@ -440,19 +441,19 @@ class ObjectType extends AbstractType
 
             $value = $this->factory->factory($item->getValue($var), $this->level + 1);
 
-            $objectProperty = new Object\Property();
+            $objectProperty = new Property();
             $objectProperty->setName($item->getName());
             $objectProperty->setValue($value);
             $objectProperty->setStatic($item->isStatic());
 
             if ($item->isPrivate()) {
-                $objectProperty->setVisibility(Object\VisibilityInterface::VISIBILITY_PRIVATE);
+                $objectProperty->setVisibility(VisibilityInterface::VISIBILITY_PRIVATE);
                 $this->privatePropertiesNumber++;
             } elseif ($item->isProtected()) {
-                $objectProperty->setVisibility(Object\VisibilityInterface::VISIBILITY_PROTECTED);
+                $objectProperty->setVisibility(VisibilityInterface::VISIBILITY_PROTECTED);
                 $this->protectedPropertiesNumber++;
             } else {
-                $objectProperty->setVisibility(Object\VisibilityInterface::VISIBILITY_PUBLIC);
+                $objectProperty->setVisibility(VisibilityInterface::VISIBILITY_PUBLIC);
                 $this->publicPropertiesNumber++;
             }
 
@@ -463,7 +464,7 @@ class ObjectType extends AbstractType
         }
 
         // order properties
-        usort($this->objectProperties, function(Object\Property $propertyA, Object\Property $propertyB) {
+        usort($this->objectProperties, function(Property $propertyA, Property $propertyB) {
 
             $orderValueA = ((int) !$propertyA->getStatic()) . $propertyA->getVisibility() . $propertyA->getName();
             $orderValueB = ((int) !$propertyB->getStatic()) . $propertyB->getVisibility() . $propertyB->getName();

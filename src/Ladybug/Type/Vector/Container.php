@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type;
+namespace Ladybug\Type\Vector;
 
-use Ladybug\Type\ArrayType\Item;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
+use Ladybug\Type\AbstractType;
+use Ladybug\Type\FactoryType;
 
 /**
  * ArrayType is an abstraction of a PHP native array
  */
-class ArrayType extends AbstractType
+class Container extends AbstractType
 {
 
     const TYPE_ID = 'array';

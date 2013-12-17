@@ -6,33 +6,33 @@
 
     <services>
 
-        <service id="type_null" class="Ladybug\Type\NullType">
+        <service id="type_null" class="Ladybug\Type\Null">
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_bool" class="Ladybug\Type\BoolType">
+        <service id="type_bool" class="Ladybug\Type\Bool">
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_int" class="Ladybug\Type\IntType">
+        <service id="type_int" class="Ladybug\Type\Int">
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_float" class="Ladybug\Type\FloatType">
+        <service id="type_float" class="Ladybug\Type\Float">
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_string" class="Ladybug\Type\StringType">
+        <service id="type_string" class="Ladybug\Type\String">
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_array" class="Ladybug\Type\ArrayType">
+        <service id="type_array" class="Ladybug\Type\Vector\Container">
             <argument>%array_max_nesting_level%</argument>
             <argument type="service" id="type_factory"></argument>
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_object" class="Ladybug\Type\ObjectType">
+        <service id="type_object" class="Ladybug\Type\Object\Container">
             <argument>%object_max_nesting_level%</argument>
             <argument type="service" id="type_factory"></argument>
             <argument type="service" id="inspector_manager"></argument>
@@ -41,7 +41,7 @@
             <tag name="ladybug.type" />
         </service>
 
-        <service id="type_resource" class="Ladybug\Type\ResourceType">
+        <service id="type_resource" class="Ladybug\Type\Resource">
             <argument type="service" id="type_factory"></argument>
             <argument type="service" id="inspector_manager"></argument>
             <argument type="service" id="metadata_resolver"></argument>

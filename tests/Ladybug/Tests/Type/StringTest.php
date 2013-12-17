@@ -4,15 +4,15 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class StringTypeTest extends \PHPUnit_Framework_TestCase
+class StringTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\StringType $type */
+    /** @var Type\String $type */
     protected $type;
 
     public function setUp()
     {
-        $this->type = new Type\StringType();
+        $this->type = new Type\String();
     }
 
     public function testLoaderForValidValues()

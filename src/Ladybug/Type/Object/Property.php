@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\ObjectType;
+namespace Ladybug\Type\Object;
 
 use Ladybug\Type\TypeInterface;
 

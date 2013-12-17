@@ -18,7 +18,7 @@ use Ladybug\Inspector\InspectorInterface;
 use Ladybug\Inspector\InspectorManager;
 use Ladybug\Model\VariableWrapper;
 
-class ResourceType extends AbstractType
+class Resource extends AbstractType
 {
 
     const TYPE_ID = 'resource';

@@ -4,15 +4,15 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class IntTypeTest extends \PHPUnit_Framework_TestCase
+class IntTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\intType $type */
+    /** @var Type\Int $type */
     protected $type;
 
     public function setUp()
     {
-        $this->type = new Type\IntType();
+        $this->type = new Type\Int();
     }
 
     public function testLoaderForValidValues()

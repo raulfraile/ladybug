@@ -4,15 +4,15 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class NullTypeTest extends \PHPUnit_Framework_TestCase
+class NullTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\NullType $type */
+    /** @var Type\Null $type */
     protected $type;
 
     public function setUp()
     {
-        $this->type = new Type\NullType();
+        $this->type = new Type\Null();
     }
 
     public function testLoaderForValidValues()

@@ -10,7 +10,7 @@ class VariableWrapperTest extends \PHPUnit_Framework_TestCase
 
     public function testObjectCreation()
     {
-        $var = new \Ladybug\Type\IntType();
+        $var = new \Ladybug\Type\Int();
         $var->load(1);
 
         $variableWrapper = new VariableWrapper(1, $var, VariableWrapper::TYPE_CLASS);

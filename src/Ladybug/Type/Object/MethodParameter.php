@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ladybug\Type\ObjectType;
+namespace Ladybug\Type\Object;
 
 /**
  * MethodParameter is an abstraction of a parameter belonging to a class method

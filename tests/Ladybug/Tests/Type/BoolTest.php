@@ -4,15 +4,15 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class BoolTypeTest extends \PHPUnit_Framework_TestCase
+class BoolTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\BoolType $type */
+    /** @var Type\Bool $type */
     protected $type;
 
     public function setUp()
     {
-        $this->type = new Type\BoolType();
+        $this->type = new Type\Bool();
     }
 
     public function testLoaderForValidValues()

@@ -15,9 +15,9 @@
 {% endmacro %}
 
 {% macro visibility_name(visibility) %}
-{% if visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PRIVATE') %}
+{% if visibility == constant('Ladybug\\Type\\Object\\VisibilityInterface::VISIBILITY_PRIVATE') %}
 private
-{% elseif visibility == constant('Ladybug\\Type\\ObjectType\\VisibilityInterface::VISIBILITY_PROTECTED') %}
+{% elseif visibility == constant('Ladybug\\Type\\Object\\VisibilityInterface::VISIBILITY_PROTECTED') %}
 protected
 {% else %}
 public
