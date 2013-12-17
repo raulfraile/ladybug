@@ -20,6 +20,10 @@ class StringType extends AbstractType
 {
     const TYPE_ID = 'string';
 
+    /** @var string $encoding */
+    protected $encoding;
+    
+
     /**
      * Constructor.
      */
@@ -31,7 +35,7 @@ class StringType extends AbstractType
     }
 
     /**
-     * Gets normalized encoding.
+     * Get normalized encoding.
      * @param string $encoding
      *
      * @return string
@@ -57,9 +61,19 @@ class StringType extends AbstractType
 
         if (in_array(strtoupper($encoding), $validEncodings)) {
             return $encoding;
-        } else {
-            return 'ISO-8859-1';
         }
+
+        return 'ISO-8859-1';
+    }
+
+    /**
+     * Get encoding
+     *
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
     }
 
     /**

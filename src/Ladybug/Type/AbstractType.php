@@ -31,9 +31,6 @@ abstract class AbstractType implements RenderizableTypeInterface, LoadableInterf
     /** @var int $level */
     protected $level;
 
-    /** @var string $encoding */
-    protected $encoding;
-
     /** @var int $length */
     protected $length;
 
@@ -170,15 +167,7 @@ abstract class AbstractType implements RenderizableTypeInterface, LoadableInterf
         $this->encoding = $encoding;
     }
 
-    /**
-     * Get encoding
-     *
-     * @return string
-     */
-    public function getEncoding()
-    {
-        return $this->encoding;
-    }
+
 
     public function __clone()
     {
