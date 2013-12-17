@@ -16,6 +16,11 @@ class TextFormat implements FormatInterface
 
     const FORMAT_NAME = 'text';
 
+    /**
+     * Gets format name
+     *
+     * @return string
+     */
     public function getName()
     {
         return self::FORMAT_NAME;
