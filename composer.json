@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=5.3.9",
-        "raulfraile/ladybug-theme-modern": "~1.0.0",
+        "raulfraile/ladybug-theme-modern": ">=1.0.7,<2.0",
         "raulfraile/ladybug-plugin-extra": "~1.0.0",
         "symfony/console": ">=2.0",
         "symfony/finder": ">=2.0",
