@@ -25,7 +25,7 @@
         "ptachoire/cssembed": "v1.0.2"
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "0.2.0",
+        "phpunit/phpunit": "~4.0",
         "mockery/mockery": "0.9.1",
         "symfony/dom-crawler": ">=2.0.4",
         "phpdocumentor/reflection-docblock": "2.0.0",
