@@ -32,7 +32,6 @@ class Float extends AbstractType
     /** @var string $mathConstant Mathematical constant name */
     protected $mathConstant = null;
 
-
     /**
      * Constructor.
      */
@@ -112,8 +111,15 @@ class Float extends AbstractType
         );
 
         foreach ($constants as $name => $item) {
-            if (0 === bccomp($var, $item['value'], max($precision - 1, $item['min_precision']))) {
-                return $name;
+            if (extension_loaded('bcmath')) {
+                if (0 === bccomp($var, $item['value'], max($precision - 1, $item['min_precision']))) {
+                    return $name;
+                }
+            } else {
+                $p = max($precision - 1, $item['min_precision']);
+                if (number_format($var, $p) === number_format($item['value'], $p)) {
+                    return $name;
+                }
             }
         }
 
@@ -124,6 +130,5 @@ class Float extends AbstractType
     {
         return $this->decimals;
     }
-
 
 }
