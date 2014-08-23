@@ -34,37 +34,38 @@ class BadTypeHintedParameterContainerTest extends \PHPUnit_Framework_TestCase
 
     public function testDumperDoesNotCrashOnWrongTypeHints()
     {
-        $var = new Problematic();
+        $var = new FlawedClass();
         $this->type->load($var);
 
         // class info
-        $this->assertEquals('Ladybug\Tests\Type\Object\Problematic', $this->type->getClassName());
+        $this->assertEquals('Ladybug\Tests\Type\Object\FlawedClass', $this->type->getClassName());
         $this->assertEquals(__FILE__, $this->type->getClassFile());
 
         $this->assertCount(2, $this->type->getClassMethods());
 
-        $privateMethod = $this->type->getMethodByName('privateFunction');
+        $privateMethod = $this->type->getMethodByName('privateMethod');
         $this->assertCount(2, $privateMethod->getParameters());
 
-        $parameter1 = $privateMethod->getParameterByName('that');
+        $parameter1 = $privateMethod->getParameterByName('bar');
         $this->assertNull($parameter1->getType());
         $this->assertFalse($parameter1->isReference());
 
-        $badTypeHinted = $privateMethod->getParameterByName('badTypeHinted');
-        $this->assertEquals('Wrong_Typehint!', $badTypeHinted->getType());
+        $badTypeHinted = $privateMethod->getParameterByName('baz');
+        $this->assertEquals('[Undefined Type Hint]', $badTypeHinted->getType());
         $this->assertFalse($badTypeHinted->isReference());
         $this->assertInstanceOf('Ladybug\Type\Null', $badTypeHinted->getDefaultValue());
     }
 }
 
-class Problematic
+class FlawedClass
 {
-    public function publicFunction()
+    public function publicMethod()
     {
-        $this->privateFunction($this, null);
+        $foo = 'bar';
+        $this->privateMethod($foo, null);
     }
 
-    private function privateFunction($that, BadTypeHint $badTypeHinted = null)
+    private function privateMethod($bar, UndefinedTypeHint $baz = null)
     {
     }
 }
