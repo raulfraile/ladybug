@@ -386,7 +386,12 @@ class Container extends AbstractType
                     $methodParameter = new MethodParameter();
                     $methodParameter->setName($methodParameterReflected->getName());
 
-                    $class = $methodParameterReflected->getClass();
+                    try {
+                        $class = $methodParameterReflected->getClass();
+                    } catch (\ReflectionException $e) {
+                        // This happens if the Class does not exist
+                        $methodParameter->setType('Wrong_Typehint!');
+                    }
 
                     if ($class instanceof \ReflectionClass) {
                         $methodParameter->setType($class->getName());
