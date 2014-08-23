@@ -11,6 +11,4 @@ matrix:
   allow_failures:
     - php: hhvm-nightly
 
-before_install:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar --dev install
+before_script: composer install --prefer-source
