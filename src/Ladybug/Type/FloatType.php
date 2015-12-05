@@ -16,7 +16,7 @@ use Ladybug\Type\Exception\InvalidVariableTypeException;
 /**
  * Float is an abstraction of a primitive variable of type 'float'
  */
-class Float extends AbstractType
+class FloatType extends AbstractType
 {
 
     const TYPE_ID = 'float';
