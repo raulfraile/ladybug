@@ -4,23 +4,24 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class IntTest extends \PHPUnit_Framework_TestCase
+class NullTypeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\Int $type */
+    /** @var Type\Null $type */
     protected $type;
 
     public function setUp()
     {
-        $this->type = new Type\Int();
+        $this->type = new Type\NullType();
     }
 
     public function testLoaderForValidValues()
     {
-        $var = 1;
+        $var = null;
 
         $this->type->load($var);
-        $this->assertEquals($var, $this->type->getValue());
+        $this->assertNull($this->type->getValue());
+        $this->assertEquals('null', $this->type->getFormattedValue());
         $this->assertEquals(1, $this->type->getLevel());
     }
 

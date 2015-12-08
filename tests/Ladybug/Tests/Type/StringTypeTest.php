@@ -4,24 +4,27 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class NullTest extends \PHPUnit_Framework_TestCase
+class StringTypeTest extends \PHPUnit_Framework_TestCase
 {
 
-    /** @var Type\Null $type */
+    /** @var Type\String $type */
     protected $type;
 
     public function setUp()
     {
-        $this->type = new Type\Null();
+        $this->type = new Type\StringType();
     }
 
     public function testLoaderForValidValues()
     {
-        $var = null;
+        $var = 'tést';
+        $encoding = 'UTF-8';
+        $length = 4;
 
         $this->type->load($var);
-        $this->assertNull($this->type->getValue());
-        $this->assertEquals('null', $this->type->getFormattedValue());
+        $this->assertEquals($var, $this->type->getValue());
+        $this->assertEquals($encoding, $this->type->getEncoding());
+        $this->assertEquals($length, $this->type->getLength());
         $this->assertEquals(1, $this->type->getLevel());
     }
 
@@ -29,7 +32,7 @@ class NullTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Ladybug\Type\Exception\InvalidVariableTypeException');
 
-        $var = 'test';
+        $var = 1;
 
         $this->type->load($var);
     }
