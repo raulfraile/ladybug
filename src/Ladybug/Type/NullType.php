@@ -14,12 +14,11 @@ namespace Ladybug\Type;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 /**
- * Int is an abstraction of a primitive variable of type 'int'
+ * Null is an abstraction of a primitive variable of type 'null'
  */
-class Int extends AbstractType
+class NullType extends AbstractType
 {
-
-    const TYPE_ID = 'int';
+    const TYPE_ID = 'null';
 
     /**
      * Constructor.
@@ -34,13 +33,30 @@ class Int extends AbstractType
     /**
      * @inheritdoc
      */
+    public function getValue()
+    {
+        return null;
+    }
+
+    public function getFormattedValue()
+    {
+        return 'null';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function load($var, $level = 1)
     {
-        if (!is_int($var)) {
+        if (!is_null($var)) {
             throw new InvalidVariableTypeException();
         }
 
         parent::load($var, $level);
     }
 
+    public function getInlineValue()
+    {
+        return 'null';
+    }
 }

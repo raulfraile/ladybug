@@ -14,12 +14,12 @@ namespace Ladybug\Type;
 use Ladybug\Type\Exception\InvalidVariableTypeException;
 
 /**
- * Bool is an abstraction of a primitive variable of type 'bool'
+ * Int is an abstraction of a primitive variable of type 'int'
  */
-class Bool extends AbstractType
+class IntType extends AbstractType
 {
 
-    const TYPE_ID = 'bool';
+    const TYPE_ID = 'int';
 
     /**
      * Constructor.
@@ -34,29 +34,13 @@ class Bool extends AbstractType
     /**
      * @inheritdoc
      */
-    public function getFormattedValue()
-    {
-        return $this->value ? 'true' : 'false';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function load($var, $level = 1)
     {
-        if (!is_bool($var)) {
+        if (!is_int($var)) {
             throw new InvalidVariableTypeException();
         }
 
         parent::load($var, $level);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getInlineValue()
-    {
-        return $this->value ? 'true' : 'false';
     }
 
 }

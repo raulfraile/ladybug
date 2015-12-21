@@ -17,7 +17,7 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
 
         $factoryTypeMock = m::mock('Ladybug\Type\FactoryType');
         $factoryTypeMock->shouldReceive('factory')->with(m::anyOf(1, 2, 3), m::any())->andReturnUsing(function($var, $level) {
-            $intType = new Type\Int();
+            $intType = new Type\IntType();
             $intType->load($var, $level);
 
             return $intType;
@@ -46,7 +46,7 @@ class ArrayTypeTest extends \PHPUnit_Framework_TestCase
         foreach ($this->type->getValue() as $item) {
             $this->assertEquals($i, $item->getKey());
             $this->assertEquals(2, $item->getLevel());
-            $this->assertInstanceOf('Ladybug\Type\Int', $item->getValue());
+            $this->assertInstanceOf('Ladybug\Type\IntType', $item->getValue());
 
             $i++;
         }

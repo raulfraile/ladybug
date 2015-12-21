@@ -4,7 +4,7 @@ namespace Ladybug\Tests\Type;
 
 use Ladybug\Type;
 
-class FloatTest extends \PHPUnit_Framework_TestCase
+class FloatTypeTest extends \PHPUnit_Framework_TestCase
 {
 
     /** @var Type\Float $type */
@@ -12,7 +12,7 @@ class FloatTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->type = new Type\Float();
+        $this->type = new Type\FloatType();
     }
 
     public function testLoaderForValidValues()

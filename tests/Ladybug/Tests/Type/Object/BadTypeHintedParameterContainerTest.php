@@ -16,7 +16,7 @@ class BadTypeHintedParameterContainerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $factory = new Type\FactoryType();
-        $factory->add(new Type\Null(), 'type_null');
+        $factory->add(new Type\NullType(), 'type_null');
 
         $managerInspectorMock = m::mock('Ladybug\Inspector\InspectorManager');
         $managerInspectorMock->shouldReceive('get')->andReturn(null);
@@ -53,7 +53,7 @@ class BadTypeHintedParameterContainerTest extends \PHPUnit_Framework_TestCase
         $badTypeHinted = $privateMethod->getParameterByName('baz');
         $this->assertEquals('[Undefined Type Hint]', $badTypeHinted->getType());
         $this->assertFalse($badTypeHinted->isReference());
-        $this->assertInstanceOf('Ladybug\Type\Null', $badTypeHinted->getDefaultValue());
+        $this->assertInstanceOf('Ladybug\Type\NullType', $badTypeHinted->getDefaultValue());
     }
 }
 

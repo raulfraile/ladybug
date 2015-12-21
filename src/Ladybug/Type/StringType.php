@@ -16,7 +16,7 @@ use Ladybug\Type\Exception\InvalidVariableTypeException;
 /**
  * String is an abstraction of a primitive variable of type 'string'
  */
-class String extends AbstractType
+class StringType extends AbstractType
 {
     const TYPE_ID = 'string';
 

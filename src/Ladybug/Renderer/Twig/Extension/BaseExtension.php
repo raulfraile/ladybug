@@ -40,9 +40,9 @@ class BaseExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_type' => new \Twig_Function_Method(
-                $this,
-                'renderTypeFunction',
+            'render_type' => new \Twig_SimpleFunction(
+                'renderTypeFunction', 
+                array($this, 'renderTypeFunction'),
                 array('needs_environment' => true, 'is_safe' => array('html'))
             )
         );
@@ -56,16 +56,8 @@ class BaseExtension extends Twig_Extension
     public function getFilters()
     {
         return array(
-            'repeat' => new \Twig_Filter_Method(
-                $this,
-                'getRepeat',
-                array('is_safe' => array('html'))
-            ),
-            'pad' => new \Twig_Filter_Method(
-                $this,
-                'getPad',
-                array()
-            )
+            'repeat' => new \Twig_SimpleFilter('getRepeat', array($this, 'getRepeat'), array('is_safe' => array('html'))),
+            'pad' => new \Twig_SimpleFilter('getPad', array($this, 'getPad')),
         );
     }
 
