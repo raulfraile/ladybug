@@ -32,7 +32,7 @@ class ConsoleExtension extends BaseExtension
     public function getFilters()
     {
         return array_merge(parent::getFilters(), array(
-            'tags' => new \Twig_SimpleFilter('getTags', array($this, 'getTags'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('tags', array($this, 'getTags'), array('is_safe' => array('html'))),
         ));
     }
 
@@ -44,5 +44,4 @@ class ConsoleExtension extends BaseExtension
 
         return $textTags;
     }
-
 }
